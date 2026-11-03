@@ -39,3 +39,14 @@ test('writer', () => {
   assert.equal(formatRowHash(99999, ''), '#v1.zzz');
   assert.equal(sanitiseName('Mary-Ann'), 'MaryAnn');
 });
+
+test('sanitiseName keeps ZWJ/ZWNJ between letters only (E6.8)', () => {
+  const ZWJ = '‍', ZWNJ = '‌';
+  assert.equal(sanitiseName('ന' + ZWJ + 'ഹ'), 'ന' + ZWJ + 'ഹ');
+  assert.equal(sanitiseName('ന' + ZWNJ + 'ഹ'), 'ന' + ZWNJ + 'ഹ');
+  assert.equal(sanitiseName(ZWJ + 'ന'), 'ന');
+  assert.equal(sanitiseName('ന' + ZWJ), 'ന');
+  assert.equal(sanitiseName('A1 sha'), 'Asha');
+  assert.equal(sanitiseName('a' + ZWJ + ZWJ + 'b'), 'a' + ZWJ + 'b');
+  assert.equal(sanitiseName('x'.repeat(30)).length, 20);
+});

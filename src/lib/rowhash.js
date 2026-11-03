@@ -3,7 +3,9 @@ export const NAME_MAX = 20;
 export function sanitiseName(raw) {
   let s = String(raw || '');
   try { s = s.normalize('NFC'); } catch (e) { /* ignore */ }
-  s = s.replace(/[^\p{L}\p{M}]/gu, '');
+  // Keep letters and marks. ZWNJ/ZWJ (U+200C/U+200D) are kept only between two letters or marks (Malayalam, Bengali, Devanagari, Persian names need them).
+  s = s.replace(/[^\p{L}\p{M}\u200C\u200D]/gu, '');
+  s = s.replace(/(?<![\p{L}\p{M}])[\u200C\u200D]+|[\u200C\u200D]+(?![\p{L}\p{M}])/gu, '').replace(/([\u200C\u200D])[\u200C\u200D]+/gu, '$1');
   const parts = (typeof Intl !== 'undefined' && Intl.Segmenter)
     ? Array.from(new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(s), (x) => x.segment)
     : Array.from(s);
