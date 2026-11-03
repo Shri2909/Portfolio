@@ -153,3 +153,10 @@ Full report with every audit's raw findings: **`docs/PACK8_AUDIT.md`**, produced
 - **P8.16 triage:** done as above for what the audits found. **P8.17 your own spoken correction:** needs a flaw you saw yourself; I will not invent one.
 - **P8.25 deployed-URL audit:** the site is not deployed. Run `node scripts/audit.mjs` after pointing it at the public address, and do the manual list (private phone window on mobile data, network panel, cookies, WhatsApp preview, open every outbound link).
 - **Parts A, B, C, F and G:** run sheet, how to speak, evidence protocol, the 3-minute video, the form, the post and the last truth gate are yours. I did not touch them.
+
+## Layout fix pass (after review feedback)
+- **Desktop opening screen:** at 1366x768 the lamp row ran to y=732 with the dock on top of lamps 3 and 4; at 1366x650 (a browser with toolbars) it ended below the screen. The headline now scales with the viewport height and the opening column is wider on screens 900 px and up, so the row sits at y 522 to 605 (768) and 485 to 568 (650), fully visible.
+- **Dock:** on screens 900 px and up it moves to the bottom-right corner and no longer overlaps any lamp (measured). On phones it keeps the bottom centre, now with a soft fade behind it so text scrolling under it is not fighting the buttons, and `scroll-padding-bottom` keeps focused items clear of it.
+- **Voice compare slider:** the sticky flame slider now stops above the dock (measured at three scroll positions, 22 px or more of clearance).
+- **Opening screen smaller issues:** the skyline was nearly invisible, so the night horizon is lifted slightly (a deliberate departure from the pack 2 gradient values) and the buildings are dark silhouettes against it. More space between the progress pill and the hold hint.
+- Not verified: real phone rendering with a browser toolbar; the dock fade on a real phone.

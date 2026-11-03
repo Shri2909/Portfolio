@@ -11,7 +11,7 @@ body { background: transparent; }
 #stage > * { position: absolute; }
 #sky { inset: 0; }
 .sky-g { position: absolute; inset: 0; transition: opacity var(--tone-ms) ease; }
-.sky-night { background: linear-gradient(#05060D 0%, #0B0D1F 55%, #17122A 100%); }
+.sky-night { background: linear-gradient(#05060D 0%, #0B0D1F 38%, #2a1b40 72%, #3b2448 100%); }
 .sky-ember { background: linear-gradient(#120D1F 0%, #2B1A33 55%, #5A2A2C 100%); opacity: clamp(0, calc((var(--tone) - 1) / 3), 1); }
 .sky-gold { background: linear-gradient(#22152B 0%, #6B3440 50%, #F2A94E 100%); opacity: clamp(0, calc((var(--tone) - 4) * .85), 1); transition: opacity 2400ms ease 400ms; }
 html[data-calm="1"] .sky-gold { transition: none; }
@@ -32,8 +32,8 @@ html[data-calm="1"] .cloud { animation-play-state: paused; } html[data-calm="1"]
 #skyline { left: 0; right: 0; bottom: 38%; height: 42%; overflow: hidden; }
 #skyline svg { position: absolute; left: 50%; bottom: 0; height: 100%; aspect-ratio: 12 / 5; transform: translateX(-50%); display: block; overflow: visible; }
 @media (min-width: 768px) { #skyline { height: 46%; } }
-.lay.far rect:not(.pane):not(.halo) { fill: color-mix(in srgb, var(--ground-1), white 6%); }
-.lay.mid > rect { fill: var(--ground-2); } .lay.near > g > rect:first-child { fill: var(--ground-3); }
+.lay.far rect:not(.pane):not(.halo) { fill: #150f25; }
+.lay.mid > rect { fill: #0f0a1a; } .lay.near > g > rect:first-child { fill: #0a0710; }
 .roof * { fill: var(--ground-1); } .roof .stroke, .roof .stroke * { fill: none; stroke: var(--ground-1); stroke-width: 1.4; }
 .roof .cloth { fill: none; stroke: var(--ground-4); }
 .lay.near .stroke { stroke: var(--ground-4); stroke-width: 1.2; fill: none; } .unit, .solar * { fill: var(--ground-1); }
