@@ -1,7 +1,0 @@
-/* Review build only. */
-.cf-filled { outline: 2px dotted #E8A317; outline-offset: 3px; }
-.review-mark { position: fixed; inset: 0; z-index: 40; pointer-events: none; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-.review-mark span {
-  display: block; transform: rotate(-24deg); white-space: nowrap; font: 800 clamp(22px, 5vw, 56px)/1 "Courier Prime", monospace;
-  letter-spacing: .06em; color: rgba(232, 163, 23, .16); text-shadow: 0 0 1px rgba(232, 163, 23, .25);
-}
