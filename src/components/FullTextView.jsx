@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import copy, { c, X, flags } from '../lib/copy.js';
 import { tpl } from '../lib/tpl.js';
 import { rich, R } from '../lib/rich.jsx';
@@ -8,7 +9,29 @@ import EvidenceBody from './EvidenceBody.jsx';
 import { contactHref, inviteVisible } from '../lib/mail.js';
 import { personParas } from '../lib/personText.js';
 import WishForm from './WishForm.jsx';
+import { wishState } from '../lib/wishState.js';
+import { cardContent, shareText, sendCard, copyText } from '../lib/cardActions.js';
+import { outgoingLink } from '../lib/row.js';
+import { useWishVersionState } from './wishHooks.js';
 
+const makePlain = () => wishState.set({ made: true, seed: wishState.makeSeedFrom(cardContent()) });
+// The plain-text twin of the card, with the same send and copy actions (no picture needed).
+function CardTwin() {
+  const st = useWishVersionState(), A = copy.wish.actions, [m, setM] = useState('');
+  return (
+    <div className="twin plain-twin">
+      <p role="status">{rich(copy.wish.micro.ready)}</p>
+      <pre>{shareText()}</pre>
+      <p>
+        <button type="button" className="btn" onClick={async () => { const r = await sendCard(st.theme, st.seed); setM(r === 'copied' ? copy.wish.micro.copied : r === 'failed' ? copy.wish.micro.copyFailed : ''); }}>{rich(A.whatsapp.label)}</button>{' '}
+        <button type="button" className="btn" onClick={async () => setM((await copyText(shareText())) ? copy.wish.micro.copied : copy.wish.micro.copyFailed)}>{rich(A.copyText.label)}</button>{' '}
+        <button type="button" className="btn" onClick={async () => setM((await copyText(outgoingLink())) ? copy.wish.micro.copied : copy.wish.micro.copyFailed)}>{rich(A.copyLink.label)}</button>
+      </p>
+      <p role="status">{m ? rich(m) : ''}</p>
+      <p>{rich(copy.wish.micro.underCard)}</p>
+    </div>
+  );
+}
 const P = ({ t }) => (t ? <p>{rich(t)}</p> : null);
 const Part = ({ part }) => part && (
   <>
@@ -21,6 +44,7 @@ const Part = ({ part }) => part && (
 // No canvas, no animation, no sticky parts. Nothing requires lighting a lamp.
 export default function FullTextView({ onClose }) {
   const row = useStore((s) => s.row);
+  const made = useWishVersionState().made;
   const n = row.count;
   const caption = n === 0 ? copy.closure.rowCaption.zero : n === 1 ? copy.closure.rowCaption.one : copy.closure.rowCaption.many;
   const so = new Date() >= new Date('2026-11-10T00:00:00') ? copy.closure.signoff.after : copy.closure.signoff.before;
@@ -121,7 +145,8 @@ export default function FullTextView({ onClose }) {
           <p>{w.english}</p>
           <h3>{rich(w.ideas.heading)}</h3>
           <ul>{w.ideas.chips.map((x, i) => <li key={i}>{rich(x)}</li>)}</ul>
-          <WishForm plain />
+          <WishForm plain onMake={makePlain} />
+          {made && <CardTwin />}
         </section>
         <section aria-labelledby="ft-closure">
           <h2 id="ft-closure">{cl.headings.map((h, i) => <span key={i}>{rich(h)} </span>)}</h2>

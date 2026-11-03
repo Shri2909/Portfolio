@@ -28,6 +28,8 @@ let state = {
 };
 const subs = new Set();
 const wish = { to: '', text: '', from: '' };
+const wishSubs = new Set();
+const wishVersion = { n: 0 };
 
 export const getState = () => state;
 export const subscribe = (fn) => { subs.add(fn); return () => subs.delete(fn); };
@@ -102,12 +104,14 @@ export const actions = {
   setOverlay(overlay, evidenceCase = null) { set({ overlay, evidenceCase }); },
   setLampCard(n) { set({ lampCard: n }); },
   reducedMotion(b) { set({ reducedMotion: !!b }); },
-  setWish(w) { Object.assign(wish, w); },
-  clearWish() { wish.to = ''; wish.text = ''; wish.from = ''; },
-  reset() { clearWish(); },
+  setWish(w) { Object.assign(wish, w); wishVersion.n++; wishSubs.forEach((f) => f()); },
+  clearWish() { wish.to = ''; wish.text = ''; wish.from = ''; wishVersion.n++; wishSubs.forEach((f) => f()); },
+  reset() { actions.clearWish(); },
 };
-function clearWish() { wish.to = ''; wish.text = ''; wish.from = ''; }
+// The wish never enters the main snapshot, any event detail, any log or the URL. This is only a version counter for the two forms.
 export const getWish = () => wish;
+export const subscribeWish = (f) => { wishSubs.add(f); return () => wishSubs.delete(f); };
+export const wishVersionNow = () => wishVersion.n;
 
 if (typeof window !== 'undefined') {
   if (import.meta.env.DEV) window.__ek = { actions, getState }; // development builds only

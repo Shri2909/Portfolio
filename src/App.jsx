@@ -5,6 +5,8 @@ import { getState } from './lib/store.js';
 import { useStore } from './lib/useStore.js';
 import { announcer } from './lib/announce.js';
 import { parseHash } from './lib/hash.js';
+import { wireRow } from './lib/row.js';
+import { ShareBanner } from './components/RowFragment.jsx';
 import { startGovernor } from './lib/quality.js';
 import { startFavicon } from './lib/favicon.js';
 import { wireOpeners, openSixty, openEvidence, openText, closeOverlay, closeText, scrollToId } from './lib/nav.js';
@@ -36,7 +38,7 @@ export default function App() {
   const live = useSyncExternalStore(announcer.subscribe, announcer.get);
   const [printing, setPrinting] = useState(false);
   useEffect(() => {
-    wireOpeners(); startGovernor(); startFavicon();
+    wireOpeners(); startGovernor(); startFavicon(); const offRow = wireRow();
     const route = () => {
       const r = parseHash(window.location.hash);
       if (!r) return;
@@ -48,7 +50,7 @@ export default function App() {
     window.addEventListener('hashchange', route);
     const bp = () => flushSync(() => setPrinting(true)), ap = () => setPrinting(false);
     window.addEventListener('beforeprint', bp); window.addEventListener('afterprint', ap);
-    return () => { window.removeEventListener('hashchange', route); window.removeEventListener('beforeprint', bp); window.removeEventListener('afterprint', ap); };
+    return () => { offRow(); window.removeEventListener('hashchange', route); window.removeEventListener('beforeprint', bp); window.removeEventListener('afterprint', ap); };
   }, []);
   return (
     <>
@@ -56,7 +58,7 @@ export default function App() {
       <TopBar />
       <Stage />
       <main id="main" tabIndex={-1}>
-        <Night><LampRow /></Night>
+        <Night banner={<ShareBanner />}><LampRow /></Night>
         <Lamps />
         <RowBreathes />
         <Lamp6 />
