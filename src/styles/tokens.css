@@ -1,0 +1,24 @@
+:root {
+  --ground-0: #0A0705; --ground-1: #110B07; --ground-2: #19100A; --ground-3: #251609;
+  --ground-4: #35200C; --ground-5: #4A2F10; --ground-6: #5C3A14;
+  --flame-core: #FFD27A; --flame-a: #FFB347; --flame-b: #FF7A1A;
+  --cream: #FFF3DC; --text-dim: #E3CFAE; --kumkum: #C2410C; --marigold: #F5A623; --leaf: #2F6B4F; --ink: #16110C;
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Noto Serif", Georgia, serif;
+  --font-body: system-ui, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Roboto Mono", Menlo, Consolas, monospace;
+  --tone-ms: 900ms; --tap: 44px; --gutter: 16px;
+  --bg: var(--ground-0);
+  --topbar-h: 56px;
+}
+html[data-tone="0"] { --bg: var(--ground-0); } html[data-tone="1"] { --bg: var(--ground-1); }
+html[data-tone="2"] { --bg: var(--ground-2); } html[data-tone="3"] { --bg: var(--ground-3); }
+html[data-tone="4"] { --bg: var(--ground-4); } html[data-tone="5"] { --bg: var(--ground-5); }
+html[data-tone="6"] { --bg: var(--ground-6); }
+html[data-calm="1"] { --tone-ms: 0ms; }
+@media (min-width: 390px) { :root { --gutter: 20px; } }
+@media (min-width: 768px) { :root { --gutter: 32px; } }
+/* Ink theme: neutral tokens, decorative layers off */
+html[data-ink="1"] {
+  --ground-0: #0B0B0C; --ground-1: #111112; --ground-2: #171718; --ground-3: #1E1E1F; --ground-4: #262627; --ground-5: #2F2F30; --ground-6: #38383A;
+  --marigold: #FFF3DC; --kumkum: #FFF3DC; --leaf: #FFF3DC;
+}

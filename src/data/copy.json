@@ -1,0 +1,1016 @@
+{
+ "version": 1,
+ "_review": [
+  "Person block (section 9): the exam sequence, \"unsuccessful entrance attempts\", the debate result and the four research contributors are on the truth ledger open list. Its first sentence is OFF (flags.ledgerGate_personFirstSentence).",
+  "Footer line 4 (no analytics, cookies or third-party script) is OFF (flags.noAnalyticsLine) until Shriniwas confirms. check-build passes today, but the decision is his.",
+  "Footer line 5 (how this page was made) is empty and OFF (flags.footerHowMade). Shriniwas must write it.",
+  "The line \"I spoke some of the directions for this page through Wispr Flow into Emergent...\" is not on the page (voice.buildLine is null). No recording exists.",
+  "Lamp 6 optional line \"Other languages deserve their own test...\" is OFF (flags.lamp6LanguageLine).",
+  "Lamp 5 label stays \"Phir kya hua\" until Shriniwas confirms which approvals were his.",
+  "The Hinglish lines were drafted by an AI agent. Shriniwas should read each aloud and rewrite in his own words."
+ ],
+ "flags": {
+  "_note": "Gates for lines not yet confirmed by Shriniwas. Change a value, nothing else.",
+  "ledgerGate_personFirstSentence": false,
+  "flowIntoEmergentRecorded": false,
+  "noAnalyticsLine": false,
+  "lamp6LanguageLine": false,
+  "footerHowMade": false
+ },
+ "site": {
+  "lang": "en-IN",
+  "title": "Ek Diya Se Doosra (one lamp lights another) · Shriniwas Kholkute",
+  "description": "324 tests passed. Then an audit found 19 problems. Shriniwas Kholkute's night page for Wispr Flow's India growth internship: one lamp lights another. Ek diya jalaiye, aage badhaiye.",
+  "og": {
+   "title": "324 tests passed. 19 problems found. Ship karte?",
+   "description": "Ek diya pehle se jal raha hai. Baaki aapke haath se jalenge. A night page about five projects, by Shriniwas Kholkute.",
+   "imageAlt": "A dark page with one small lit lamp and five unlit lamps beside it, under the words \"324 tests passed. 19 problems found.\""
+  },
+  "shareLine": "324 tests passed. Phir ek audit ne 19 problems dhoondhe. Ship karte? {link}",
+  "contact": {
+   "email": "shrniwaskholkute2282@gmail.com",
+   "linkedin": null
+  },
+  "links": {
+   "resume": "https://drive.google.com/file/d/19DXFxUoCiynAvErP6KQVq-ArzV69Mgf2/view?usp=drive_link",
+   "essay": "https://drive.google.com/file/d/1ccYZ-WZOZTLmZ4A23Ed9yNGy9jiCNi2k/view?usp=drive_link"
+  },
+  "signoffSwitchAfter": "2026-11-09"
+ },
+ "ui": {
+  "skip": "Skip to main content",
+  "nav": [
+   {
+    "id": "lamps",
+    "label": "The lamps",
+    "href": "#lamps"
+   },
+   {
+    "id": "evidence",
+    "label": "Evidence",
+    "href": "#evidence"
+   },
+   {
+    "id": "sixty",
+    "label": "60-second file",
+    "href": "#sixty"
+   }
+  ],
+  "close": "Close",
+  "holdHint": "<hi>Dabaye rakhiye. Tap ya Enter bhi chalega.</hi>",
+  "holding": "<hi>Baati abhi garam ho rahi hai.</hi>",
+  "travelling": "<hi>Lau aage badh rahi hai…</hi>",
+  "progress": {
+   "some": "<hi>{n} diye jal chuke, {rest} baaki.</hi>",
+   "all": "<hi>Paanchon jal uthe.</hi>"
+  },
+  "lampOpen": "<hi>Kissa kholiye</hi>",
+  "lampClose": "<hi>Row par waapas</hi>",
+  "lightAll": "<hi>Sab diye ek saath jalaiye</hi>",
+  "sr": {
+   "unlit": "Lamp {n}, unlit. Press and hold, tap or press Enter to light it from lamp {prev}.",
+   "lit": "Lamp {n}, lit."
+  },
+  "calmNote": "<hi>Motion off hai? Diye seedhe jal jaate hain, koi animation nahi.</hi>",
+  "invite": {
+   "short": "INVITE ME",
+   "long": "INVITE ME TO AN INTERVIEW",
+   "sub": "<hi>Ek email. Ek lamp. Baaki baat wahin.</hi>"
+  },
+  "startAgain": "<hi>Phir se shuru kijiye</hi>",
+  "badLink": "<hi>Link thoda alag lag raha hai. Koi baat nahi, row yahin se shuru hoti hai.</hi>",
+  "rowFine": "This number is written inside the link. It is not a visitor count and is not verified.",
+  "extra": {
+   "_needsApproval": true,
+   "calm": "Calm",
+   "calmHi": "Roshni kam karo",
+   "calmOnHi": "Roshni waapas laao",
+   "calmAria": "Turn the lights down, calm mode",
+   "look": "Look",
+   "ink": "Ink",
+   "deepavali": "Deepavali",
+   "tilt": "Tilt",
+   "fullText": "Poora text padhein",
+   "fullTextAria": "Read the full text of this page in one linear view",
+   "menu": "Menu",
+   "closeText": "Close the plain text view",
+   "lightFirst": "Light lamp {k} first.",
+   "lampLitLive": "Lamp {n} is lit. {n} of 5 lamps lit.",
+   "allLitLive": "All five lamps are lit. The room has turned warm gold.",
+   "lamp6Live": "Lamp 6 is proposed, not run. It stays unlit.",
+   "lightAllDone": "All five lamps are lit.",
+   "lightLamp": "Light lamp {n}, {project}.",
+   "litLamp": "Lamp {n}, {project}, lit. Open its story.",
+   "lamp6Aria": "Lamp 6, proposed and not run. It stays unlit.",
+   "fromHome": "from the home flame",
+   "whisper": "Aasmaan ko dabaye rakhiye.",
+   "aglaDiya": "Agla diya",
+   "aglaNext": "Agla diya (next lamp)",
+   "aglaLamp6": "Agla diya (lamp 6)",
+   "pictureOnly": "A picture, not a map. The 19 problems are not 19 of the 324 tests.",
+   "exact3": "Reply at 3 s, right on the deadline line. Move the flame a little either way to see each case.",
+   "flipTag": "Flip the tag",
+   "holdRounds": "Hold to count the rounds",
+   "roundsCounter": "{n} of 820 completed measurement rounds",
+   "roundsChip": "Campaign record: 820 completed measurement rounds",
+   "codex": "Codex",
+   "claudeCode": "Claude Code",
+   "stones": [
+    "Handoff",
+    "Verified disk cleanup",
+    "Recorded checkpoints"
+   ],
+   "priceTagFront": "1,205 nanoseconds",
+   "priceTagLine": "It had come from an uncommitted working tree.",
+   "priceTagBack": "1,850",
+   "priceTagChip": "A historical run, not today's number.",
+   "advertisedAdvantage": "Advertised advantage",
+   "barAlt": "The advertised 3.1× advantage shrank to 1.02×.",
+   "cutoffSentence": "A simulated cutoff, not a live database. The 06:15 UTC record, the 06:00 UTC cutoff, one direct-ingestion daylight-saving fold.",
+   "routeDirect": "Direct ingestion (the fold case)",
+   "routeCsv": "Normalized UTC CSV route",
+   "routeNote": "The normalized UTC CSV route was not affected.",
+   "cutoffDirect0545": "Cutoff 05:45. The 06:15 event is not visible yet.",
+   "cutoffDirect0600": "Cutoff 06:00. The 06:15 event is already visible. It should not be yet.",
+   "cutoffDirect0615": "Cutoff 06:15. The 06:15 event is visible.",
+   "cutoffCsvEarly": "Cutoff {time}. The 06:15 event is not visible yet.",
+   "cutoffCsv0615": "Cutoff 06:15. The 06:15 event is visible.",
+   "cutoffLabel": "Cutoff time, in UTC",
+   "cutoffSpoken": "{time} UTC",
+   "themeNames": [
+    "Diya",
+    "Rangoli",
+    "Marigold Toran",
+    "Phuljhadi Night",
+    "Akash Kandil",
+    "Ink"
+   ],
+   "download": "Download card (PNG)",
+   "themeGroupAria": "Card style",
+   "visitorLampAria": "Your lamp, not lit yet",
+   "visitorLamp": "Your lamp",
+   "onRequest": "evidence available on request",
+   "recordingLinkText": "linked here",
+   "readPlainlyTrimmed": "trimmed",
+   "readPlainlySmoothed": "smoothed",
+   "readPlainlyAdded": "added",
+   "countsLine": "Trimmed: {a} words. Smoothed or added: {b} words.",
+   "takeValue0": "As I said it",
+   "takeValueN": "{k} of {m} changes showing",
+   "takeValueLast": "As Flow wrote it",
+   "wishCounter": "{n} of 400",
+   "wishCounterAria": "{n} of 400 characters",
+   "emailSubject": "Interview: Ek Diya Se Doosra",
+   "emailBody": [
+    "Hello Shriniwas,",
+    "I would like to talk about an interview.",
+    "My lamp number on your page: {n}"
+   ],
+   "moreThan99": "more than 99",
+   "wickLine": "Time left in the 60-second file",
+   "copyHeading": "Card text",
+   "statusPrefix": "Status",
+   "repoAria": "Repository for {project}: {label}, opens GitHub in a new tab",
+   "driveAria": "{label}, opens Google Drive in a new tab",
+   "mailAria": "opens an email",
+   "receiptAria": "Evidence drawer, folder {name}",
+   "lampCardAria": "Lamp {n} story",
+   "yourLampAria": "Your lamp"
+  }
+ },
+ "opening": {
+  "label": "EK DIYA SE DOOSRA · Shriniwas Kholkute",
+  "sharedWithName": "<hi>{name} ne yeh link bheja. Link mein likhi ginti: {count} diye.</hi>",
+  "sharedNoName": "<hi>Kisi ne yeh link bheja. Link mein likhi ginti: {count} diye.</hi>",
+  "headline": "324 tests passed. Then an audit found 19 problems.",
+  "ask": "<hi>**Ship karte? Imaandari se bataiye.**</hi>",
+  "lines": [
+   "<hi>Ek diya pehle se jal raha hai. Woh mera hai.</hi>",
+   "<hi>Baaki paanch aapke haath se jalenge.</hi>"
+  ],
+  "holdLabel": "HOLD TO LIGHT THE FIRST LAMP",
+  "sixtyPrompt": "<hi>Jaldi mein hain? Ek minute mein poori kahani.</hi>",
+  "sixtyCta": "THE 60-SECOND FILE",
+  "below": [
+   "Five projects. Five inconvenient discoveries. <hi>Aur ek sawaal: phir maine kya kiya?</hi>",
+   "I'm Shriniwas, a final-year VIT Pune engineering student applying for Wispr Flow's India growth internship. <hi>Strengths ki list nahi. Main aapko mushkil faisle dikhaunga.</hi>"
+  ],
+  "altText": "A dark page with one small flame lit on the left and a row of five unlit lamps leading away to the right."
+ },
+ "lamps": [
+  {
+   "n": 1,
+   "id": "certgen",
+   "kicker": "LAMP 1 · CERTGEN · THE GREEN WALL",
+   "title": "<hi>Sab green tha</hi>",
+   "holding": "<hi>Lau aage badh rahi hai…</hi>",
+   "lit": "<hi>Lamp 1 jal utha. Ab iska kissa.</hi>",
+   "what": {
+    "heading": "What happened",
+    "gloss": null,
+    "paras": [
+     "Imagine a college generating thousands of certificates. One wrong entry shouldn't ruin the batch or crash the service. <hi>Bas itna hi kaam tha.</hi>",
+     "I mapped the workflow and architecture, made or approved product decisions, and used AI coding tools to implement the prototype. The prototype passed **324 tests**.",
+     "A separate audit found **19 problems**: one input consumed excessive processing time; another ballooned into an enormous response. <hi>Tests ne woh sawaal poochhe hi nahi the.</hi>"
+    ]
+   },
+   "next": {
+    "heading": "<hi>Maine phir kya kiya</hi>",
+    "gloss": "what I did next",
+    "paras": [
+     "<hi>Green screen pe ruk jaana aasaan tha.</hi> **I didn't defend the green screen.** Records show me approving safeguards, changing scope and directing more remediation when problems remained. Agents audited and fixed the code. The final report recorded zero open findings in its scope; later checks passed **479 main and 232 audit tests**."
+    ]
+   },
+   "warning": {
+    "heading": "Fair warning",
+    "gloss": null,
+    "paras": [
+     "It's still a prototype, not a security guarantee. <hi>Isse zyaada ka daava main nahi karta.</hi>"
+    ]
+   },
+   "receipt": {
+    "label": "OPEN THE CERTGEN RECEIPT",
+    "folder": "c1"
+   },
+   "interaction": "guess"
+  },
+  {
+   "n": 2,
+   "id": "vigil",
+   "kicker": "LAMP 2 · VIGIL · THE WATCHDOG THAT TRUSTED A LATE REPLY",
+   "title": "<hi>Der se aaya jawab</hi>",
+   "holding": "<hi>Lau aage badh rahi hai…</hi>",
+   "lit": "<hi>Lamp 2 jal utha. Ek diya jala. Ab agla.</hi>",
+   "what": {
+    "heading": "What happened",
+    "gloss": null,
+    "paras": [
+     "Vigil checked whether a data connection was alive, <hi>jaise phone par poochhna: \"Hello? Aap wahin hain?\"</hi>",
+     "Despite green tests, a reply arriving **after the deadline** could count as proof of health. <hi>Der se aaya jawab bhi \"haan, zinda hoon\" maan liya ja sakta tha.</hi>"
+    ]
+   },
+   "next": {
+    "heading": "<hi>Maine phir kya kiya</hi>",
+    "gloss": "what I did next",
+    "paras": [
+     "<hi>Maine ek sawaal uthaya: kya yeh tests system ka asli vaada sach mein check karte hain?</hi>",
+     "I questioned whether the tests proved the system's real promise. An AI-assisted review found the defect and implemented an approval-gated correction.",
+     "When a verifier removed the correction, **two targeted tests failed**. Restored, the suite passed **105 tests**.",
+     "The question became: **does it deliver what someone depends on?**"
+    ]
+   },
+   "warning": {
+    "heading": "Fair warning",
+    "gloss": null,
+    "paras": [
+     "<hi>Yeh sab simulated connections par hua tha.</hi> The 105 tests were verified locally in an agent session, not in CI, and there was no production deployment."
+    ]
+   },
+   "receipt": {
+    "label": "OPEN THE VIGIL RECEIPT",
+    "folder": "c2"
+   },
+   "interaction": "lateReply"
+  },
+  {
+   "n": 3,
+   "id": "blitz",
+   "kicker": "LAMP 3 · BLITZ · THE NUMBER I WITHDREW",
+   "title": "<hi>Jo number maine waapas liya</hi>",
+   "holding": null,
+   "lit": "<hi>Lamp 3 jal utha. Lau aage badh rahi hai.</hi>",
+   "what": {
+    "heading": "What happened",
+    "gloss": null,
+    "paras": [
+     "A speed claim looked remarkable: **1,205 nanoseconds**. <hi>Woh number bahut achha lag raha tha.</hi> It had come from an uncommitted working tree.",
+     "Better-controlled measurement showed **1,850**. The advertised **3.1× advantage** shrank to **1.02×**."
+    ]
+   },
+   "next": {
+    "heading": "<hi>Maine phir kya kiya</hi>",
+    "gloss": "what I did next",
+    "paras": [
+     "The headline was replaced. Later changes made even the replacement historical. **I chose the defensible story over the flattering one.** <hi>Chamak nahi, sach.</hi>"
+    ]
+   },
+   "warning": {
+    "heading": "Fair warning",
+    "gloss": null,
+    "paras": [
+     "1,850 ns is a historical run, not today's number. Current latency has not been remeasured."
+    ]
+   },
+   "receipt": {
+    "label": "OPEN THE BLITZ RECEIPT",
+    "folder": "c3"
+   },
+   "interaction": null
+  },
+  {
+   "n": 4,
+   "id": "tipindex",
+   "kicker": "LAMP 4 · TIPINDEX · THE AGENT STOPPED, THE WORK CONTINUED",
+   "title": "<hi>Agent ruka. Kaam nahi.</hi>",
+   "holding": null,
+   "lit": "<hi>Lamp 4 jal utha. Ek diya jala. Ab agla.</hi>",
+   "what": {
+    "heading": "What happened",
+    "gloss": null,
+    "paras": [
+     "Codex hit its limit during a long experiment and left an incomplete output. <hi>Beech raaste mein agent ruk gaya. File adhoori.</hi>"
+    ]
+   },
+   "next": {
+    "heading": "<hi>Maine phir kya kiya</hi>",
+    "gloss": "what I did next",
+    "paras": [
+     "I directed a handoff to Claude Code, approved a verified disk cleanup, and resumed from recorded checkpoints. The campaign record reports **820 completed measurement rounds**.",
+     "**A process shouldn't depend on one operator remembering everything.**"
+    ]
+   },
+   "warning": {
+    "heading": "Fair warning",
+    "gloss": null,
+    "paras": [
+     "Agents wrote most of the code and ran most of the benchmarks in this project. These are one-laptop, limited-workload results, not product speedups. <hi>Product ka daava nahi.</hi>"
+    ]
+   },
+   "receipt": {
+    "label": "OPEN THE TIPINDEX RECEIPT",
+    "folder": "c4"
+   },
+   "interaction": null
+  },
+  {
+   "n": 5,
+   "id": "pitdb",
+   "kicker": "LAMP 5 · PITDB · THE FUTURE APPEARED EARLY",
+   "title": "<hi>Future, waqt se pehle</hi>",
+   "holding": null,
+   "lit": "<hi>Lamp 5 jal utha.</hi>",
+   "what": {
+    "heading": "What happened",
+    "gloss": null,
+    "paras": [
+     "A database meant to answer \"What was known then?\" could, in one specific time-zone edge case, show a **06:15** event at **06:00**. <hi>Yaani 06:15 ki baat 06:00 par hi dikh jaati.</hi>"
+    ]
+   },
+   "next": {
+    "heading": "<hi>Phir kya hua</hi>",
+    "gloss": "what happened next",
+    "paras": [
+     "Agents found and addressed the defect in a local remediation version; the claim was narrowed."
+    ]
+   },
+   "warning": {
+    "heading": "Fair warning",
+    "gloss": null,
+    "paras": [
+     "**That correction is not yet reflected in the public default branch.** <hi>Aur main yeh nahi keh raha ki har audit finding fix ho chuki hai.</hi>"
+    ]
+   },
+   "receipt": {
+    "label": "OPEN THE PITDB RECEIPT",
+    "folder": "c5"
+   },
+   "interaction": null
+  }
+ ],
+ "guess": {
+  "label": "GUESS THE AUDIT RESULT",
+  "question": "How many problems did the separate audit find?",
+  "options": [
+   0,
+   3,
+   8,
+   19
+  ],
+  "answer": 19,
+  "ask": "<hi>Aapka andaza?</hi>",
+  "reveal": "The audit found 19 problems, two of them high. One crafted value caused disproportionate CPU work. A request of roughly 26 MB expanded into roughly 192 MB of response material. The tests hadn't asked those questions, and I directed more remediation.",
+  "below": "<hi>Kam socha? Aap akele nahi hain. 324 tests ne bhi wahi socha.</hi>",
+  "exact": "<hi>Bilkul sahi. Tests ko yeh nahi dikha tha.</hi>",
+  "plain": "324 of 324 tests passed. A separate audit then found 19 problems, two of them high.",
+  "chip": "324 / 324 tests pass"
+ },
+ "lateReply": {
+  "label": "TEST THE LATE REPLY",
+  "instruction": "<hi>Khiskaiye aur dekhiye.</hi>",
+  "badge": "MODEL OF DOCUMENTED BEHAVIOR",
+  "badgeNote": "A simulated connection, not real monitoring.",
+  "logicLabel": "Which logic?",
+  "logics": [
+   {
+    "id": "original",
+    "label": "Original logic"
+   },
+   {
+    "id": "corrected",
+    "label": "Corrected logic"
+   }
+  ],
+  "slider": {
+   "label": "When the reply arrives",
+   "assistive": "When the reply arrives, in seconds",
+   "min": 0,
+   "max": 6,
+   "step": 0.4,
+   "start": 2,
+   "deadline": 3,
+   "deadlineLabel": "3-second deadline",
+   "spokenBefore": "{t} seconds, before the 3-second deadline",
+   "spokenAfter": "{t} seconds, after the 3-second deadline"
+  },
+  "readout": {
+   "before": "Reply at {t} s, before the 3-second deadline. Counted as proof the connection is alive. <hi>Dono logic mein yahi hota hai.</hi>",
+   "afterOriginal": "Reply at {t} s, after the 3-second deadline. Original logic: still counted as proof of health. <hi>Yahi dikkat thi.</hi>",
+   "afterCorrected": "Reply at {t} s, after the 3-second deadline. Corrected logic: not counted as proof of current health."
+  },
+  "plain": "A reply that arrives before the 3-second deadline counts as proof the connection is alive. In the original logic, a reply that arrived after the deadline could still count as proof of health. In the corrected logic it is not counted as proof of current health."
+ },
+ "rowBreathes": {
+  "lines": [
+   "<hi>Paanch diye jal uthe.</hi>",
+   "<hi>Dekhiye: ek diya doosre se jala, aur pehle wale ki roshni kam nahi hui.</hi>"
+  ],
+  "after": "<hi>Kamra ab thoda sunehra ho gaya.</hi>"
+ },
+ "lamp6": {
+  "kicker": "LAMP 6 · PROPOSED, NOT RUN",
+  "badge": "PROPOSED, NOT RUN",
+  "title": "<hi>Yeh diya abhi bujha hai</hi>",
+  "idea": {
+   "heading": "The idea",
+   "paras": [
+    "For India growth, I'd test whether a **Hinglish-first demo for students and early-career users** beats a speed-focused pitch on **first usable dictations** and **a second dictation within a day**. **Proposed, not run.**",
+    "<hi>Shuruaat ek chhote group se: jo log sach mein Hindi-English mein messages likhte hain.</hi> I would not assume every Indian student uses Hinglish."
+   ],
+   "variants": [
+    {
+     "id": "A",
+     "label": "Variant A, speed",
+     "text": "\"Say the message. Skip typing it.\""
+    },
+    {
+     "id": "B",
+     "label": "Variant B, expression",
+     "text": "\"Don't stop the thought halfway through. Say it naturally.\""
+    }
+   ]
+  },
+  "optionalNote": {
+   "text": "Other languages deserve their own test; this one speaks only for Hindi-English."
+  },
+  "warning": {
+   "heading": "Fair warning",
+   "paras": [
+    "This test has not been run, and no result is claimed. <hi>Koi sample, koi lift, koi number nahi.</hi>"
+   ]
+  },
+  "cta": {
+   "label": "SEE THE GROWTH TEST",
+   "folder": "c8"
+  },
+  "tryLight": "<hi>Yeh diya abhi nahi jalega. Test chala nahi. Bujha hua, par imaandaar.</hi>"
+ },
+ "person": {
+  "enabled": true,
+  "kicker": "THE PERSON BEHIND THE FILE",
+  "heading": "<hi>Is file ke peeche ka insaan</hi>",
+  "firstSentence": "My father's accident brought serious financial pressure during my Class 12 exams.",
+  "paras": [
+   "A gap year, unsuccessful entrance attempts, YouTube study and a ₹3,999 course formed my route to VIT Pune.",
+   "I coordinated four research contributors, placed second in a college debate, and enjoy business case studies, essays and Advaita Vedanta. I care about people as much as code."
+  ],
+  "pull": "I didn't learn that every plan works. I learned to decide what to do when it doesn't."
+ },
+ "voice": {
+  "kicker": "THE FIRST CLUE WAS MY VOICE",
+  "heading": "<hi>Soch poori hone do</hi>",
+  "sub": "Let people finish thinking.",
+  "paras": [
+   "Here's a real thought I spoke on **2 November 2026**: \"Shouldn't the technology adapt to how we naturally think and communicate?\"",
+   "<hi>Dono ko saath rakh ke padhiye: meri hand-transcribed voice memo, aur Flow ka actual text. Thought wahi raha; bas expression saaf ho gaya.</hi>",
+   "That matters more to me than \"type faster\": **let people finish thinking.**"
+  ],
+  "buildLine": null,
+  "recordingLink": "",
+  "compare": {
+   "label": "COMPARE THE TWO REAL TAKES",
+   "instruction": "<hi>Flame ko meri awaaz se Flow ke text tak khiskaiye.</hi> (Arrow keys work too, or use \"Read it plainly\".)",
+   "legend": "Blue pencil: words Flow trimmed. Highlighted: words Flow smoothed or added.",
+   "plainToggle": "Read it plainly",
+   "asIsaid": "As I said it",
+   "asFlow": "As Flow wrote it",
+   "altText": "Two columns of text for each take, my spoken words on the left and Flow's text on the right, joined by a glowing line."
+  },
+  "takes": [
+   {
+    "id": "take1",
+    "label": "Take 1",
+    "when": "2 Nov 2026, 7:27 pm",
+    "badge": "Spoken with Wispr Flow",
+    "raw": [
+     "Okay, so... the best interface... I think it's basically when you don't have to think about using it, like learning it sorry sorry how to use it.",
+     "Like, when you're using something and you're not constantly wondering where to click or what to do next.",
+     "You're just... doing what you came there to do.",
+     "And, yeah, I think that's actually quite difficult to build. Because all the complicated stuff, the logic, the decisions... someone has to handle all of that. Just not the user."
+    ],
+    "out": "Okay the best interface, I think, is basically when you don't have to think about how to use it, like when you are using something and you are not constantly wondering where to click or what to do next. You are just doing what you came there to do. I think that's actually quite difficult to build because all the complicated stuff, the logic, the decisions, someone has to handle all of that, just not the user."
+   },
+   {
+    "id": "take2",
+    "label": "Take 2",
+    "when": "2 Nov 2026, 7:30 pm",
+    "badge": "Spoken with Wispr Flow",
+    "raw": [
+     "Wait, I think there's another way to look at this.",
+     "We spend so much time learning how to use technology... remembering commands, figuring out buttons, changing ourselves to fit the tool adjusting to how a tool works.",
+     "But why? I mean, shouldn't it be the other way around?",
+     "Shouldn't the technology adapt to how we naturally think and communicate?",
+     "Because we already know what we want to say. We shouldn't have to learn the tool first struggle just to get it out."
+    ],
+    "out": "I think there's another way to look at this. We spend so much time learning how to use technology: remembering commands, figuring out buttons, adjusting to how a tool works. But why? Shouldn't it be the other way around? Shouldn't the technology adapt to how we naturally think and communicate? Because we already know what we want to say, we shouldn't have to struggle just to get it out."
+   }
+  ],
+  "provenance": {
+   "heading": "Where this came from:",
+   "text": "My Wispr Flow history · Wispr Flow · 2 Nov 2026 · Output matches Flow history word for word. \"As I said it\" is my own hand transcription of what I said, typed from my voice memo."
+  },
+  "chip": "A real take, straight from my Flow history"
+ },
+ "verdict": {
+  "kicker": "YOUR VERDICT",
+  "heading": "<hi>Seedhi baat</hi>",
+  "paras": [
+   "AI helped implement and investigate. I mapped workflows, shaped architecture, made or approved decisions, identified bottlenecks, directed attempts to break the prototypes, and pursued fixes. I didn't personally write every line or discover every bug.",
+   "I haven't owned a growth channel or shipped these prototypes to customers. <hi>Yeh zimmedari main kamaana chahta hoon.</hi>"
+  ],
+  "pull": "I can't promise I'll always be right. I can show you what I do when I'm wrong.",
+  "signed": "Shriniwas",
+  "ask": "<hi>Koi ek claim chuniye. Uska evidence kholiye. Phir faisle ke baare mein mujhse poochhiye.</hi>",
+  "resume": {
+   "label": "VIEW MY RÉSUMÉ",
+   "hint": "opens Google Drive"
+  },
+  "evidenceLabel": "EVIDENCE DRAWER"
+ },
+ "wish": {
+  "kicker": "YOUR TURN",
+  "heading": "<hi>Ab aapki baari</hi>",
+  "lines": [
+   "<hi>Is baar soan papdi nahi, ek wish.</hi>",
+   "<hi>Mere paanch diye ab roshan hain. Ab ek aur: aapka apna.</hi>",
+   "<hi>Ek real insaan sochiye. Do-teen line, jo sirf aap unse keh sakte hain. Generic forward nahi.</hi>",
+   "<hi>Bolkar likhiye, jaise unse baat kar rahe hon. Flow ya koi voice typing ho toh bol dijiye; nahi ho toh type bhi chalega.</hi>",
+   "<hi>Deepavali ho ya na ho: koi achhi khabar, koi purani yaad, ya bas \"yaad aaye\". Sab chalega.</hi>"
+  ],
+  "english": "Write one short wish for one real person, in any language you like.",
+  "ideas": {
+   "heading": "<hi>Kuch idea chahiye? Chuniye (optional):</hi>",
+   "chips": [
+    "<hi>Kisi ko, jinse aap is baar mil nahi paayenge.</hi>",
+    "<hi>Kisi ko, jinhone aapko kabhi kuch sikhaya.</hi>",
+    "<hi>Kisi ko, jise aapne kabhi theek se thank you nahi kaha.</hi>",
+    "<hi>Kisi ko, jinse baat kiye bahut din ho gaye.</hi>"
+   ]
+  },
+  "form": {
+   "toLabel": "<hi>Kiske liye? (pehla naam, optional)</hi>",
+   "wishLabel": "<hi>Aapki wish</hi>",
+   "wishPlaceholder": "<hi>Jaise unse baat kar rahe hon, waise likhiye…</hi>",
+   "fromLabel": "<hi>Aapka pehla naam (optional, link mein jaayega)</hi>"
+  },
+  "submit": "<hi>Card banaiye</hi>",
+  "privacy": {
+   "hi": "<hi>Ek baat saaf: yeh page aapki wish upload ya save nahi karta; woh sirf aapke tab mein banti hai. Link mein sirf diyon ki ginti aur, agar aap likhein, aapka pehla naam hota hai. Jab aap card bhejte hain (WhatsApp ya copy), tab wish aur naam wahin tak jaate hain jahan aap bhejte hain. Bolkar likhte hain toh aapka voice tool apne niyam se chalega.</hi>",
+   "en": "In short: this page doesn't upload or save your wish. If you send the card, it goes only where you send it."
+  },
+  "card": {
+   "brand": "EK DIYA SE DOOSRA",
+   "toLine": "<hi>{to} ke liye:</hi>",
+   "wishLine": "\"{wish}\"",
+   "fromLine": "— {from}",
+   "footer": "<hi>Ek diya doosre diye se. Yahan se jalaiye:</hi> {link}",
+   "tag": "One lamp lights another.",
+   "altText": "A warm-gold card with a small lamp icon at the top, a short personal wish in the middle and the sender's first name at the bottom."
+  },
+  "actions": {
+   "whatsapp": {
+    "label": "<hi>WhatsApp par bhejiye</hi>",
+    "aria": "Send the card on WhatsApp"
+   },
+   "copyText": {
+    "label": "<hi>Card ka text copy kijiye</hi>",
+    "aria": "Copy the card text"
+   },
+   "copyLink": {
+    "label": "<hi>Link copy kijiye</hi>",
+    "aria": "Copy the link"
+   },
+   "edit": {
+    "label": "<hi>Badlein</hi>",
+    "aria": "Change the card"
+   }
+  },
+  "micro": {
+   "empty": "<hi>Ek line toh likhiye, phir card ban jaayega.</hi>",
+   "ready": "<hi>Card taiyar hai. Jisko bhejna ho, bhej dijiye.</hi>",
+   "copied": "<hi>Copy ho gaya.</hi>",
+   "copyFailed": "<hi>Copy nahi ho paya. Link select karke copy kar lijiye.</hi>",
+   "underCard": "<hi>Yeh wish sirf is tab mein hai. Bhejna ho toh abhi bhej dijiye.</hi>"
+  }
+ },
+ "closure": {
+  "rowCaption": {
+   "many": "<hi>{count} diye pehle se. Aakhir mein aapka.</hi>",
+   "one": "<hi>Ek diya pehle se. Aakhir mein aapka.</hi>",
+   "zero": "<hi>Yeh row aapse shuru hoti hai.</hi>"
+  },
+  "kicker": "YOUR LAMP IS LIT",
+  "headings": [
+   "<hi>Aapka diya jal utha.</hi>",
+   "<hi>Ab mujhse ek sawaal poochhiye.</hi>"
+  ],
+  "para": "<hi>Paanch projects mein se koi ek chuniye. Kya hua, maine kya kiya, aur kya abhi adhura hai: teeno batata hoon.</hi>",
+  "invite": {
+   "label": "INVITE ME TO AN INTERVIEW",
+   "sub": "<hi>Ek email. Ek lamp. Baaki baat wahin.</hi>"
+  },
+  "links": {
+   "resume": "View my résumé",
+   "evidence": "Evidence drawer"
+  },
+  "recap": "<hi>Mere paanch diye bhi ek-ek karke jale. Jahan jawab adhura tha, wahan maine adhura hi likha.</hi>",
+  "closing": "<hi>Sawaal poochhne ke liye yeh page khula hai.</hi> The best interface gets out of the way. The best evidence doesn't.",
+  "signoff": {
+   "before": [
+    "<hi>Shubh Deepavali.</hi>",
+    "— Shriniwas"
+   ],
+   "after": [
+    "<hi>Shukriya.</hi>",
+    "— Shriniwas"
+   ]
+  },
+  "altText": "A long row of lit lamps, with the newest lamp at the right end glowing a little brighter."
+ },
+ "evidence": {
+  "title": "Evidence drawer",
+  "intro": "Every figure above has a source and a status. Statuses are plain text: PUBLIC, LOCAL-BRANCH, REPO-REPORTED, PERSONALLY CONFIRMED, UNRESOLVED, PROPOSED. <hi>Jahan jawab abhi adhura hai, wahan UNRESOLVED likha hai.</hi>",
+  "fieldLabels": {
+   "purpose": "Plain-English purpose",
+   "finding": "The central finding",
+   "mine": "My part",
+   "results": "Recorded results",
+   "inspect": "Where to inspect",
+   "status": "Status",
+   "more": "Other findings"
+  },
+  "linkOverrides": {},
+  "folders": [
+   {
+    "id": "c1",
+    "name": "CERTGEN: The green wall",
+    "blurb": "<hi>324 tests, phir 19 findings, aur mera hissa kitna tha.</hi>",
+    "body": {
+     "purpose": "A college can generate certificates for thousands of students, accept the valid rows and explain the invalid rows without making everyone else start again.",
+     "finding": "324 passing release-candidate tests preceded a separate 19-finding forensic audit (two high). Among the issues were disproportionate CPU work on a crafted value and memory-intensive expansion from a roughly 26 MB request into roughly 192 MB of response material. The audit did not certify the prototype for unrestricted network exposure.",
+     "mine": "Requirements and architectural decisions were recorded. I approved bounded error-reporting, resource limits, later authentication-related changes and continuing remediation when findings remained. AI agents performed many of the technical investigations and fixes.",
+     "results": "The remediation report says zero open findings within the identified list. Later local checks passed 479 main-suite and 232 audit-suite tests (separate suites, not necessarily 711 independent tests). The optional QR-verification branch passed its own tests but failed a pre-agreed existing requirement and was not merged. A series of further remediation attempts was necessary, and no claim of security certification is justified.",
+     "inspect": {
+      "label": "Bulk Certificate Generator",
+      "url": "https://github.com/Shri2909/Bulk-Certificate-Generator",
+      "files": [
+       "audit/AUDIT_REPORT.md",
+       "audit/REMEDIATION_REPORT.md",
+       "docs/BLUEPRINT_AMENDMENTS.md",
+       "tests/"
+      ],
+      "note": "Some of these reports are local or ignored in the repository. For those, the evidence is available on request."
+     },
+     "status": [
+      [
+       "PUBLIC",
+       "Repository"
+      ],
+      [
+       "REPO-REPORTED",
+       "Test counts, audit and remediation results"
+      ],
+      [
+       "EVIDENCE AVAILABLE ON REQUEST",
+       "Some report files are local or ignored in the repository"
+      ],
+      [
+       "UNRESOLVED",
+       "Who commissioned the forensic audit"
+      ]
+     ],
+     "more": [
+      "“The Feature I Killed”: a QR enhancement was rejected because it regressed required PDF behavior. This is a scope and quality judgment, not a statement about the feature's inherent worth.",
+      "Commit trailers credit autonomous AI work. I did not personally write every endpoint."
+     ]
+    }
+   },
+   {
+    "id": "c2",
+    "name": "VIGIL: The late witness",
+    "blurb": "<hi>Ek late reply, ek sawaal, aur do tests jo correction hatane par fail hue.</hi>",
+    "body": {
+     "purpose": "A monitor checks whether a stream of important information is still alive. A late reply must not count as proof of current health.",
+     "finding": "The original handle_pong logic accepted stale or future-timestamped replies. The project plan records a question about whether its tests truly established the stated state-machine behavior. An agent investigated the code and implemented the correction with an approval gate.",
+     "mine": "I questioned whether the tests proved the system's real promise.",
+     "results": "A later local verification reported 105/105 tests passing. Replacing the guard with `if (false)` made exactly two targeted tests fail. A simulated three-feed lifecycle demonstrated failure, reconnection and recovery. There was no production exchange deployment, and the kernel-level network-loss script was not run.",
+     "inspect": {
+      "label": "Vigil",
+      "url": "https://github.com/Shri2909/Vigil-Low-latency-TCP-heartbeat-monitor",
+      "files": [
+       "PROJECT_PLAN.md §§18–19",
+       "src/connection.cpp",
+       "test/connection_test.cpp",
+       "test/feed_monitor_test.cpp",
+       "demo/lifecycle_demo.cpp"
+      ]
+     },
+     "status": [
+      [
+       "PUBLIC",
+       "Repository"
+      ],
+      [
+       "REPO-REPORTED",
+       "105/105 tests, verified locally in an agent session (not CI)"
+      ],
+      [
+       "UNRESOLVED",
+       "Who asked the correctness question and who approved the semantic change"
+      ]
+     ],
+     "more": [
+      "A CLI dropped piped commands when EOF arrived with the final input; the pattern appeared at three sites.",
+      "A benchmark comparing reactor architectures inherited a one-CPU affinity mask, invalidating the original naive-baseline comparison. Committed documents still disagree on absolute CPU numbers.",
+      "An 18-gap specification exercise led to a first-class feed simulator and protocol decisions.",
+      "One deeper fuzzing harness hung in the sandbox and remains incompletely validated. None of this is production or CI evidence."
+     ]
+    }
+   },
+   {
+    "id": "c3",
+    "name": "BLITZ: The number I withdrew",
+    "blurb": "<hi>1,205 se 1,850 tak ka poora hisaab, aur jo abhi remeasure nahi hua.</hi>",
+    "body": {
+     "purpose": "A fast matching engine keeps track of buyers and sellers, but a claimed speed improvement matters only if it can be reliably reproduced.",
+     "finding": "The README's earlier 1,205 ns headline came from an uncommitted working tree. A more controlled historical run gave 1,850 ns. A reported memory-layout advantage shrank from 3.1× to about 1.02× and some verdicts became inconclusive.",
+     "mine": "The decision to retract or downgrade the claim is visible in commit f46a9cb and in historical README revisions. AI agents were involved in the benchmark overhaul and the audits.",
+     "results": "A later AI-executed audit found 3,059 crossed-at-rest states in 110,000 replay events (2.78%). Remediation reported zero such states on the replay, and fixing the matching engine made earlier latency numbers stale. New engine latency was not remeasured. An existing test had actually asserted the invalid state.",
+     "inspect": {
+      "label": "Blitz",
+      "url": "https://github.com/Shri2909/Blitz-Limit-Order-Book",
+      "files": [
+       "commit f46a9cb",
+       "historical README",
+       "METHODOLOGY.md",
+       "results/98a597b/",
+       "branch-only audit/ reports"
+      ]
+     },
+     "status": [
+      [
+       "PUBLIC",
+       "Repository"
+      ],
+      [
+       "REPO-REPORTED",
+       "Retraction of the 1,205 ns headline"
+      ],
+      [
+       "LOCAL-BRANCH",
+       "Audit reports"
+      ],
+      [
+       "UNRESOLVED",
+       "Current latency has not been remeasured. The 1,850 ns run is historical."
+      ]
+     ],
+     "more": [
+      "At last review, the public default branch did not include the stale-results warning.",
+      "An AF_XDP latency spike was traced to competing processes pinned to the same cores and touchpad interrupts; that subsystem has since been removed from uncommitted work.",
+      "A chart displayed passing tests despite missing executables and an unverified sanitizer claim.",
+      "An Avellaneda–Stoikov strategy lost to a naive benchmark on five tickers; the reason for reverting it is not documented."
+     ]
+    }
+   },
+   {
+    "id": "c4",
+    "name": "TIPINDEX: The operator changed, the evidence stayed",
+    "blurb": "<hi>Handoff ka record, aur woh jawab jo abhi UNRESOLVED hain.</hi>",
+    "body": {
+     "purpose": "Instead of searching every market message, an index can jump to relevant ones, but that shortcut has maintenance and workload costs.",
+     "finding": "During a P6 measurement campaign Codex ran out of usage allowance, a process died, and one output file was truncated. I redirected the work to Claude Code, controlled progress and approved deleting checksum-verified redundant chunks to recover disk. Agents verified checkpoint integrity; the reports state 820 measured rounds and that 5,364 original P6 files remained byte-identical.",
+     "mine": "The project records explicit phase gates, selection of a narrower Tier B plan, stop and start instructions, approval of controlled deletions, the switch from Codex to Claude Code, and permission to remediate audit findings. Most C++ and Python development, benchmarking and audit execution was agent-written.",
+     "results": "In a separate P7 runtime study, CPU contamination invalidated 9 of 10 rounds in attempt one; a new quiescence rule rejected attempt two at 3.52 seconds against a 3.0-second limit; attempt three passed. The rule was written after attempt one but before the reruns. Failed timing values were deleted at my instruction, despite a general “preserve failures” policy.",
+     "inspect": {
+      "label": "TipIndex",
+      "url": "https://github.com/Shri2909/TipIndex-Indexed-Market-Data-Message-Bus",
+      "files": [
+       "docs/plan/PROGRESS.md",
+       "results/p6/pause-20261025.json",
+       "results/p6/resume-after-pause.md",
+       "results/p7/runtime-quiescence-rule.json",
+       "docs/report/REMEDIATION.md",
+       "results/p6/",
+       "results/f01/"
+      ]
+     },
+     "status": [
+      [
+       "PUBLIC",
+       "Repository"
+      ],
+      [
+       "REPO-REPORTED",
+       "820 rounds, checkpoint integrity, audit counts"
+      ],
+      [
+       "UNRESOLVED",
+       "Understanding of the generated code: needs a genuine walkthrough. An October interview-prep prompt in the repository states I had zero working knowledge of it at that moment."
+      ]
+     ],
+     "more": [
+      "Two audits found 26 and then 14 numbered findings; the mutation audit showed three no-op invariant checkers could pass the existing tests.",
+      "A polling-budget feature shortened individual turns but increased cumulative work and retained unresolved overhead.",
+      "These are one-laptop, limited-workload results, not generalized product speedups. The P7 contamination and the P6 agent interruption are distinct campaigns."
+     ]
+    }
+   },
+   {
+    "id": "c5",
+    "name": "PITDB: The future appeared early",
+    "blurb": "<hi>06:15, 06:00 par: kya local branch par hai, aur kya public par.</hi>",
+    "body": {
+     "purpose": "A historical database should answer “What was actually known by this point in time?” without quietly using later facts.",
+     "finding": "One specific direct-ingestion daylight-saving-time fold could make a 06:15 UTC record visible at a 06:00 UTC cutoff. The normalized UTC CSV route was not affected. Agent-executed remediation centralized timestamp validation and rejected problematic input.",
+     "mine": "The exact approvals I gave on particular temporal-policy tradeoffs still need to be confirmed against the project record.",
+     "results": "Current local tests passed 346. The last public default branch was an older, pre-audit version.",
+     "inspect": {
+      "label": "PitDB",
+      "url": "https://github.com/Shri2909/PitDB",
+      "files": [
+       "audit finding STORAGE-01",
+       "src/store/validation.py",
+       "tests/test_temporal_regressions.py",
+       "tests/test_benchmark_integrity.py",
+       "corrected README on the local branch fix/forensic-audit-20261029"
+      ]
+     },
+     "status": [
+      [
+       "PUBLIC",
+       "Repository (older, pre-audit version)"
+      ],
+      [
+       "LOCAL-BRANCH",
+       "The remediation and corrected README"
+      ],
+      [
+       "REPO-REPORTED",
+       "346 local tests"
+      ],
+      [
+       "UNRESOLVED",
+       "A per-finding remediation ledger: not every audit finding is claimed fixed"
+      ]
+     ],
+     "more": [
+      "A trimmed-mean estimator hid slow outliers: thirteen 1 ms trials plus two 100 ms trials gave a trimmed mean of 1 ms but a raw mean of 14.2 ms.",
+      "An AI-audit process used approval gates and independent-oracle instructions; 18 confirmed findings were reported and a later review found three more issues.",
+      "GitHub images and packaging had separate first-minute usability issues."
+     ]
+    }
+   },
+   {
+    "id": "c6",
+    "name": "ROLES: Who designed, who executed, who verified?",
+    "blurb": "<hi>Kisne kya kiya, seedhe shabdon mein.</hi>",
+    "body": {
+     "mine": "As I describe it: sketching complete workflows and architectures; defining goals and constraints; making or approving major design, scope and user-flow decisions; identifying bottlenecks; directing deliberate attempts to break the prototypes; reading audit results and deciding which fixes or further tests to pursue. This is my firsthand account, which is different from actions specifically recorded in each repository's logs. The provenance of some prompts and audit initiations remains uncertain.",
+     "finding": "AI agents did the coding, many root-cause investigations, fuzzing, audits, tests, benchmarks and documentation. AI-generated code is not claimed as manually implemented or independently discovered. Individual tests and reports are called repository-reported unless freshly rerun as noted.",
+     "status": [
+      [
+       "UNRESOLVED",
+       "Provenance of some prompts and audit initiations"
+      ]
+     ],
+     "labels": {
+      "finding": "The AI agents' role",
+      "mine": "My role, as I describe it"
+     }
+    }
+   },
+   {
+    "id": "c7",
+    "name": "THE PERSON AND THE VOICE: Sources",
+    "blurb": "<hi>Voice takes kahan se aaye, aur kya abhi baaki hai.</hi>",
+    "body": {
+     "purpose": "Where to read more, and what is and is not claimed about the voice exhibit.",
+     "results": "The two takes on this page are from 2 November 2026, at 7:27 pm and 7:30 pm. The “As I said it” text is my own hand transcription of a separate voice memo; it is not an automatically produced transcript. No audio is published on this page. A recorded build in which Flow dictation drives a builder, followed by a spoken correction, has not been supplied, so that exhibit is pending. The original engineering repositories were not built with Flow.",
+     "links": [
+      {
+       "label": "Read my long-form essay",
+       "key": "essay"
+      },
+      {
+       "label": "View my résumé",
+       "key": "resume"
+      }
+     ],
+     "status": [
+      [
+       "PROPOSED",
+       "A voice-to-builder build receipt"
+      ]
+     ],
+     "labels": {
+      "results": "Provenance"
+     }
+    }
+   },
+   {
+    "id": "c8",
+    "name": "INDIA GROWTH TEST: The proposed protocol",
+    "blurb": "<hi>Poora protocol. Proposed, not run.</hi>",
+    "body": {
+     "purpose": "Can an actual message-first Hinglish demonstration help Indian students and early-career workers experience the value of Flow more effectively than a speed-focused pitch?",
+     "finding": "Audience: a small, reachable group of students and early-career users who naturally write Hindi-English messages. I would not assume that every Indian student uses Hinglish.\n\nVariant A, speed: “Say the message. Skip typing it.”\n\nVariant B, expression: “Don't stop the thought halfway through. Say it naturally.”",
+     "mine": "Design: the same real task and demo duration, rotated message order, success defined in advance, consent collected, no sensitive content. A small exploratory sample with counts per variant; no causal certainty claimed. Record what objection people raise and what they actually do.",
+     "results": "First useful action: the recipient creates a usable first dictation in a real app without needing a full rewrite. Return action: a second useful dictation within 24 hours, confirmed appropriately, not merely opening the app. Failure condition: no improvement on first success or second use, or results too small or noisy. Next iteration: revise the framing, user segment or first-message context based on the objections, and test again.",
+     "more": [
+      "A separate self-only experiment: five paired tasks, typed versus Flow, alternating order and recording time, edit count and whether the result was usable. That would give a personal workflow observation, not a claim about user behavior."
+     ],
+     "status": [
+      [
+       "PROPOSED",
+       "No activation result, conversion lift, sample count or cohort metric is claimed. Neither experiment has been run."
+      ]
+     ],
+     "labels": {
+      "finding": "Audience and variants",
+      "mine": "Design",
+      "results": "Actions, failure condition and next step",
+      "more": "A separate self-only experiment"
+     }
+    }
+   }
+  ]
+ },
+ "sixty": {
+  "label": "THE 60-SECOND FILE",
+  "hi": "<hi>Jaldi mein hain? Yeh padhiye.</hi>",
+  "headline": "324 tests passed. A separate audit found 19 problems. Would you have shipped it?",
+  "paras": [
+   "I'm Shriniwas, an engineering student applying to Wispr Flow's India growth internship. I mapped workflows and architectures, made or approved key design decisions, and used AI agents for implementation and investigation.",
+   "In one project, I approved further corrections after the first audit fixes weren't enough. In another, a watchdog called a late reply proof of a healthy connection. I questioned whether the tests actually proved the product's promise; the corrected test failed when its fix was removed.",
+   "I also withdrew a flattering speed claim, redirected an interrupted experiment between AI agents, and narrowed a database claim after a specific time-handling defect.",
+   "I have no growth wins to borrow. But I've used Flow, and I want to test whether a Hinglish-first demonstration helps Indian students reach their first useful dictation and return for another."
+  ],
+  "pull": "I can't promise I'll always be right. I can show you what I do when I'm wrong.",
+  "receiptCta": "OPEN ONE RECEIPT",
+  "inviteCta": "INVITE ME TO AN INTERVIEW"
+ },
+ "footer": {
+  "howMade": "",
+  "lines": [
+   {
+    "id": "l1",
+    "text": "<hi>Wispr Flow ke India growth internship challenge ke liye banaya hai.</hi> Prototypes, not products. <hi>Har number ka source aur status Evidence drawer mein hai.</hi>"
+   },
+   {
+    "id": "l2",
+    "text": "AI agents wrote a substantial share of the code in these projects. I directed, approved and questioned. <hi>Kisne kya kiya, woh drawer mein hai, jitna main saabit kar sakta hoon.</hi>"
+   },
+   {
+    "id": "l3",
+    "text": "<hi>Yeh page aapki wish upload ya save nahi karta. Link mein sirf diyon ki ginti aur, agar aap likhein, aapka pehla naam hota hai.</hi>"
+   },
+   {
+    "id": "l4",
+    "text": "<hi>Is page mein koi analytics, cookies ya third-party script nahi hai.</hi>",
+    "flag": "noAnalyticsLine"
+   },
+   {
+    "id": "l6",
+    "text": "This is an independent application page. Wispr Flow and Emergent have not reviewed or endorsed it."
+   },
+   {
+    "id": "l7",
+    "text": "© Shriniwas Kholkute"
+   }
+  ]
+ },
+ "alternates": {
+  "headlineShare": "324 tests passed. 19 problems found. Ship karte?",
+  "closureFull": "<hi>Sab diye jal uthe. Ab mujhse poochhiye.</hi>"
+ }
+}

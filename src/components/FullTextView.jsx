@@ -1,0 +1,152 @@
+import copy, { c, X, flags } from '../lib/copy.js';
+import { tpl } from '../lib/tpl.js';
+import { rich, R } from '../lib/rich.jsx';
+import { useStore } from '../lib/useStore.js';
+import { closeText } from '../lib/nav.js';
+import { shownCount } from '../lib/rowhash.js';
+import EvidenceBody from './EvidenceBody.jsx';
+import { contactHref, inviteVisible } from '../lib/mail.js';
+import { personParas } from '../lib/personText.js';
+import WishForm from './WishForm.jsx';
+
+const P = ({ t }) => (t ? <p>{rich(t)}</p> : null);
+const Part = ({ part }) => part && (
+  <>
+    <h3>{rich(part.heading)}{part.gloss ? <> <em>({part.gloss})</em></> : null}</h3>
+    {part.paras.map((p, i) => <P key={i} t={p} />)}
+  </>
+);
+
+// One linear view of the whole page, built from the same copy data.
+// No canvas, no animation, no sticky parts. Nothing requires lighting a lamp.
+export default function FullTextView({ onClose }) {
+  const row = useStore((s) => s.row);
+  const n = row.count;
+  const caption = n === 0 ? copy.closure.rowCaption.zero : n === 1 ? copy.closure.rowCaption.one : copy.closure.rowCaption.many;
+  const so = new Date() >= new Date('2026-11-10T00:00:00') ? copy.closure.signoff.after : copy.closure.signoff.before;
+  const g = copy.guess, lr = copy.lateReply, l6 = copy.lamp6, v = copy.voice, vd = copy.verdict, w = copy.wish, cl = copy.closure, sx = copy.sixty;
+  return (
+    <div id="fulltext" className="fulltext" lang="en-IN">
+      <a className="skip-link" href="#fulltext-close">{X('closeText')}</a>
+      <article className="ft-wrap">
+        <header>
+          <p className="kicker">{copy.opening.label}</p>
+          <h1 id="ft-h1" tabIndex={-1}>{copy.site.title}</h1>
+        </header>
+        <section aria-labelledby="ft-opening">
+          <h2 id="ft-opening">{copy.opening.headline}</h2>
+          <p><strong>{rich(copy.opening.ask)}</strong></p>
+          {copy.opening.lines.map((l, i) => <P key={i} t={l} />)}
+          {copy.opening.below.map((l, i) => <P key={i} t={l} />)}
+          <p>{rich(copy.opening.sixtyPrompt)} <a href="#sixty" data-sixty>{copy.opening.sixtyCta}</a></p>
+        </section>
+        {copy.lamps.map((l) => (
+          <section key={l.id} aria-labelledby={`ft-${l.id}`}>
+            <h2 id={`ft-${l.id}`}>{l.kicker}: {rich(l.title)}</h2>
+            <Part part={l.what} />
+            {l.interaction === 'guess' && (
+              <>
+                <h3>{g.label}</h3>
+                <p>{g.question}</p>
+                <ul>{g.options.map((o) => <li key={o}>{o}</li>)}</ul>
+                <p>{g.plain}</p><p>{g.chip}</p>
+                <p>{g.reveal}</p><p>{rich(g.below)}</p><p>{rich(g.exact)}</p>
+              </>
+            )}
+            {l.interaction === 'lateReply' && (
+              <>
+                <h3>{lr.label}</h3>
+                <p><strong>{lr.badge}</strong> {lr.badgeNote}</p>
+                <ul>{lr.logics.map((o) => <li key={o.id}>{o.label}</li>)}</ul>
+                <p>{lr.slider.deadlineLabel}</p>
+                <p>{lr.plain}</p>
+                <ul>
+                  <li>{rich(tpl(lr.readout.before, { t: '2.0' }))}</li>
+                  <li>{rich(tpl(lr.readout.afterOriginal, { t: '4.0' }))}</li>
+                  <li>{rich(tpl(lr.readout.afterCorrected, { t: '4.0' }))}</li>
+                </ul>
+              </>
+            )}
+            <Part part={l.next} />
+            <Part part={l.warning} />
+            <p><a href="#evidence" data-evidence={l.receipt.folder}>{l.receipt.label}</a></p>
+          </section>
+        ))}
+        <section aria-labelledby="ft-row">
+          <h2 id="ft-row">{rich(copy.rowBreathes.lines[0])}</h2>
+          <P t={copy.rowBreathes.lines[1]} /><P t={copy.rowBreathes.after} />
+        </section>
+        <section aria-labelledby="ft-l6">
+          <h2 id="ft-l6">{l6.kicker}: {rich(l6.title)}</h2>
+          <h3>{l6.idea.heading}</h3>
+          {l6.idea.paras.map((p, i) => <P key={i} t={p} />)}
+          <ul>{l6.idea.variants.map((x) => <li key={x.id}>{x.label}: {x.text}</li>)}</ul>
+          {flags.lamp6LanguageLine && <p>{l6.optionalNote.text}</p>}
+          <Part part={l6.warning} />
+          <p>{rich(l6.tryLight)}</p>
+          <p><a href="#evidence" data-evidence={l6.cta.folder}>{l6.cta.label}</a></p>
+        </section>
+        {copy.person.enabled && (
+          <section aria-labelledby="ft-person">
+            <h2 id="ft-person">{rich(copy.person.heading)}</h2>
+            {personParas().map((p, i) => <P key={i} t={p} />)}
+            <p><strong>{copy.person.pull}</strong></p>
+          </section>
+        )}
+        <section aria-labelledby="ft-voice">
+          <h2 id="ft-voice">{rich(v.heading)}</h2>
+          <p><em>{v.sub}</em></p>
+          {v.paras.map((p, i) => <P key={i} t={p} />)}
+          {v.takes.map((t) => (
+            <div key={t.id}>
+              <h3>{t.label} · {t.when} · {t.badge}</h3>
+              <h4>{v.compare.asIsaid}</h4>
+              {t.raw.map((p, i) => <p key={i}>{p}</p>)}
+              <h4>{v.compare.asFlow}</h4>
+              <p>{t.out}</p>
+            </div>
+          ))}
+          <p><strong>{v.provenance.heading}</strong> {v.provenance.text}</p>
+          <p>{v.chip}</p>
+        </section>
+        <section aria-labelledby="ft-verdict">
+          <h2 id="ft-verdict">{rich(vd.heading)}</h2>
+          {vd.paras.map((p, i) => <P key={i} t={p} />)}
+          <p><strong>{vd.pull}</strong></p><P t={vd.ask} />
+          <p><a href={copy.site.links.resume} target="_blank" rel="noopener noreferrer">{vd.resume.label} ({vd.resume.hint})</a></p>
+        </section>
+        <section aria-labelledby="ft-wish">
+          <h2 id="ft-wish">{rich(w.heading)}</h2>
+          {w.lines.map((l, i) => <P key={i} t={l} />)}
+          <p>{w.english}</p>
+          <h3>{rich(w.ideas.heading)}</h3>
+          <ul>{w.ideas.chips.map((x, i) => <li key={i}>{rich(x)}</li>)}</ul>
+          <WishForm plain />
+        </section>
+        <section aria-labelledby="ft-closure">
+          <h2 id="ft-closure">{cl.headings.map((h, i) => <span key={i}>{rich(h)} </span>)}</h2>
+          <p>{rich(tpl(caption, { count: shownCount(n) }))}</p><p>{copy.ui.rowFine}</p>
+          <P t={cl.para} />
+          {inviteVisible() && <p><a href={contactHref(n + 1)}>{cl.invite.label}</a> ({X('mailAria')}) {rich(cl.invite.sub)}</p>}
+          <P t={cl.recap} /><P t={cl.closing} />
+          <p>{so.map((l, i) => <span key={i}>{rich(l)} </span>)}</p>
+        </section>
+        <section aria-labelledby="ft-evidence">
+          <h2 id="ft-evidence">{copy.evidence.title}</h2>
+          <P t={copy.evidence.intro} />
+          {copy.evidence.folders.map((f) => (<div key={f.id}><h3>{f.name}</h3><p>{rich(f.blurb)}</p><EvidenceBody folder={f} /></div>))}
+        </section>
+        <section aria-labelledby="ft-sixty">
+          <h2 id="ft-sixty">{sx.label}</h2>
+          <p>{rich(sx.hi)}</p><h3>{sx.headline}</h3>
+          {sx.paras.map((p, i) => <p key={i}>{p}</p>)}<p><em>{sx.pull}</em></p>
+        </section>
+        <footer>
+          {copy.footer.lines.filter((l) => !l.flag || flags[l.flag]).map((l) => <P key={l.id} t={l.text} />)}
+          {flags.footerHowMade && copy.footer.howMade && <P t={copy.footer.howMade} />}
+        </footer>
+        <p><button id="fulltext-close" className="btn" onClick={onClose}>{c('ui.close')}</button></p>
+      </article>
+    </div>
+  );
+}
