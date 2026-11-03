@@ -47,7 +47,7 @@
 .tile-status, .find-cap { max-width: 520px; }
 .find-cap { display: flex; align-items: center; gap: 14px; margin-top: 10px; }
 .fc-t { flex: 1; font-family: var(--display); font-weight: 600; font-size: 18px; line-height: 1.3; }
-.fseal { flex: 0 0 auto; display: grid; place-items: center; width: 78px; height: 78px; padding: 4px; text-align: center; border: 3px double var(--string); border-radius: 50%; color: var(--string); font-family: var(--display); font-weight: 800; font-size: 10.5px; line-height: 1.15; letter-spacing: 0; transform: rotate(-9deg); mix-blend-mode: multiply; }
+.fseal { flex: 0 0 auto; display: grid; place-items: center; width: 78px; height: 78px; padding: 4px; text-align: center; border: 3px double var(--string); border-radius: 50%; color: var(--red-text); font-family: var(--display); font-weight: 800; font-size: 10.5px; line-height: 1.15; letter-spacing: 0; transform: rotate(-9deg); mix-blend-mode: multiply; }
 
 /* timeline */
 .tlwrap { position: relative; padding-left: 28px; }

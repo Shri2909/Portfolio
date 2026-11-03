@@ -1,8 +1,9 @@
 // Case File No. 001: browser tests (Playwright, Chromium). Usage: node scripts/test.mjs [stage ...]
 // Stages: 1 shell and builds, 2 opening engine, 3 opening behaviour.  No arguments runs everything built so far.
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
+import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
-import { launch, openPage, VIEWPORTS, sleep, check, summary, ROOT } from './lib.mjs';
+import { launch, openPage, openWithData, VIEWPORTS, sleep, check, summary, ROOT } from './lib.mjs';
 
 const SHOTS = process.env.SHOTS || join(ROOT, 'previews', '_scratch');
 import { mkdirSync } from 'node:fs';
@@ -593,9 +594,9 @@ if (run(5)) {
     check(`${vn}: the highlight fades after about 3 s`, (await page.evaluate(() => document.querySelectorAll('.sheet.hl').length)) === 0);
     await tap(sel); await sleep(300);
     check(`${vn}: tapping the lead again clears the strings`, (await page.evaluate(() => document.querySelectorAll('.string-path').length)) === 0);
-    // a lead whose targets are hidden skips them
-    await tap('#brief .leads li:nth-child(4) .lead'); await sleep(500);
-    check(`${vn}: a lead whose exhibits are hidden draws nothing and breaks nothing`, (await page.evaluate(() => document.querySelectorAll('.string-path').length)) === 0);
+    // a lead's hidden targets are skipped: lead 4 points at effects (hidden) and closing (visible)
+    await tap('#brief .leads li:nth-child(4) .lead'); await sleep(700);
+    check(`${vn}: hidden targets are skipped, visible ones still get their string (lead 4: effects hidden, closing visible)`, (await page.evaluate(() => document.querySelectorAll('.string-path').length)) === (await page.evaluate(() => ['effects', 'closing'].filter((id) => window.CF.visibleSections.includes(id)).length)));
     await ctx.close();
   }
 
@@ -607,7 +608,7 @@ if (run(5)) {
     const expected = content.clues.filter((c) => vis.includes(c.section));
     const btnText = () => page.evaluate(() => document.querySelector('.tb-btn.clues').getAttribute('aria-label'));
     check(`N counts only visible clues (${expected.length} of ${content.clues.length})`, (await page.evaluate(() => document.querySelectorAll('.clue-tag').length)) === expected.length);
-    check('top-bar button shows Clues 0/N and the first rank', (await page.evaluate(() => document.querySelector('.tb-btn.clues .l1').textContent)) === `${content.ui.clues} 0/${expected.length}` && (await page.evaluate(() => document.querySelector('.tb-btn.clues .l2').textContent)) === content.ranks[0].title, await btnText());
+    check('top-bar button shows Clues 0/N and the first rank', (await page.evaluate(() => document.querySelector('.tb-btn.clues .l1').textContent)) === `${content.ui.clues} 0/${expected.length}` && (await page.evaluate(() => document.querySelector('.tb-btn.clues .l2').textContent)).endsWith(content.ranks[0].title), await btnText());
     const wob = await page.evaluate(() => getComputedStyle(document.querySelector('.tag-art')).animationName);
     check('clue magnifier wobbles gently (about every 8 s)', wob === 'wobble');
     const tb = await page.evaluate(() => { const r = document.querySelector('.tb-btn.clues').getBoundingClientRect(); const b = document.querySelector('.brand').getBoundingClientRect(); return { h: r.height, w: r.width, right: r.right, vw: innerWidth, overlap: r.left < b.right }; });
@@ -618,7 +619,7 @@ if (run(5)) {
     check('tap a clue magnifier: "Clue n of N", the text, "Verified in: <source>"', dlg.open && dlg.txt.toLowerCase().includes(`clue 1 of ${expected.length}`) && dlg.txt.includes(content.clues[0].text) && dlg.txt.includes('Verified in: ' + content.clues[0].source), dlg.txt);
     await page.keyboard.press('Escape'); await sleep(200);
     const after = await page.evaluate(() => ({ l1: document.querySelector('.tb-btn.clues .l1').textContent, l2: document.querySelector('.tb-btn.clues .l2').textContent, saved: localStorage.getItem('cf1:found'), ping: document.querySelector('.tb-btn.clues').classList.contains('ping') }));
-    check('finding it updates Clues 1/N, ranks up to "Junior sleuth", saves to localStorage, soft ping', after.l1 === `${content.ui.clues} 1/${expected.length}` && after.l2 === content.ranks[1].title && JSON.parse(after.saved).includes('k1') && after.ping, JSON.stringify(after));
+    check('finding it updates Clues 1/N, ranks up to "Junior sleuth", saves to localStorage, soft ping', after.l1 === `${content.ui.clues} 1/${expected.length}` && after.l2.endsWith(content.ranks[1].title) && JSON.parse(after.saved).includes('k1') && after.ping, JSON.stringify(after));
     await page.tap('.tb-btn.clues'); await sleep(500);
     const nb = await page.evaluate(() => { const d = document.querySelector('dialog.notebook'); const r = d.getBoundingClientRect(); return { open: d.open, modal: d.matches(':modal'), text: d.innerText, w: r.width, vw: innerWidth, h: r.height, vh: innerHeight }; });
     check('notebook opens as a modal dialog, full-screen on phone', nb.open && nb.modal && nb.w >= nb.vw - 1 && nb.h >= nb.vh - 1, JSON.stringify([nb.w, nb.vw, nb.h, nb.vh]));
@@ -675,7 +676,7 @@ if (run(6)) {
     const ch = await page.evaluate(() => window.CF.chapters.map((c) => [c.chapter.id, c.members]));
     check('production: chapter list counts only visible chapters', ch.every(([, m]) => m.every((id) => vis.includes(id))), JSON.stringify(ch));
     const labels = await page.evaluate(() => [...document.querySelectorAll('.sheet .tab .chap')].map((e) => e.textContent));
-    check('production: chapter labels are "Chapter n of N" over visible chapters only', labels.every((l, i) => l === `Chapter ${Math.min(i + 2, ch.length)} of ${ch.length}` || /^Chapter \d+ of \d+$/.test(l)), JSON.stringify(labels));
+    check('production: chapter labels are "Chapter n of N" over visible chapters only', labels.filter(Boolean).every((l) => new RegExp(`^Chapter \\d of ${ch.length}$`).test(l)) && labels.filter(Boolean).length >= ch.length - 1, JSON.stringify(labels));
     check('production: no seal after the last chapter, none after chapter 1 (the opening has its own cue)', (await page.evaluate(() => document.querySelectorAll('.seal-note').length)) === Math.max(0, ch.length - 2));
     check('production: no console errors', log.errors.length === 0, log.errors.join('|'));
     await ctx.close();
@@ -700,7 +701,7 @@ if (run(6)) {
     check(`${vn} review: Space folds it again`, (await page.evaluate(() => document.querySelector('#against .icard:nth-child(2) .ic-btn').getAttribute('aria-expanded'))) === 'false');
     check(`${vn} review: card text is outlined amber (from draft)`, await page.evaluate(() => document.querySelectorAll('#against .cf-filled').length >= 3));
     const chs = await page.evaluate(() => ({ n: window.CF.chapters.length, labels: [...document.querySelectorAll('.sheet .tab .chap')].map((e) => e.textContent), seals: [...document.querySelectorAll('.seal-note')].map((s) => s.innerText.replace(/\s+/g, ' ')) }));
-    check(`${vn} review: chapter labels are consistent ("Chapter n of ${chs.n}")`, chs.labels.length > 0 && chs.labels.every((l) => new RegExp(`^Chapter \\d of ${chs.n}$`).test(l)), JSON.stringify(chs.labels));
+    check(`${vn} review: chapter labels are consistent ("Chapter n of ${chs.n}")`, chs.labels.length > 0 && chs.labels.filter(Boolean).every((l) => new RegExp(`^Chapter \\d of ${chs.n}$`).test(l)), JSON.stringify(chs.labels));
     check(`${vn} review: seals carry ui.sealCue and the chapter's own question, and there is none after the last chapter`, chs.seals.length === chs.n - 2 && chs.seals.every((t) => t.toLowerCase().includes(content.ui.sealCue.toLowerCase()) && content.chapters.some((c) => has(c.teaser) && t.includes(c.teaser))), JSON.stringify(chs.seals));
     check(`${vn} review: no console errors`, log.errors.length === 0, log.errors.join('|'));
     await ctx.close();
@@ -884,6 +885,283 @@ if (run(9)) {
     check(`${build}: ${forks.length} forks, each with one chosen branch, the others "not taken", evidence under the chosen`, F.length === forks.length && F.every((f, i) => f.title === forks[i].title && f.chosen === 1 && f.notTaken === f.total - 1 && f.ev && !f.evUnderSkipped), JSON.stringify(F).slice(0, 200));
     check(`${build}: chosen branch is drawn in red string, others grey`, F.every((f) => f.red === 'rgb(210, 69, 46)' && f.grey === 'rgb(94, 86, 75)'), JSON.stringify([F[0].red, F[0].grey]));
     check(`${build}: "What would change my mind" slip is ${expectMind ? 'present (draft, outlined)' : 'hidden while empty'}`, expectMind ? F.every((f) => f.cmm) : F.every((f) => !f.cmm));
+    await ctx.close();
+  }
+}
+
+
+// ------------------------------------------------------------------ Stages 10 and 11
+const med = (a) => { const s = [...a].sort((x, y) => x - y), n = s.length; return n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2; };
+const r1 = (v) => String(Math.round(v * 10) / 10);
+if (run(10)) {
+  console.log('\nStage 10: Roots (Beyond the code)');
+  {
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(300);
+    check('production: the whole section is hidden while it is empty (no items, no timeline)', (await page.locator('#effects').count()) === 0 && !(await visibleSecs(page)).includes('effects'));
+    await ctx.close();
+  }
+  {
+    const { page, ctx, log } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html' });
+    await ready(page); await sleep(400); await scrollTo(page, '#effects .tlwrap', 200); await sleep(2200);
+    const e = await page.evaluate(() => ({ title: document.querySelector('#effects .sheet-title').textContent, tl: [...document.querySelectorAll('#effects .tl-l')].map((x) => x.textContent), intro: document.querySelectorAll('#effects .intro-p').length, philo: !!document.querySelector('#effects .philo'), filled: document.querySelectorAll('#effects .cf-filled').length, drawn: document.querySelector('#effects .tlwrap').classList.contains('drawn'), bags: document.querySelectorAll('#effects .bag').length }));
+    check('review: Roots shows ui.effectsTitle, the intro, a red-string timeline in order and one quiet philosophy card (all amber)', e.title === content.ui.effectsTitle && e.tl.length === 5 && e.tl[0].startsWith('Class 12') && e.tl[4] === 'VIT Pune' && e.intro >= 2 && e.philo && e.filled >= 8 && e.drawn && e.bags === 0, JSON.stringify(e));
+    check('review: no console errors', log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+  }
+  { // evidence bags (data supplied by the test)
+    const items = [{ id: 'i1', kind: 'paper', title: 'Essay', tag: 'document', url: '', file: 'content/x.pdf', note: 'A note about the essay.' }, { id: 'i2', title: 'Debate', tag: 'self-reported', note: 'Second place.' }, { id: 'i3', title: 'Post', tag: 'link', url: 'https://example.com/post', note: '' }];
+    const { page, ctx, log } = await openWithData(browser, (d) => { d.effects.items = items; }, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(400); await scrollTo(page, '#effects');
+    const b = await page.evaluate(() => [...document.querySelectorAll('#effects .bag')].map((x) => ({ s: x.querySelector('.stamp').textContent, dashed: getComputedStyle(x).borderStyle.includes('dashed'), h: x.getBoundingClientRect().height })));
+    check('items with items only: section appears; bags carry DOCUMENT / SELF-REPORTED / LINK stamps, self-reported is dashed', b.map((x) => x.s).join() === 'DOCUMENT,SELF-REPORTED,LINK' && b[1].dashed && !b[0].dashed && b.every((x) => x.h >= 44), JSON.stringify(b));
+    await page.tap('#effects .bag:nth-child(1)'); await sleep(300);
+    const d1 = await page.evaluate(() => { const a = document.querySelector('#effects .bag-detail a'); return { t: document.querySelector('#effects .bag-detail').innerText, target: a && a.target, rel: a && a.rel }; });
+    check('tapping a bag opens a detail slip; a document opens in a new tab (noopener)', d1.t.includes('A note about the essay.') && d1.target === '_blank' && /noopener/.test(d1.rel), JSON.stringify(d1));
+    await page.tap('#effects .bag:nth-child(2)'); await sleep(300);
+    check('a bag without a file or url still opens (never blocks on a missing file)', (await page.evaluate(() => document.querySelector('#effects .bag-detail').innerText)).includes('Second place.') && (await page.evaluate(() => document.querySelectorAll('#effects .bag-detail a').length)) === 0);
+    check('items: no console errors', log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+    const c2 = await openWithData(browser, (d) => { d.effects.timeline = [{ label: 'Only one', text: 'x' }]; d.effects.items = []; }, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(c2.page); await sleep(300);
+    check('a single timeline event and no items: the section stays hidden', (await c2.page.locator('#effects').count()) === 0);
+    await c2.ctx.close();
+  }
+}
+
+if (run(11)) {
+  console.log('\nStage 11: the Voice Lab and Field notes on Wispr');
+  {
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(300);
+    check('production: the Lab is hidden while there is no hypothesis and no results', (await page.locator('#lab').count()) === 0);
+    await ctx.close();
+    const r = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html' });
+    await ready(r.page); await sleep(300); await scrollTo(r.page, '#lab');
+    const l = await r.page.evaluate(() => ({ banner: document.querySelector('#lab .lab-banner').textContent, stamp: document.querySelector('#lab .prereg-s').textContent, hyp: document.querySelector('#lab .hyp').textContent, pend: document.querySelector('#lab .pending').textContent, charts: document.querySelectorAll('#lab .dumb-row').length, hdr: document.querySelector('#lab .sheet-title').textContent }));
+    check('review: banner "n = 1. One person, five tasks. Not a study.", PRE-REGISTERED stamp, hypothesis, "Results pending", no chart yet', l.banner === content.ui.labBanner && l.stamp === 'PRE-REGISTERED' && l.hyp.length > 20 && l.pend === content.ui.labPending && l.charts === 0 && l.hdr === content.ui.labTitle, JSON.stringify(l).slice(0, 200));
+    await r.ctx.close();
+  }
+  { // results (supplied by the test, never by the site)
+    const tasks = [
+      { name: 'Task one', order: 'typing-first', typing: { seconds: 40, usable: true, edits: 2 }, voice: { seconds: 22, usable: true, edits: 1 } },
+      { name: 'Task two', order: 'voice-first', typing: { seconds: 18, usable: true, edits: 0 }, voice: { seconds: 25, usable: false, edits: 4 } },
+      { name: 'Task three', order: 'typing-first', typing: { seconds: 90, usable: false, edits: 6 }, voice: { seconds: 41, usable: true, edits: 1 } },
+      { name: 'Task four', order: 'voice-first', typing: { seconds: 30, usable: true, edits: 1 }, voice: { seconds: 30, usable: true, edits: 0 } },
+      { name: 'Task five', order: 'typing-first', typing: { seconds: 12, usable: true, edits: 0 }, voice: { seconds: 15, usable: true, edits: 2 } },
+    ];
+    const { page, ctx, log } = await openWithData(browser, (d) => { d.lab.hypothesis = 'A prediction written first.'; d.lab.usableDefinition = 'Sendable unedited.'; d.lab.preregisteredAt = '3 November 2026'; d.lab.tasks = tasks; }, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(300); await scrollTo(page, '#lab'); await sleep(300);
+    const L = await page.evaluate(() => ({ rows: document.querySelectorAll('#lab .dumb-row').length, sum: [...document.querySelectorAll('#lab .lab-sum li')].map((x) => x.textContent), honest: document.querySelector('#lab .honest').textContent, ord: [...document.querySelectorAll('#lab .ord')].map((x) => x.textContent), tbl: document.querySelectorAll('#lab .sr-only tbody tr').length, fast: [...document.querySelectorAll('#lab .dumb-row')].map((r) => { const t = r.querySelector('.dt'), v = r.querySelector('.dv'); return +t.getAttribute('r') > +v.getAttribute('r') ? 'T' : +v.getAttribute('r') > +t.getAttribute('r') ? 'V' : '='; }).join(''), banner: document.querySelector('#lab .lab-banner').textContent, stamp: document.querySelector('#lab .prereg-d').textContent }));
+    const tT = med(tasks.map((x) => x.typing.seconds)), tV = med(tasks.map((x) => x.voice.seconds));
+    const vFast = tasks.filter((x) => x.voice.seconds < x.typing.seconds).length, vLost = tasks.filter((x) => x.voice.seconds > x.typing.seconds).length;
+    const uT = tasks.filter((x) => x.typing.usable).length, uV = tasks.filter((x) => x.voice.usable).length;
+    check('with results: paired dumbbell rows for every task, plus a hidden data table', L.rows === 5 && L.tbl === 5);
+    check('summary lines are computed from the data (medians, usable counts, tasks where voice lost)', L.sum[0] === `Median typing: ${r1(tT)} s. Median voice: ${r1(tV)} s.` && L.sum[1] === `Usable: typing ${uT} of 5, voice ${uV} of 5.` && L.sum[2] === `Tasks where voice lost: ${vLost} of 5.`, JSON.stringify(L.sum));
+    check('one programmatic honest read, nothing else interpreted', L.honest === `Voice was faster on ${vFast} of 5 tasks and usable on ${uV} of 5.`, L.honest);
+    check('faster side is emphasised (larger dot), order markers T first / V first', L.fast === 'VTV=T' && L.ord.join() === 'T first,V first,T first,V first,T first', L.fast + ' ' + L.ord.join());
+    check('banner and pre-registration date stay visible with results', L.banner === content.ui.labBanner && L.stamp === '3 November 2026');
+    check('lab with results: no console errors', log.errors.length === 0, log.errors.join('|'));
+    await page.screenshot({ path: join(SHOTS, 's11-lab-results.png') });
+    await ctx.close();
+    const c2 = await openWithData(browser, (d) => { d.lab.tasks = tasks.slice(0, 2); }, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(c2.page); await sleep(300);
+    check('results without a hypothesis still render (with the banner)', (await c2.page.locator('#lab .lab-banner').count()) === 1 && (await c2.page.locator('#lab .prereg').count()) === 0);
+    await c2.ctx.close();
+  }
+  for (const build of ['index.html', 'review.html']) {
+    const { page, ctx, log } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build });
+    await ready(page); await sleep(400); await scrollTo(page, '#wispr'); await sleep(400);
+    const m = content.wispr.moments;
+    const t0 = await page.evaluate(() => ({ tags: [...document.querySelectorAll('#wispr .wtag')].map((b) => b.textContent), h: Math.min(...[...document.querySelectorAll('#wispr .wtag')].map((b) => b.getBoundingClientRect().height)), pov: document.querySelectorAll('#wispr .pov').length, title: document.querySelector('#wispr .sheet-title').textContent }));
+    check(`${build}: five numbered evidence tags, 44px targets`, t0.tags.length === 5 && t0.tags.every((x, i) => x.startsWith(String(i + 1))) && t0.h >= 44 && t0.title === content.ui.wisprTitle, JSON.stringify(t0.tags));
+    await page.tap('#wispr .wtags li:nth-child(1) .wtag'); await sleep(1700);
+    const o = await page.evaluate(() => ({ fact: document.querySelector('#wispr .wfact').textContent, src: document.querySelector('#wispr .wsrc').textContent, link: document.querySelectorAll('#wispr .wpanel a').length, bars: [...document.querySelectorAll('#wispr .wl')].map((x) => x.textContent), widths: [...document.querySelectorAll('#wispr .wfill')].map((x) => Math.round(x.getBoundingClientRect().width / x.parentElement.getBoundingClientRect().width * 100)), cap: document.querySelector('#wispr .wcap').textContent, nav: document.querySelectorAll('#wispr .wstepbtn').length, label: document.querySelector('#wispr .wcard .label-brass') && document.querySelector('#wispr .wcard .label-brass').textContent }));
+    check(`${build}: moment 1 shows the observation with source and date and no link (no url)`, o.fact === m[0].fact && o.src === 'TechCrunch, citing Sensor Tower, 9 May 2026' && o.link === 0, JSON.stringify(o).slice(0, 200));
+    check(`${build}: India bars animate in on one scale ("about 14%" and "about 2%") with the exact caption`, o.bars.join('|') === 'Share of installs: about 14%|Share of in-app-purchase revenue: about 2%' && Math.abs(o.widths[0] - 70) <= 3 && Math.abs(o.widths[1] - 10) <= 3 && o.cap === 'Sensor Tower via TechCrunch. Web billing may explain part of the gap.', JSON.stringify([o.widths, o.cap]));
+    if (build === 'index.html') check('production: empty steps are hidden, so no stepper, only the observation', o.nav === 0 && o.label === 'Observation', JSON.stringify([o.nav, o.label]));
+    else {
+      check('review: three-step stepper (Observation, What it suggests, First test) for moment 1', o.nav === 3);
+      await page.tap('#wispr .wstepbtn:nth-child(3)'); await sleep(200);
+      check('review: tapping step 3 shows the first test (amber)', (await page.evaluate(() => document.querySelector('#wispr .wtxt.cf-filled') !== null)));
+      await page.tap('#wispr .wtags li:nth-child(3) .wtag'); await sleep(300);
+      check('review: moment 3 has only two steps because its first test is empty', (await page.evaluate(() => document.querySelectorAll('#wispr .wstepbtn').length)) === 2);
+    }
+    await page.tap('#wispr .wtags li:nth-child(2) .wtag'); await sleep(250);
+    const w2 = await page.evaluate(() => { const a = document.querySelector('#wispr .wpanel a'); return a ? [a.href, a.target, a.rel] : null; });
+    check(`${build}: moment 2 shows its source link only because it has a url (new tab, noopener)`, w2 && w2[0] === m[1].url && w2[1] === '_blank' && /noopener/.test(w2[2]), JSON.stringify(w2));
+    check(`${build}: the point-of-view slip ${build === 'index.html' ? 'is hidden while empty' : 'shows stamped "HYPOTHESIS: NOT A RESULT"'}`, build === 'index.html' ? t0.pov === 0 : (await page.evaluate(() => document.querySelector('#wispr .pov-s') && document.querySelector('#wispr .pov-s').textContent)) === 'HYPOTHESIS: NOT A RESULT');
+    check(`${build}: no console errors`, log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+  }
+}
+
+// ------------------------------------------------------------------ Stage 12
+if (run(12)) {
+  console.log('\nStage 12: evidence drawer, closing notes, provenance');
+  {
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(300);
+    check('production: the drawer is hidden while no repo has a url', (await page.locator('#locker').count()) === 0);
+    await ctx.close();
+  }
+  {
+    const { page, ctx, log } = await openWithData(browser, (d) => { d.locker.repos[0].url = 'https://example.com/blitz'; d.locker.repos[0].verify = { steps: ['Clone it.', 'Run it.'], command: 'make test', expected: '5 passed' }; d.locker.repos[3].url = 'https://example.com/certgen'; }, { viewport: VIEWPORTS.phone, touch: true });
+    await ctx.grantPermissions(['clipboard-read', 'clipboard-write']).catch(() => {});
+    await ready(page); await sleep(300); await scrollTo(page, '#locker');
+    const names = await page.evaluate(() => [...document.querySelectorAll('#locker .dr-n')].map((x) => x.textContent));
+    check('only repos with a url get a drawer card', names.join() === 'Blitz,certgen', names.join());
+    await page.tap('#locker .drawer:nth-child(1) .dr-btn'); await sleep(600);
+    const v = await page.evaluate(() => ({ head: document.querySelector('#locker .verify .xe-h').textContent, steps: document.querySelectorAll('#locker .v-steps li').length, cmd: document.querySelector('#locker .cmd').textContent, exp: document.querySelector('#locker .v-exp').textContent, a: (() => { const a = document.querySelector('#locker .verify a'); return [a.href, a.target, a.rel]; })(), copy: document.querySelector('#locker .copy').textContent }));
+    check('opening a card shows steps, command, Copy, expected output and the repo link (new tab)', v.head === content.ui.verify && v.steps === 2 && v.cmd === 'make test' && v.exp.includes('5 passed') && v.a[1] === '_blank' && /noopener/.test(v.a[2]) && v.copy === content.ui.copy, JSON.stringify(v));
+    await page.tap('#locker .copy'); await sleep(400);
+    check('Copy button says "Copied" when the clipboard accepts', (await page.evaluate(() => document.querySelector('#locker .copy').textContent)) === content.ui.copied);
+    await page.evaluate(() => { navigator.clipboard.writeText = () => Promise.reject(new Error('refused')); });
+    await sleep(2200);
+    await page.tap('#locker .copy'); await sleep(400);
+    check('a refused clipboard is caught: no error, button unchanged, text selected for manual copy', (await page.evaluate(() => document.querySelector('#locker .copy').textContent)) === content.ui.copy && (await page.evaluate(() => window.getSelection().toString())) === 'make test' && log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+  }
+  {
+    const { page, ctx, log } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(300); await scrollTo(page, '#closing');
+    const c = await page.evaluate(() => ({ title: document.querySelector('#closing .sheet-title').textContent, finds: document.querySelectorAll('#closing .find').length, line: document.querySelectorAll('#closing .cline').length, move: document.querySelectorAll('#closing .yourmove').length, log: [...document.querySelectorAll('#closing .caselog li')].map((x) => x.textContent) }));
+    check('production closing: only the case log (dated, from content); no findings, line, questions or contact while empty', c.title === content.ui.closingTitle && c.finds === 0 && c.line === 0 && c.move === 0 && c.log.length === 2 && c.log[0].startsWith('1 Nov 2026'), JSON.stringify(c));
+    check('production: no console errors', log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+  }
+  {
+    const { page, ctx, log } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html' });
+    await ready(page); await sleep(300); await scrollTo(page, '#closing');
+    const c = await page.evaluate(() => ({ finds: document.querySelectorAll('#closing .find').length, line: document.querySelector('#closing .cline').textContent, fs: getComputedStyle(document.querySelector('#closing .cline')).fontSize, oq: [...document.querySelectorAll('#closing .oq-d')].map((x) => x.textContent), follow: document.querySelectorAll('#closing .follow').length, move: document.querySelectorAll('#closing .yourmove').length, filled: document.querySelectorAll('#closing .cf-filled').length }));
+    check('review closing: three findings, the closing line in large type, dated slips "Answer of <date>", all amber, no contact block without contact data', c.finds === 3 && c.line.includes('Please check it.') && parseFloat(c.fs) >= 24 && c.oq.length === 3 && c.oq.every((x) => x.startsWith('Answer of ')) && c.move === 0 && c.filled >= 8, JSON.stringify(c));
+    const visTargets = await page.evaluate(() => [...document.querySelectorAll('#closing .find')].map((f) => 0));
+    await page.tap('#closing .find:nth-child(1) .follow'); await sleep(900);
+    const n = await page.evaluate(() => { const ids = ['exhibitA', 'exhibitB']; const paths = [...document.querySelectorAll('.page-strings path')]; const ends = paths.map((p) => { const L = p.getTotalLength(), pt = p.getPointAtLength(L), m = p.ownerSVGElement.getScreenCTM(); return [pt.x * m.a + m.e, pt.y * m.d + m.f]; }); const cs = ids.map((id) => { const r = window.CF.rail.pins[id].getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }); return { n: paths.length, miss: ends.map((e) => Math.min(...cs.map((c) => Math.hypot(c[0] - e[0], c[1] - e[1])))) }; });
+    check('tapping a finding runs red string to its exhibits (both land on their pins)', n.n === 2 && n.miss.every((m) => m < 14), JSON.stringify(n));
+    await page.tap('#closing .find:nth-child(1) .follow'); await sleep(200);
+    check('tapping again clears it', (await page.evaluate(() => document.querySelectorAll('.page-strings path').length)) === 0);
+    await page.evaluate(() => window.scrollTo(0, 0)); await sleep(200);
+    const before = await page.evaluate(() => document.querySelector('#closing .cl-seal').classList.contains('on'));
+    await scrollTo(page, '#closing .caselog', 300); await sleep(900);
+    check('the seal thuds again when the closing scrolls into view', !before && (await page.evaluate(() => document.querySelector('#closing .cl-seal').classList.contains('thud'))));
+    check('review closing: no console errors', log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+  }
+  { // YOUR MOVE with contact data supplied by the test
+    const { page, ctx } = await openWithData(browser, (d) => { d.closing.contact = { email: 'a@b.example', linkedin: 'https://example.com/in/x', github: '' }; }, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(300); await scrollTo(page, '#closing');
+    const m = await page.evaluate(() => ({ head: document.querySelector('.yourmove .ym-h').textContent, vals: [...document.querySelectorAll('.yourmove .ym-v')].map((x) => x.textContent), us: getComputedStyle(document.querySelector('.ym-v')).userSelect, links: [...document.querySelectorAll('.yourmove a')].map((a) => a.getAttribute('href')) }));
+    check('YOUR MOVE lists only the contacts that exist, as selectable text, plus link conveniences', m.head === 'YOUR MOVE' && m.vals.join() === 'a@b.example,https://example.com/in/x' && m.us === 'all' && m.links[0] === 'mailto:a@b.example', JSON.stringify(m));
+    await ctx.close();
+  }
+  for (const build of ['index.html', 'review.html']) {
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build });
+    await ready(page); await sleep(300); await scrollTo(page, '#exhibitZ');
+    const z = await page.evaluate(() => ({ st: document.querySelector('#exhibitZ .z-st').textContent, segs: [...document.querySelectorAll('#exhibitZ .zseg')].map((s) => [s.querySelector('.zl').textContent, s.querySelector('.ztag').textContent]), bo: document.querySelectorAll('#exhibitZ .z-bo').length }));
+    const flowSegs = z.segs.filter((s) => s[1] === 'Spoken with Flow').map((s) => s[0]);
+    check(`${build}: Exhibit Z states the statement, and ONLY "Exhibit 0: the opening takes" is tagged "Spoken with Flow"`, z.st === content.exhibitZ.statement && flowSegs.join() === 'Exhibit 0: the opening takes' && z.segs.every((s) => ['Spoken with Flow', 'Written from sources'].includes(s[1])) && z.bo === 0, JSON.stringify(z));
+    const vis = await visibleSecs(page);
+    const want = { S01: 'exhibit0', S02: 'brief', S03: 'against', S04: 'exhibitA', S06: 'exhibitB', S07: 'ledger', S08: 'effects', S09: 'decisions', S10: 'effects', S11: 'effects', S12: 'lab', S13: 'wispr', S14: 'closing' };
+    const expected = content.exhibitZ.segments.filter((s) => vis.includes(want[s.id])).map((s) => s.label);
+    check(`${build}: a segment shows only if its section has content (${expected.length} of ${content.exhibitZ.segments.length})`, JSON.stringify(z.segs.map((s) => s[0])) === JSON.stringify(expected), JSON.stringify([z.segs.map((s) => s[0]), expected]));
+    await ctx.close();
+  }
+  { // flags are literal
+    const { page, ctx } = await openWithData(browser, (d) => { d.exhibitZ.segments.find((s) => s.id === 'S04').spokenWithFlow = true; d.exhibitZ.builtOn = 'A tool name'; }, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(300);
+    const z = await page.evaluate(() => [...document.querySelectorAll('#exhibitZ .zseg')].map((s) => [s.querySelector('.zl').textContent, s.querySelector('.ztag').textContent]));
+    check('flags are literal: flipping spokenWithFlow flips the tag, and builtOn renders when present', z.find((s) => s[0].startsWith('Exhibit A'))[1] === 'Spoken with Flow' && (await page.locator('#exhibitZ .z-bo').count()) === 1);
+    await ctx.close();
+  }
+}
+
+
+// ------------------------------------------------------------------ Stage 14
+if (run(14)) {
+  console.log('\nStage 14: quality, warm words, share assets');
+  const prod = readFileSync(join(ROOT, 'dist', 'index.html'), 'utf8');
+  // --- share assets
+  check('meta: title and description come from content', prod.includes(`<title>${content.site.title}</title>`) && prod.includes(`name="description" content="${content.site.description}"`));
+  check('meta: Open Graph and Twitter tags, favicon and touch icon', ['og:title', 'og:description', 'og:image', 'og:type'].every((k) => prod.includes(`property="${k}"`)) && ['twitter:card', 'twitter:title', 'twitter:image'].every((k) => prod.includes(`name="${k}"`)) && /rel="icon"/.test(prod) && /apple-touch-icon/.test(prod));
+  const png = readFileSync(join(ROOT, 'dist', 'og.png'));
+  check('share image is a 1200x630 PNG', png.readUInt32BE(16) === 1200 && png.readUInt32BE(20) === 630);
+  check('robots.txt, sitemap.xml, favicon.svg, favicon-32.png, apple-touch-icon.png exist', ['robots.txt', 'sitemap.xml', 'favicon.svg', 'favicon-32.png', 'apple-touch-icon.png'].every((f) => existsSync(join(ROOT, 'dist', f))));
+  const nf = readFileSync(join(ROOT, 'dist', '404.html'), 'utf8');
+  check('404 page says FILE NOT FOUND, has a friendly line and a way back, makes no external requests', nf.includes('FILE NOT FOUND') && nf.includes('Back to the file') && !/https?:\/\//.test(nf.replace(/data:font[^)]+/, '')));
+  // --- budgets
+  const scripts = [...prod.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]).join('');
+  const gz = gzipSync(Buffer.from(scripts)).length;
+  check(`JS under 100 KB gzipped (fonts excluded): ${(gz / 1024).toFixed(1)} KB`, gz < 100 * 1024);
+  console.log(`       html total ${(prod.length / 1024).toFixed(0)} KB, js raw ${(scripts.length / 1024).toFixed(0)} KB, gzip ${(gz / 1024).toFixed(1)} KB`);
+  // --- warm words: every UI string in content and every string literal in the source
+  const bad = /\b(cut|wrong|errors?|fail(?:s|ed|ure|ures|ing)?|reject(?:s|ed|ion)?|danger\w*|miss(?:es|ed|ing)?|against|guilty|suspect\w*|caught|traps?|interrogat\w*|victims?|crimes?)\b/i;
+  const uiHits = []; (function walk(o, p) { if (typeof o === 'string') { if (bad.test(o)) uiHits.push(p + ': ' + o); } else if (o && typeof o === 'object') for (const k in o) walk(o[k], p + '.' + k); })(content.ui, 'ui');
+  check('warm words: no banned word in any ui string', uiHits.length === 0, uiHits.join(' | '));
+  const srcHits = [];
+  for (const f of readdirSync(join(ROOT, 'src', 'js'))) {
+    const src = readFileSync(join(ROOT, 'src', 'js', f), 'utf8');
+    for (const m of src.matchAll(/'((?:[^'\\\n]|\\.)*)'|"((?:[^"\\\n]|\\.)*)"/g)) { const s = m[1] ?? m[2]; if (/\s/.test(s) && bad.test(s)) srcHits.push(f + ': ' + s.slice(0, 70)); }
+  }
+  check('warm words: no banned word in any chrome string written in the source', srcHits.length === 0, srcHits.join(' | '));
+  // --- accessibility with axe-core, in the states a visitor reaches
+  const axeSrc = readFileSync(join(ROOT, 'node_modules', 'axe-core', 'axe.min.js'), 'utf8');
+  const axeRun = async (page) => { await page.evaluate(axeSrc); return page.evaluate(async () => { const r = await window.axe.run(document, { resultTypes: ['violations'] }); return r.violations.map((v) => ({ id: v.id, impact: v.impact, n: v.nodes.length, sample: v.nodes.slice(0, 3).map((n) => n.target.join(' ') + ' :: ' + (n.failureSummary || '').replace(/\s+/g, ' ').slice(0, 160)) })); }); };
+  for (const [name, vp, touch, build, prep] of [
+    ['production phone, landed', VIEWPORTS.phone, true, 'index.html', async (p) => { await p.evaluate(() => window.CF.opening.skip()); await sleep(1600); }],
+    ['production laptop, landed', VIEWPORTS.laptop, false, 'index.html', async (p) => { await p.evaluate(() => window.CF.opening.skip()); await sleep(1600); }],
+    ['review phone, every section open', VIEWPORTS.phone, true, 'review.html', async (p) => { await p.evaluate(() => window.CF.opening.skip()); await sleep(800); for (let y = 0; y < 14000; y += 700) { await p.evaluate((v) => window.scrollTo(0, v), y); await sleep(60); } await p.evaluate(() => { document.querySelectorAll('.opt').forEach((b, i) => { if (i % 4 === 0) b.click(); }); document.querySelectorAll('.ic-btn, .case-head, .xe-btn, .wtag, .dr-btn').forEach((b) => b.click()); }); await sleep(1500); }],
+    ['review laptop', VIEWPORTS.laptop, false, 'review.html', async (p) => { await p.evaluate(() => window.CF.opening.skip()); await sleep(1500); for (let y = 0; y < 9000; y += 700) { await p.evaluate((v) => window.scrollTo(0, v), y); await sleep(60); } }],
+  ]) {
+    const { page, ctx, log } = await openPage(browser, { viewport: vp, touch, build });
+    await ready(page); await sleep(500); await prep(page);
+    const v = await axeRun(page);
+    check(`axe-core: zero violations (${name})`, v.length === 0, JSON.stringify(v).slice(0, 700));
+    check(`${name}: no console errors, no network requests`, log.errors.length === 0 && log.requests.length === 0, log.errors.concat(log.requests).join('|'));
+    await ctx.close();
+  }
+  { // axe on the dialogs
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(400);
+    await page.tap('.tb-btn.clues'); await sleep(500);
+    check('axe-core: zero violations (clue notebook open)', (await axeRun(page)).length === 0);
+    await page.keyboard.press('Escape'); await sleep(200);
+    await page.evaluate(() => document.querySelector('.controls > .btn:last-child').click()); await sleep(400);
+    check('axe-core: zero violations (plain-reading dialog open)', (await axeRun(page)).length === 0);
+    await ctx.close();
+  }
+  // --- structure, focus, targets
+  {
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html' });
+    await ready(page); await sleep(500);
+    const hs = await page.evaluate(() => [...document.querySelectorAll('h1, h2, h3, h4')].map((h) => +h.tagName[1]));
+    check('headings: start at h1 and never jump down more than one level', hs[0] === 1 && hs.every((l, i) => i === 0 || l - hs[i - 1] <= 1) && hs.filter((l) => l === 1).length === 1, hs.join(''));
+    const lm = await page.evaluate(() => ({ banner: document.querySelectorAll('header').length, main: document.querySelectorAll('main').length, foot: document.querySelectorAll('footer').length, skip: document.querySelector('.skip-link').getAttribute('href') }));
+    check('landmarks: banner, main, contentinfo and a skip link to #main', lm.banner === 1 && lm.main === 1 && lm.foot === 1 && lm.skip === '#main');
+    const tg = await page.evaluate(() => [...document.querySelectorAll('button, a[href], input')].filter((e) => e.offsetParent && !e.closest('[hidden]') && !e.closest('.seal-note:not(.unfolded)') && !e.classList.contains('skip-link') && getComputedStyle(e).visibility !== 'hidden').map((e) => { const r = e.getBoundingClientRect(); return { n: (e.className || e.tagName) + ':' + (e.textContent || '').trim().slice(0, 18), w: Math.round(r.width), h: Math.round(r.height) }; }).filter((x) => x.h < 43.5 || x.w < 43.5));
+    check('every visible control is at least 44x44', tg.length === 0, JSON.stringify(tg.slice(0, 8)));
+    // keyboard-only walk: tab through, every stop has a visible focus indicator
+    await page.evaluate(() => window.CF.opening.skip()); await sleep(1200);
+    await page.evaluate(() => { document.body.focus(); window.scrollTo(0, 0); });
+    const bad2 = []; let stops = 0;
+    for (let i = 0; i < 90; i++) {
+      await page.keyboard.press('Tab');
+      const r = await page.evaluate(() => { const e = document.activeElement; if (!e || e === document.body) return null; const cs = getComputedStyle(e); let ok = cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) > 0; if (!ok && e.matches('input[type=range]')) ok = getComputedStyle(e, '::-webkit-slider-thumb').boxShadow !== 'none'; if (!ok && cs.boxShadow !== 'none') ok = true; return { ok, n: e.className + ' ' + e.tagName }; });
+      if (!r) continue; stops++; if (!r.ok) bad2.push(r.n);
+    }
+    check(`keyboard walk: ${stops} tab stops, all show a visible focus indicator`, stops > 40 && bad2.length === 0, bad2.join(' | '));
+    await ctx.close();
+  }
+  { // performance numbers (Lighthouse is not installed here; these are the same underlying metrics)
+    const ctx = await browser.newContext({ viewport: VIEWPORTS.phone, hasTouch: true, isMobile: true, deviceScaleFactor: 2 });
+    const page = await ctx.newPage();
+    const cdp = await ctx.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+    await page.addInitScript(() => { window.__m = { lcp: 0, cls: 0, tbt: 0 }; new PerformanceObserver((l) => { for (const e of l.getEntries()) window.__m.lcp = e.startTime; }).observe({ type: 'largest-contentful-paint', buffered: true }); new PerformanceObserver((l) => { for (const e of l.getEntries()) { if (e.hadRecentInput) continue; const out = e.sources.some((s) => s.node && !(s.node.closest && s.node.closest('.textblock')) && !(s.node.parentElement && s.node.parentElement.closest && s.node.parentElement.closest('.textblock'))); if (out) window.__m.cls += e.value; } }).observe({ type: 'layout-shift', buffered: true }); new PerformanceObserver((l) => { for (const e of l.getEntries()) window.__m.tbt += Math.max(0, e.duration - 50); }).observe({ type: 'longtask', buffered: true }); });
+    await page.goto('file://' + join(ROOT, 'dist', 'index.html'));
+    await page.waitForFunction(() => window.CF && window.CF.opening && window.CF.opening.landed, null, { timeout: 25000 }); await sleep(800);
+    const m = await page.evaluate(() => ({ ...window.__m, fcp: Math.round(performance.getEntriesByName('first-contentful-paint')[0].startTime), res: performance.getEntriesByType('resource').length }));
+    console.log('       4x CPU throttle:', JSON.stringify(m));
+    check('FCP under 1 s, LCP under 2.5 s, blocking time under 300 ms, no layout shift outside the text block, zero resources fetched', m.fcp < 1000 && m.lcp < 2500 && m.tbt < 300 && m.cls < 0.01 && m.res === 0, JSON.stringify(m));
     await ctx.close();
   }
 }

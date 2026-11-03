@@ -12,8 +12,10 @@ import base64
 import copy
 import html
 import json
+import os
 import re
 import sys
+import urllib.parse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -223,12 +225,50 @@ FAVICON = (
 )
 
 
+SITE_URL = os.environ.get("SITE_URL", "").rstrip("/")
+
+
+def share_meta(site):
+    """Open Graph, Twitter and canonical tags. Absolute URLs only when SITE_URL is known (it is set at publish time)."""
+    title = html.escape(site.get("title", "Case File No. 001"), quote=True)
+    desc = html.escape(site.get("description", ""), quote=True)
+    img = (SITE_URL + "/og.png") if SITE_URL else "og.png"
+    out = [
+        '<meta property="og:type" content="website">',
+        '<meta property="og:title" content="%s">' % title,
+        '<meta property="og:description" content="%s">' % desc,
+        '<meta property="og:image" content="%s">' % img,
+        '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">',
+        '<meta name="twitter:card" content="summary_large_image">',
+        '<meta name="twitter:title" content="%s">' % title,
+        '<meta name="twitter:description" content="%s">' % desc,
+        '<meta name="twitter:image" content="%s">' % img,
+        '<link rel="apple-touch-icon" href="apple-touch-icon.png">',
+    ]
+    if SITE_URL:
+        out.append('<link rel="canonical" href="%s/">' % SITE_URL)
+        out.append('<meta property="og:url" content="%s/">' % SITE_URL)
+    return "\n".join(out)
+
+
+def write_static(out, site):
+    """robots.txt, sitemap.xml, 404.html and favicon.svg next to the production build."""
+    (out / "robots.txt").write_text("User-agent: *\nAllow: /\n" + (("Sitemap: %s/sitemap.xml\n" % SITE_URL) if SITE_URL else ""), encoding="utf-8")
+    loc = ('<url><loc>%s/</loc></url>' % SITE_URL) if SITE_URL else ""
+    (out / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">%s</urlset>\n' % loc, encoding="utf-8")
+    svg = urllib.parse.unquote(FAVICON.split(",", 1)[1])
+    (out / "favicon.svg").write_text(svg, encoding="utf-8")
+    fraunces = base64.b64encode((SRC / "fonts" / "fraunces-wght.woff2").read_bytes()).decode("ascii")
+    page404 = (SRC / "404.html").read_text(encoding="utf-8").replace("@@FRAUNCES@@", fraunces).replace("@@TITLE@@", html.escape(site.get("title", ""), quote=True))
+    (out / "404.html").write_text(page404, encoding="utf-8")
+
+
 def render(template, data, mode, filled=None):
     site = data.get("site") or {}
     css = (SRC / "styles.css").read_text(encoding="utf-8")
     for extra in sorted((SRC / "css").glob("*.css")):
         css += "\n" + extra.read_text(encoding="utf-8")
-    head_extra, body_extra = "", ""
+    head_extra, body_extra = share_meta(site), ""
     js = bundle_js()
     if mode == "review":
         css += "\n" + (SRC / "review" / "review.css").read_text(encoding="utf-8")
@@ -283,6 +323,7 @@ def main():
             print("  -", p)
         sys.exit(1)
     (out / "index.html").write_text(prod, encoding="utf-8")
+    write_static(out, prod_data.get("site") or {})
 
     rev_data, filled = review_content(review_base, draft)
     rev = render(template, rev_data, "review", filled)

@@ -59,7 +59,7 @@ CF.ex = (function () {
     if (!list.length) return null;
     return h('div', { class: 'xexam' }, h('h3', { class: 'xe-h', text: ui().crossExam || '' }),
       list.map(({ x, i }) => {
-        const body = h('div', { class: 'xe-body', role: 'region' }, h('div', { class: 'xe-in' }, h('p', { path: base + '.crossExam.' + i + '.a', text: x.a })));
+        const body = h('div', { class: 'xe-body' }, h('div', { class: 'xe-in' }, h('p', { path: base + '.crossExam.' + i + '.a', text: x.a })));
         const btn = h('button', { class: 'xe-btn', type: 'button', 'aria-expanded': 'false' }, h('span', { path: base + '.crossExam.' + i + '.q', text: x.q }), CF.icon('chevron'));
         const item = h('div', { class: 'xe-item' }, btn, body);
         btn.addEventListener('click', () => { const o = btn.getAttribute('aria-expanded') === 'true'; btn.setAttribute('aria-expanded', String(!o)); item.classList.toggle('open', !o); });
@@ -95,6 +95,7 @@ CF.ex = (function () {
     const list = (items || []).filter((t) => has(t.label) || has(t.text));
     if (!list.length) return null;
     const ol = h('ol', { class: 'tl' }, list.map((t, i) => h('li', null, h('i', { class: 'tl-dot', 'aria-hidden': 'true' }),
+      has(t.date) ? h('p', { class: 'tl-d', text: t.date }) : null,
       has(t.label) ? h('p', { class: 'tl-l', path: base + '.timeline.' + i + '.label', text: t.label }) : null,
       has(t.text) ? h('p', { class: 'tl-t', path: base + '.timeline.' + i + '.text', text: t.text }) : null)));
     const wrap = h('div', { class: 'tlwrap' }, h('i', { class: 'tl-string', 'aria-hidden': 'true' }), ol);

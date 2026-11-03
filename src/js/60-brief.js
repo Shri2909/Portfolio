@@ -2,6 +2,46 @@
    and the red string that runs from a lead to the pins of its exhibits. */
 CF.board = { afterRail() {} };
 
+/* Red string along the left rail: from any element to the rail pins of the given sections. Used by the leads and the closing findings. */
+CF.pageStrings = (function () {
+  let layer = null;
+  const svgNS = () => {
+    if (!layer) { layer = s('svg', { class: 'page-strings', 'aria-hidden': 'true', focusable: 'false' }); document.getElementById('page').appendChild(layer); }
+    return layer;
+  };
+  function addPath(svg, dStr, animate) {
+    const p = s('path', { d: dStr, class: 'string-path', fill: 'none' });
+    svg.appendChild(p);
+    if (animate && !CF.reduced) {
+      const L = p.getTotalLength();
+      p.style.strokeDasharray = L; p.style.strokeDashoffset = L;
+      void p.getBoundingClientRect();
+      p.style.transition = 'stroke-dashoffset .6s cubic-bezier(.22,.61,.36,1)';
+      p.style.strokeDashoffset = 0;
+    }
+    return p;
+  }
+  function clear() { if (layer) while (layer.firstChild) layer.removeChild(layer.firstChild); }
+  function draw(from, ids, animate) {
+    if (CF.rail) CF.rail.place(true);
+    const page = document.getElementById('page'), pgr = page.getBoundingClientRect(), svg = svgNS();
+    svg.setAttribute('viewBox', '0 0 ' + pgr.width + ' ' + page.scrollHeight);
+    svg.style.height = page.scrollHeight + 'px';
+    const fr = from.getBoundingClientRect();
+    const x0 = fr.left - pgr.left, y0 = fr.top + fr.height / 2 - pgr.top;
+    let n = 0;
+    ids.forEach((id) => {
+      const pin = CF.rail && CF.rail.pins[id]; if (!pin) return;
+      const pr = pin.getBoundingClientRect();
+      const rx = pr.left + pr.width / 2 - pgr.left, y1 = pr.top + pr.height / 2 - pgr.top;
+      const dir = y1 >= y0 ? 1 : -1;
+      addPath(svg, 'M' + x0 + ' ' + y0 + ' L' + (rx + 14) + ' ' + y0 + ' Q' + rx + ' ' + y0 + ' ' + rx + ' ' + (y0 + 14 * dir) + ' L' + rx + ' ' + y1, animate); n++;
+    });
+    return n;
+  }
+  return { draw, clear, addPath };
+})();
+
 CF.defineSection('brief', function (d) {
   const ui = d.ui || {};
   const leads = (d.specialties || []).filter((s) => has(s.title));
@@ -15,7 +55,7 @@ CF.defineSection('brief', function (d) {
   /* ---- envelope ---- */
   const art = h('span', { class: 'env-art', 'aria-hidden': 'true' },
     h('i', { class: 'env-body' }), h('i', { class: 'env-flap' }), h('i', { class: 'env-wax' }));
-  const envBtn = h('button', { class: 'env-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'brief-letter' }, art,
+  const envBtn = h('button', { class: 'env-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'brief-letter', 'aria-label': ui.openBriefing || undefined }, art,
     has(ui.openBriefing) ? h('span', { class: 'env-cap', text: ui.openBriefing }) : null);
 
   /* ---- leads ---- */
@@ -54,32 +94,15 @@ CF.defineSection('brief', function (d) {
 
   /* ---- strings ---- */
   const wide = () => window.matchMedia('(min-width: 768px)').matches;
-  let pageLayer = null;
-  function layer() {
-    if (!pageLayer) { pageLayer = s('svg', { class: 'page-strings', 'aria-hidden': 'true', focusable: 'false' }); document.getElementById('page').appendChild(pageLayer); }
-    return pageLayer;
-  }
   function clearStrings() {
     sel.timers.forEach(clearTimeout); sel.timers = [];
     while (stringsBoard.firstChild) stringsBoard.removeChild(stringsBoard.firstChild);
-    if (pageLayer) while (pageLayer.firstChild) pageLayer.removeChild(pageLayer.firstChild);
+    CF.pageStrings.clear();
     document.querySelectorAll('.sheet.hl').forEach((e) => e.classList.remove('hl'));
     document.querySelectorAll('.bpin.pulse').forEach((e) => e.classList.remove('pulse'));
   }
-  function addPath(svg, dStr, animate) {
-    const p = s('path', { d: dStr, class: 'string-path', fill: 'none' });
-    svg.appendChild(p);
-    if (animate && !CF.reduced) {
-      const L = p.getTotalLength();
-      p.style.strokeDasharray = L; p.style.strokeDashoffset = L;
-      void p.getBoundingClientRect();
-      p.style.transition = 'stroke-dashoffset .6s cubic-bezier(.22,.61,.36,1)';
-      p.style.strokeDashoffset = 0;
-    }
-    return p;
-  }
+  const addPath = CF.pageStrings.addPath;
   function draw(lead, animate) {
-    if (CF.rail && !wide()) CF.rail.place(true);
     const targets = (lead.exhibits || []).filter((id) => CF.visibleSections.includes(id));
     const from = leadBtns.find((b) => b.dataset.id === lead.id);
     if (!from || !targets.length) return;
@@ -95,18 +118,7 @@ CF.defineSection('brief', function (d) {
         pb.classList.add('pulse');
       });
     } else {
-      const page = document.getElementById('page'), pgr = page.getBoundingClientRect(), svg = layer();
-      svg.setAttribute('viewBox', '0 0 ' + pgr.width + ' ' + page.scrollHeight);
-      svg.style.height = page.scrollHeight + 'px';
-      const fr = from.getBoundingClientRect();
-      const x0 = fr.left - pgr.left, y0 = fr.top + fr.height / 2 - pgr.top;
-      targets.forEach((id, i) => {
-        const pin = CF.rail && CF.rail.pins[id]; if (!pin) return;
-        const pr = pin.getBoundingClientRect();
-        const rx = pr.left + pr.width / 2 - pgr.left, y1 = pr.top + pr.height / 2 - pgr.top;
-        const dir = y1 >= y0 ? 1 : -1;
-        addPath(svg, 'M' + x0 + ' ' + y0 + ' L' + (rx + 14) + ' ' + y0 + ' Q' + rx + ' ' + y0 + ' ' + rx + ' ' + (y0 + 14 * dir) + ' L' + rx + ' ' + y1, animate);
-      });
+      CF.pageStrings.draw(from, targets, animate);
     }
     targets.forEach((id) => { const sheet = document.getElementById(id); if (sheet) sheet.classList.add('hl'); });
     sel.timers.push(setTimeout(() => { document.querySelectorAll('.sheet.hl').forEach((e) => e.classList.remove('hl')); document.querySelectorAll('.bpin.pulse').forEach((e) => e.classList.remove('pulse')); }, 3000));

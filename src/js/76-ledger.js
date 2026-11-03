@@ -8,7 +8,7 @@ CF.defineSection('ledger', function (d) {
   const statuses = ORDER.filter((s) => counts[s]).concat(Object.keys(counts).filter((s) => !ORDER.includes(s)));
   let filter = 'all';
   const rows = cases.map((c, i) => {
-    const body = h('div', { class: 'case-body', id: 'case-b-' + c.id, role: 'region' }, h('div', { class: 'case-in' },
+    const body = h('div', { class: 'case-body', id: 'case-b-' + c.id }, h('div', { class: 'case-in' },
       has(c.what) ? h('p', null, h('span', { class: 'label-brass', text: 'The plot twist' }), ' ', h('span', { path: 'ledger.cases.' + i + '.what', text: c.what })) : null,
       has(c.resolution) ? h('p', null, h('span', { class: 'label-brass', text: 'What I did next' }), ' ', h('span', { path: 'ledger.cases.' + i + '.resolution', text: c.resolution })) : null,
       has(c.note) ? h('p', null, h('span', { class: 'label-brass', text: c.project }), ' ', h('span', { path: 'ledger.cases.' + i + '.note', text: c.note })) : null));

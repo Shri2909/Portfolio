@@ -118,6 +118,7 @@ CF.shell = (function () {
 
   function mountAll() {
     const main = document.getElementById('main');
+    CF.visibleSections = visible; // filled in page order as sections mount, so later sections can ask about earlier ones
     CF.order.forEach((id) => {
       const fn = CF.defs[id];
       if (!fn) return;

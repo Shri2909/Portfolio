@@ -33,7 +33,7 @@ CF.defineSection('exhibitB', function (d) {
       g.push(gap);
       g.push(s('text', { x: (X(sorted[0].x) + X(sorted[1].x)) / 2 + 6, y: (Y(sorted[0].y) + Y(sorted[1].y)) / 2 - 8, class: 'gap-l', 'text-anchor': 'middle', transform: 'rotate(' + (Math.atan2(Y(sorted[1].y) - Y(sorted[0].y), X(sorted[1].x) - X(sorted[0].x)) * 180 / Math.PI).toFixed(1) + ' ' + ((X(sorted[0].x) + X(sorted[1].x)) / 2 + 6) + ' ' + ((Y(sorted[0].y) + Y(sorted[1].y)) / 2 - 8) + ')' }, 'crossover not measured here'));
     }
-    const svg = s('svg', { viewBox: '0 0 ' + W + ' ' + H, class: 'bchart', role: 'img', 'aria-label': 'Boundary chart: index speedup over a full scan against symbols subscribed, both on log scales. The data table below lists the plotted points.' }, g);
+    const svg = s('svg', { viewBox: '0 0 ' + W + ' ' + H, class: 'bchart', role: 'img', 'aria-label': 'Boundary chart: index speedup over a full scan, by symbols subscribed, both on log scales. The data table below lists the plotted points.' }, g);
     const detail = h('p', { class: 'dot-detail', 'aria-live': 'polite' });
     const dots = sorted.map((p, i) => {
       const lab = String(p.y) + 'x';

@@ -9,7 +9,7 @@ CF.makeSeal = function (chapter, target) {
   };
   const btn = h('button', { class: 'seal-btn', type: 'button', onclick: go },
     h('span', { class: 'sc-cue', text: ui.sealCue || '' }), h('span', { class: 'sc-q', text: chapter.teaser }), CF.icon('down'));
-  const note = h('aside', { class: 'seal-note', 'data-chapter': chapter.id, 'aria-label': ui.sealCue || undefined }, h('i', { class: 'clip', 'aria-hidden': 'true' }), btn);
+  const note = h('div', { class: 'seal-note', 'data-chapter': chapter.id }, h('i', { class: 'clip', 'aria-hidden': 'true' }), btn);
   if (CF.reduced || !window.IntersectionObserver) note.classList.add('unfolded');
   else {
     const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { note.classList.add('unfolded'); io.disconnect(); } }, { threshold: 0.5 });

@@ -1,3 +1,14 @@
+CF.sealMarkup =
+    '<svg viewBox="0 0 200 200" focusable="false"><defs>' +
+    '<filter id="sealrough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.2"/></filter>' +
+    '<path id="sealring" d="M100,100 m-68,0 a68,68 0 1,1 136,0 a68,68 0 1,1 -136,0"/></defs>' +
+    '<g filter="url(#sealrough)" fill="none" stroke="#D2452E">' +
+    '<circle cx="100" cy="100" r="94" stroke-width="6"/><circle cx="100" cy="100" r="84" stroke-width="2"/><circle cx="100" cy="100" r="52" stroke-width="2"/>' +
+    '<text fill="#D2452E" stroke="none" font-size="15" font-weight="800" style="font-family:var(--display)"><textPath href="#sealring" textLength="418" lengthAdjust="spacing">CASE FILE No. 001 - COME IN, DETECTIVE -</textPath></text>' +
+    '<circle cx="100" cy="82" r="10" stroke-width="4"/><path d="M107.5 89.5 L117 99" stroke-width="5" stroke-linecap="round"/>' +
+    '<text x="100" y="128" text-anchor="middle" fill="#D2452E" stroke="none" font-size="27" font-weight="800" letter-spacing="2" style="font-family:var(--display)">OPEN</text>' +
+    '</g></svg>';
+
 /* Exhibit 0: the opening. One dossier on the desk, a red string to drag, a name under tape. */
 CF.mountOpening = function (data, mount) {
   const ex = data.exhibit0 || {};
@@ -16,16 +27,7 @@ CF.mountOpening = function (data, mount) {
 
   /* ---------- the seal ---------- */
   const seal = h('div', { class: 'seal', 'aria-hidden': 'true' });
-  seal.innerHTML =
-    '<svg viewBox="0 0 200 200" focusable="false"><defs>' +
-    '<filter id="sealrough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.2"/></filter>' +
-    '<path id="sealring" d="M100,100 m-68,0 a68,68 0 1,1 136,0 a68,68 0 1,1 -136,0"/></defs>' +
-    '<g filter="url(#sealrough)" fill="none" stroke="#D2452E">' +
-    '<circle cx="100" cy="100" r="94" stroke-width="6"/><circle cx="100" cy="100" r="84" stroke-width="2"/><circle cx="100" cy="100" r="52" stroke-width="2"/>' +
-    '<text fill="#D2452E" stroke="none" font-size="15" font-weight="800" style="font-family:var(--display)"><textPath href="#sealring" textLength="418" lengthAdjust="spacing">CASE FILE No. 001 - COME IN, DETECTIVE -</textPath></text>' +
-    '<circle cx="100" cy="82" r="10" stroke-width="4"/><path d="M107.5 89.5 L117 99" stroke-width="5" stroke-linecap="round"/>' +
-    '<text x="100" y="128" text-anchor="middle" fill="#D2452E" stroke="none" font-size="27" font-weight="800" letter-spacing="2" style="font-family:var(--display)">OPEN</text>' +
-    '</g></svg>';
+  seal.innerHTML = CF.sealMarkup;
   seal.appendChild(h('i', { class: 'ripple' }));
   seal.play = function () {
     seal.classList.add('on');
@@ -111,7 +113,7 @@ CF.mountOpening = function (data, mount) {
       ['Status', custody.status], ['Note', custody.note],
     ].filter((r) => has(r[1]));
     chipPanel.textContent = '';
-    put(chipPanel, h('h3', { text: ui.custody || '' }),
+    put(chipPanel, h('p', { class: 'cs-h', text: ui.custody || '' }),
       h('dl', null, rows.map((r) => [h('dt', { text: r[0] }), h('dd', { text: r[1] })])),
       custody.verified === true ? h('span', { class: 'stamp-verified', text: 'VERIFIED' }) : null);
   }

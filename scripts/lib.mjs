@@ -61,7 +61,7 @@ export function summary() { console.log(`\n${pass} passed, ${failed} failed`); r
 // Playwright's recordVideo needs a newer bundled ffmpeg than this machine has, so we record Chromium's screencast
 // (CDP) and encode it ourselves with the ffmpeg that IS installed (it has the VP8 encoder: .webm output).
 import { spawn } from 'node:child_process';
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, readFileSync, mkdirSync } from 'node:fs';
 
 function ffmpegPath() {
   const base = join(homedir(), '.cache', 'ms-playwright');
@@ -96,4 +96,20 @@ export async function startRecording(page, { fps = 25 } = {}) {
       return { frames: frames.length, seconds: +(t1 - t0).toFixed(1) };
     },
   };
+}
+
+// ---- tests with modified data ---------------------------------------------------------------
+// Takes dist/<build>, lets a function edit the embedded JSON (for example to add Lab results or repo links that do not exist
+// in content.json yet), writes the copy next to the build and opens it. Production code stays free of any sample data.
+export async function openWithData(browser, mutate, opts = {}) {
+  const src = readFileSync(join(ROOT, 'dist', opts.build || 'index.html'), 'utf8');
+  const m = src.match(/<script type="application\/json" id="cf-data">([\s\S]*?)<\/script>/);
+  const data = JSON.parse(m[1].replace(/<\\\//g, '</'));
+  mutate(data);
+  const out = src.replace(m[0], () => '<script type="application/json" id="cf-data">' + JSON.stringify(data).replace(/<\//g, '<\\/') + '</script>');
+  mkdirSync(join(ROOT, '.tmp'), { recursive: true });
+  const file = join(ROOT, '.tmp', '_mutated.html');
+  writeFileSync(file, out);
+  const r = await openPage(browser, { ...opts, url: pathToFileURL(file).href });
+  return r;
 }

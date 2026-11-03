@@ -261,7 +261,7 @@ button { font: inherit; color: inherit; }
   width: 44px; height: 44px; border: 0; border-radius: 50%;
   background: radial-gradient(circle at 42% 38%, #FFB4A0 0 2px, transparent 3px), radial-gradient(circle, #E2573D 0 9px, #8F2A1A 10px 11px, rgba(0, 0, 0, .18) 12px, transparent 14px);
 }
-.string:focus-visible { outline: none; }
+.string:focus-visible { outline: 3px solid var(--pencil); outline-offset: -3px; border-radius: 22px; }
 .string:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--pencil); }
 .string:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px var(--pencil); }
 .slabels { display: flex; justify-content: space-between; gap: 12px; margin-top: -8px; font-family: var(--type); font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: .02em; }
@@ -293,7 +293,7 @@ button { font: inherit; color: inherit; }
   background: #FBF6EA; border: 1px solid var(--brass-art); border-radius: 8px; box-shadow: 0 10px 24px rgba(0, 0, 0, .3);
   font-family: var(--type); font-size: 12.5px; line-height: 1.4; color: var(--ink);
 }
-.custody h3 { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--brass-text); margin-bottom: 6px; }
+.custody .cs-h { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--brass-text); margin-bottom: 6px; }
 .custody dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; }
 .custody dt { color: var(--muted); font-weight: 700; }
 .custody dd { margin: 0; }
@@ -631,7 +631,7 @@ dialog.notebook[open] { animation: nbin .35s var(--ease); }
 .tile-status, .find-cap { max-width: 520px; }
 .find-cap { display: flex; align-items: center; gap: 14px; margin-top: 10px; }
 .fc-t { flex: 1; font-family: var(--display); font-weight: 600; font-size: 18px; line-height: 1.3; }
-.fseal { flex: 0 0 auto; display: grid; place-items: center; width: 78px; height: 78px; padding: 4px; text-align: center; border: 3px double var(--string); border-radius: 50%; color: var(--string); font-family: var(--display); font-weight: 800; font-size: 10.5px; line-height: 1.15; letter-spacing: 0; transform: rotate(-9deg); mix-blend-mode: multiply; }
+.fseal { flex: 0 0 auto; display: grid; place-items: center; width: 78px; height: 78px; padding: 4px; text-align: center; border: 3px double var(--string); border-radius: 50%; color: var(--red-text); font-family: var(--display); font-weight: 800; font-size: 10.5px; line-height: 1.15; letter-spacing: 0; transform: rotate(-9deg); mix-blend-mode: multiply; }
 
 /* timeline */
 .tlwrap { position: relative; padding-left: 28px; }
@@ -733,6 +733,91 @@ dialog.notebook[open] { animation: nbin .35s var(--ease); }
 .cmm { margin: 10px 0 0 38px; padding: 10px 14px; background: #FFF6C9; border-left: 3px solid var(--brass-art); transform: rotate(-.4deg); box-shadow: 0 1px 3px rgba(0, 0, 0, .15); }
 .cmm p:last-child { font-size: 16px; line-height: 1.5; }
 
+/* Effects, Lab, Wispr, drawer, closing, Exhibit Z */
+.intro-p { margin: 10px 0; font-size: 17px; line-height: 1.6; }
+.tl-d { font-family: var(--type); font-size: 12px; color: var(--muted); }
+.bags { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+.bag { position: relative; min-height: 64px; min-width: 150px; padding: 10px 14px; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; cursor: pointer; color: var(--ink);
+  background: linear-gradient(#F1E4C2, #E7D6AA); border: 1.5px solid var(--brass-art); border-radius: 4px 4px 14px 14px; box-shadow: 0 2px 5px rgba(0, 0, 0, .2); }
+.bag::before { content: ""; position: absolute; left: 12px; right: 12px; top: -7px; height: 8px; background: var(--brass-art); border-radius: 3px 3px 0 0; }
+.bag-l { font-family: var(--serif); font-style: italic; font-weight: 600; font-size: 17px; line-height: 1.25; }
+.bag[aria-expanded="true"] { background: linear-gradient(#EBD49B, #DDBE70); }
+.bag.self { border-style: dashed; background: #F4EEDD; color: var(--muted); }
+.stamp.dashed { border-style: dashed; }
+.bag-s { font-size: 10.5px; }
+.slipcard { margin-top: 12px; padding: 12px 14px; background: #FFFDF6; border-left: 3px solid var(--brass-art); box-shadow: 0 1px 4px rgba(0, 0, 0, .15); }
+.slipcard h3 { font-family: var(--display); font-size: 18px; } .slipcard p { margin-top: 6px; line-height: 1.5; }
+.philo { margin-top: 20px; padding: 16px 18px; background: #FBF6EA; border: 1px solid var(--paper-edge); font-family: var(--display); font-size: 19px; line-height: 1.5; color: var(--ink); }
+.philo p + p { margin-top: 10px; }
+
+.lab-banner { padding: 8px 12px; background: #231F1A; color: var(--paper); border-radius: 4px; font-family: var(--type); font-weight: 700; font-size: 14px; letter-spacing: .02em; margin: 6px 0 12px; }
+.prereg { padding: 12px 14px; background: #FFFDF6; border: 1px solid var(--paper-edge); border-left: 3px solid var(--brass-art); }
+.prereg-h { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.prereg-s { color: var(--brass-text); border-color: var(--brass-text); }
+.prereg-d { font-family: var(--type); font-size: 13px; color: var(--muted); }
+.hyp { font-family: var(--display); font-size: 19px; line-height: 1.4; margin-bottom: 8px; }
+.pending { margin-top: 12px; font-style: italic; color: var(--muted); }
+.dumbwrap { margin-top: 14px; }
+.dleg { font-size: 14px; color: var(--muted); } .dleg .k { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: -1px; } .kt { background: var(--pencil); } .kv { background: var(--brass-art); border: 1.5px solid var(--brass-text); } .kn { margin-left: 6px; font-style: italic; }
+.dumbs { list-style: none; margin: 8px 0 0; padding: 0; }
+.dumb-row { padding: 10px 0; border-top: 1px solid var(--paper-edge); }
+.dtask { font-size: 15px; line-height: 1.35; margin-bottom: 2px; }
+.dline { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 10px; }
+.dumb { width: 100%; height: auto; grid-column: 1 / -1; }
+.dumb .dl { stroke: var(--muted); stroke-width: 2; } .dumb .dt { fill: var(--pencil); } .dumb .dv { fill: var(--brass-art); stroke: var(--brass-text); stroke-width: 1.5; }
+.dumb .dn, .dax .dn { fill: var(--muted); font: 11px var(--type); } .dax .gl { stroke: var(--muted); stroke-width: 1; } .dax { width: 100%; height: auto; }
+.ord { font-family: var(--type); font-size: 11.5px; font-weight: 700; padding: 1px 8px; border: 1px solid var(--brass-text); border-radius: 10px; color: var(--brass-text); }
+.use { display: inline-flex; gap: 10px; font-family: var(--type); font-size: 12.5px; color: var(--muted); } .use .yes { color: var(--ink); font-weight: 700; }
+.lab-sum { margin: 14px 0 0 18px; padding: 0; line-height: 1.6; }
+.honest { margin-top: 10px; font-family: var(--display); font-weight: 600; font-size: 19px; }
+
+.wtags { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.wtag { min-height: 44px; display: inline-flex; align-items: center; gap: 10px; padding: 0 16px 0 8px; cursor: pointer; color: var(--ink); background: #FBF6EA; border: 1.5px solid var(--brass-art); border-radius: 22px; font-family: var(--serif); font-size: 15px; font-weight: 600; }
+.wtag[aria-expanded="true"] { background: #EBD49B; border-color: var(--brass-text); }
+.wn { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--brass-art); color: #2a1d05; font-family: var(--type); font-size: 13px; }
+.wcard { margin-top: 14px; padding: 14px; background: #FFFDF6; border: 1px solid var(--paper-edge); border-top: 3px solid var(--brass-art); }
+.wnav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.wstepbtn { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 0 12px; cursor: pointer; background: #FBF6EA; color: var(--ink); border: 1.5px solid var(--brass-art); border-radius: 10px; font-family: var(--serif); font-size: 14px; font-weight: 600; }
+.wstepbtn b { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--brass-text); font-family: var(--type); font-size: 12px; color: var(--brass-text); }
+.wstepbtn[aria-pressed="true"] { background: #EBD49B; border-color: var(--brass-text); }
+.wfact { font-size: 17px; line-height: 1.5; } .wsrc { margin-top: 6px; font-family: var(--type); font-size: 12.5px; color: var(--muted); } .wtxt { font-size: 17px; line-height: 1.55; }
+.wbars { margin-top: 14px; } .wbar { margin-top: 10px; } .wl { font-size: 15px; font-weight: 600; }
+.wtrack { height: 14px; margin-top: 4px; background: rgba(94, 86, 75, .15); border-radius: 7px; overflow: hidden; }
+.wfill { display: block; height: 100%; width: 0; background: var(--brass-art); border-radius: 7px; transition: width .9s var(--ease); transition-delay: calc(var(--i) * .25s); }
+.wbars.go .wfill { width: var(--w); }
+.wcap { margin-top: 8px; font-size: 14px; color: var(--muted); font-style: italic; }
+.pov { position: relative; margin-top: 20px; padding: 24px 16px 14px; background: #FFF6C9; border-left: 3px solid var(--brass-art); transform: rotate(-.4deg); }
+.pov-s { position: absolute; top: -10px; left: 12px; background: var(--paper); color: var(--brass-text); border-color: var(--brass-text); }
+.pov p { font-size: 17px; line-height: 1.55; }
+
+.drawers { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 12px; }
+.drawer { background: #FFFDF6; border: 1px solid var(--paper-edge); border-top: 5px solid var(--brass-art); box-shadow: 0 2px 5px rgba(0, 0, 0, .15); }
+.dr-btn { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 10px; width: 100%; min-height: 56px; padding: 10px 14px; text-align: left; cursor: pointer; background: none; border: 0; color: var(--ink); }
+.dr-n { font-family: var(--display); font-weight: 650; font-size: 19px; } .dr-s { grid-column: 1; color: var(--muted); font-size: 15px; } .dr-btn svg { grid-column: 2; grid-row: 1 / span 2; width: 22px; height: 22px; color: var(--brass-text); transition: transform .3s; }
+.drawer.open .dr-btn svg { transform: rotate(180deg); }
+.dr-body { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows .4s var(--ease), visibility 0s .4s; }
+.drawer.open .dr-body { grid-template-rows: 1fr; visibility: visible; transition-delay: 0s; } .dr-in { min-height: 0; overflow: hidden; padding: 0 14px; } .drawer.open .dr-in { padding-bottom: 14px; }
+
+.closing { padding-bottom: 38px; }
+.finds { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 14px; }
+.find { padding: 14px; background: #FFFDF6; border: 1px solid var(--paper-edge); border-left: 4px solid var(--string); } .find h3 { font-family: var(--display); font-size: 19px; } .find p { margin-top: 6px; line-height: 1.55; }
+.follow { margin-top: 10px; font-size: 13px; } .follow svg { width: 16px; height: 16px; } .follow[aria-pressed="true"] { background: #EBD49B; }
+.cline { margin: 26px 0 18px; font-family: var(--display); font-weight: 650; font-size: clamp(24px, 6.2vw, 34px); line-height: 1.25; }
+.oqs { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.oq { padding: 12px 14px; background: #FFF6C9; border-left: 3px solid var(--brass-art); transform: rotate(-.3deg); } .oq:nth-child(even) { transform: rotate(.35deg); }
+.oq-q { font-weight: 700; } .oq-a { margin-top: 4px; line-height: 1.5; } .oq-d { margin-top: 6px; font-family: var(--type); font-size: 12.5px; color: var(--muted); }
+.yourmove { margin-top: 24px; padding: 16px; border: 2px solid var(--brass-text); background: #FBF6EA; }
+.ym-h { font-family: var(--type); font-weight: 700; letter-spacing: .14em; color: var(--brass-text); } .yourmove ul { list-style: none; padding: 0; margin: 8px 0 0; } .yourmove li { padding: 4px 0; } .ym-v { user-select: all; font-family: var(--type); word-break: break-all; }
+.caselog { list-style: none; margin: 22px 0 0; padding: 0; font-size: 14.5px; color: var(--muted); } .caselog li { padding: 3px 0; } .cl-d { font-family: var(--type); font-weight: 700; color: var(--brass-text); }
+.cl-seal { position: absolute; right: 14px; bottom: 10px; width: 84px; height: 84px; opacity: 0; pointer-events: none; mix-blend-mode: multiply; transform: rotate(-8deg); }
+.cl-seal svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.cl-seal.on { opacity: .9; }
+.cl-seal.thud { animation: thud .28s var(--ease) both; }
+.exz .z-st { margin: 6px 0 10px; line-height: 1.5; } .z-bo { margin-bottom: 10px; }
+.zsegs { list-style: none; margin: 0; padding: 0; } .zseg { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px dashed rgba(94, 86, 75, .35); font-size: 15.5px; }
+.ztag { flex: 0 0 auto; font-family: var(--type); font-size: 11.5px; font-weight: 700; letter-spacing: .04em; padding: 2px 8px; border: 1px dashed var(--muted); border-radius: 10px; color: var(--muted); height: fit-content; }
+.zseg.flow .ztag { border-style: solid; border-color: var(--brass-text); color: var(--brass-text); }
+
 /* Review build only. */
 .cf-filled { outline: 2px dotted #E8A317; outline-offset: 3px; }
 .review-mark { position: fixed; inset: 0; z-index: 40; pointer-events: none; overflow: hidden; display: flex; align-items: center; justify-content: center; }
@@ -742,7 +827,16 @@ dialog.notebook[open] { animation: nbin .35s var(--ease); }
 }
 
 </style>
-
+<meta property="og:type" content="website">
+<meta property="og:title" content="Case File No. 001: Shriniwas Kholkute">
+<meta property="og:description" content="A portfolio built as a case file. Cross-examine the candidate.">
+<meta property="og:image" content="og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Case File No. 001: Shriniwas Kholkute">
+<meta name="twitter:description" content="A portfolio built as a case file. Cross-examine the candidate.">
+<meta name="twitter:image" content="og.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to the file</a>
@@ -1026,6 +1120,7 @@ CF.shell = (function () {
 
   function mountAll() {
     const main = document.getElementById('main');
+    CF.visibleSections = visible; // filled in page order as sections mount, so later sections can ask about earlier ones
     CF.order.forEach((id) => {
       const fn = CF.defs[id];
       if (!fn) return;
@@ -1070,6 +1165,17 @@ CF.shell = (function () {
 })();
 
 /* ---- 30-opening.js ---- */
+CF.sealMarkup =
+    '<svg viewBox="0 0 200 200" focusable="false"><defs>' +
+    '<filter id="sealrough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.2"/></filter>' +
+    '<path id="sealring" d="M100,100 m-68,0 a68,68 0 1,1 136,0 a68,68 0 1,1 -136,0"/></defs>' +
+    '<g filter="url(#sealrough)" fill="none" stroke="#D2452E">' +
+    '<circle cx="100" cy="100" r="94" stroke-width="6"/><circle cx="100" cy="100" r="84" stroke-width="2"/><circle cx="100" cy="100" r="52" stroke-width="2"/>' +
+    '<text fill="#D2452E" stroke="none" font-size="15" font-weight="800" style="font-family:var(--display)"><textPath href="#sealring" textLength="418" lengthAdjust="spacing">CASE FILE No. 001 - COME IN, DETECTIVE -</textPath></text>' +
+    '<circle cx="100" cy="82" r="10" stroke-width="4"/><path d="M107.5 89.5 L117 99" stroke-width="5" stroke-linecap="round"/>' +
+    '<text x="100" y="128" text-anchor="middle" fill="#D2452E" stroke="none" font-size="27" font-weight="800" letter-spacing="2" style="font-family:var(--display)">OPEN</text>' +
+    '</g></svg>';
+
 /* Exhibit 0: the opening. One dossier on the desk, a red string to drag, a name under tape. */
 CF.mountOpening = function (data, mount) {
   const ex = data.exhibit0 || {};
@@ -1088,16 +1194,7 @@ CF.mountOpening = function (data, mount) {
 
   /* ---------- the seal ---------- */
   const seal = h('div', { class: 'seal', 'aria-hidden': 'true' });
-  seal.innerHTML =
-    '<svg viewBox="0 0 200 200" focusable="false"><defs>' +
-    '<filter id="sealrough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.2"/></filter>' +
-    '<path id="sealring" d="M100,100 m-68,0 a68,68 0 1,1 136,0 a68,68 0 1,1 -136,0"/></defs>' +
-    '<g filter="url(#sealrough)" fill="none" stroke="#D2452E">' +
-    '<circle cx="100" cy="100" r="94" stroke-width="6"/><circle cx="100" cy="100" r="84" stroke-width="2"/><circle cx="100" cy="100" r="52" stroke-width="2"/>' +
-    '<text fill="#D2452E" stroke="none" font-size="15" font-weight="800" style="font-family:var(--display)"><textPath href="#sealring" textLength="418" lengthAdjust="spacing">CASE FILE No. 001 - COME IN, DETECTIVE -</textPath></text>' +
-    '<circle cx="100" cy="82" r="10" stroke-width="4"/><path d="M107.5 89.5 L117 99" stroke-width="5" stroke-linecap="round"/>' +
-    '<text x="100" y="128" text-anchor="middle" fill="#D2452E" stroke="none" font-size="27" font-weight="800" letter-spacing="2" style="font-family:var(--display)">OPEN</text>' +
-    '</g></svg>';
+  seal.innerHTML = CF.sealMarkup;
   seal.appendChild(h('i', { class: 'ripple' }));
   seal.play = function () {
     seal.classList.add('on');
@@ -1183,7 +1280,7 @@ CF.mountOpening = function (data, mount) {
       ['Status', custody.status], ['Note', custody.note],
     ].filter((r) => has(r[1]));
     chipPanel.textContent = '';
-    put(chipPanel, h('h3', { text: ui.custody || '' }),
+    put(chipPanel, h('p', { class: 'cs-h', text: ui.custody || '' }),
       h('dl', null, rows.map((r) => [h('dt', { text: r[0] }), h('dd', { text: r[1] })])),
       custody.verified === true ? h('span', { class: 'stamp-verified', text: 'VERIFIED' }) : null);
   }
@@ -1660,8 +1757,7 @@ CF.clues = (function () {
   function renderButton() {
     const n = found.size, N = list.length, rank = rankFor(n);
     btn.textContent = '';
-    put(btn, h('span', { class: 'l1', text: (ui().clues || '') + ' ' + n + '/' + N }), has(rank) ? h('span', { class: 'l2', text: rank }) : null);
-    btn.setAttribute('aria-label', (ui().clues || '') + ' ' + n + ' of ' + N + (has(rank) ? '. ' + (ui().rankLabel || '') + ': ' + rank : ''));
+    put(btn, h('span', { class: 'l1', text: (ui().clues || '') + ' ' + n + '/' + N }), has(rank) ? h('span', { class: 'l2' }, h('span', { class: 'sr-only', text: (ui().rankLabel || '') + ': ' }), rank) : null);
   }
 
   function renderNotebook() {
@@ -1750,7 +1846,7 @@ CF.makeSeal = function (chapter, target) {
   };
   const btn = h('button', { class: 'seal-btn', type: 'button', onclick: go },
     h('span', { class: 'sc-cue', text: ui.sealCue || '' }), h('span', { class: 'sc-q', text: chapter.teaser }), CF.icon('down'));
-  const note = h('aside', { class: 'seal-note', 'data-chapter': chapter.id, 'aria-label': ui.sealCue || undefined }, h('i', { class: 'clip', 'aria-hidden': 'true' }), btn);
+  const note = h('div', { class: 'seal-note', 'data-chapter': chapter.id }, h('i', { class: 'clip', 'aria-hidden': 'true' }), btn);
   if (CF.reduced || !window.IntersectionObserver) note.classList.add('unfolded');
   else {
     const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { note.classList.add('unfolded'); io.disconnect(); } }, { threshold: 0.5 });
@@ -1763,6 +1859,46 @@ CF.makeSeal = function (chapter, target) {
 /* The Briefing: a cream envelope that opens by itself, the leads (luggage tags on phones, the cork case board from 768px),
    and the red string that runs from a lead to the pins of its exhibits. */
 CF.board = { afterRail() {} };
+
+/* Red string along the left rail: from any element to the rail pins of the given sections. Used by the leads and the closing findings. */
+CF.pageStrings = (function () {
+  let layer = null;
+  const svgNS = () => {
+    if (!layer) { layer = s('svg', { class: 'page-strings', 'aria-hidden': 'true', focusable: 'false' }); document.getElementById('page').appendChild(layer); }
+    return layer;
+  };
+  function addPath(svg, dStr, animate) {
+    const p = s('path', { d: dStr, class: 'string-path', fill: 'none' });
+    svg.appendChild(p);
+    if (animate && !CF.reduced) {
+      const L = p.getTotalLength();
+      p.style.strokeDasharray = L; p.style.strokeDashoffset = L;
+      void p.getBoundingClientRect();
+      p.style.transition = 'stroke-dashoffset .6s cubic-bezier(.22,.61,.36,1)';
+      p.style.strokeDashoffset = 0;
+    }
+    return p;
+  }
+  function clear() { if (layer) while (layer.firstChild) layer.removeChild(layer.firstChild); }
+  function draw(from, ids, animate) {
+    if (CF.rail) CF.rail.place(true);
+    const page = document.getElementById('page'), pgr = page.getBoundingClientRect(), svg = svgNS();
+    svg.setAttribute('viewBox', '0 0 ' + pgr.width + ' ' + page.scrollHeight);
+    svg.style.height = page.scrollHeight + 'px';
+    const fr = from.getBoundingClientRect();
+    const x0 = fr.left - pgr.left, y0 = fr.top + fr.height / 2 - pgr.top;
+    let n = 0;
+    ids.forEach((id) => {
+      const pin = CF.rail && CF.rail.pins[id]; if (!pin) return;
+      const pr = pin.getBoundingClientRect();
+      const rx = pr.left + pr.width / 2 - pgr.left, y1 = pr.top + pr.height / 2 - pgr.top;
+      const dir = y1 >= y0 ? 1 : -1;
+      addPath(svg, 'M' + x0 + ' ' + y0 + ' L' + (rx + 14) + ' ' + y0 + ' Q' + rx + ' ' + y0 + ' ' + rx + ' ' + (y0 + 14 * dir) + ' L' + rx + ' ' + y1, animate); n++;
+    });
+    return n;
+  }
+  return { draw, clear, addPath };
+})();
 
 CF.defineSection('brief', function (d) {
   const ui = d.ui || {};
@@ -1777,7 +1913,7 @@ CF.defineSection('brief', function (d) {
   /* ---- envelope ---- */
   const art = h('span', { class: 'env-art', 'aria-hidden': 'true' },
     h('i', { class: 'env-body' }), h('i', { class: 'env-flap' }), h('i', { class: 'env-wax' }));
-  const envBtn = h('button', { class: 'env-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'brief-letter' }, art,
+  const envBtn = h('button', { class: 'env-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'brief-letter', 'aria-label': ui.openBriefing || undefined }, art,
     has(ui.openBriefing) ? h('span', { class: 'env-cap', text: ui.openBriefing }) : null);
 
   /* ---- leads ---- */
@@ -1816,32 +1952,15 @@ CF.defineSection('brief', function (d) {
 
   /* ---- strings ---- */
   const wide = () => window.matchMedia('(min-width: 768px)').matches;
-  let pageLayer = null;
-  function layer() {
-    if (!pageLayer) { pageLayer = s('svg', { class: 'page-strings', 'aria-hidden': 'true', focusable: 'false' }); document.getElementById('page').appendChild(pageLayer); }
-    return pageLayer;
-  }
   function clearStrings() {
     sel.timers.forEach(clearTimeout); sel.timers = [];
     while (stringsBoard.firstChild) stringsBoard.removeChild(stringsBoard.firstChild);
-    if (pageLayer) while (pageLayer.firstChild) pageLayer.removeChild(pageLayer.firstChild);
+    CF.pageStrings.clear();
     document.querySelectorAll('.sheet.hl').forEach((e) => e.classList.remove('hl'));
     document.querySelectorAll('.bpin.pulse').forEach((e) => e.classList.remove('pulse'));
   }
-  function addPath(svg, dStr, animate) {
-    const p = s('path', { d: dStr, class: 'string-path', fill: 'none' });
-    svg.appendChild(p);
-    if (animate && !CF.reduced) {
-      const L = p.getTotalLength();
-      p.style.strokeDasharray = L; p.style.strokeDashoffset = L;
-      void p.getBoundingClientRect();
-      p.style.transition = 'stroke-dashoffset .6s cubic-bezier(.22,.61,.36,1)';
-      p.style.strokeDashoffset = 0;
-    }
-    return p;
-  }
+  const addPath = CF.pageStrings.addPath;
   function draw(lead, animate) {
-    if (CF.rail && !wide()) CF.rail.place(true);
     const targets = (lead.exhibits || []).filter((id) => CF.visibleSections.includes(id));
     const from = leadBtns.find((b) => b.dataset.id === lead.id);
     if (!from || !targets.length) return;
@@ -1857,18 +1976,7 @@ CF.defineSection('brief', function (d) {
         pb.classList.add('pulse');
       });
     } else {
-      const page = document.getElementById('page'), pgr = page.getBoundingClientRect(), svg = layer();
-      svg.setAttribute('viewBox', '0 0 ' + pgr.width + ' ' + page.scrollHeight);
-      svg.style.height = page.scrollHeight + 'px';
-      const fr = from.getBoundingClientRect();
-      const x0 = fr.left - pgr.left, y0 = fr.top + fr.height / 2 - pgr.top;
-      targets.forEach((id, i) => {
-        const pin = CF.rail && CF.rail.pins[id]; if (!pin) return;
-        const pr = pin.getBoundingClientRect();
-        const rx = pr.left + pr.width / 2 - pgr.left, y1 = pr.top + pr.height / 2 - pgr.top;
-        const dir = y1 >= y0 ? 1 : -1;
-        addPath(svg, 'M' + x0 + ' ' + y0 + ' L' + (rx + 14) + ' ' + y0 + ' Q' + rx + ' ' + y0 + ' ' + rx + ' ' + (y0 + 14 * dir) + ' L' + rx + ' ' + y1, animate);
-      });
+      CF.pageStrings.draw(from, targets, animate);
     }
     targets.forEach((id) => { const sheet = document.getElementById(id); if (sheet) sheet.classList.add('hl'); });
     sel.timers.push(setTimeout(() => { document.querySelectorAll('.sheet.hl').forEach((e) => e.classList.remove('hl')); document.querySelectorAll('.bpin.pulse').forEach((e) => e.classList.remove('pulse')); }, 3000));
@@ -2016,7 +2124,7 @@ CF.ex = (function () {
     if (!list.length) return null;
     return h('div', { class: 'xexam' }, h('h3', { class: 'xe-h', text: ui().crossExam || '' }),
       list.map(({ x, i }) => {
-        const body = h('div', { class: 'xe-body', role: 'region' }, h('div', { class: 'xe-in' }, h('p', { path: base + '.crossExam.' + i + '.a', text: x.a })));
+        const body = h('div', { class: 'xe-body' }, h('div', { class: 'xe-in' }, h('p', { path: base + '.crossExam.' + i + '.a', text: x.a })));
         const btn = h('button', { class: 'xe-btn', type: 'button', 'aria-expanded': 'false' }, h('span', { path: base + '.crossExam.' + i + '.q', text: x.q }), CF.icon('chevron'));
         const item = h('div', { class: 'xe-item' }, btn, body);
         btn.addEventListener('click', () => { const o = btn.getAttribute('aria-expanded') === 'true'; btn.setAttribute('aria-expanded', String(!o)); item.classList.toggle('open', !o); });
@@ -2052,6 +2160,7 @@ CF.ex = (function () {
     const list = (items || []).filter((t) => has(t.label) || has(t.text));
     if (!list.length) return null;
     const ol = h('ol', { class: 'tl' }, list.map((t, i) => h('li', null, h('i', { class: 'tl-dot', 'aria-hidden': 'true' }),
+      has(t.date) ? h('p', { class: 'tl-d', text: t.date }) : null,
       has(t.label) ? h('p', { class: 'tl-l', path: base + '.timeline.' + i + '.label', text: t.label }) : null,
       has(t.text) ? h('p', { class: 'tl-t', path: base + '.timeline.' + i + '.text', text: t.text }) : null)));
     const wrap = h('div', { class: 'tlwrap' }, h('i', { class: 'tl-string', 'aria-hidden': 'true' }), ol);
@@ -2171,7 +2280,7 @@ CF.defineSection('exhibitB', function (d) {
       g.push(gap);
       g.push(s('text', { x: (X(sorted[0].x) + X(sorted[1].x)) / 2 + 6, y: (Y(sorted[0].y) + Y(sorted[1].y)) / 2 - 8, class: 'gap-l', 'text-anchor': 'middle', transform: 'rotate(' + (Math.atan2(Y(sorted[1].y) - Y(sorted[0].y), X(sorted[1].x) - X(sorted[0].x)) * 180 / Math.PI).toFixed(1) + ' ' + ((X(sorted[0].x) + X(sorted[1].x)) / 2 + 6) + ' ' + ((Y(sorted[0].y) + Y(sorted[1].y)) / 2 - 8) + ')' }, 'crossover not measured here'));
     }
-    const svg = s('svg', { viewBox: '0 0 ' + W + ' ' + H, class: 'bchart', role: 'img', 'aria-label': 'Boundary chart: index speedup over a full scan against symbols subscribed, both on log scales. The data table below lists the plotted points.' }, g);
+    const svg = s('svg', { viewBox: '0 0 ' + W + ' ' + H, class: 'bchart', role: 'img', 'aria-label': 'Boundary chart: index speedup over a full scan, by symbols subscribed, both on log scales. The data table below lists the plotted points.' }, g);
     const detail = h('p', { class: 'dot-detail', 'aria-live': 'polite' });
     const dots = sorted.map((p, i) => {
       const lab = String(p.y) + 'x';
@@ -2218,7 +2327,7 @@ CF.defineSection('ledger', function (d) {
   const statuses = ORDER.filter((s) => counts[s]).concat(Object.keys(counts).filter((s) => !ORDER.includes(s)));
   let filter = 'all';
   const rows = cases.map((c, i) => {
-    const body = h('div', { class: 'case-body', id: 'case-b-' + c.id, role: 'region' }, h('div', { class: 'case-in' },
+    const body = h('div', { class: 'case-body', id: 'case-b-' + c.id }, h('div', { class: 'case-in' },
       has(c.what) ? h('p', null, h('span', { class: 'label-brass', text: 'The plot twist' }), ' ', h('span', { path: 'ledger.cases.' + i + '.what', text: c.what })) : null,
       has(c.resolution) ? h('p', null, h('span', { class: 'label-brass', text: 'What I did next' }), ' ', h('span', { path: 'ledger.cases.' + i + '.resolution', text: c.resolution })) : null,
       has(c.note) ? h('p', null, h('span', { class: 'label-brass', text: c.project }), ' ', h('span', { path: 'ledger.cases.' + i + '.note', text: c.note })) : null));
@@ -2265,6 +2374,256 @@ CF.defineSection('decisions', function (d) {
       has(f.changeMyMind) ? h('aside', { class: 'cmm' }, h('p', { class: 'label-brass', text: 'What would change my mind' }), h('p', { path: 'decisions.forks.' + fi + '.changeMyMind', text: f.changeMyMind })) : null);
   });
   return CF.sheet('decisions', { title: ui.decisionsTitle, cls: 'forks' }, h('ol', { class: 'forklist' }, items));
+});
+
+/* ---- 80-effects.js ---- */
+/* Beyond the code (Roots): intro, a red-string timeline, evidence bags, one quiet philosophy card. Renders only with items or at least two timeline events. */
+CF.defineSection('effects', function (d) {
+  const ui = d.ui || {};
+  const e = d.effects || {};
+  const items = (e.items || []).filter((i) => has(i.title));
+  const tl = (e.timeline || []).filter((t) => has(t.label) || has(t.text));
+  if (!items.length && tl.length < 2) return null;
+
+  const TAGS = { document: 'DOCUMENT', link: 'LINK', 'self-reported': 'SELF-REPORTED' };
+  const detail = h('div', { class: 'bag-detail', 'aria-live': 'polite' });
+  const bags = items.map((it, i) => {
+    const self = it.tag === 'self-reported';
+    const b = h('button', { class: 'bag' + (self ? ' self' : ''), type: 'button', 'aria-expanded': 'false', 'data-i': String(i) },
+      h('span', { class: 'bag-l', text: it.title }), h('span', { class: 'stamp bag-s' + (self ? ' dashed' : ''), 'aria-hidden': 'true', text: TAGS[it.tag] || String(it.tag || '').toUpperCase() }),
+      h('span', { class: 'sr-only', text: TAGS[it.tag] || it.tag || '' }));
+    b.addEventListener('click', () => {
+      const same = b.getAttribute('aria-expanded') === 'true';
+      bags.forEach((x) => x.setAttribute('aria-expanded', 'false'));
+      detail.textContent = '';
+      if (same) return;
+      b.setAttribute('aria-expanded', 'true');
+      put(detail, h('div', { class: 'slipcard' }, h('h3', { text: it.title }),
+        has(it.note) ? h('p', { path: 'effects.items.' + i + '.note', text: it.note }) : null,
+        // a PDF or link opens in a new tab; a missing file never blocks anything
+        has(it.file) ? h('p', null, h('a', { class: 'repo-link', href: it.file, target: '_blank', rel: 'noopener', text: 'Open the document' })) : null,
+        has(it.url) ? h('p', null, h('a', { class: 'repo-link', href: it.url, target: '_blank', rel: 'noopener', text: it.url })) : null));
+    });
+    return b;
+  });
+  const intro = has(e.intro) ? e.intro.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean).map((p) => h('p', { class: 'intro-p', path: 'effects.intro', text: p })) : null;
+  const phil = e.philosophy && has(e.philosophy.text)
+    ? h('aside', { class: 'philo' }, e.philosophy.text.split(/\n\s*\n/).map((p) => h('p', { path: 'effects.philosophy.text', text: p.trim() }))) : null;
+  return CF.sheet('effects', { title: ui.effectsTitle, cls: 'effects' },
+    intro, tl.length >= 2 ? CF.ex.timeline(tl, 'effects') : null,
+    bags.length ? h('div', { class: 'bags' }, bags) : null, bags.length ? detail : null, phil);
+});
+
+/* ---- 82-lab.js ---- */
+/* The Voice Lab: n = 1, prediction written first. Every summary line is computed from the data; the only interpretation is one computed sentence. */
+CF.defineSection('lab', function (d) {
+  const ui = d.ui || {};
+  const lab = d.lab || {};
+  const tasks = (lab.tasks || []).filter((t) => t && t.typing && t.voice && isFinite(t.typing.seconds) && isFinite(t.voice.seconds));
+  if (!has(lab.hypothesis) && !tasks.length) return null;
+
+  const med = (a) => { const s = a.slice().sort((x, y) => x - y), n = s.length; return n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2; };
+  const fmt = (v) => (Math.round(v * 10) / 10).toString();
+  const kids = [];
+  kids.push(has(ui.labBanner) ? h('p', { class: 'lab-banner', text: ui.labBanner }) : null);
+
+  if (has(lab.hypothesis)) {
+    kids.push(h('div', { class: 'prereg' },
+      h('div', { class: 'prereg-h' }, h('span', { class: 'stamp prereg-s', 'aria-hidden': 'true', text: String(ui.preRegistered || '').toUpperCase() }),
+        h('span', { class: 'sr-only', text: ui.preRegistered || '' }), has(lab.preregisteredAt) ? h('span', { class: 'prereg-d', path: 'lab.preregisteredAt', text: lab.preregisteredAt }) : null),
+      h('p', { class: 'hyp', path: 'lab.hypothesis', text: lab.hypothesis }),
+      has(lab.usableDefinition) ? h('p', null, h('span', { class: 'label-brass', text: 'Usable means' }), ' ', h('span', { path: 'lab.usableDefinition', text: lab.usableDefinition })) : null,
+      has(lab.protocol) ? h('p', { path: 'lab.protocol', text: lab.protocol }) : null));
+  }
+
+  if (!tasks.length) {
+    kids.push(has(ui.labPending) ? h('p', { class: 'pending', text: ui.labPending }) : null);
+  } else {
+    const N = tasks.length;
+    const all = tasks.flatMap((t) => [t.typing.seconds, t.voice.seconds]);
+    const max = Math.max(...all);
+    const step = max <= 10 ? 2 : max <= 30 ? 5 : max <= 120 ? 20 : 60;
+    const top = Math.ceil(max / step) * step || step;
+    const W = 300, L = 6, R = 40;
+    const X = (v) => L + (v / top) * (W - L - R);
+    const rows = tasks.map((t, i) => {
+      const a = t.typing.seconds, b = t.voice.seconds;
+      const vFaster = b < a, tFaster = a < b;
+      const icon = (u) => (u ? '✓' : '○');
+      const svg = s('svg', { viewBox: '0 0 ' + W + ' 34', class: 'dumb', 'aria-hidden': 'true', focusable: 'false' },
+        s('line', { x1: X(a), x2: X(b), y1: 17, y2: 17, class: 'dl' }),
+        s('circle', { cx: X(a), cy: 17, r: tFaster ? 8 : 5.5, class: 'dt' + (tFaster ? ' fast' : '') }),
+        s('circle', { cx: X(b), cy: 17, r: vFaster ? 8 : 5.5, class: 'dv' + (vFaster ? ' fast' : '') }),
+        s('text', { x: X(a), y: 8, class: 'dn', 'text-anchor': 'middle' }, fmt(a) + 's'),
+        s('text', { x: X(b), y: 32, class: 'dn', 'text-anchor': 'middle' }, fmt(b) + 's'));
+      return h('li', { class: 'dumb-row' },
+        h('p', { class: 'dtask', text: t.name || ('Task ' + (i + 1)) }),
+        h('div', { class: 'dline' }, svg,
+          h('span', { class: 'ord', text: t.order === 'voice-first' ? 'V first' : 'T first' }),
+          h('span', { class: 'use' }, h('span', { class: 'ut' + (t.typing.usable ? ' yes' : ''), 'aria-hidden': 'true', text: 'T ' + icon(t.typing.usable) }), h('span', { class: 'uv' + (t.voice.usable ? ' yes' : ''), 'aria-hidden': 'true', text: 'V ' + icon(t.voice.usable) }))));
+    });
+    const axis = s('svg', { viewBox: '0 0 ' + W + ' 22', class: 'dax', 'aria-hidden': 'true', focusable: 'false' },
+      ...Array.from({ length: Math.floor(top / step) + 1 }, (_, k) => [s('line', { x1: X(k * step), x2: X(k * step), y1: 0, y2: 5, class: 'gl' }), s('text', { x: X(k * step), y: 17, class: 'dn', 'text-anchor': 'middle' }, String(k * step))]).flat(),
+      s('text', { x: W - R + 8, y: 17, class: 'dn' }, 'seconds'));
+    const vFast = tasks.filter((t) => t.voice.seconds < t.typing.seconds).length;
+    const vLost = tasks.filter((t) => t.voice.seconds > t.typing.seconds).length;
+    const uT = tasks.filter((t) => t.typing.usable).length, uV = tasks.filter((t) => t.voice.usable).length;
+    const leg = h('p', { class: 'dleg', 'aria-hidden': 'true' }, h('span', { class: 'k kt' }), ' Typing  ', h('span', { class: 'k kv' }), ' Voice  ', h('span', { class: 'kn', text: 'larger dot = faster side' }));
+    const table = h('div', { class: 'sr-only' }, h('table', null, h('caption', { text: ui.labTitle || 'Voice Lab' }),
+      h('thead', null, h('tr', null, ['Task', 'Order', 'Typing seconds', 'Typing usable', 'Voice seconds', 'Voice usable', 'Edits (typing / voice)'].map((x) => h('th', { text: x })))),
+      h('tbody', null, tasks.map((t, i) => h('tr', null, h('td', { text: t.name || 'Task ' + (i + 1) }), h('td', { text: t.order || '' }), h('td', { text: String(t.typing.seconds) }), h('td', { text: t.typing.usable ? 'yes' : 'no' }), h('td', { text: String(t.voice.seconds) }), h('td', { text: t.voice.usable ? 'yes' : 'no' }), h('td', { text: (t.typing.edits ?? '') + ' / ' + (t.voice.edits ?? '') }))))));
+    kids.push(h('div', { class: 'dumbwrap' }, leg, h('ol', { class: 'dumbs' }, rows), axis, table));
+    kids.push(h('ul', { class: 'lab-sum' },
+      h('li', { text: 'Median typing: ' + fmt(med(tasks.map((t) => t.typing.seconds))) + ' s. Median voice: ' + fmt(med(tasks.map((t) => t.voice.seconds))) + ' s.' }),
+      h('li', { text: 'Usable: typing ' + uT + ' of ' + N + ', voice ' + uV + ' of ' + N + '.' }),
+      h('li', { text: 'Tasks where voice lost: ' + vLost + ' of ' + N + '.' })));
+    kids.push(h('p', { class: 'honest', text: 'Voice was faster on ' + vFast + ' of ' + N + ' tasks and usable on ' + uV + ' of ' + N + '.' }));
+    if (has(lab.notes)) kids.push(h('p', { class: 'lab-notes', path: 'lab.notes', text: lab.notes }));
+  }
+  return CF.sheet('lab', { title: ui.labTitle, cls: 'lab' }, ...kids);
+});
+
+/* ---- 84-wispr.js ---- */
+/* Field notes on Wispr: numbered evidence tags, each opening a three-step stepper (observation, what it suggests, first test). Empty steps are hidden. */
+CF.defineSection('wispr', function (d) {
+  const ui = d.ui || {};
+  const w = d.wispr || {};
+  const moments = (w.moments || []).filter((m) => has(m.fact));
+  if (!moments.length) return null;
+  const panelBox = h('div', { class: 'wpanel', 'aria-live': 'polite' });
+  const tags = [];
+
+  function bars(m) {
+    const list = (m.bars || []).filter((b) => has(b.label) && isFinite(b.value));
+    if (!list.length) return null;
+    const max = 20; // one scale for both bars, 0 to 20 percent
+    const wrap = h('div', { class: 'wbars', role: 'img', 'aria-label': list.map((b) => b.label + ': about ' + b.value + '%').join('. ') },
+      list.map((b, i) => h('div', { class: 'wbar' }, h('p', { class: 'wl', text: b.label + ': about ' + b.value + '%' }),
+        h('div', { class: 'wtrack' }, h('i', { class: 'wfill', style: '--w:' + Math.min(100, (b.value / max) * 100) + '%;--i:' + i })))),
+      h('p', { class: 'wcap', text: 'Sensor Tower via TechCrunch. Web billing may explain part of the gap.' }));
+    CF.ex.whenVisible(wrap, () => wrap.classList.add('go'), 0.5);
+    return wrap;
+  }
+
+  function show(m, i, tag) {
+    const same = tag.getAttribute('aria-expanded') === 'true';
+    tags.forEach((t) => t.setAttribute('aria-expanded', 'false'));
+    panelBox.textContent = '';
+    if (same) return;
+    tag.setAttribute('aria-expanded', 'true');
+    const steps = [
+      { k: 'obs', label: 'Observation', node: h('div', null,
+        h('p', { class: 'wfact', path: 'wispr.moments.' + i + '.fact', text: m.fact }),
+        h('p', { class: 'wsrc' }, [m.source, m.date].filter(has).join(', ')),
+        has(m.url) ? h('p', null, h('a', { class: 'repo-link', href: m.url, target: '_blank', rel: 'noopener', text: m.url })) : null,
+        bars(m)) },
+      has(m.suggests) ? { k: 'sug', label: 'What it suggests', node: h('p', { class: 'wtxt', path: 'wispr.moments.' + i + '.suggests', text: m.suggests }) } : null,
+      has(m.firstTest) ? { k: 'test', label: 'First test', node: h('p', { class: 'wtxt', path: 'wispr.moments.' + i + '.firstTest', text: m.firstTest }) } : null,
+    ].filter(Boolean);
+    const body = h('div', { class: 'wstep' });
+    const nav = steps.length > 1 ? h('div', { class: 'wnav', role: 'group', 'aria-label': 'Steps' }) : null;
+    const go = (j) => {
+      body.textContent = ''; body.appendChild(steps[j].node);
+      if (nav) [...nav.children].forEach((b, k) => b.setAttribute('aria-pressed', String(k === j)));
+    };
+    if (nav) steps.forEach((st, j) => nav.appendChild(h('button', { class: 'wstepbtn', type: 'button', 'aria-pressed': 'false', onclick: () => go(j) }, h('b', { text: String(j + 1) }), h('span', { text: st.label }))));
+    else if (steps.length === 1) body.dataset.single = 'true';
+    put(panelBox, h('div', { class: 'wcard' }, nav ? nav : h('p', { class: 'label-brass', text: steps[0].label }), body));
+    go(0);
+  }
+
+  const list = h('ol', { class: 'wtags' }, moments.map((m, i) => {
+    const t = h('button', { class: 'wtag', type: 'button', 'aria-expanded': 'false' }, h('b', { class: 'wn', text: String(i + 1) }), h('span', { text: m.title || m.source || '' }));
+    t.addEventListener('click', () => show(m, i, t));
+    tags.push(t);
+    return h('li', null, t);
+  }));
+  const pov = w.pov && has(w.pov.text) ? h('aside', { class: 'pov' }, h('span', { class: 'stamp pov-s', text: 'HYPOTHESIS: NOT A RESULT' }), h('p', { path: 'wispr.pov.text', text: w.pov.text })) : null;
+  return CF.sheet('wispr', { title: ui.wisprTitle, cls: 'wispr' }, list, panelBox, pov);
+});
+
+/* ---- 86-locker.js ---- */
+/* The evidence drawer: one card per repo that has a url. Tap to open the five-minute verify box. */
+CF.defineSection('locker', function (d) {
+  const ui = d.ui || {};
+  const repos = ((d.locker && d.locker.repos) || []).filter((r) => has(r.url) && has(r.name));
+  if (!repos.length) return null;
+  const cards = repos.map((r, i) => {
+    const vb = CF.ex.verifyBox(Object.assign({}, r.verify || {}, { repoUrl: r.url }), r.name);
+    const body = h('div', { class: 'dr-body', id: 'dr-b' + i }, h('div', { class: 'dr-in' }, vb));
+    const btn = h('button', { class: 'dr-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'dr-b' + i },
+      h('span', { class: 'dr-n', text: r.name }), has(r.summary) ? h('span', { class: 'dr-s', text: r.summary }) : null, CF.icon('chevron'));
+    const li = h('li', { class: 'drawer' }, btn, body);
+    btn.addEventListener('click', () => { const o = btn.getAttribute('aria-expanded') === 'true'; btn.setAttribute('aria-expanded', String(!o)); li.classList.toggle('open', !o); });
+    return li;
+  });
+  return CF.sheet('locker', { title: ui.lockerTitle, cls: 'locker' }, h('ul', { class: 'drawers' }, cards));
+});
+
+/* ---- 88-closing.js ---- */
+/* Closing notes: three findings tied to their exhibits by red string, the closing line, dated open questions, YOUR MOVE, the case log. Then Exhibit Z. */
+CF.defineSection('closing', function (d) {
+  const ui = d.ui || {};
+  const c = d.closing || {};
+  const findings = (c.findings || []).filter((f) => has(f.title) || has(f.text)).slice(0, 3);
+  const qs = (c.openQuestions || []).filter((q) => has(q.q) && has(q.a));
+  const ct = c.contact || {};
+  const contact = [['Email', ct.email, (v) => 'mailto:' + v], ['LinkedIn', ct.linkedin, (v) => v], ['GitHub', ct.github, (v) => v]].filter((x) => has(x[1]));
+  const log = (d.caseLog || []).filter((e) => has(e.entry));
+  if (!findings.length && !has(c.line) && !qs.length && !contact.length && !log.length) return null;
+
+  const fcards = findings.map((f, i) => {
+    const ids = (f.exhibits || []).filter((id) => CF.visibleSections.includes(id));
+    const card = h('li', { class: 'find' });
+    const body = [h('h3', { path: 'closing.findings.' + i + '.title', text: f.title || '' }), has(f.text) ? h('p', { path: 'closing.findings.' + i + '.text', text: f.text }) : null];
+    if (ids.length) {
+      const btn = h('button', { class: 'btn follow', type: 'button', 'aria-pressed': 'false' }, CF.icon('magnifier'), h('span', { text: ids.map((id) => CF.sectionLabel(id)).filter(has).join(' · ') }));
+      btn.addEventListener('click', () => {
+        const on = btn.getAttribute('aria-pressed') === 'true';
+        document.querySelectorAll('.follow[aria-pressed="true"]').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+        CF.pageStrings.clear();
+        document.querySelectorAll('.sheet.hl').forEach((e) => e.classList.remove('hl'));
+        if (on) return;
+        btn.setAttribute('aria-pressed', 'true');
+        CF.pageStrings.draw(btn, ids, true);
+        ids.forEach((id) => { const s2 = document.getElementById(id); if (s2) s2.classList.add('hl'); });
+        setTimeout(() => document.querySelectorAll('.sheet.hl').forEach((e) => e.classList.remove('hl')), 3000);
+      });
+      body.push(btn);
+    }
+    put(card, ...body);
+    return card;
+  });
+
+  const stamp = h('div', { class: 'cl-seal', 'aria-hidden': 'true' });
+  stamp.innerHTML = CF.sealMarkup;
+  CF.ex.whenVisible(stamp, (instant) => { stamp.classList.add('on'); if (!instant) stamp.classList.add('thud'); }, 0.6);
+
+  const move = contact.length ? h('div', { class: 'yourmove' }, h('p', { class: 'ym-h', text: 'YOUR MOVE' }),
+    h('ul', null, contact.map(([label, v, href]) => h('li', null, h('span', { class: 'label-brass', text: label }), ' ',
+      h('span', { class: 'ym-v', text: v }), ' ', h('a', { class: 'repo-link', href: href(v), target: label === 'Email' ? undefined : '_blank', rel: 'noopener', text: 'Open' }))))) : null;
+
+  return CF.sheet('closing', { title: ui.closingTitle, cls: 'closing' },
+    fcards.length ? h('ul', { class: 'finds' }, fcards) : null,
+    has(c.line) ? h('p', { class: 'cline', path: 'closing.line', text: c.line }) : null,
+    qs.length ? h('ul', { class: 'oqs' }, qs.map((q, i) => h('li', { class: 'oq' }, h('p', { class: 'oq-q', path: 'closing.openQuestions.' + i + '.q', text: q.q }),
+      h('p', { class: 'oq-a', path: 'closing.openQuestions.' + i + '.a', text: q.a }), has(q.date) ? h('p', { class: 'oq-d', text: 'Answer of ' + q.date }) : null))) : null,
+    move,
+    log.length ? h('ol', { class: 'caselog', 'aria-label': 'Case log' }, log.map((e) => h('li', null, h('span', { class: 'cl-d', text: e.date || '' }), ' ', h('span', { text: e.entry })))) : null,
+    stamp);
+});
+
+/* Exhibit Z: which parts were spoken with Flow and which were written from sources. Flags are literal. */
+CF.defineSection('exhibitZ', function (d) {
+  const z = d.exhibitZ || {};
+  const SEG = { S01: 'exhibit0', S02: 'brief', S03: 'against', S04: 'exhibitA', S06: 'exhibitB', S07: 'ledger', S08: 'effects', S09: 'decisions', S10: 'effects', S11: 'effects', S12: 'lab', S13: 'wispr', S14: 'closing' };
+  const segs = (z.segments || []).filter((s2) => has(s2.label) && (!SEG[s2.id] || CF.visibleSections.includes(SEG[s2.id])));
+  if (!has(z.statement) && !segs.length) return null;
+  return CF.sheet('exhibitZ', { title: 'Exhibit Z', tab: 'Z', cls: 'exz' },
+    has(z.statement) ? h('p', { class: 'z-st', text: z.statement }) : null,
+    has(z.builtOn) ? h('p', { class: 'z-bo' }, h('span', { class: 'label-brass', text: 'Built on' }), ' ', z.builtOn) : null,
+    h('ul', { class: 'zsegs' }, segs.map((s2) => h('li', { class: 'zseg' + (s2.spokenWithFlow === true ? ' flow' : '') },
+      h('span', { class: 'zl', text: s2.label }), h('span', { class: 'ztag', text: s2.spokenWithFlow === true ? 'Spoken with Flow' : 'Written from sources' })))));
 });
 
 /* ---- 90-main.js ---- */

@@ -4,6 +4,37 @@ Newest milestone first. Honest reporting: "not tested" means nobody ran it.
 
 ---
 
+## M4 "Every A-tier chapter" (Stages 10 without the journey map, 11, 12, 14)
+
+### What changed
+- **Stage 10, Roots (`80-effects.js`).** Renders only with items or at least two timeline events (so it exists in the review build, not in production). Intro paragraphs, red-string timeline (dates only if given), evidence bags (DOCUMENT and LINK solid, SELF-REPORTED dashed and muted; tap opens a detail slip; a PDF or link opens in a new tab with noopener; a missing file never blocks), one quiet philosophy card.
+- **Stage 11.** The Voice Lab (`82-lab.js`): the banner `ui.labBanner`, PRE-REGISTERED stamp with `preregisteredAt`, hypothesis, usable definition, "Results pending". With results: paired dumbbell rows (typing dot, voice dot, line, larger dot on the faster side, T first / V first, usable marks), hidden data table, summary lines computed from the data (medians, usable counts, tasks where voice lost) and one computed honest-read sentence. Field notes on Wispr (`84-wispr.js`): five numbered tags, three-step stepper with empty steps hidden (no stepper when only the observation exists), link only when `url` exists, the India bars on one 0 to 20% scale with the exact caption, the "HYPOTHESIS: NOT A RESULT" slip only when text exists.
+- **Stage 12.** Evidence drawer (`86-locker.js`, only repos with a url; verify box with steps, command and Copy that survives a refused clipboard, expected output, repo link). Closing notes (`88-closing.js`): finding cards with red-string buttons to their exhibits (reuses `CF.pageStrings`), the closing line in large Fraunces, dated "Answer of" slips, YOUR MOVE from `closing.contact` only (selectable text plus link), the case log, and the seal that thuds again when scrolled into view. Exhibit Z: statement, `builtOn`, and a row per segment whose section has content, tagged "Spoken with Flow" only when `spokenWithFlow` is true.
+- **Stage 14.** Share assets (`scripts/assets.mjs` draws `dist/og.png` 1200x630, `favicon-32.png`, `apple-touch-icon.png`; `build.py` writes `favicon.svg`, `robots.txt`, `sitemap.xml`, the styled `404.html`, and Open Graph, Twitter and apple-touch tags). Accessibility fixes found by axe (see below). Warm-words audit.
+
+### Tests
+All stages together: 364+ checks pass (`node scripts/test.mjs`). New ones: Roots hidden when empty and shown from the draft; bags with test-supplied items; Lab pre-registration state and, with test-supplied results, the computed medians, usable counts, tasks where voice lost, the honest-read sentence, larger-dot emphasis and order markers (the site never contains sample results); Wispr tags, steps, link rule, bar widths (70% and 10% of the track), caption, POV slip; drawer with test-supplied repo links, Copy accepted and refused; closing in production (case log only) and review; strings from findings land on their pins; YOUR MOVE with test-supplied contact data; Exhibit Z flags literal (only the opening takes are "Spoken with Flow"); meta tags and share files; JS size; warm-words scan of every `ui` string and every string literal in the source; axe-core with zero violations in six states (production phone and laptop, review phone with every section opened, review laptop, notebook dialog, plain-reading dialog); heading order; landmarks; every visible control at least 44x44; a 90-stop keyboard walk where every stop shows a focus indicator.
+
+### Numbers (4x CPU throttle, phone, production)
+FCP about 180 to 200 ms, LCP about 450 ms, long-task blocking about 150 ms, zero resources fetched, layout shift outside the text block under 0.001. Inline JS 101 KB raw, 29 KB gzipped (fonts excluded). Whole page 417 KB with fonts and data.
+**Lighthouse was not run**: it is not installed and the brief says to install nothing beyond the Stage 1 packages. The numbers above come from the same browser metrics; treat the Lighthouse score as unmeasured. `axe-core` itself was installed (dev dependency) because the brief requires an axe run.
+
+### Accessibility fixes the axe run forced
+`.clues` accessible name now contains its visible text; chapter seals are `div`s (duplicate landmarks); the envelope button has a name once the caption disappears; the "19 FINDINGS" seal text uses the red-text token (contrast); the custody panel title is not a stray `h3` after the `h1`; disclosure panels are not unlabeled regions; the range input has a real outline when focused.
+
+### Decisions
+- **Production data for the Lab, Roots, drawer and contact is empty**, so those sections do not exist in `index.html` yet; the closing shows only the dated case log.
+- **Canonical, `og:image` absolute URL, sitemap `<loc>`** need the final public address. `build.py` reads `SITE_URL` from the environment; without it the sitemap is an empty `<urlset>`, there is no canonical, and `og:image` is the relative `og.png`. Set `SITE_URL=https://...` at publish time (Stage 16).
+- **404 line** ("This page wandered off, detective. The rest of the file is right where you left it.") is new chrome copy the spec asked for ("a friendly line"); please read it.
+- Chrome strings added in this milestone: "The plot twist", "What I did next" (ledger labels), "Observation", "What it suggests", "First test", "Built on", "Exhibit Z", "Usable means", "Back to the file", "Open the document", "Median typing...", "Usable: typing a of N...", "Tasks where voice lost" (spec's wording), the honest-read sentence (spec's wording).
+- Exhibit Z lists "PitDB" in production because the ledger section is visible; the PitDB note itself exists only in the review build.
+- **Founder review of the first screen** (three weakest things): (1) for the first 0.4 s the hero is an empty block before typing starts; (2) on a phone the top bar is crowded (title, Clues with rank, menu); (3) the seal slightly overlaps the end of the name. I changed none of them: the first is the intended beat, the second fits and passes tap-target tests, and the third is the stamp doing its job.
+
+### Not verified
+Real phones, Safari and Firefox, a screen reader, Lighthouse.
+
+---
+
 ## M3 "The exhibits" (Stages 7, 8, 9: ledger and forks)
 
 ### What changed

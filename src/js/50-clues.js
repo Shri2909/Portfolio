@@ -18,8 +18,7 @@ CF.clues = (function () {
   function renderButton() {
     const n = found.size, N = list.length, rank = rankFor(n);
     btn.textContent = '';
-    put(btn, h('span', { class: 'l1', text: (ui().clues || '') + ' ' + n + '/' + N }), has(rank) ? h('span', { class: 'l2', text: rank }) : null);
-    btn.setAttribute('aria-label', (ui().clues || '') + ' ' + n + ' of ' + N + (has(rank) ? '. ' + (ui().rankLabel || '') + ': ' + rank : ''));
+    put(btn, h('span', { class: 'l1', text: (ui().clues || '') + ' ' + n + '/' + N }), has(rank) ? h('span', { class: 'l2' }, h('span', { class: 'sr-only', text: (ui().rankLabel || '') + ': ' }), rank) : null);
   }
 
   function renderNotebook() {

@@ -163,8 +163,71 @@ sets.M3 = async () => {
 };
 sets.M3.vp = true;
 
+sets.M4 = async () => {
+  for (const [vn, vp, touch, label] of [['phone', VIEWPORTS.phone, true, '390x844'], ['laptop', VIEWPORTS.laptop, false, '1366x650']]) {
+    const { page, ctx } = await openPage(browser, { viewport: vp, touch });
+    await rdy(page); await sleep(400);
+    const tap = (s) => (touch ? page.tap(s) : page.click(s));
+    await page.evaluate(() => window.CF.opening.skip()); await sleep(1700);
+    await snap(page, `${vn}-1-opening.png`, `Production build, opening (${label}); the top bar now carries Clues and the chapter menu.`, label);
+    await scr(page, '#brief', -100); await sleep(1500);
+    await snap(page, `${vn}-2-briefing.png`, `The briefing in production: greeting and leads (the summary stays empty until recorded), ${label}.`, label);
+    await scr(page, '#wispr'); await tap('#wispr .wtags li:nth-child(1) .wtag'); await sleep(1800);
+    await snap(page, `${vn}-3-wispr-india.png`, `Field notes on Wispr: five numbered evidence tags; tag 1 opens the observation with the India bars (14% of installs, 2% of in-app-purchase revenue), ${label}. Empty steps are hidden, so there is no stepper yet.`, label);
+    await scr(page, '#closing'); await sleep(900);
+    await snap(page, `${vn}-4-closing.png`, `Closing notes in production: only what exists (the dated case log), ${label}.`, label);
+    await scr(page, '#exhibitZ'); await sleep(500);
+    await snap(page, `${vn}-5-exhibit-z.png`, `Exhibit Z: only the opening takes are tagged "Spoken with Flow"; everything else says "Written from sources", ${label}.`, label);
+    await ctx.close();
+  }
+  {
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html' });
+    await rdy(page); await sleep(400);
+    await scr(page, '#effects .tlwrap', 150); await sleep(2200);
+    await snap(page, 'phone-6-review-roots.png', 'Review build: Roots (Beyond the code) with the drafted intro and a red-string timeline.', '390x844');
+    await scr(page, '#lab'); await sleep(500);
+    await snap(page, 'phone-7-review-lab.png', 'Review build: the Voice Lab pre-registration (banner, PRE-REGISTERED stamp, prediction, Results pending). The results chart is tested with test-only data.', '390x844');
+    await scr(page, '#wispr'); await page.tap('#wispr .wtags li:nth-child(1) .wtag'); await sleep(900); await page.tap('#wispr .wstepbtn:nth-child(2)'); await sleep(500);
+    await snap(page, 'phone-8-review-wispr-stepper.png', 'Review build: the three-step stepper (Observation, What it suggests, First test) from the drafted text.', '390x844');
+    await scr(page, '#closing .oqs', 100); await sleep(700);
+    await snap(page, 'phone-9-review-closing.png', 'Review build: findings with red-string buttons, the closing line, dated open-question slips.', '390x844');
+    await page.tap('#closing .find:nth-child(1) .follow'); await sleep(1200);
+    await scr(page, '#closing .finds', 120); await sleep(300);
+    await snap(page, 'phone-10-review-closing-string.png', 'Review build: tapping a finding runs red string to its exhibits.', '390x844');
+    await ctx.close();
+  }
+  {
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
+    await page.goto('file://' + join(ROOT, 'dist', '404.html')); await sleep(500);
+    await snap(page, 'phone-11-404.png', 'The styled 404 page: "FILE NOT FOUND" with a friendly way back.', '390x844');
+    await ctx.close();
+  }
+  copyFileSync(join(ROOT, 'dist', 'og.png'), join(shots, 'share-image-og.png'));
+  gallery.push({ file: 'screenshots/share-image-og.png', caption: 'The 1200x630 share image, drawn in code (green desk, paper sheet, subject, the case seal).', vp: '1366x650' });
+};
+sets.M4.vp = true;
+
 /* ------------------------------------------------------------ demo video */
+const scrollThrough = (page, pxPerSec = 520) => page.evaluate(async (v) => {
+  const t0 = performance.now();
+  await new Promise((res) => {
+    let last = performance.now();
+    const tick = () => {
+      const now = performance.now(), dt = (now - last) / 1000; last = now;
+      window.scrollBy({ top: v * dt, behavior: 'instant' });
+      const max = document.documentElement.scrollHeight - innerHeight;
+      if (window.scrollY >= max - 2 || now - t0 > 60000) res(); else setTimeout(tick, 16);
+    };
+    tick();
+  });
+}, pxPerSec);
 const videos = {
+  M4: async (page) => {
+    await page.waitForFunction(() => window.CF && window.CF.opening);
+    await page.evaluate(() => window.CF.opening.skip()); await sleep(1600);
+    await scrollThrough(page, 560);
+    await sleep(800);
+  },
   M3: async (page) => {
     await page.waitForFunction(() => window.CF && window.CF.opening);
     await page.evaluate(() => window.CF.opening.skip()); await sleep(800);
@@ -222,7 +285,7 @@ if (videos[name]) {
   const vb = await launch({ slowMo: 80 });
   const ctx = await vb.newContext({ viewport: VIEWPORTS.phone, hasTouch: true, isMobile: true, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
-  await page.goto('file://' + join(dir, name === 'M1' || name === 'M3' ? 'index.html' : 'review.html'));
+  await page.goto('file://' + join(dir, ['M1', 'M3', 'M4', 'M5', 'final'].includes(name) ? 'index.html' : 'review.html'));
   const rec = await startRecording(page);
   await videos[name](page);
   const info = await rec.stop(join(dir, 'demo.webm'));
