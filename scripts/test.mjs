@@ -108,7 +108,8 @@ for (const [vn, vp] of [['phone', VIEWPORTS.phone], ['laptop', VIEWPORTS.laptop]
   check('links are the five repositories, the essay and the résumé only', ev.flatMap((c) => c.links).every((u) => /^https:\/\/(github\.com\/Shri2909\/|drive\.google\.com\/file\/d\/)/.test(u)));
   await page.evaluate(() => CF.openEvidence('c3')); await sleep(1200);
   check('receipt opens its case', await page.evaluate(() => document.getElementById('ev-c3').open && document.activeElement.closest('details') === document.getElementById('ev-c3')));
-  check('no interview button without a real contact', (await page.locator('a[href^="mailto:"]').count()) === 0 && !/INVITE ME/.test(await page.textContent('#verdict')));
+  const em = content.site.contact.email;
+  check('interview button appears only with a real contact', em ? (await page.locator('#verdict a[href="mailto:' + em + '"]').count()) === 1 && /INVITE ME TO AN INTERVIEW/.test(await page.textContent('#verdict')) : (await page.locator('a[href^="mailto:"]').count()) === 0);
 
   // 60-second file
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
@@ -178,8 +179,8 @@ if (process.env.COPY_FILE && existsSync(process.env.COPY_FILE)) {
     }
   }
   // interview CTA is intentionally absent (no contact supplied); the closing line lives in the verdict
-  const real = missing.filter((x) => x !== 'invite me to an interview');
-  check('all ' + n + ' copy lines are on the page (except the contact-less interview CTA)', real.length === 0, real.join(' || '));
+  const real = missing;
+  check('all ' + n + ' copy lines are on the page', real.length === 0, real.join(' || '));
   await ctx.close();
 } else console.log('  skipped (set COPY_FILE to the Focused Website Copy)');
 
