@@ -1,108 +1,163 @@
 {
   "_meta": {
-    "purpose": "Production content. Only sourced facts and text Shriniwas has actually spoken or confirmed. Empty string / empty array = render nothing.",
-    "rule": "Never put drafted scripts here. They live in draft.json until he records them with Flow and the recorded text is pasted in.",
-    "authoredByClaude": [
-      "ui.*",
-      "specialties.title/evidence",
-      "clues.text",
-      "exhibitA.call",
-      "exhibitB.call",
-      "exhibitB.chips",
-      "ledger.cases (summarised from repo-reported Profile archive)",
-      "forks.options/evidence",
-      "chapters (titles and teaser questions)",
-      "ranks",
-      "thumbprint caption",
-      "easter-egg text"
+    "purpose": "Public content for Case File 001. Visible text comes from the Final Website Copy (primary story), the Final Master Document (structure and interactions) and the Evidence Package (drawer). Nothing here is invented; fields marked UI are interface labels.",
+    "sources": [
+      "Case_File_001_Focused_Website_Copy.md",
+      "Operation_Case_File_001_Final_Master.md",
+      "Case_File_001_Evidence_And_Submission_Package.md"
     ],
-    "needsHisApproval": "Every field listed in authoredByClaude is wording by Claude from his sourced record. He should read each once.",
-    "unverifiedGates": {
-      "exhibitB.boundary.confirmed": "false until he confirms in the TipIndex README that 0.585 means the index LOST at 1,000 symbols. While false, production hides the boundary chart's 0.585 point and shows only the 40.6x point with the note.",
-      "exhibitB.workingKnowledgeConfirmed": "false until he confirms he can answer any question about TipIndex code live."
-    }
+    "rule": "Empty field = render nothing."
   },
   "site": {
-    "title": "Case File No. 001: Shriniwas Kholkute",
-    "description": "A portfolio built as a case file. Cross-examine the candidate.",
+    "title": "Case File 001: The First Answer Is the Suspect",
+    "description": "324 tests passed. Then an audit found 19 problems. Would you have shipped it? Shriniwas Kholkute's case file for Wispr Flow's India growth internship.",
     "subject": "Shriniwas Kholkute",
-    "tagline": "Every claim in this file shows where it came from. Go ahead, check.",
-    "openedOn": "2 Nov 2026",
     "contact": {
       "email": "",
       "linkedin": "",
       "github": ""
-    }
+    },
+    "resume": "https://drive.google.com/file/d/19DXFxUoCiynAvErP6KQVq-ArzV69Mgf2/view?usp=drive_link",
+    "essay": "https://drive.google.com/file/d/1ccYZ-WZOZTLmZ4A23Ed9yNGy9jiCNi2k/view?usp=drive_link"
   },
   "ui": {
+    "brand": "CASE FILE No. 001",
+    "brandShort": "No. 001",
+    "navCase": "The case",
+    "navEvidence": "Evidence",
+    "navSixty": "60-second file",
+    "skip": "Skip to the file",
+    "close": "Close",
+    "plainly": "In plain words",
+    "evidenceTitle": "Evidence drawer",
+    "evidenceIntro": "Every figure above has a source and a status. Statuses are plain text: PUBLIC, LOCAL-BRANCH, REPO-REPORTED, PERSONALLY CONFIRMED, UNRESOLVED, PROPOSED.",
+    "inspect": "Where to inspect",
+    "purpose": "Plain-English purpose",
+    "finding": "The central finding",
+    "mine": "My part",
+    "results": "Recorded results",
+    "status": "Status",
+    "more": "Other findings",
     "raw": "As I said it",
     "flow": "As Flow wrote it",
-    "hint": "Go on, drag the line. Watch a messy thought tidy itself up.",
+    "hint": "Drag the red string from my words to Flow's words.",
     "legend": "Blue pencil: words Flow trimmed. Highlighted: words Flow smoothed or added.",
     "chip": "A real take, straight from my Flow history",
     "custody": "Where this came from",
-    "cue": "Open the file",
-    "skip": "Skip the intro",
-    "replay": "Play it again",
     "readBoth": "Read it plainly",
     "take1": "Take 1",
     "take2": "Take 2",
-    "teaSlip": "Take your time. The case isn't going anywhere.",
-    "ledgerTitle": "Plot twists, and what I did next",
-    "decisionsTitle": "Forks in the road",
-    "labTitle": "The Voice Lab",
-    "wisprTitle": "Field notes on Wispr",
-    "effectsTitle": "Beyond the code",
-    "lockerTitle": "The evidence drawer",
-    "closingTitle": "Closing notes, detective",
-    "greeting": "Welcome, detective. Here is your briefing.",
-    "openBriefing": "Open the briefing",
-    "leadsTitle": "Where shall we start?",
-    "leadsHint": "Pick a lead and the red string will show you where the evidence is.",
-    "notYet": "Not shown yet",
-    "evidence": "Evidence",
-    "worth": "Why it matters",
-    "warningTitle": "Fair warning",
-    "warningSub": "Three honest limits, before you look at anything else.",
-    "afterWarning": "Those are my honest limits. Now, the evidence.",
-    "crossExam": "Just one more thing...",
-    "makeCall": "Make your call, detective",
-    "justShow": "Just show me",
-    "verify": "Check my work in five minutes",
-    "copy": "Copy",
-    "copied": "Copied",
-    "clues": "Clues",
-    "clueLocked": "Still out there, somewhere in",
-    "notebookTitle": "Clue notebook",
-    "notebookEmpty": "No clues yet. Tap the little brass magnifiers as you read.",
-    "cluesDone": "All clues found. Nicely done, detective.",
-    "labBanner": "n = 1. One person, five tasks. Not a study.",
-    "labPending": "Results pending",
-    "preRegistered": "Pre-registered",
-    "tour": "90-second read",
-    "footer": "Case File No. 001 · opened 2 Nov 2026",
-    "sealCue": "Next chapter",
-    "rankLabel": "Your rank",
-    "boardTitle": "The case board",
-    "boardHint": "Tap a pin. Follow the red string.",
-    "thumbprintTitle": "The thumbprint of this case",
-    "thumbprintCaption": "A decorative print drawn from the numbers in this file. It measures nothing about a person.",
-    "marginaliaHint": "Move the lamp over the margins. Someone left pencil notes.",
-    "journeyTitle": "The route so far",
-    "journeyNote": "Dashed means not yet.",
-    "coffeeRingSlip": "You found the coffee ring. Everything on this page says where it came from.",
-    "elementary": "Elementary, my dear detective."
+    "takes": "Takes",
+    "modelBadge": "MODEL OF DOCUMENTED BEHAVIOR",
+    "modelNote": "A simulated connection, not real monitoring.",
+    "logicLabel": "Which logic?",
+    "logicOld": "Original logic",
+    "logicNew": "Corrected logic",
+    "arrivalLabel": "When the reply arrives",
+    "deadlineLabel": "3-second deadline",
+    "guessAsk": "How many problems did the separate audit find?"
   },
-  "exhibit0": {
-    "label": "Exhibit 0",
-    "question": "What does \"the best interface is the one you forget exists\" mean to you as someone who builds systems?",
-    "custody": {
-      "source": "My Wispr Flow history",
-      "tool": "Wispr Flow",
-      "date": "2 Nov 2026",
-      "status": "Output matches Flow history word for word",
-      "note": "\"As I said it\" is my own hand transcription of what I said, typed from my voice memo.",
-      "verified": false
+  "hero": {
+    "title": "CASE FILE 001 — THE FIRST ANSWER IS THE SUSPECT",
+    "byline": "India Growth Internship · Shriniwas Kholkute · 3 November 2026",
+    "headline": "324 tests passed. Then an audit found 19 problems.",
+    "question": "Would you have shipped it?",
+    "lede": "Five projects. Five inconvenient discoveries. One investigation into what I did next.",
+    "intro": "I'm Shriniwas, a final-year VIT Pune engineering student applying for Wispr Flow's India growth internship. I build software, debate, write and study business strategy. Instead of listing strengths, I'll show you difficult decisions.",
+    "ctaOpen": "OPEN THE CASE",
+    "ctaSixty": "THE 60-SECOND FILE"
+  },
+  "exhibitA": {
+    "heading": "EXHIBIT A — THE GREEN WALL",
+    "body": [
+      "Imagine a college generating thousands of certificates. One wrong entry shouldn't ruin the batch—or crash the service.",
+      "I mapped the workflow and architecture, made or approved product decisions, and used AI coding tools to implement the prototype. It passed **324 tests**.",
+      "A separate audit found **19 problems**: one input consumed excessive processing time; another ballooned into an enormous response. The tests hadn't asked those questions.",
+      "**I didn't defend the green screen.** Records show me approving safeguards, changing scope and directing more remediation when problems remained. Agents audited and fixed the code. The final report recorded zero open findings in its scope; later checks passed **479 main and 232 audit tests**.",
+      "It's still a prototype, not a security guarantee."
+    ],
+    "guess": {
+      "label": "GUESS THE AUDIT RESULT → REVEAL 19",
+      "options": [
+        0,
+        3,
+        8,
+        19
+      ],
+      "answer": 19,
+      "high": 2,
+      "reveal": "The audit found 19 problems, two of them high. One crafted value caused disproportionate CPU work. A request of roughly 26 MB expanded into roughly 192 MB of response material. The tests hadn't asked those questions, and I directed more remediation.",
+      "plain": "324 of 324 tests passed. A separate audit then found 19 problems, two of them high.",
+      "status": "324 / 324 tests pass"
+    },
+    "receipt": {
+      "label": "CHECK THE RECEIPT",
+      "case": "c1"
+    }
+  },
+  "exhibitB": {
+    "heading": "EXHIBIT B — THE WATCHDOG THAT TRUSTED A LATE REPLY",
+    "body": [
+      "Vigil checked whether a data connection was alive—like asking, “Are you there?”",
+      "Despite green tests, a reply arriving **after the deadline** could count as proof of health.",
+      "I questioned whether the tests proved the system's real promise. An AI-assisted review found the defect and implemented an approval-gated correction.",
+      "When a verifier removed the correction, **two targeted tests failed**. Restored, the suite passed **105 tests**. These were simulated connections.",
+      "The question became: **Does it deliver what someone depends on?**"
+    ],
+    "late": {
+      "label": "TEST THE LATE REPLY",
+      "deadline": 3,
+      "max": 6,
+      "start": 2,
+      "plain": "A reply that arrives before the 3-second deadline counts as proof the connection is alive. In the original logic, a reply that arrived after the deadline could still count as proof of health. In the corrected logic it is not counted as proof of current health."
+    },
+    "receipt": {
+      "label": "SEE THE RECEIPT",
+      "case": "c2"
+    }
+  },
+  "more": {
+    "heading": "THREE MORE FILES. THREE DIFFERENT DECISIONS.",
+    "cards": [
+      {
+        "head": "BLITZ — THE NUMBER I WITHDREW.",
+        "text": "A speed claim looked remarkable: **1,205 nanoseconds**. Better-controlled measurement showed **1,850**; an advertised **3.1× advantage** shrank to **1.02×**. The headline was replaced. Later changes made even the replacement historical. **I chose the defensible story over the flattering one.**",
+        "case": "c3"
+      },
+      {
+        "head": "TIPINDEX — THE AGENT STOPPED. THE WORK CONTINUED.",
+        "text": "Codex hit its limit during a long experiment and left an incomplete output. I directed a handoff to Claude Code, approved a verified disk cleanup, and resumed from recorded checkpoints. The campaign record reports **820 completed measurement rounds**. **A process shouldn't depend on one operator remembering everything.**",
+        "case": "c4"
+      },
+      {
+        "head": "PITDB — THE FUTURE APPEARED EARLY.",
+        "text": "A database meant to answer “What was known then?” could, in one specific time-zone edge case, show a **06:15** event at **06:00**. Agents found and addressed the defect in a local remediation version; the claim was narrowed. **That correction is not yet reflected in the public default branch.**",
+        "case": "c5"
+      }
+    ],
+    "cta": "OPEN THE FIVE EVIDENCE FOLDERS"
+  },
+  "person": {
+    "heading": "THE PERSON BEHIND THE FILE",
+    "body": [
+      "My father's accident brought serious financial pressure during my Class 12 exams. A gap year, unsuccessful entrance attempts, YouTube study and a ₹3,999 course formed my route to VIT Pune.",
+      "I coordinated four research contributors, placed second in a college debate, and enjoy business case studies, essays and Advaita Vedanta. I care about people as much as code.",
+      "**I didn't learn that every plan works. I learned to decide what to do when it doesn't.**"
+    ]
+  },
+  "voice": {
+    "heading": "THE FIRST CLUE WAS MY VOICE",
+    "body": [
+      "Here's a real thought I spoke on **2 November 2026**: “Shouldn't the technology adapt to how we naturally think and communicate?”",
+      "Compare my hand-transcribed voice memo with Flow's actual text. It preserved the thought while cleaning the expression.",
+      "That matters more to me than “type faster”: **let people finish thinking.** A voice-to-builder exhibit will appear only with genuine build evidence.",
+      "For India growth, I'd test whether a **Hinglish-first demo for students and early-career users** beats a speed-focused pitch on **first usable dictations** and **a second dictation within a day**. **Proposed, not run.**"
+    ],
+    "compareAfter": 2,
+    "compareLabel": "COMPARE THE TWO REAL TAKES",
+    "growthCta": {
+      "label": "SEE THE GROWTH TEST",
+      "case": "c8"
     },
     "takes": [
       {
@@ -120,668 +175,314 @@
         "output": "I think there's another way to look at this. We spend so much time learning how to use technology: remembering commands, figuring out buttons, adjusting to how a tool works. But why? Shouldn't it be the other way around? Shouldn't the technology adapt to how we naturally think and communicate? Because we already know what we want to say, we shouldn't have to struggle just to get it out."
       }
     ],
-    "excludedTakes": [
-      {
-        "id": "take3",
-        "reason": "Cleaned text does not match Flow history (Flow's recorded output was near-raw). Excluded until he explains the source."
-      }
-    ]
-  },
-  "brief": {
-    "summary": "",
-    "note": "Filled from S02 after he records it with Flow."
-  },
-  "specialties": [
-    {
-      "id": "s1",
-      "title": "I go looking for where my work breaks",
-      "status": "shown",
-      "exhibits": [
-        "exhibitA",
-        "exhibitB",
-        "ledger"
-      ],
-      "evidence": "certgen had 324 passing tests, then a separate audit found 19 issues. TipIndex had two audits: 26 issues, then 14 more.",
-      "worth": ""
-    },
-    {
-      "id": "s2",
-      "title": "I decide what counts as valid before I see the number",
-      "status": "shown",
-      "exhibits": [
-        "exhibitB",
-        "ledger"
-      ],
-      "evidence": "TipIndex benchmark runs were rejected for contaminated conditions (another agent session competed on the pinned core in 9 of 10 rounds).",
-      "worth": ""
-    },
-    {
-      "id": "s3",
-      "title": "I narrow my claims instead of inflating them",
-      "status": "shown",
-      "exhibits": [
-        "exhibitB",
-        "decisions",
-        "ledger"
-      ],
-      "evidence": "TipIndex's index was 40.6x better for one symbol and the result at 1,000 symbols is published too.",
-      "worth": ""
-    },
-    {
-      "id": "s4",
-      "title": "I keep going when the first plan fails",
-      "status": "shown",
-      "exhibits": [
-        "effects",
-        "closing"
-      ],
-      "evidence": "Personal effects and the closing notes.",
-      "worth": ""
-    },
-    {
-      "id": "s5",
-      "title": "Owning a growth channel",
-      "status": "not_shown",
-      "exhibits": [
-        "lab",
-        "wispr"
-      ],
-      "evidence": "I have not owned a growth channel or measured an activation lift. The Voice Lab is a one-person method, and the Wispr field notes are hypotheses.",
-      "worth": ""
-    }
-  ],
-  "clues": [
-    {
-      "id": "k1",
-      "section": "exhibit0",
-      "text": "The words on the first screen were really dictated with Flow on 2 November 2026.",
-      "source": "My Wispr Flow history (Take 1 at 7:27 pm, Take 2 at 7:30 pm)"
-    },
-    {
-      "id": "k2",
-      "section": "exhibitA",
-      "text": "certgen had 324 passing tests and a release-candidate tag before a separate audit found 19 issues.",
-      "source": "certgen repository (repo-reported)"
-    },
-    {
-      "id": "k3",
-      "section": "exhibitB",
-      "text": "In 9 of 10 benchmark rounds, a second agent session was competing for the CPU core TipIndex had pinned.",
-      "source": "TipIndex repository (repo-reported)"
-    },
-    {
-      "id": "k4",
-      "section": "ledger",
-      "text": "Vigil once called a dead connection healthy, because a stale reply could restore the HEALTHY state.",
-      "source": "Vigil repository (repo-reported)"
-    },
-    {
-      "id": "k5",
-      "section": "wispr",
-      "text": "India is about 14% of Wispr installs but about 2% of in-app-purchase revenue.",
-      "source": "TechCrunch citing Sensor Tower, 9 May 2026"
-    }
-  ],
-  "against": {
-    "reasons": []
-  },
-  "exhibitA": {
-    "id": "exhibitA",
-    "title": "324 passing tests, then a 19-finding audit",
-    "summary": "certgen: a bulk PDF certificate backend. A take-home assignment, a local prototype.",
     "custody": {
-      "source": "certgen repository, project documents and audit report",
-      "tool": "Claude Code and other AI coding agents wrote a substantial share of the code",
-      "date": "",
-      "status": "Repo-reported",
-      "note": "Not independently rerun. This is a prototype with no users and no blanket security guarantee.",
-      "verified": false
-    },
-    "stats": {
-      "tests": 324,
-      "findings": 19
-    },
-    "call": {
-      "question": "certgen had 324 passing tests and a release-candidate tag. A separate forensic audit then looked at it. How many issues did it find?",
-      "options": [
-        "None",
-        "3",
-        "8",
-        "19"
-      ],
-      "answerIndex": 3,
-      "reveal": "19. The tests only covered cases I had imagined. The audit asked about hostile input, floods of requests and greedy clients."
-    },
-    "timeline": [
-      {
-        "label": "Scope frozen",
-        "text": "v1.0 required scope frozen before optional features; 13 architecture decision records."
-      },
-      {
-        "label": "324 tests passing",
-        "text": "324 passing tests and a v1.0-rc tag."
-      },
-      {
-        "label": "Audit",
-        "text": "A separate forensic audit found 19 issues."
-      },
-      {
-        "label": "Fixes",
-        "text": "A failing regression test per finding, input caps, error-size limits, host checks, deadlines, per-client fairness, bearer tokens."
-      },
-      {
-        "label": "Start-up fix",
-        "text": "Concurrent boot failed 39 of 60 six-process rounds before the database initialization fix, and 0 of 360 after."
-      }
-    ],
-    "beats": {
-      "did": "",
-      "didnt": "",
-      "learned": "",
-      "next": ""
-    },
-    "crossExam": [],
-    "verify": {
-      "repoUrl": "",
-      "steps": [],
-      "command": "",
-      "expected": ""
+      "source": "My Wispr Flow history",
+      "tool": "Wispr Flow",
+      "date": "2 Nov 2026",
+      "status": "Output matches Flow history word for word",
+      "note": "“As I said it” is my own hand transcription of what I said, typed from my voice memo."
     }
   },
-  "exhibitB": {
-    "id": "exhibitB",
-    "title": "The index was 40.6x better, until it was worse",
-    "summary": "TipIndex: a C++20 in-process market-data log with selective replay. One machine, one workload, repo-reported.",
-    "custody": {
-      "source": "TipIndex repository, README and project documents",
-      "tool": "Codex and Claude Code wrote much of the code",
-      "date": "",
-      "status": "Repo-reported",
-      "note": "The question was inspired by a published Jane Street article. It is not my invention.",
-      "verified": false
-    },
-    "workingKnowledgeConfirmed": false,
-    "boundary": {
-      "confirmed": false,
-      "xLabel": "Symbols subscribed (log scale)",
-      "yLabel": "Index speedup over full scan (log scale)",
-      "points": [
-        {
-          "x": 1,
-          "y": 40.6,
-          "label": "1 symbol: 40.6x less CPU than a full scan"
-        },
-        {
-          "x": 1000,
-          "y": 0.585,
-          "label": "1,000 symbols: 0.585x (the index loses)",
-          "requiresConfirmation": true
-        }
-      ],
-      "note": "Nasdaq ITCH sample of 268,744,780 messages plus synthetic workloads. One machine, one workload. The crossover point was not measured here."
-    },
-    "contamination": {
-      "rounds": 10,
-      "contaminated": 9,
-      "note": "A second agent session competed on the pinned core in 9 of 10 rounds. A second run broke the predeclared quiet-machine threshold. Both were rejected for invalid conditions, and a later run was accepted."
-    },
-    "chips": [
-      {
-        "tag": "MEASURED",
-        "text": "40.6x less CPU for one symbol"
-      },
-      {
-        "tag": "MEASURED",
-        "text": "268,744,780-message Nasdaq ITCH sample"
-      },
-      {
-        "tag": "MODELED",
-        "text": "27.9% fewer read bytes (modeled, not measured)"
-      },
-      {
-        "tag": "AUDITS",
-        "text": "26 findings, then 14 more; fixes recorded in project docs, not independently rerun"
-      }
+  "verdict": {
+    "heading": "YOUR VERDICT",
+    "body": [
+      "AI helped implement and investigate. I mapped workflows, shaped architecture, made or approved decisions, identified bottlenecks, directed attempts to break the prototypes, and pursued fixes. I didn't personally write every line or discover every bug.",
+      "I haven't owned a growth channel or shipped these prototypes to customers. I want to earn that responsibility.",
+      "**I can't promise I'll always be right. I can show you what I do when I'm wrong.**",
+      "Choose one claim. Follow the evidence. Then ask me about the decision behind it."
     ],
-    "call": {
-      "question": "TipIndex's index used 40.6x less CPU than scanning everything when you follow one symbol. What happens when you follow 1,000 symbols?",
-      "options": [
-        "It gets even better",
-        "It stays about the same",
-        "It becomes slower than a full scan"
-      ],
-      "answerIndex": 2,
-      "reveal": "At 1,000 symbols the index lost. I published both regimes, so you can see where it stops being true.",
-      "requiresConfirmation": true
-    },
-    "beats": {
-      "did": "",
-      "didnt": "",
-      "learned": "",
-      "next": ""
-    },
-    "crossExam": [],
-    "verify": {
-      "repoUrl": "",
-      "steps": [],
-      "command": "",
-      "expected": ""
-    }
+    "ctaInterview": "INVITE ME TO AN INTERVIEW",
+    "ctaResume": "VIEW MY RÉSUMÉ",
+    "ctaEvidence": "EVIDENCE DRAWER",
+    "closing": "Case file open for questions. The best interface gets out of the way. The best evidence doesn't."
   },
-  "ledger": {
+  "sixty": {
+    "label": "THE 60-SECOND FILE",
+    "headline": "324 tests passed. A separate audit found 19 problems. Would you have shipped it?",
+    "body": [
+      "I'm Shriniwas, an engineering student applying to Wispr Flow's India growth internship. I mapped workflows and architectures, made or approved key design decisions, and used AI agents for implementation and investigation.",
+      "In one project, I approved further corrections after the first audit fixes weren't enough. In another, a watchdog called a late reply proof of a healthy connection. I questioned whether the tests actually proved the product's promise; the corrected test failed when its fix was removed.",
+      "I also withdrew a flattering speed claim, redirected an interrupted experiment between AI agents, and narrowed a database claim after a specific time-handling defect.",
+      "I have no growth wins to borrow. But I've used Flow, and I want to test whether a Hinglish-first demonstration helps Indian students reach their first useful dictation and return for another."
+    ],
+    "line": "I can't promise I'll always be right. I can show you what I do when I'm wrong.",
+    "ctaReceipt": {
+      "label": "OPEN ONE RECEIPT",
+      "case": "c1"
+    },
+    "ctaInterview": "INVITE ME TO AN INTERVIEW"
+  },
+  "evidence": {
     "cases": [
       {
         "id": "c1",
-        "project": "PitDB",
-        "title": "A project built to prevent looking into the future did exactly that",
-        "what": "Tests found a daylight-saving fold that could admit a future event at an earlier cutoff; duplicate keys and chunk boundaries could give wrong AS OF answers.",
-        "status": "closed",
-        "resolution": "Found, fixed and resolved before the resume claim."
-      },
-      {
-        "id": "c2",
-        "project": "Blitz",
-        "title": "A headline benchmark did not survive a clean rerun",
-        "what": "One headline number lacked a clean reproducible provenance; a cache-line-layout advantage fell from about 3.1x to about 1.02x on rerun.",
-        "status": "narrowed",
-        "resolution": "Published the slower, defensible numbers and reclassified the inconclusive improvement."
-      },
-      {
-        "id": "c3",
-        "project": "certgen",
-        "title": "324 tests passed, then a 19-finding audit",
-        "what": "A separate forensic audit found 19 issues the tests never asked about, including quadratic CPU on an overlong email, response amplification and starvation.",
-        "status": "narrowed",
-        "resolution": "Regression test per finding, caps, fairness, tokens. No blanket security guarantee."
-      },
-      {
-        "id": "c4",
-        "project": "TipIndex",
-        "title": "I rejected my own benchmark runs",
-        "what": "Another agent session competed on the pinned core in 9 of 10 rounds; a second run broke the predeclared quiet-machine threshold.",
-        "status": "closed",
-        "resolution": "Both rejected for invalid conditions, not for bad-looking numbers. A later run was accepted."
-      },
-      {
-        "id": "c5",
-        "project": "Vigil",
-        "title": "The watchdog called a dead connection healthy",
-        "what": "A late heartbeat reply could restore HEALTHY.",
-        "status": "closed",
-        "resolution": "Late replies are now rejected as liveness; tests added with the simulator."
-      },
-      {
-        "id": "c6",
-        "project": "TipIndex",
-        "title": "The index was 40.6x better, until it was worse",
-        "what": "One symbol: 40.6x less CPU than a full scan. At 1,000 symbols the index lost.",
-        "status": "narrowed",
-        "resolution": "Published both regimes and the boundary instead of claiming one universal winner.",
-        "requiresConfirmation": true
-      },
-      {
-        "id": "c7",
-        "project": "certgen",
-        "title": "I built an extra feature, then did not merge it",
-        "what": "An optional QR verification route was built on a branch and failed a required test I had declared in advance.",
-        "status": "dropped",
-        "resolution": "Not merged. The old test contract may have been too rigid; that is noted openly."
-      },
-      {
-        "id": "c8",
-        "project": "Vigil",
-        "title": "The comparison was unfair because every thread was pinned to one core",
-        "what": "Every spawned thread inherited CPU 0 pinning, which overstated the epoll versus thread-per-connection difference.",
-        "status": "closed",
-        "resolution": "Reset affinity, report per-thread CPU, interleave trials."
-      },
-      {
-        "id": "c9",
-        "project": "TipIndex",
-        "title": "The polling budget: better tail latency, more total work",
-        "what": "In finding F-01, a polling budget gave better p99 per poll but higher total work.",
-        "status": "open",
-        "resolution": "The cause is not fully resolved."
-      }
-    ]
-  },
-  "decisions": {
-    "forks": [
-      {
-        "id": "f1",
-        "title": "How certgen queues its jobs",
-        "options": [
-          "Redis with Celery",
-          "SQLite in WAL mode with worker leases and fencing"
+        "name": "CERTGEN — The green wall",
+        "purpose": "A college can generate certificates for thousands of students, accept the valid rows and explain the invalid rows without making everyone else start again.",
+        "finding": "324 passing release-candidate tests preceded a separate 19-finding forensic audit (two high). Among the issues were disproportionate CPU work on a crafted value and memory-intensive expansion from a roughly 26 MB request into roughly 192 MB of response material. The audit did not certify the prototype for unrestricted network exposure.",
+        "mine": "Requirements and architectural decisions were recorded. I approved bounded error-reporting, resource limits, later authentication-related changes and continuing remediation when findings remained. AI agents performed many of the technical investigations and fixes.",
+        "results": "The remediation report says zero open findings within the identified list. Later local checks passed 479 main-suite and 232 audit-suite tests (separate suites, not necessarily 711 independent tests). The optional QR-verification branch passed its own tests but failed a pre-agreed existing requirement and was not merged. A series of further remediation attempts was necessary, and no claim of security certification is justified.",
+        "inspect": {
+          "label": "Bulk Certificate Generator",
+          "url": "https://github.com/Shri2909/Bulk-Certificate-Generator",
+          "files": [
+            "audit/AUDIT_REPORT.md",
+            "audit/REMEDIATION_REPORT.md",
+            "docs/BLUEPRINT_AMENDMENTS.md",
+            "tests/"
+          ],
+          "note": "Some of these reports are local or ignored in the repository. For those, the evidence is available on request."
+        },
+        "status": [
+          [
+            "PUBLIC",
+            "Repository"
+          ],
+          [
+            "REPO-REPORTED",
+            "Test counts, audit and remediation results"
+          ],
+          [
+            "EVIDENCE AVAILABLE ON REQUEST",
+            "Some report files are local or ignored in the repository"
+          ],
+          [
+            "UNRESOLVED",
+            "Who commissioned the forensic audit"
+          ]
         ],
-        "chosen": 1,
-        "evidence": "No external service to run for a take-home. Limits are written down: a single writer and first-in-first-out ordering.",
-        "changeMyMind": ""
-      },
-      {
-        "id": "f2",
-        "title": "The optional QR verification route in certgen",
-        "options": [
-          "Merge it",
-          "Do not merge it"
-        ],
-        "chosen": 1,
-        "evidence": "It failed a required test declared in advance, because the PDF output changed.",
-        "changeMyMind": ""
-      },
-      {
-        "id": "f3",
-        "title": "TipIndex scope",
-        "options": [
-          "Tier B (narrower)",
-          "Tier C (more ambitious)"
-        ],
-        "chosen": 0,
-        "evidence": "Approved phases and stopped at phase boundaries.",
-        "changeMyMind": ""
-      }
-    ]
-  },
-  "lab": {
-    "hypothesis": "",
-    "usableDefinition": "",
-    "preregisteredAt": "",
-    "tasks": [],
-    "notes": ""
-  },
-  "wispr": {
-    "moments": [
-      {
-        "id": "w1",
-        "title": "India",
-        "fact": "About 14% of Wispr's installs but about 2% of its in-app-purchase revenue are in India. Web billing may explain part of the gap.",
-        "source": "TechCrunch, citing Sensor Tower",
-        "date": "9 May 2026",
-        "url": "",
-        "suggests": "",
-        "firstTest": "",
-        "bars": [
-          {
-            "label": "Share of installs",
-            "value": 14
-          },
-          {
-            "label": "Share of in-app-purchase revenue",
-            "value": 2
-          }
+        "more": [
+          "“The Feature I Killed”: a QR enhancement was rejected because it regressed required PDF behavior. This is a scope and quality judgment, not a statement about the feature's inherent worth.",
+          "Commit trailers credit autonomous AI work. I did not personally write every endpoint."
         ]
       },
       {
-        "id": "w2",
-        "title": "Hinglish",
-        "fact": "Hinglish output is romanised, not Devanagari.",
-        "source": "Wispr Series B post",
-        "date": "17 Aug 2026",
-        "url": "https://wisprflow.ai/post/series-b",
-        "suggests": "",
-        "firstTest": ""
+        "id": "c2",
+        "name": "VIGIL — The late witness",
+        "purpose": "A monitor checks whether a stream of important information is still alive. A late reply must not count as proof of current health.",
+        "finding": "The original handle_pong logic accepted stale or future-timestamped replies. The project plan records a question about whether its tests truly established the stated state-machine behavior. An agent investigated the code and implemented the correction with an approval gate.",
+        "mine": "I questioned whether the tests proved the system's real promise.",
+        "results": "A later local verification reported 105/105 tests passing. Replacing the guard with `if (false)` made exactly two targeted tests fail. A simulated three-feed lifecycle demonstrated failure, reconnection and recovery. There was no production exchange deployment, and the kernel-level network-loss script was not run.",
+        "inspect": {
+          "label": "Vigil",
+          "url": "https://github.com/Shri2909/Vigil-Low-latency-TCP-heartbeat-monitor",
+          "files": [
+            "PROJECT_PLAN.md §§18–19",
+            "src/connection.cpp",
+            "test/connection_test.cpp",
+            "test/feed_monitor_test.cpp",
+            "demo/lifecycle_demo.cpp"
+          ]
+        },
+        "status": [
+          [
+            "PUBLIC",
+            "Repository"
+          ],
+          [
+            "REPO-REPORTED",
+            "105/105 tests, verified locally in an agent session (not CI)"
+          ],
+          [
+            "UNRESOLVED",
+            "Who asked the correctness question and who approved the semantic change"
+          ]
+        ],
+        "more": [
+          "A CLI dropped piped commands when EOF arrived with the final input; the pattern appeared at three sites.",
+          "A benchmark comparing reactor architectures inherited a one-CPU affinity mask, invalidating the original naive-baseline comparison. Committed documents still disagree on absolute CPU numbers.",
+          "An 18-gap specification exercise led to a first-class feed simulator and protocol decisions.",
+          "One deeper fuzzing harness hung in the sandbox and remains incompletely validated. None of this is production or CI evidence."
+        ]
       },
       {
-        "id": "w3",
-        "title": "Testing intuition",
-        "fact": "Wispr Lens (April to August 2025) taught the team to test intuition against real behaviour.",
-        "source": "Wispr post on product taste",
-        "date": "14 Sep 2026",
-        "url": "https://wisprflow.ai/post/hiring-for-product-taste",
-        "suggests": "",
-        "firstTest": ""
+        "id": "c3",
+        "name": "BLITZ — The number I withdrew",
+        "purpose": "A fast matching engine keeps track of buyers and sellers, but a claimed speed improvement matters only if it can be reliably reproduced.",
+        "finding": "The README's earlier 1,205 ns headline came from an uncommitted working tree. A more controlled historical run gave 1,850 ns. A reported memory-layout advantage shrank from 3.1× to about 1.02× and some verdicts became inconclusive.",
+        "mine": "The decision to retract or downgrade the claim is visible in commit f46a9cb and in historical README revisions. AI agents were involved in the benchmark overhaul and the audits.",
+        "results": "A later AI-executed audit found 3,059 crossed-at-rest states in 110,000 replay events (2.78%). Remediation reported zero such states on the replay, and fixing the matching engine made earlier latency numbers stale. New engine latency was not remeasured. An existing test had actually asserted the invalid state.",
+        "inspect": {
+          "label": "Blitz",
+          "url": "https://github.com/Shri2909/Blitz-Limit-Order-Book",
+          "files": [
+            "commit f46a9cb",
+            "historical README",
+            "METHODOLOGY.md",
+            "results/98a597b/",
+            "branch-only audit/ reports"
+          ]
+        },
+        "status": [
+          [
+            "PUBLIC",
+            "Repository"
+          ],
+          [
+            "REPO-REPORTED",
+            "Retraction of the 1,205 ns headline"
+          ],
+          [
+            "LOCAL-BRANCH",
+            "Audit reports"
+          ],
+          [
+            "UNRESOLVED",
+            "Current latency has not been remeasured. The 1,850 ns run is historical."
+          ]
+        ],
+        "more": [
+          "At last review, the public default branch did not include the stale-results warning.",
+          "An AF_XDP latency spike was traced to competing processes pinned to the same cores and touchpad interrupts; that subsystem has since been removed from uncommitted work.",
+          "A chart displayed passing tests despite missing executables and an unverified sanitizer claim.",
+          "An Avellaneda–Stoikov strategy lost to a naive benchmark on five tickers; the reason for reverting it is not documented."
+        ]
       },
       {
-        "id": "w4",
-        "title": "Awareness",
-        "fact": "Awareness work should simplify, invite and be allowed to be incomplete.",
-        "source": "Wispr mode-switching post",
-        "date": "11 Feb 2026",
-        "url": "https://wisprflow.ai/post/mode-switching",
-        "suggests": "",
-        "firstTest": ""
+        "id": "c4",
+        "name": "TIPINDEX — The operator changed, the evidence stayed",
+        "purpose": "Instead of searching every market message, an index can jump to relevant ones, but that shortcut has maintenance and workload costs.",
+        "finding": "During a P6 measurement campaign Codex ran out of usage allowance, a process died, and one output file was truncated. I redirected the work to Claude Code, controlled progress and approved deleting checksum-verified redundant chunks to recover disk. Agents verified checkpoint integrity; the reports state 820 measured rounds and that 5,364 original P6 files remained byte-identical.",
+        "mine": "The project records explicit phase gates, selection of a narrower Tier B plan, stop and start instructions, approval of controlled deletions, the switch from Codex to Claude Code, and permission to remediate audit findings. Most C++ and Python development, benchmarking and audit execution was agent-written.",
+        "results": "In a separate P7 runtime study, CPU contamination invalidated 9 of 10 rounds in attempt one; a new quiescence rule rejected attempt two at 3.52 seconds against a 3.0-second limit; attempt three passed. The rule was written after attempt one but before the reruns. Failed timing values were deleted at my instruction, despite a general “preserve failures” policy.",
+        "inspect": {
+          "label": "TipIndex",
+          "url": "https://github.com/Shri2909/TipIndex-Indexed-Market-Data-Message-Bus",
+          "files": [
+            "docs/plan/PROGRESS.md",
+            "results/p6/pause-20261025.json",
+            "results/p6/resume-after-pause.md",
+            "results/p7/runtime-quiescence-rule.json",
+            "docs/report/REMEDIATION.md",
+            "results/p6/",
+            "results/f01/"
+          ]
+        },
+        "status": [
+          [
+            "PUBLIC",
+            "Repository"
+          ],
+          [
+            "REPO-REPORTED",
+            "820 rounds, checkpoint integrity, audit counts"
+          ],
+          [
+            "UNRESOLVED",
+            "Understanding of the generated code: needs a genuine walkthrough. An October interview-prep prompt in the repository states I had zero working knowledge of it at that moment."
+          ]
+        ],
+        "more": [
+          "Two audits found 26 and then 14 numbered findings; the mutation audit showed three no-op invariant checkers could pass the existing tests.",
+          "A polling-budget feature shortened individual turns but increased cumulative work and retained unresolved overhead.",
+          "These are one-laptop, limited-workload results, not generalized product speedups. The P7 contamination and the P6 agent interruption are distinct campaigns."
+        ]
       },
       {
-        "id": "w5",
-        "title": "The cap",
-        "fact": "The India page promises free unlimited dictation, while the pricing page lists weekly caps: 2,000 words on desktop and 1,000 on iPhone, with Pro removing them.",
-        "source": "Wispr India page and pricing page",
-        "date": "read 2 Nov 2026",
-        "url": "https://wisprflow.ai/pricing",
-        "suggests": "",
-        "firstTest": "",
-        "note": "Re-read the live wording before publishing; pricing and offers change."
-      }
-    ],
-    "pov": {
-      "text": ""
-    }
-  },
-  "effects": {
-    "intro": "",
-    "timeline": [],
-    "items": [],
-    "philosophy": {
-      "text": ""
-    }
-  },
-  "locker": {
-    "repos": [
+        "id": "c5",
+        "name": "PITDB — The future appeared early",
+        "purpose": "A historical database should answer “What was actually known by this point in time?” without quietly using later facts.",
+        "finding": "One specific direct-ingestion daylight-saving-time fold could make a 06:15 UTC record visible at a 06:00 UTC cutoff. The normalized UTC CSV route was not affected. Agent-executed remediation centralized timestamp validation and rejected problematic input.",
+        "mine": "The exact approvals I gave on particular temporal-policy tradeoffs still need to be confirmed against the project record.",
+        "results": "Current local tests passed 346. The last public default branch was an older, pre-audit version.",
+        "inspect": {
+          "label": "PitDB",
+          "url": "https://github.com/Shri2909/PitDB",
+          "files": [
+            "audit finding STORAGE-01",
+            "src/store/validation.py",
+            "tests/test_temporal_regressions.py",
+            "tests/test_benchmark_integrity.py",
+            "corrected README on the local branch fix/forensic-audit-20261029"
+          ]
+        },
+        "status": [
+          [
+            "PUBLIC",
+            "Repository (older, pre-audit version)"
+          ],
+          [
+            "LOCAL-BRANCH",
+            "The remediation and corrected README"
+          ],
+          [
+            "REPO-REPORTED",
+            "346 local tests"
+          ],
+          [
+            "UNRESOLVED",
+            "A per-finding remediation ledger: not every audit finding is claimed fixed"
+          ]
+        ],
+        "more": [
+          "A trimmed-mean estimator hid slow outliers: thirteen 1 ms trials plus two 100 ms trials gave a trimmed mean of 1 ms but a raw mean of 14.2 ms.",
+          "An AI-audit process used approval gates and independent-oracle instructions; 18 confirmed findings were reported and a later review found three more issues.",
+          "GitHub images and packaging had separate first-minute usability issues."
+        ]
+      },
       {
-        "name": "Blitz",
-        "url": "",
-        "summary": "Limit order book.",
-        "verify": {
-          "steps": [],
-          "command": "",
-          "expected": ""
+        "id": "c6",
+        "name": "ROLES — Who designed, who executed, who verified?",
+        "mine": "As I describe it: sketching complete workflows and architectures; defining goals and constraints; making or approving major design, scope and user-flow decisions; identifying bottlenecks; directing deliberate attempts to break the prototypes; reading audit results and deciding which fixes or further tests to pursue. This is my firsthand account, which is different from actions specifically recorded in each repository's logs. The provenance of some prompts and audit initiations remains uncertain.",
+        "finding": "AI agents did the coding, many root-cause investigations, fuzzing, audits, tests, benchmarks and documentation. AI-generated code is not claimed as manually implemented or independently discovered. Individual tests and reports are called repository-reported unless freshly rerun as noted.",
+        "status": [
+          [
+            "UNRESOLVED",
+            "Provenance of some prompts and audit initiations"
+          ]
+        ],
+        "labels": {
+          "finding": "The AI agents' role",
+          "mine": "My role, as I describe it"
         }
       },
       {
-        "name": "Vigil",
-        "url": "",
-        "summary": "TCP heartbeat monitor.",
-        "verify": {
-          "steps": [],
-          "command": "",
-          "expected": ""
+        "id": "c7",
+        "name": "THE PERSON AND THE VOICE — Sources",
+        "purpose": "Where to read more, and what is and is not claimed about the voice exhibit.",
+        "results": "The two takes on this page are from 2 November 2026, at 7:27 pm and 7:30 pm. The “As I said it” text is my own hand transcription of a separate voice memo; it is not an automatically produced transcript. No audio is published on this page. A recorded build in which Flow dictation drives a builder, followed by a spoken correction, has not been supplied, so that exhibit is pending. The original engineering repositories were not built with Flow.",
+        "links": [
+          {
+            "label": "Read my long-form essay",
+            "key": "essay"
+          },
+          {
+            "label": "View my résumé",
+            "key": "resume"
+          }
+        ],
+        "status": [
+          [
+            "PROPOSED",
+            "A voice-to-builder build receipt"
+          ]
+        ],
+        "labels": {
+          "results": "Provenance"
         }
       },
       {
-        "name": "PitDB",
-        "url": "",
-        "summary": "Point-in-time query engine.",
-        "verify": {
-          "steps": [],
-          "command": "",
-          "expected": ""
-        }
-      },
-      {
-        "name": "certgen",
-        "url": "",
-        "summary": "Bulk PDF certificate backend (take-home).",
-        "verify": {
-          "steps": [],
-          "command": "",
-          "expected": ""
-        }
-      },
-      {
-        "name": "TipIndex",
-        "url": "",
-        "summary": "Market-data replay experiment.",
-        "verify": {
-          "steps": [],
-          "command": "",
-          "expected": ""
+        "id": "c8",
+        "name": "INDIA GROWTH TEST — The proposed protocol",
+        "purpose": "Can an actual message-first Hinglish demonstration help Indian students and early-career workers experience the value of Flow more effectively than a speed-focused pitch?",
+        "finding": "Audience: a small, reachable group of students and early-career users who naturally write Hindi-English messages. I would not assume that every Indian student uses Hinglish.\n\nVariant A, speed: “Say the message. Skip typing it.”\n\nVariant B, expression: “Don't stop the thought halfway through. Say it naturally.”",
+        "mine": "Design: the same real task and demo duration, rotated message order, success defined in advance, consent collected, no sensitive content. A small exploratory sample with counts per variant; no causal certainty claimed. Record what objection people raise and what they actually do.",
+        "results": "First useful action: the recipient creates a usable first dictation in a real app without needing a full rewrite. Return action: a second useful dictation within 24 hours, confirmed appropriately, not merely opening the app. Failure condition: no improvement on first success or second use, or results too small or noisy. Next iteration: revise the framing, user segment or first-message context based on the objections, and test again.",
+        "more": [
+          "A separate self-only experiment: five paired tasks, typed versus Flow, alternating order and recording time, edit count and whether the result was usable. That would give a personal workflow observation, not a claim about user behavior."
+        ],
+        "status": [
+          [
+            "PROPOSED",
+            "No activation result, conversion lift, sample count or cohort metric is claimed. Neither experiment has been run."
+          ]
+        ],
+        "labels": {
+          "finding": "Audience and variants",
+          "mine": "Design",
+          "results": "Actions, failure condition and next step",
+          "more": "A separate self-only experiment"
         }
       }
     ]
-  },
-  "closing": {
-    "findings": [],
-    "line": "",
-    "openQuestions": [],
-    "contact": {
-      "email": "",
-      "linkedin": "",
-      "github": ""
-    }
-  },
-  "caseLog": [
-    {
-      "date": "1 Nov 2026",
-      "entry": "Downloaded Wispr Flow."
-    },
-    {
-      "date": "2 Nov 2026",
-      "entry": "Recorded the opening takes with Flow. Case file opened."
-    }
-  ],
-  "exhibitZ": {
-    "statement": "Which parts of this page were spoken with Wispr Flow, and which were written from sources.",
-    "builtOn": "",
-    "segments": [
-      {
-        "id": "S01",
-        "label": "Exhibit 0: the opening takes",
-        "spokenWithFlow": true
-      },
-      {
-        "id": "S02",
-        "label": "The brief",
-        "spokenWithFlow": false
-      },
-      {
-        "id": "S03",
-        "label": "Fair warning",
-        "spokenWithFlow": false
-      },
-      {
-        "id": "S04",
-        "label": "Exhibit A: certgen",
-        "spokenWithFlow": false
-      },
-      {
-        "id": "S06",
-        "label": "Exhibit B: TipIndex",
-        "spokenWithFlow": false
-      },
-      {
-        "id": "S07",
-        "label": "PitDB",
-        "spokenWithFlow": false
-      },
-      {
-        "id": "S08",
-        "label": "Setbacks",
-        "spokenWithFlow": false
-      },
-      {
-        "id": "S09",
-        "label": "Forks in the road",
-        "spokenWithFlow": false
-      },
-      {
-        "id": "S10",
-        "label": "Philosophy",
-        "spokenWithFlow": false
-      },
-      {
-        "id": "S11",
-        "label": "Debate and writing",
-        "spokenWithFlow": false
-      },
-      {
-        "id": "S12",
-        "label": "Voice Lab pre-registration",
-        "spokenWithFlow": false
-      },
-      {
-        "id": "S13",
-        "label": "Field notes on Wispr",
-        "spokenWithFlow": false
-      },
-      {
-        "id": "S14",
-        "label": "Closing notes",
-        "spokenWithFlow": false
-      }
-    ]
-  },
-  "chapters": [
-    {
-      "id": "c1",
-      "section": "exhibit0",
-      "title": "The Question",
-      "teaser": "Who is behind the tape?"
-    },
-    {
-      "id": "c2",
-      "section": "brief",
-      "title": "The Briefing",
-      "teaser": "Before the evidence, what are his honest limits?"
-    },
-    {
-      "id": "c3",
-      "section": "against",
-      "title": "Fair Warning",
-      "teaser": "324 tests passed. So what did a second pair of eyes ask?"
-    },
-    {
-      "id": "c4",
-      "section": "exhibitB",
-      "title": "The Builder's Bench",
-      "teaser": "Which case in the file is still open?"
-    },
-    {
-      "id": "c5",
-      "section": "decisions",
-      "title": "Plot Twists and Forks",
-      "teaser": "Where does the habit of changing the plan come from?"
-    },
-    {
-      "id": "c6",
-      "section": "effects",
-      "title": "Roots",
-      "teaser": "What did he predict, in writing, before the test?"
-    },
-    {
-      "id": "c7",
-      "section": "lab",
-      "title": "The Voice Lab",
-      "teaser": "What did he notice about Wispr and India?"
-    },
-    {
-      "id": "c8",
-      "section": "wispr",
-      "title": "Field Notes on Wispr",
-      "teaser": "Ready to give your verdict, detective?"
-    },
-    {
-      "id": "c9",
-      "section": "closing",
-      "title": "Closing Notes",
-      "teaser": ""
-    }
-  ],
-  "ranks": [
-    {
-      "minClues": 0,
-      "title": "Curious visitor"
-    },
-    {
-      "minClues": 1,
-      "title": "Junior sleuth"
-    },
-    {
-      "minClues": 3,
-      "title": "Inspector"
-    },
-    {
-      "minClues": 5,
-      "title": "Chief Inspector"
-    }
-  ]
+  }
 }
