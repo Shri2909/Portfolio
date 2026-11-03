@@ -119,8 +119,68 @@ sets.M2 = async () => {
 };
 sets.M2.vp = true;
 
+const rdy = (page) => page.waitForFunction(() => document.documentElement.classList.contains('ready'));
+const scr = (page, sel, off = 70) => page.evaluate(([s, o]) => { const t = document.querySelector(s); window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - o, behavior: 'instant' }); }, [sel, off]);
+sets.M3 = async () => {
+  for (const [vn, vp, touch, label] of [['phone', VIEWPORTS.phone, true, '390x844'], ['laptop', VIEWPORTS.laptop, false, '1366x650']]) {
+    const { page, ctx } = await openPage(browser, { viewport: vp, touch });
+    await rdy(page); await sleep(400);
+    const tap = (s) => (touch ? page.tap(s) : page.click(s));
+    await scr(page, '#exhibitA'); await sleep(400);
+    await snap(page, `${vn}-1-exhibit-a-call.png`, `Exhibit A (certgen): custody strip, honest authorship, then "Make your call, detective" with large tap targets, ${label}.`, label);
+    await tap('#exhibitA .opt:nth-child(4)'); await sleep(1300);
+    await snap(page, `${vn}-2-exhibit-a-reveal.png`, `The right answer highlighted and the reveal text; the card opens, ${label}.`, label);
+    await scr(page, '#exhibitA .tiles', vn === 'phone' ? 120 : 90); await sleep(700);
+    await snap(page, `${vn}-3-tiles-scan.png`, `324 sage tiles pop in as a wave while a brass scan line sweeps across, ${label}.`, label);
+    await sleep(3000);
+    await snap(page, `${vn}-4-tiles-findings.png`, `Then 19 brass tiles fall in below the grid: "19 findings the 324 tests never asked about" and the 19 FINDINGS seal, ${label}.`, label);
+    await tap('#exhibitA .tile.find:nth-child(7)'); await sleep(200);
+    await scr(page, '#exhibitA .tl', 100); await sleep(1800);
+    await snap(page, `${vn}-5-timeline.png`, `The red-string timeline draws itself (sequence only, no dates), ${label}. Tapping a tile reads "Finding 7 of 19".`, label);
+    await scr(page, '#exhibitB', 70); await sleep(500);
+    await snap(page, `${vn}-6-exhibit-b-top.png`, `Exhibit B (TipIndex) in production while the 0.585 direction is unconfirmed: no call, no 1,000-symbol claim, ${label}.`, label);
+    await scr(page, '#exhibitB .chart', 100); await sleep(2600);
+    await tap('#exhibitB .bdot'); await sleep(300);
+    await snap(page, `${vn}-7-boundary-chart.png`, `The boundary chart (log-log): one measured point (40.6x) and the break-even line. Tap the dot for its label, ${label}.`, label);
+    await scr(page, '#exhibitB .cstrip', vn === 'phone' ? 160 : 120); await sleep(3200);
+    await snap(page, `${vn}-8-contamination-chips.png`, `Contamination strip (9 of 10 dots turn brass, one by one) and the chips; MODELED is dashed, ${label}.`, label);
+    await scr(page, '#ledger'); await sleep(300);
+    await snap(page, `${vn}-9-ledger.png`, `Plot twists, and what I did next: rubber-stamp status, the single OPEN stamp loudest, filter chips with computed counts, ${label}.`, label);
+    await tap('#ledger .fchip[data-f="closed"]'); await sleep(500); await scr(page, '#ledger .cases', 120); await sleep(300); await page.evaluate(() => document.querySelector('#ledger .case:not([hidden]) .case-head').click()); await sleep(900);
+    await snap(page, `${vn}-10-ledger-filtered.png`, `Filtered to CLOSED, first row expanded, ${label}.`, label);
+    await scr(page, '#decisions'); await sleep(400);
+    await snap(page, `${vn}-11-forks.png`, `Forks in the road: chosen branch in red string, others grey and "not taken", evidence under the chosen one, ${label}.`, label);
+    await ctx.close();
+  }
+  {
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html' });
+    await rdy(page); await sleep(300);
+    await scr(page, '#exhibitB'); await page.tap('#exhibitB .opt:nth-child(3)'); await sleep(1400);
+    await scr(page, '#exhibitB .chart', 100); await sleep(3400);
+    await snap(page, 'phone-12-review-two-points.png', 'Review build only: both measured points, the dashed gap labelled "crossover not measured here", and the call. This needs the README direction of 0.585 confirmed before it can go live.', '390x844');
+    await ctx.close();
+  }
+};
+sets.M3.vp = true;
+
 /* ------------------------------------------------------------ demo video */
 const videos = {
+  M3: async (page) => {
+    await page.waitForFunction(() => window.CF && window.CF.opening);
+    await page.evaluate(() => window.CF.opening.skip()); await sleep(800);
+    const go = (sel, off = 70) => page.evaluate(([s, o]) => { const t = document.querySelector(s); window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - o, behavior: 'smooth' }); }, [sel, off]);
+    await go('#exhibitA'); await sleep(2800);
+    await page.tap('#exhibitA .opt:nth-child(2)'); await sleep(1600);
+    await go('#exhibitA .tiles', 120); await sleep(6500);
+    await page.tap('#exhibitA .tile.test:nth-child(150)'); await sleep(900);
+    await go('#exhibitB .chart', 100); await sleep(4200);
+    await page.tap('#exhibitB .bdot'); await sleep(1500);
+    await go('#ledger'); await sleep(2800);
+    await page.tap('#ledger .fchip[data-f="narrowed"]'); await sleep(1200);
+    await page.tap('#ledger .fchip[data-f="open"]'); await sleep(1200);
+    await page.tap('#ledger .case:not([hidden]) .case-head'); await sleep(1500);
+    await go('#decisions'); await sleep(3000);
+  },
   M2: async (page) => {
     await page.waitForFunction(() => window.CF && window.CF.opening);
     await page.evaluate(() => window.CF.opening.skip()); await sleep(1500);
@@ -162,7 +222,7 @@ if (videos[name]) {
   const vb = await launch({ slowMo: 80 });
   const ctx = await vb.newContext({ viewport: VIEWPORTS.phone, hasTouch: true, isMobile: true, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
-  await page.goto('file://' + join(dir, name === 'M1' ? 'index.html' : 'review.html'));
+  await page.goto('file://' + join(dir, name === 'M1' || name === 'M3' ? 'index.html' : 'review.html'));
   const rec = await startRecording(page);
   await videos[name](page);
   const info = await rec.stop(join(dir, 'demo.webm'));

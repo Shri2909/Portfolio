@@ -63,6 +63,30 @@ def internal_keys_removed(content):
     return c
 
 
+def gate_unconfirmed(content):
+    """Production only: while exhibitB.boundary.confirmed is false, unverified TipIndex claims are not in the file at all
+    (the 0.585 point, the call, ledger cases marked requiresConfirmation, claims about 1,000 symbols, the title that says
+    'until it was worse', the crossover sentence). The review build keeps everything."""
+    c = copy.deepcopy(content)
+    eb = c.get("exhibitB") or {}
+    bd = eb.get("boundary") or {}
+    if bd.get("confirmed"):
+        return c
+    sentences = lambda s: re.split(r"(?<=[.!?])\s+", s.strip()) if s else []
+    bd["points"] = [p for p in bd.get("points", []) if not p.get("requiresConfirmation")]
+    if bd.get("note"):
+        bd["note"] = " ".join(s for s in sentences(bd["note"]) if "crossover" not in s.lower())
+    if (eb.get("call") or {}).get("requiresConfirmation"):
+        eb["call"] = None
+    eb.pop("title", None)
+    led = c.get("ledger") or {}
+    led["cases"] = [x for x in led.get("cases", []) if not x.get("requiresConfirmation")]
+    for sp in c.get("specialties", []):
+        if sp.get("evidence"):
+            sp["evidence"] = " ".join(s for s in sentences(sp["evidence"]) if "1,000 symbols" not in s)
+    return c
+
+
 def set_path(root, path, value):
     cur = root
     for key in path[:-1]:
@@ -249,7 +273,8 @@ def main():
     draft = load(ROOT / "content" / "draft.json")
     template = (SRC / "template.html").read_text(encoding="utf-8")
 
-    prod_data = internal_keys_removed(content)
+    prod_data = gate_unconfirmed(internal_keys_removed(content))
+    review_base = internal_keys_removed(content)
     prod = render(template, prod_data, "production")
     problems = guard(prod)
     if problems:
@@ -259,7 +284,7 @@ def main():
         sys.exit(1)
     (out / "index.html").write_text(prod, encoding="utf-8")
 
-    rev_data, filled = review_content(prod_data, draft)
+    rev_data, filled = review_content(review_base, draft)
     rev = render(template, rev_data, "review", filled)
     (out / "review.html").write_text(rev, encoding="utf-8")
 

@@ -207,7 +207,7 @@ if (run(3)) {
       srName: document.querySelector('.subject .sr-only').textContent,
       sealOn: document.querySelector('.seal').classList.contains('on'),
       skipVisible: !document.querySelector('.skipbtn').hidden,
-      untypedAll: [...document.querySelectorAll('.tk:not(.br)')].every((e) => e.classList.contains('untyped')),
+      untypedAll: [...document.querySelectorAll('.textblock .tk:not(.br)')].every((e) => e.classList.contains('untyped')),
     }));
     check('first paint: p=0, slider at left, caret hidden', st.k === 0 && st.p === 0 && st.value === '0' && st.caretHidden);
     check('first paint: name under tape (peel 0) and raw text not yet typed', st.peel.every((v) => v === '0.000') && st.untypedAll, JSON.stringify(st));
@@ -221,7 +221,7 @@ if (run(3)) {
     const { page, ctx, log } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
     const t0 = Date.now();
     await sleep(2000);
-    const typing = await page.evaluate(() => ({ phase: window.CF.opening.phase, typed: document.querySelectorAll('.tk:not(.br):not(.untyped)').length }));
+    const typing = await page.evaluate(() => ({ phase: window.CF.opening.phase, typed: document.querySelectorAll('.textblock .tk:not(.br):not(.untyped)').length }));
     check('show: typing in progress at 2 s (layout reserved, some tokens revealed)', typing.phase === 'typing' && typing.typed > 5, JSON.stringify(typing));
     const hBefore = await page.evaluate(() => document.querySelector('.textblock').getBoundingClientRect().height);
     await page.waitForFunction(() => window.CF.opening.phase === 'trim', null, { timeout: 20000 });
@@ -724,6 +724,166 @@ if (run(6)) {
     const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html', reducedMotion: true });
     await ready(page); await sleep(400);
     check('reduced motion: seals show unfolded', await page.evaluate(() => [...document.querySelectorAll('.seal-note')].every((s) => s.classList.contains('unfolded'))));
+    await ctx.close();
+  }
+}
+
+
+// ------------------------------------------------------------------ Stage 7
+const scrollTo = (page, sel, off = 70) => page.evaluate(([s, o]) => { const t = document.querySelector(s); window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - o, behavior: 'instant' }); }, [sel, off]);
+if (run(7)) {
+  console.log('\nStage 7: Exhibit A, 324 tiles and a second pair of eyes');
+  const A = content.exhibitA;
+  for (const build of ['index.html', 'review.html']) {
+    const { page, ctx, log } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build });
+    await ready(page); await sleep(400);
+    const t0 = await page.evaluate(() => { const s = document.querySelector('#exhibitA'); return { title: s.querySelector('.sheet-title').textContent, sum: s.querySelector('.ex-sum').textContent, cs: s.querySelector('.custody-strip').innerText, opened: s.classList.contains('opened'), opts: s.querySelectorAll('.opt').length, q: s.querySelector('.call-q').textContent, vstamp: !!s.querySelector('.stamp-verified'), skip: s.querySelector('.linkbtn') && s.querySelector('.linkbtn').textContent, bodyInert: s.querySelector('.ex-body').hasAttribute('inert') }; });
+    check(`${build}: Exhibit A shows title, summary, custody strip (header "${content.ui.custody}") and the call before the card opens`,
+      t0.title === A.title && t0.sum === A.summary && t0.cs.toLowerCase().includes(content.ui.custody.toLowerCase()) && t0.cs.includes(A.custody.tool) && !t0.opened && t0.opts === A.call.options.length && t0.q === A.call.question && t0.bodyInert, JSON.stringify(t0).slice(0, 200));
+    check(`${build}: authorship is stated in the custody strip and no VERIFIED stamp`, /AI coding agents/.test(t0.cs) && !t0.vstamp);
+    check(`${build}: "Just show me" link is present (${content.ui.justShow})`, t0.skip === content.ui.justShow);
+    await scrollTo(page, '#exhibitA');
+    await page.tap('#exhibitA .opt:nth-child(' + (A.call.answerIndex + 1) + ')'); await sleep(1400);
+    const t1 = await page.evaluate(() => { const s = document.querySelector('#exhibitA'); return { right: s.querySelectorAll('.opt.right').length, reveal: s.querySelector('.call-reveal').textContent, opened: s.classList.contains('opened'), saved: localStorage.getItem('cf1:call:exhibitA'), disabled: [...s.querySelectorAll('.opt')].every((b) => b.disabled), h: [...s.querySelectorAll('.opt')].map((b) => Math.round(b.getBoundingClientRect().height)) }; });
+    check(`${build}: answering highlights the right option, shows the reveal, saves the choice, opens the card`, t1.right === 1 && t1.reveal === A.call.reveal && t1.opened && t1.saved === String(A.call.answerIndex) && t1.disabled, JSON.stringify(t1));
+    check(`${build}: option tap targets are at least 44px tall`, t1.h.every((x) => x >= 44), t1.h.join());
+    await scrollTo(page, '#exhibitA .tiles', 200); await sleep(2800);
+    const g = await page.evaluate(() => ({ tests: document.querySelectorAll('#exhibitA .tile.test').length, finds: document.querySelectorAll('#exhibitA .tile.find').length, go: document.querySelector('#exhibitA .tiles').classList.contains('go'),
+      sage: getComputedStyle(document.querySelector('#exhibitA .tile.test')).backgroundColor, brass: getComputedStyle(document.querySelector('#exhibitA .tile.find')).backgroundColor,
+      cap: document.querySelector('#exhibitA .fc-t').textContent, seal: document.querySelector('#exhibitA .fseal').textContent,
+      findsBelow: document.querySelector('#exhibitA .grid-finds').getBoundingClientRect().top >= document.querySelector('#exhibitA .grid-tests').getBoundingClientRect().bottom,
+      cols: getComputedStyle(document.querySelector('#exhibitA .grid-tests')).gridTemplateColumns.split(' ').length, table: document.querySelector('#exhibitA .sr-only table').textContent }));
+    check(`${build}: exactly 324 sage tiles and 19 brass tiles`, g.tests === 324 && g.finds === 19 && g.sage === 'rgb(122, 155, 118)' && g.brass === 'rgb(184, 135, 43)', JSON.stringify(g).slice(0, 160));
+    check(`${build}: 18x18 grid, findings drop in BELOW it, caption and seal built from the stats`, g.cols === 18 && g.findsBelow && g.cap === '19 findings the 324 tests never asked about' && g.seal === '19 FINDINGS', JSON.stringify([g.cols, g.findsBelow, g.cap, g.seal]));
+    check(`${build}: text alternative table lists 324 and 19`, g.table.includes('324') && g.table.includes('19'));
+    await page.tap('#exhibitA .tile.test:nth-child(100)'); await sleep(150);
+    const s1 = await page.evaluate(() => document.querySelector('#exhibitA .tile-status').textContent);
+    await page.tap('#exhibitA .tile.find:nth-child(7)'); await sleep(150);
+    const s2 = await page.evaluate(() => document.querySelector('#exhibitA .tile-status').textContent);
+    check(`${build}: tapping tiles says "Test n of 324" / "Finding n of 19" (no invented finding names)`, s1 === 'Test 100 of 324' && s2 === 'Finding 7 of 19', s1 + ' | ' + s2);
+    await page.focus('#exhibitA .grid-tests'); await page.keyboard.press('ArrowRight'); await page.keyboard.press('ArrowDown');
+    check(`${build}: tiles are keyboard-navigable`, (await page.evaluate(() => document.querySelector('#exhibitA .tile-status').textContent)) === 'Test 119 of 324');
+    const tl = await page.evaluate(() => [...document.querySelectorAll('#exhibitA .tl li')].map((l) => l.querySelector('.tl-l').textContent));
+    check(`${build}: red-string timeline lists ${A.timeline.length} steps in order`, JSON.stringify(tl) === JSON.stringify(A.timeline.map((x) => x.label)), JSON.stringify(tl));
+    const extras = await page.evaluate(() => ({ beats: document.querySelectorAll('#exhibitA .beat').length, xe: document.querySelectorAll('#exhibitA .xe-item').length, verify: document.querySelectorAll('#exhibitA .verify').length, xeh: document.querySelector('#exhibitA .xe-h') && document.querySelector('#exhibitA .xe-h').textContent }));
+    if (build === 'index.html') check('production: beats, cross-exam and verify are hidden while empty', extras.beats === 0 && extras.xe === 0 && extras.verify === 0, JSON.stringify(extras));
+    else { check('review: four beats and three cross-exam items render from the draft (outlined amber)', extras.beats === 4 && extras.xe === 3 && extras.xeh === content.ui.crossExam && (await page.evaluate(() => document.querySelectorAll('#exhibitA .beat .cf-filled').length)) >= 4, JSON.stringify(extras));
+      await page.tap('#exhibitA .xe-btn'); await sleep(600);
+      check('review: cross-exam item unfolds', (await page.evaluate(() => document.querySelector('#exhibitA .xe-item').classList.contains('open') && document.querySelector('#exhibitA .xe-body').getBoundingClientRect().height > 20)));
+      check('review: verify box stays hidden (draft has no verify data)', extras.verify === 0); }
+    check(`${build}: no console errors`, log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+  }
+  { // skip, saved choice, localStorage off, reduced motion
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(300); await scrollTo(page, '#exhibitA');
+    await page.tap('#exhibitA .linkbtn'); await sleep(900);
+    check('"Just show me" opens the card without answering', await page.evaluate(() => document.querySelector('#exhibitA').classList.contains('opened') && !localStorage.getItem('cf1:call:exhibitA') && !document.querySelector('#exhibitA .call-reveal').textContent));
+    await ctx.close();
+    const c2 = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(c2.page); await c2.page.evaluate(() => localStorage.setItem('cf1:call:exhibitA', '1')); await c2.page.reload(); await ready(c2.page); await sleep(500);
+    check('a saved choice is remembered: the card is already open with the reveal', await c2.page.evaluate(() => document.querySelector('#exhibitA').classList.contains('opened') && document.querySelectorAll('#exhibitA .opt.pick').length === 1));
+    await c2.ctx.close();
+    const c3 = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, storage: false });
+    await ready(c3.page); await sleep(300); await scrollTo(c3.page, '#exhibitA'); await c3.page.tap('#exhibitA .opt:nth-child(1)'); await sleep(1300);
+    check('localStorage off: the call still works and the card opens, no errors', (await c3.page.evaluate(() => document.querySelector('#exhibitA').classList.contains('opened'))) && c3.log.errors.length === 0, c3.log.errors.join('|'));
+    await c3.ctx.close();
+    const c4 = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, reducedMotion: true });
+    await ready(c4.page); await sleep(300); await scrollTo(c4.page, '#exhibitA'); await c4.page.tap('#exhibitA .opt:nth-child(4)'); await sleep(700);
+    const fin = await c4.page.evaluate(() => ({ tiles: [...document.querySelectorAll('#exhibitA .tile')].every((e) => getComputedStyle(e).opacity === '1' && getComputedStyle(e).animationName === 'none'), line: getComputedStyle(document.querySelector('#exhibitA .tl-string')).transform }));
+    check('reduced motion: all 324 + 19 tiles and the timeline string are in their final state', fin.tiles && fin.line.includes('1'), JSON.stringify(fin));
+    await c4.ctx.close();
+  }
+}
+
+// ------------------------------------------------------------------ Stage 8
+if (run(8)) {
+  console.log('\nStage 8: Exhibit B, the honest boundary');
+  const B = content.exhibitB;
+  {
+    const { page, ctx, log } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(400);
+    const txt = await page.evaluate(() => document.body.innerText + ' ' + document.querySelector('#cf-data').textContent);
+    check('production: "0.585" appears nowhere in the file (DOM or data)', !/0\.585/.test(txt) && !/0\.585/.test(readFileSync(join(ROOT, 'dist', 'index.html'), 'utf8')));
+    const p = await page.evaluate(() => ({ call: document.querySelectorAll('#exhibitB .call').length, opened: document.querySelector('#exhibitB').classList.contains('opened'), dots: document.querySelectorAll('#exhibitB .bdot').length, title: document.querySelector('#exhibitB .sheet-title').textContent, gap: document.querySelectorAll('#exhibitB .gap').length, text: document.querySelector('#exhibitB').innerText }));
+    check('production: while unconfirmed there is no call, the card is open, exactly one dot (40.6x)', p.call === 0 && p.opened && p.dots === 1, JSON.stringify([p.call, p.opened, p.dots]));
+    check('production: no claim about 1,000 symbols, no "until it was worse" title, no crossover line, no gap line', !/1,000 symbols/.test(p.text) && p.title !== B.title && !/crossover/i.test(p.text) && p.gap === 0 && !/until it was worse/i.test(p.text), p.title);
+    await scrollTo(page, '#exhibitB .chart', 180); await sleep(2200);
+    const c = await page.evaluate(() => ({ ticksX: [...document.querySelectorAll('#exhibitB .bchart .axl')].map((e) => e.textContent), be: document.querySelector('#exhibitB .be-l').textContent, label: document.querySelector('#exhibitB .bdot').getAttribute('aria-label'), val: document.querySelector('#exhibitB .bval').textContent, table: document.querySelector('#exhibitB .sr-only table').innerText, svgRole: document.querySelector('#exhibitB .bchart').getAttribute('role'), dotH: document.querySelector('#exhibitB .bdot').getBoundingClientRect().height }));
+    check('chart: log axes 1 to 1,000, break-even line labelled, direct value label, role=img, data table', ['1', '10', '100', '1,000'].every((x) => c.ticksX.includes(x)) && c.be === 'break-even: above it the index wins' && c.val === '40.6x' && c.svgRole === 'img' && c.table.includes('40.6'), JSON.stringify(c).slice(0, 220));
+    await page.tap('#exhibitB .bdot'); await sleep(200);
+    check('tapping the dot shows its label', (await page.evaluate(() => document.querySelector('#exhibitB .dot-detail').textContent)) === B.boundary.points[0].label);
+    check('dot tap target is at least 44px', c.dotH >= 44);
+    const note = await page.evaluate(() => document.querySelector('#exhibitB .chart .custody-strip').innerText);
+    check('boundary.note shows in a custody strip (without the crossover sentence while gated)', note.includes('268,744,780') && note.includes('One machine, one workload') && !/crossover/i.test(note), note);
+    await scrollTo(page, '#exhibitB .cstrip', 250); await sleep(3000);
+    const cn = await page.evaluate(() => ({ n: document.querySelectorAll('#exhibitB .rd').length, hot: document.querySelectorAll('#exhibitB .rd.hot').length, hotFirst: [...document.querySelectorAll('#exhibitB .rd')].slice(0, 9).every((e) => e.classList.contains('hot')), note: document.querySelector('#exhibitB .cn-note').textContent, label: document.querySelector('#exhibitB .rounds').getAttribute('aria-label') }));
+    check('contamination strip: 10 dots, the first 9 turn brass one by one, caption from content', cn.n === 10 && cn.hot === 9 && cn.hotFirst && cn.note === B.contamination.note && /9 of 10/.test(cn.label), JSON.stringify(cn));
+    const ch = await page.evaluate(() => [...document.querySelectorAll('#exhibitB .chip-t')].map((e) => ({ t: e.textContent, dashed: getComputedStyle(e).borderStyle.includes('dashed') })));
+    check('chips from content; only the MODELED chip is dashed', ch.length === B.chips.length && ch.filter((x) => x.dashed).length === 1 && ch.find((x) => x.dashed).t.includes('MODELED'), JSON.stringify(ch));
+    check('production: no console errors', log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+  }
+  {
+    const { page, ctx, log } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html' });
+    await ready(page); await sleep(400);
+    const r = await page.evaluate(() => ({ call: document.querySelectorAll('#exhibitB .call').length, title: document.querySelector('#exhibitB .sheet-title').textContent, dots: document.querySelectorAll('#exhibitB .bdot').length, opened: document.querySelector('#exhibitB').classList.contains('opened') }));
+    check('review: full title, the call, and both dots are there', r.title === B.title && r.call === 1 && r.dots === 2 && !r.opened, JSON.stringify(r));
+    await scrollTo(page, '#exhibitB'); await page.tap('#exhibitB .opt:nth-child(' + (B.call.answerIndex + 1) + ')'); await sleep(1400);
+    await scrollTo(page, '#exhibitB .chart', 180); await sleep(3200);
+    const c = await page.evaluate(() => ({ gap: document.querySelectorAll('#exhibitB .gap').length, gl: document.querySelector('#exhibitB .gap-l').textContent, vals: [...document.querySelectorAll('#exhibitB .bval')].map((e) => e.textContent), reveal: document.querySelector('#exhibitB .call-reveal').textContent, dash: getComputedStyle(document.querySelector('#exhibitB .gap')).strokeDasharray, rows: document.querySelectorAll('#exhibitB .sr-only tbody tr').length, below: (() => { const dots = [...document.querySelectorAll('#exhibitB .bdot')].map((e) => e.getBoundingClientRect().top); return dots[1] > dots[0]; })() }));
+    check('review: second point plotted below the first, dashed gap labelled "crossover not measured here"', c.gap === 1 && c.gl === 'crossover not measured here' && c.vals.join() === '40.6x,0.585x' && c.dash !== 'none' && c.rows === 2 && c.below, JSON.stringify(c));
+    check('review: the call reveal shows after answering', c.reveal === B.call.reveal);
+    check('review: no console errors', log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+  }
+  { // laptop screenshot for the eye + reduced motion final
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.laptop, reducedMotion: true });
+    await ready(page); await sleep(300); await scrollTo(page, '#exhibitB .chart', 100); await sleep(400);
+    check('reduced motion: chart dots and strip are final at once', await page.evaluate(() => getComputedStyle(document.querySelector('#exhibitB .bdot')).opacity === '1' && document.querySelectorAll('#exhibitB .rd.hot').length === 9));
+    await ctx.close();
+  }
+}
+
+// ------------------------------------------------------------------ Stage 9 (ledger and forks)
+if (run(9)) {
+  console.log('\nStage 9: plot twists and forks');
+  const prodCases = content.ledger.cases.filter((c) => !c.requiresConfirmation);
+  const cnt = (cs) => cs.reduce((m, c) => { m[c.status] = (m[c.status] || 0) + 1; return m; }, {});
+  for (const [build, cases] of [['index.html', prodCases], ['review.html', content.ledger.cases]]) {
+    const { page, ctx, log } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build });
+    await ready(page); await sleep(400);
+    await scrollTo(page, '#ledger');
+    const L = await page.evaluate(() => ({ title: document.querySelector('#ledger .sheet-title').textContent, rows: document.querySelectorAll('#ledger .case').length, chips: [...document.querySelectorAll('#ledger .fchip')].map((c) => [c.dataset.f, +c.querySelector('b').textContent]), open: document.querySelectorAll('#ledger .stamp.s-open').length, stamps: [...document.querySelectorAll('#ledger .stamp')].map((s) => s.textContent) }));
+    const want = cnt(cases);
+    check(`${build}: ${cases.length} cases${build === 'index.html' ? ' (c6 hidden while unconfirmed)' : ''}, title is ui.ledgerTitle`, L.rows === cases.length && L.title === content.ui.ledgerTitle && (build === 'review.html' || !L.stamps.length || true), JSON.stringify(L.rows));
+    check(`${build}: filter chip counts are computed from the data`, L.chips.every(([k, n]) => k === 'all' ? n === cases.length : n === want[k]) && L.chips.length === Object.keys(want).length + 1, JSON.stringify(L.chips) + JSON.stringify(want));
+    check(`${build}: the OPEN stamp exists exactly once`, L.open === 1 && L.stamps.filter((s) => s === 'OPEN').length === 1, JSON.stringify(L.open));
+    const op = await page.evaluate(() => { const o = getComputedStyle(document.querySelector('#ledger .stamp.s-open')); const c = getComputedStyle(document.querySelector('#ledger .stamp.s-closed')); return { oa: parseFloat(o.fontSize), ca: parseFloat(c.fontSize), obg: o.backgroundColor, cbg: c.backgroundColor }; });
+    check(`${build}: OPEN is visually loudest (bigger, filled brass); closed stamps are muted`, op.oa > op.ca && op.obg !== 'rgba(0, 0, 0, 0)' && op.cbg === 'rgba(0, 0, 0, 0)', JSON.stringify(op));
+    // filters by touch
+    for (const status of Object.keys(want)) {
+      await page.tap(`#ledger .fchip[data-f="${status}"]`); await sleep(150);
+      const shown = await page.evaluate(() => [...document.querySelectorAll('#ledger .case')].filter((c) => !c.hidden).map((c) => c.dataset.status));
+      check(`${build}: tapping the ${status.toUpperCase()} chip shows ${want[status]} case(s) of that status`, shown.length === want[status] && shown.every((s) => s === status), shown.join());
+    }
+    await page.tap('#ledger .fchip[data-f="all"]'); await sleep(150);
+    check(`${build}: All chip restores every row`, (await page.evaluate(() => [...document.querySelectorAll('#ledger .case')].filter((c) => !c.hidden).length)) === cases.length);
+    await page.tap('#ledger .case:nth-child(1) .case-head'); await sleep(600);
+    const e = await page.evaluate(() => ({ exp: document.querySelector('#ledger .case-head').getAttribute('aria-expanded'), t: document.querySelector('#ledger .case-body').innerText, h: document.querySelector('#ledger .case-head').getBoundingClientRect().height }));
+    check(`${build}: tapping a row expands what / resolution (touch target 44px+)`, e.exp === 'true' && e.t.includes(cases[0].what) && e.t.includes(cases[0].resolution) && e.h >= 44, e.t.slice(0, 60));
+    if (build === 'review.html') check('review: the PitDB note (draft) shows on case c1, outlined amber', await page.evaluate(() => !!document.querySelector('#ledger .case:nth-child(1) .case-in .cf-filled')));
+    check(`${build}: no console errors`, log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+  }
+  for (const [build, expectMind] of [['index.html', false], ['review.html', true]]) {
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build });
+    await ready(page); await sleep(300); await scrollTo(page, '#decisions');
+    const F = await page.evaluate(() => [...document.querySelectorAll('#decisions .fork')].map((f) => ({ title: f.querySelector('h3').textContent, chosen: f.querySelectorAll('.branch.chosen').length, total: f.querySelectorAll('.branch').length, notTaken: f.querySelectorAll('.nt').length, ev: !!f.querySelector('.chosen .bev'), evUnderSkipped: !!f.querySelector('.skipped .bev'), cmm: !!f.querySelector('.cmm'), red: getComputedStyle(f.querySelector('.chosen'), '::before').backgroundColor, grey: getComputedStyle(f.querySelector('.skipped')).color })));
+    const forks = content.decisions.forks;
+    check(`${build}: ${forks.length} forks, each with one chosen branch, the others "not taken", evidence under the chosen`, F.length === forks.length && F.every((f, i) => f.title === forks[i].title && f.chosen === 1 && f.notTaken === f.total - 1 && f.ev && !f.evUnderSkipped), JSON.stringify(F).slice(0, 200));
+    check(`${build}: chosen branch is drawn in red string, others grey`, F.every((f) => f.red === 'rgb(210, 69, 46)' && f.grey === 'rgb(94, 86, 75)'), JSON.stringify([F[0].red, F[0].grey]));
+    check(`${build}: "What would change my mind" slip is ${expectMind ? 'present (draft, outlined)' : 'hidden while empty'}`, expectMind ? F.every((f) => f.cmm) : F.every((f) => !f.cmm));
     await ctx.close();
   }
 }

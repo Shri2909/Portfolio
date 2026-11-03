@@ -4,6 +4,30 @@ Newest milestone first. Honest reporting: "not tested" means nobody ran it.
 
 ---
 
+## M3 "The exhibits" (Stages 7, 8, 9: ledger and forks)
+
+### What changed
+- **Shared parts (`70-exhibit.js`).** Exhibit card (title, one-line summary, custody strip, optional Make Your Call, body that opens after the call), custody strip (Source, Tool, Date, Status, Note, hidden when empty, VERIFIED only if `verified` is true), four beats (labels from the spec, empty ones hidden), cross-exam accordion (`ui.crossExam`, items with an empty answer hidden), verify box (steps, command with a Copy button that catches clipboard refusal and selects the text instead, expected output, repo link; hidden when empty), red-string timeline that draws when seen. Make Your Call saves the pick in localStorage (try/catch); a saved pick reopens the card with the reveal; "Just show me" skips.
+- **Exhibit A.** 324 sage tiles (18x18) pop in as a wave, a brass scan line sweeps, 19 brass tiles fall in below the grid with the caption "19 findings the 324 tests never asked about" and a "19 FINDINGS" seal. Both numbers come from `exhibitA.stats`. Tap or arrow-key a tile for "Test n of 324" / "Finding n of 19" (no invented finding names). Text-alternative table. Reduced motion: final state.
+- **Exhibit B.** Hand-built SVG chart, log scales, 1x break-even line labelled, only `boundary.points` plotted, a dashed gap labelled "crossover not measured here" when there are two points, dots (real 44px buttons) that animate in from the left, tap a dot for its label, data table. Contamination strip (10 dots, 9 turn brass one by one), chips (MODELED dashed), call.
+- **Confirmation gate, done at build time.** While `boundary.confirmed` is false, `scripts/build.py` removes the unverified TipIndex claims from the production file itself: the 0.585 point, the call, ledger case c6, the crossover sentence of `boundary.note`, the 1,000-symbol sentence in lead s3's evidence, and the title "...until it was worse". The string "0.585" is not anywhere in `dist/index.html` (tested). The Exhibit B heading in production falls back to the part of the summary before the colon ("TipIndex"). The review build keeps everything.
+- **Ledger.** Case rows with rubber stamps (CLOSED, NARROWED, DROPPED muted; the single OPEN stamp bigger, filled brass, gently breathing), filter chips with counts computed from the data, tap to expand ("The plot twist" / "What I did next"; the PitDB note from the draft in the review build).
+- **Forks.** Chosen branch in red string, others grey with "not taken", evidence under the chosen branch, "What would change my mind" slip (hidden while empty).
+
+### Tests
+Stages 7, 8, 9 added (about 85 checks); all stages together: 290 pass. They check exactly 324 sage and 19 brass tiles, the caption and seal text, tile status text, keyboard navigation, timeline order, hidden-when-empty beats/cross-exam/verify in production versus filled and amber-outlined in review, the full call flow (answer, reveal, saved pick, "Just show me", localStorage off, reduced motion), chart axes, labels, dots, the production gate (no 0.585, no call, one dot, no crossover) versus the review build (two dots, gap line, call), contamination dots, dashed MODELED chip, ledger counts and filters by touch, exactly one OPEN stamp, stamp weight, forks structure and colours.
+
+### Bugs found while building
+- A CSS class name clash (`.t` for tiles also matched the opening's name text) broke the opening layout; tiles are now `.tile`. The chart tick class `.tk` also clashed with the opening's token class; renamed `.axl`.
+- Visually hidden data tables (`position:absolute` tables) widened the layout viewport on phones; the table now sits in a `div.sr-only`.
+
+### Decisions / caveats
+- Ledger case c2 (Blitz) is live in production; TRUTH_CHECK says to confirm it with Shriniwas first. I left it in because it is in `content.json` without `requiresConfirmation`.
+- The "What I did / What didn't work / What I learned / What I did next" labels and "The plot twist" are chrome strings I added.
+- The tiles only play when scrolled into view, so a static screenshot taken without scrolling shows the grid space empty.
+
+---
+
 ## M2 "The cosy desk and the board" (Stages 4, 5, 6)
 
 Run straight on after M1 at the user's request (no stop between M1 and M5; the user approved moving on).
