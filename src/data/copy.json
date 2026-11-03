@@ -175,7 +175,17 @@
    "mailAria": "opens an email",
    "receiptAria": "Evidence drawer, folder {name}",
    "lampCardAria": "Lamp {n} story",
-   "yourLampAria": "Your lamp"
+   "yourLampAria": "Your lamp",
+   "stringMode": "String lights: {mode}",
+   "stringAria": "Change the string light pattern",
+   "stringModes": [
+    "steady",
+    "chase",
+    "twinkle",
+    "fade"
+   ],
+   "tiltOn": "Tilt on",
+   "lampRow": "The five lamps"
   }
  },
  "opening": {

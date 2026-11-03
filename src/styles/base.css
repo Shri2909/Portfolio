@@ -32,8 +32,9 @@ html[data-ink="1"] .btn-primary { background: var(--cream); border-color: var(--
 .btn[disabled] { opacity: .55; cursor: default; }
 
 #topbar { position: fixed; z-index: 5; top: 0; left: 0; right: 0; height: var(--topbar-h); padding: env(safe-area-inset-top) var(--gutter) 0; display: flex; align-items: center; justify-content: space-between; gap: 8px; background: linear-gradient(to bottom, rgba(10, 7, 5, .92), rgba(10, 7, 5, .6)); }
-#topbar .mark { font: 12px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--cream); text-decoration: none; min-height: var(--tap); display: flex; align-items: center; }
-#topbar .right { display: flex; gap: 8px; align-items: center; }
+#topbar .mark { font: 11px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--cream); text-decoration: none; min-height: var(--tap); display: flex; align-items: center; }
+#topbar .right { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+#topbar .right .btn { white-space: nowrap; padding: 8px 14px; font-size: 14px; }
 .menu { position: fixed; z-index: 6; top: calc(var(--topbar-h) + env(safe-area-inset-top)); right: var(--gutter); left: var(--gutter); max-width: 360px; margin-left: auto; padding: 8px; background: var(--ground-2); border: 1px solid var(--ground-5); border-radius: 14px; display: grid; gap: 2px; }
 .menu a, .menu button { display: flex; align-items: center; min-height: var(--tap); padding: 8px 14px; border-radius: 10px; color: var(--cream); text-decoration: none; background: none; border: 0; font: 600 16px var(--font-body); text-align: left; cursor: pointer; }
 .menu a:hover, .menu button:hover { background: var(--ground-4); }

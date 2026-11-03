@@ -9,6 +9,8 @@ import { startGovernor } from './lib/quality.js';
 import { startFavicon } from './lib/favicon.js';
 import { wireOpeners, openSixty, openEvidence, openText, closeOverlay, closeText, scrollToId } from './lib/nav.js';
 import { rich } from './lib/rich.jsx';
+import Stage from './components/stage/Stage.jsx';
+import TiltChip from './components/TiltChip.jsx';
 import TopBar from './components/TopBar.jsx';
 import Dock from './components/Dock.jsx';
 import Overlay from './components/Overlay.jsx';
@@ -50,7 +52,7 @@ export default function App() {
     <>
       <a className="skip-link" href="#main" onClick={(e) => { e.preventDefault(); const m = document.getElementById('main'); m.focus(); m.scrollIntoView(); }}>{copy.ui.skip}</a>
       <TopBar />
-      <div id="stage" aria-hidden="true"><div id="sky" /><div id="skyline" /><canvas id="fx" /></div>
+      <Stage />
       <main id="main" tabIndex={-1}>
         <Night />
         <Lamps />
@@ -63,7 +65,7 @@ export default function App() {
         <Closure />
       </main>
       <Footer />
-      <Dock />
+      <Dock><TiltChip /></Dock>
       <SixtyDialog />
       <EvidenceDrawer />
       <dialog id="lamp-sheet" className="overlay sheet" aria-label="Lamp story" />

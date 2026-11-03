@@ -38,6 +38,7 @@ function syncRoot() {
   r.dataset.calm = state.calm ? '1' : '0';
   r.dataset.quality = state.quality;
   r.dataset.ink = state.ink ? '1' : '0';
+  r.style.setProperty('--tone', String(state.tone));
 }
 function set(patch) {
   const next = { ...state, ...patch };
@@ -109,6 +110,7 @@ function clearWish() { wish.to = ''; wish.text = ''; wish.from = ''; }
 export const getWish = () => wish;
 
 if (typeof window !== 'undefined') {
+  if (import.meta.env.DEV) window.__ek = { actions, getState }; // development builds only
   mq && mq.addEventListener && mq.addEventListener('change', (e) => set({ reducedMotion: e.matches }));
   syncRoot();
 }

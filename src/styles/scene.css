@@ -1,0 +1,128 @@
+@property --p { syntax: '<number>'; inherits: true; initial-value: 0; }
+html { --vig: .55; background: var(--bg); }
+html[data-tone="1"] { --vig: .52; } html[data-tone="2"] { --vig: .48; } html[data-tone="3"] { --vig: .44; }
+html[data-tone="4"] { --vig: .40; } html[data-tone="5"] { --vig: .26; } html[data-tone="6"] { --vig: .22; }
+/* dusk-gold: the change to tone 5 waits 700 ms so the row's breath finishes first, then eases over 1.5 s */
+html[data-tone="5"], html[data-tone="5"] body { transition: background-color 1500ms ease 700ms; }
+html[data-calm="1"], html[data-calm="1"] body { transition: none !important; }
+body { background: transparent; }
+
+#stage { position: fixed; inset: 0; height: 100svh; z-index: -1; overflow: hidden; pointer-events: none; }
+#stage > * { position: absolute; }
+#sky { inset: 0; }
+.sky-g { position: absolute; inset: 0; transition: opacity var(--tone-ms) ease; }
+.sky-night { background: linear-gradient(#05060D 0%, #0B0D1F 55%, #17122A 100%); }
+.sky-ember { background: linear-gradient(#120D1F 0%, #2B1A33 55%, #5A2A2C 100%); opacity: clamp(0, calc((var(--tone) - 1) / 3), 1); }
+.sky-gold { background: linear-gradient(#22152B 0%, #6B3440 50%, #F2A94E 100%); opacity: clamp(0, calc((var(--tone) - 4) * .85), 1); transition: opacity 2400ms ease 400ms; }
+html[data-calm="1"] .sky-gold { transition: none; }
+.stars { position: absolute; left: 0; top: 0; width: 100%; height: 60%; opacity: calc(1 - var(--tone) * .1); transition: opacity var(--tone-ms); }
+.tw { animation: tw 4s ease-in-out infinite alternate; }
+@keyframes tw { from { opacity: .35; } to { opacity: 1; } }
+.moon { position: absolute; top: 12%; right: 18%; transform: translate(50%, -50%); }
+.cloud { position: absolute; width: 70vw; height: 14svh; left: -75vw; top: 14%; animation: drift 120s linear infinite; }
+.cloud i { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(150, 165, 195, .14), transparent 70%); }
+.cloud .rim { background: radial-gradient(ellipse at center, rgba(245, 166, 35, .12), transparent 70%); opacity: clamp(0, calc((var(--tone) - 3) / 3), 1); }
+.cloud-0 { animation-duration: 90s; top: 10%; } .cloud-1 { animation-duration: 120s; top: 24%; animation-delay: -40s; } .cloud-2 { animation-duration: 140s; top: 36%; animation-delay: -90s; }
+@keyframes drift { to { transform: translateX(190vw); } }
+.shooting { position: absolute; top: 14%; left: 40%; width: 2px; height: 60px; background: linear-gradient(transparent, var(--cream)); transform-origin: top; }
+html[data-quality="low"] .cloud, html[data-quality="low"] .tw { display: none; }
+html[data-quality="mid"] .cloud-2 { display: none; }
+html[data-calm="1"] .cloud { animation-play-state: paused; } html[data-calm="1"] .tw { animation: none; opacity: .7; }
+
+#skyline { left: 0; right: 0; bottom: 38%; height: 42%; overflow: hidden; }
+#skyline svg { position: absolute; left: 50%; bottom: 0; height: 100%; aspect-ratio: 12 / 5; transform: translateX(-50%); display: block; overflow: visible; }
+@media (min-width: 768px) { #skyline { height: 46%; } }
+.lay.far rect:not(.pane):not(.halo) { fill: color-mix(in srgb, var(--ground-1), white 6%); }
+.lay.mid > rect { fill: var(--ground-2); } .lay.near > g > rect:first-child { fill: var(--ground-3); }
+.roof * { fill: var(--ground-1); } .roof .stroke, .roof .stroke * { fill: none; stroke: var(--ground-1); stroke-width: 1.4; }
+.roof .cloth { fill: none; stroke: var(--ground-4); }
+.lay.near .stroke { stroke: var(--ground-4); stroke-width: 1.2; fill: none; } .unit, .solar * { fill: var(--ground-1); }
+.win { color: var(--flame-core); transition: opacity .6s ease; }
+.win .pane { fill: currentColor; } .win .halo { fill: currentColor; opacity: .18; }
+.win.c-a { color: var(--flame-a); } .win.c-cream { color: var(--cream); } .win.c-tv { color: #8FB4E8; }
+.win.c-tv .pane { animation: tvf 2s infinite steps(1); }
+@keyframes tvf { 0% { opacity: .9; } 18% { opacity: .5; } 37% { opacity: .8; } 55% { opacity: .55; } 80% { opacity: .9; } }
+.fan { transition: opacity .6s; } .fan ellipse { fill: var(--ground-5); } .fan { animation: spin 4s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.win.visitor.on .pane { fill: var(--flame-core); } .win.visitor.on .halo { opacity: .5; animation: pulse 3s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .22; } }
+html[data-calm="1"] .win, html[data-calm="1"] .fan { transition: none !important; }
+html[data-calm="1"] .win .pane, html[data-calm="1"] .fan, html[data-calm="1"] .win.visitor.on .halo { animation: none !important; }
+html[data-quality="low"] .fan, html[data-quality="low"] .win.c-tv .pane { animation: none; }
+html[data-quality="low"] .win { transition-delay: 0ms !important; }
+
+#terrace { inset: 0; }
+#terrace > * { position: absolute; }
+.floor { left: 0; right: 0; bottom: 0; height: 31%; background: linear-gradient(var(--ground-3), var(--ground-2)); }
+.parapet { left: 0; right: 0; bottom: 31%; height: 7%; background: var(--ground-3); border-top: 2px solid rgba(255, 243, 220, .25); }
+.parapet .cap { position: absolute; top: -9px; width: 26px; height: 9px; background: var(--ground-4); border-top: 2px solid rgba(255, 243, 220, .25); }
+.rangoli-wrap { left: 50%; top: 75%; width: min(92vw, 520px); height: calc(min(92vw, 520px) * .42); transform: translate(-50%, -50%); }
+@media (min-width: 1024px) { .rangoli-wrap { width: 640px; height: 269px; } }
+.rangoli { width: 100%; height: 100%; display: block; }
+.rl { transition: --p 1.4s ease; }
+.rl path { stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--p)); fill: none; stroke-linecap: round; }
+.rl .glow { stroke: var(--cream); stroke-width: 6; opacity: .12; } .rl .ln { stroke: var(--cream); stroke-opacity: .8; stroke-width: 1.4; }
+.rl .ln[class*="fill-"] { fill-opacity: 0; transition: fill-opacity 1.2s ease; }
+.fill-petal { fill: var(--marigold) !important; } .fill-small { fill: var(--kumkum) !important; } .fill-star { fill: var(--leaf) !important; } .fill-scallop { fill: var(--cream) !important; }
+html[data-tone="6"] .fill-petal { fill-opacity: .55 !important; } html[data-tone="6"] .fill-small { fill-opacity: .5 !important; }
+html[data-tone="6"] .fill-star { fill-opacity: .35 !important; } html[data-tone="6"] .fill-scallop { fill-opacity: .2 !important; }
+.dotted-arc { fill: none; stroke: var(--cream); stroke-opacity: .8; stroke-width: 1.6; stroke-dasharray: .5 5; stroke-linecap: round; }
+html[data-calm="1"] .rl, html[data-calm="1"] .rl .ln { transition: none !important; }
+.pools i { position: absolute; bottom: 6%; width: 140px; height: 40px; transform: translateX(-50%); background: radial-gradient(ellipse, rgba(255, 179, 71, .35), transparent 70%); opacity: 0; transition: opacity 1s; }
+.pools i.on { opacity: 1; } .pools { position: absolute; inset: 0; }
+html[data-quality="high"] .pools i { mix-blend-mode: screen; } html[data-quality="low"] .pools { display: none; }
+.inkline { display: none; left: 0; top: 75%; width: 100%; height: 4px; }
+.inkline path { stroke: var(--cream); stroke-opacity: .6; stroke-width: 1; stroke-dasharray: 1; fill: none; transition: stroke-dashoffset 1.4s ease; vector-effect: non-scaling-stroke; }
+html[data-ink="1"] .inkline { display: block; }
+
+.toran-wrap { top: 16px; left: 0; width: 100%; } .toran { display: block; }
+.toran-warm { opacity: calc(var(--tone) * .0417); pointer-events: none; mix-blend-mode: soft-light; }
+.gust { animation: gust 12s ease-in-out infinite; } .strand { animation: sway 6s ease-in-out infinite alternate; }
+@keyframes sway { from { transform: rotate(-2.5deg); } to { transform: rotate(2.5deg); } }
+@keyframes gust { 0%, 70%, 100% { transform: rotate(0); } 80% { transform: rotate(4deg); } 90% { transform: rotate(-1.5deg); } }
+html[data-quality="low"] .gust, html[data-quality="low"] .strand:nth-child(n + 4) { animation: none; }
+html[data-calm="1"] .gust, html[data-calm="1"] .strand { animation: none; }
+
+.lights-wrap { left: 0; right: 0; bottom: 38%; margin-bottom: -4px; }
+.lights { display: block; }
+.bulb { opacity: calc(.35 + .1 * var(--tone)); } .bglow { opacity: calc(.12 + .03 * var(--tone)); }
+.mode-chase .bulb { animation: chase 1.2s infinite; } .mode-twinkle .bulb { animation: tw 3s ease-in-out infinite alternate; } .mode-fade .bulb { animation: fadeb 5s ease-in-out infinite alternate; animation-delay: 0s !important; }
+@keyframes chase { 0%, 100% { opacity: 1; } 33%, 66% { opacity: .25; } } @keyframes fadeb { from { opacity: .2; } to { opacity: 1; } }
+html[data-calm="1"] .bulb { animation: none !important; }
+.lights-ctl { position: fixed; z-index: 2; left: 6px; bottom: calc(38% + 2px); width: 44px; height: 44px; background: none; border: 0; padding: 0; cursor: pointer; pointer-events: auto; display: grid; place-items: center; }
+.lights-ctl i { width: 24px; height: 18px; background: #050403; border: 1px solid var(--ground-5); border-radius: 3px; display: block; position: relative; }
+.lights-ctl i::after { content: ""; position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--flame-a); left: 9px; top: 6px; }
+html[data-ink="1"] .lights-ctl { display: none; }
+
+.lantern { top: 40px; transform: translateX(-50%); cursor: pointer; }
+.lantern .pend { transform-origin: 50% 0; animation: pend var(--dur) ease-in-out infinite alternate; }
+@keyframes pend { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
+.lantern svg { display: block; opacity: .55; transition: opacity 1s; } .lantern.lit svg { opacity: 1; }
+.lantern .lglow { opacity: 0; transition: opacity 1s; } .lantern.lit .lglow { opacity: 1; }
+html[data-calm="1"] .lantern .pend { animation: none; } html[data-quality="low"] .lantern .pend { animation: none; }
+.cat-wrap { right: 10px; bottom: calc(38% - 2px); } .cat { display: block; cursor: pointer; }
+.stage-hit { pointer-events: auto; }
+@media (max-height: 679px) { .lantern-3, .cat-wrap { display: none; } }
+@media (max-height: 499px) { .parapet, .rangoli-wrap, .toran-wrap, .lantern, .floor, .lights-wrap, .lights-ctl, .cat-wrap, .pools { display: none; } }
+html[data-ink="1"] .deco, html[data-ink="1"] .moon, html[data-ink="1"] .cloud, html[data-ink="1"] .pools { display: none; }
+html[data-ink="1"] .sky-ember, html[data-ink="1"] .sky-gold { display: none; }
+html[data-ink="1"] .sky-night { background: linear-gradient(#0B0B0C, #1a1a1b); }
+html[data-ink="1"] .win { color: #F4EBD3 !important; } html[data-ink="1"] .tw { animation: none; }
+html[data-ink="1"] .lay.far rect:not(.pane):not(.halo), html[data-ink="1"] .lay.mid > rect, html[data-ink="1"] .lay.near > g > rect:first-child { fill: #1a1816; }
+html[data-ink="1"][data-tone="5"] .sky-night { background: linear-gradient(#0B0B0C 60%, #34302A 100%); }
+
+.dusk-ring { position: fixed; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 210, 122, .35), transparent 70%); opacity: 0; pointer-events: none; }
+.birds { position: fixed; left: 0; top: 18%; width: 340px; height: 90px; pointer-events: none; }
+.bird { fill: none; stroke: var(--ground-1); stroke-width: 2; stroke-linecap: round; animation: flap .5s steps(2) infinite alternate; }
+@keyframes flap { to { transform: scaleY(.55); } }
+#fx { inset: 0; width: 100%; height: 100%; }
+#vignette { inset: 0; background: radial-gradient(ellipse at 50% 45%, transparent 40%, rgba(0, 0, 0, var(--vig)) 100%); }
+#cast { inset: 0; background: radial-gradient(circle at var(--lx, 50%) var(--ly, 70%), rgba(255, 179, 71, .14), transparent 45%); opacity: calc(var(--tone) * .17); transition: opacity var(--tone-ms); }
+#veil { inset: 0; background: #000; opacity: 0; transition: opacity .6s; } html[data-veil="1"] #veil { opacity: .25; }
+html[data-calm="1"] #veil { transition: none; }
+
+/* stage is click-through; content sits above it */
+main { pointer-events: none; } main .sec > * { pointer-events: auto; }
+h1 { text-shadow: 0 0 calc(var(--tone) * 3px) rgba(255, 179, 71, calc(var(--tone) * .05)); }
+.sec .panel { background: color-mix(in srgb, var(--ground-2) 90%, transparent); }
+.night-copy { max-width: 36rem; }
