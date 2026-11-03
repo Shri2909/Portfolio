@@ -73,7 +73,7 @@ await p.mouse.move(180, 76); await p.mouse.down(); await p.waitForTimeout(700); 
 log(await p.locator('.sparkler-wire').count() === 0, 'Calm: long-press does nothing');
 await p.close();
 // Ink: crackers dropped
-p = await mk(); await p.click('#dock button:has-text("Ink")');
+p = await mk(); await p.getByRole('button', { name: 'Menu' }).click(); await p.locator('#menu button:has-text("Ink")').click();
 await p.evaluate(() => { window.__fx.burst({ kind: 'anar', x: 150, y: 400 }); window.__fx.burst({ kind: 'rocket', x: 150, y: 400, tx: 150, ty: 100 }); }); await p.waitForTimeout(500);
 log(await T(p, 3) === 0 && await p.evaluate(() => window.__fx.countType(1)) === 0, 'Ink: anar and rocket are dropped');
 await p.close();

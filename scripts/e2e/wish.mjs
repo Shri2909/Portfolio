@@ -15,7 +15,7 @@ log((await p.locator('.msg').innerText()).includes('Ek line toh likhiye, phir ca
 log(await p.evaluate(() => document.activeElement.id === 'wish-text'), 'cursor goes back to the wish box');
 log(await p.locator('.card-stage').count() === 0, 'no card is made from an empty wish');
 // chips type nothing
-await p.locator('.chip-btn').first().click(); await p.waitForTimeout(100);
+await p.locator('details.ideas > summary').click(); await p.locator('.chip-btn').first().click(); await p.waitForTimeout(100);
 log((await p.locator('#wish-text').inputValue()) === '' && (await p.locator('.reminder').count()) === 1, 'a chip shows its sentence as a reminder and types nothing');
 // Enter in a name field must not submit or touch the address
 const urlBefore = await p.evaluate(() => location.href);

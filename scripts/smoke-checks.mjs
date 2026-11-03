@@ -22,8 +22,8 @@ export default async function ({ browser, base, out, ok }) {
   await page.keyboard.press('Tab');
   ok('first Tab stop is the skip link', await page.evaluate(() => document.activeElement.className.includes('skip-link')));
   ok('exactly one h1', (await page.locator('h1').count()) === 1);
-  const ids = await page.evaluate(() => ['night', 'lamps', 'row-breathes', 'lamp-6', 'person', 'voice', 'verdict', 'wish', 'closure'].filter((i) => document.getElementById(i)));
-  ok('all nine section ids exist', ids.length === 9);
+  const ids = await page.evaluate(() => ['night', 'lamp-1', 'baithak', 'lamp-2', 'lamp-3', 'lamp-4', 'lamp-5', 'voice', 'lamp-6', 'verdict', 'wish', 'closure'].filter((i) => document.getElementById(i)));
+  ok('all twelve section ids exist', ids.length === 12);
   await page.goto(base + '#sixty'); await page.waitForTimeout(200);
   ok('#sixty opens the dialog', await page.evaluate(() => document.getElementById('sixty').open));
   await page.keyboard.press('Escape'); await page.waitForTimeout(100);
