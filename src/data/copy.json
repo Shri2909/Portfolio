@@ -15,18 +15,29 @@
   "flowIntoEmergentRecorded": false,
   "noAnalyticsLine": false,
   "lamp6LanguageLine": false,
-  "footerHowMade": false
+  "footerHowMade": false,
+  "meet.roots.father": false,
+  "meet.roots.examOrder": false,
+  "meet.roots.case": false,
+  "meet.debate.filled": false,
+  "meet.research.filled": false,
+  "meet.mergeThin": true,
+  "meet.essay.idea": false,
+  "meet.essay.berggruen": false,
+  "meet.loop.ownWords": false,
+  "meet.outside": false,
+  "bring.indiaShare": false
  },
  "site": {
   "lang": "en-IN",
   "title": "Ek Diya Se Doosra (one lamp lights another) · Shriniwas Kholkute",
-  "description": "324 tests passed. Then an audit found 19 problems. Shriniwas Kholkute's night page for Wispr Flow's India growth internship: one lamp lights another. Ek diya jalaiye, aage badhaiye.",
+  "description": "324 tests passed. Then a separate audit found 19 problems. Shriniwas Kholkute's Deepavali-night page for Wispr Flow's India growth internship: five projects, one proposed test. Aaiye, chhat par.",
   "og": {
    "title": "324 tests passed. 19 problems found. Ship karte?",
-   "description": "Ek diya pehle se jal raha hai. Baaki aapke haath se jalenge. A night page about five projects, by Shriniwas Kholkute.",
-   "imageAlt": "A dark page with one small lit lamp and five unlit lamps beside it, under the words \"324 tests passed. 19 problems found.\""
+   "description": "Ek diya pehle se jal raha hai. Chaliye chhat par: paanch projects, ek proposed test, aur ek lau jo aapke haath se aage jaayegi.",
+   "imageAlt": "A dark terrace with one lit lamp, four unlit lamps and a faint dashed sixth lamp, under the words \"324 tests passed. 19 problems found.\""
   },
-  "shareLine": "324 tests passed. Phir ek audit ne 19 problems dhoondhe. Ship karte? {link}",
+  "shareLine": "324 tests passed. Phir ek audit ne 19 problems dhoondhe. Ship karte? Aaiye, dekhiye: {link}",
   "contact": {
    "email": "shrniwaskholkute2282@gmail.com",
    "linkedin": null
@@ -64,8 +75,8 @@
    "some": "<hi>{n} diye jal chuke, {rest} baaki.</hi>",
    "all": "<hi>Paanchon jal uthe.</hi>"
   },
-  "lampOpen": "<hi>Kissa kholiye</hi>",
-  "lampClose": "<hi>Row par waapas</hi>",
+  "lampOpen": "<hi>Poora kissa</hi>",
+  "lampClose": "<hi>Chhat par waapas</hi>",
   "lightAll": "<hi>Sab diye ek saath jalaiye</hi>",
   "sr": {
    "unlit": "Lamp {n}, unlit. Press and hold, tap or press Enter to light it from lamp {prev}.",
@@ -221,8 +232,22 @@
     "Regards,\n[your name and role]"
    ],
    "calmCorner": "Calm",
-   "calmCornerAria": "Calm mode: fewer moving things"
-  }
+   "calmCornerAria": "Calm mode: fewer moving things",
+   "menuFullText": "Poora text padhiye",
+   "menuSixty": "The 60-second file",
+   "menuEvidence": "Evidence drawer",
+   "menuLightAll": "Sab diye ek saath jalaiye",
+   "menuLast": "Aakhri diya",
+   "fullTextTitle": "Poora text",
+   "fullTextLine": "Yahan sab kuch seedhe text mein hai: koi animation nahi, koi interaction nahi. Har interaction ka plain-text version bhi.",
+   "poorakissaAria": "Full story: {project} receipt",
+   "passPrompt": "Lamp {n} ko chhuiye, lau aage badhegi.",
+   "moreLabel": "Aur dekhiye",
+   "proofLabel": "Proof",
+   "plainLabel": "Plain text",
+   "fastLane": "Take the whole walk"
+  },
+  "idleHint": "<hi>Agla diya →</hi>"
  },
  "opening": {
   "label": "EK DIYA SE DOOSRA · Shriniwas Kholkute",
@@ -232,16 +257,19 @@
   "ask": "<hi>**Ship karte? Imaandari se bataiye.**</hi>",
   "lines": [
    "<hi>Ek diya pehle se jal raha hai. Woh mera hai.</hi>",
-   "<hi>Baaki paanch aapke haath se jalenge.</hi>"
+   "<hi>Baaki aapke haath se jalenge.</hi>"
   ],
   "holdLabel": "HOLD TO LIGHT THE FIRST LAMP",
   "sixtyPrompt": "<hi>Jaldi mein hain? Ek minute mein poori kahani.</hi>",
   "sixtyCta": "THE 60-SECOND FILE",
   "below": [
-   "Five projects. Five inconvenient discoveries. <hi>Aur ek sawaal: phir maine kya kiya?</hi>",
-   "I'm Shriniwas, a final-year VIT Pune engineering student applying for Wispr Flow's India growth internship. <hi>Strengths ki list nahi. Main aapko mushkil faisle dikhaunga.</hi>"
+   "I'm Shriniwas, a final-year VIT Pune engineering student applying for Wispr Flow's India growth internship. <hi>Strengths ki list résumé mein hai; yahan sirf chaay aur chaar khidkiyan.</hi>"
   ],
-  "altText": "A dark page with one small flame lit on the left and a row of five unlit lamps leading away to the right."
+  "altText": "A dark terrace; one small flame lit on the left, a row of unlit lamps leading right.",
+  "headlineA": "324 tests passed.",
+  "headlineB": "Then an audit found 19 problems.",
+  "quick": "<hi>Jaldi mein? 60 second ki file →</hi>",
+  "awe1": "<hi>Ek diya jala. Poori gali jag uthi.</hi>"
  },
  "lamps": [
   {
@@ -278,7 +306,15 @@
     "label": "OPEN THE CERTGEN RECEIPT",
     "folder": "c1"
    },
-   "interaction": "guess"
+   "interaction": "guess",
+   "stop": {
+    "hook": "The prototype passed 324 tests. A separate audit found 19 problems.",
+    "nextHeading": "<hi>Maine phir kya kiya</hi>",
+    "next": "<hi>Green screen par ruk jaana aasaan tha.</hi> I didn't defend it: records show me approving safeguards and directing more remediation.",
+    "warning": "Still a prototype, not a security guarantee.",
+    "chip": "324 / 324 tests pass",
+    "twin": "324 of 324 tests passed. A separate audit then found 19 problems, two of them high."
+   }
   },
   {
    "n": 2,
@@ -316,7 +352,16 @@
     "label": "OPEN THE VIGIL RECEIPT",
     "folder": "c2"
    },
-   "interaction": "lateReply"
+   "interaction": "lateReply",
+   "stop": {
+    "hook": "<hi>Vigil poochhta hai: \"Hello? Aap wahin hain?\"</hi> Despite green tests, a reply arriving after the deadline could count as proof of health.",
+    "nextHeading": "<hi>Maine phir kya kiya</hi>",
+    "next": "<hi>Maine poochha: kya tests asli vaada check karte hain?</hi> With the correction removed, exactly two targeted tests failed; restored, 105 passed.",
+    "warning": "Simulated connections only. The 105 tests were verified locally in an agent session, not in CI, and there was no production deployment.",
+    "chip": "105 / 105 tests · simulated",
+    "flameOriginal": "<hi>Lau jalti rahi, jawab toh der se aaya tha.</hi>",
+    "flameCorrected": "<hi>Lau dheemi hui: der se aaya jawab ab proof nahi.</hi>"
+   }
   },
   {
    "n": 3,
@@ -351,7 +396,19 @@
     "label": "OPEN THE BLITZ RECEIPT",
     "folder": "c3"
    },
-   "interaction": null
+   "interaction": null,
+   "stop": {
+    "hook": "A speed claim looked remarkable: 1,205 nanoseconds. It had come from an uncommitted working tree.",
+    "tap": "<hi>3.1× par tap kijiye.</hi>",
+    "tapLabel": "Tap 3.1×",
+    "counter": "1,205 ns → 1,850 ns · 3.1× → about 1.02×",
+    "caption": "<hi>Chamak nahi, sach.</hi>",
+    "nextHeading": "<hi>Maine phir kya kiya</hi>",
+    "next": "I chose the defensible story over the flattering one: the headline was replaced, and later changes made even the replacement historical.",
+    "warning": "1,850 ns is a historical run, not today's number. Current latency has not been remeasured.",
+    "chip": "Historical run · not remeasured",
+    "twin": "the advertised 3.1× advantage shrank to about 1.02×; 1,205 ns came from an uncommitted working tree, 1,850 ns from the controlled run."
+   }
   },
   {
    "n": 4,
@@ -386,7 +443,15 @@
     "label": "OPEN THE TIPINDEX RECEIPT",
     "folder": "c4"
    },
-   "interaction": null
+   "interaction": null,
+   "stop": {
+    "hook": "Codex hit its limit mid-experiment. <hi>Beech raaste mein agent ruk gaya; file adhoori.</hi>",
+    "pass": "<hi>Lau doosre agent ko dijiye</hi>",
+    "nextHeading": "<hi>Maine phir kya kiya</hi>",
+    "next": "I directed a handoff to Claude Code and resumed from checkpoints: 820 completed measurement rounds.",
+    "warning": "Agents wrote most of the code and ran most benchmarks. One laptop, limited workload; not product speedups.",
+    "chip": "820 rounds · repo-reported"
+   }
   },
   {
    "n": 5,
@@ -420,12 +485,21 @@
     "label": "OPEN THE PITDB RECEIPT",
     "folder": "c5"
    },
-   "interaction": null
+   "interaction": null,
+   "stop": {
+    "hook": "In one time-zone edge case, a database meant to answer \"What was known then?\" showed a 06:15 event at 06:00.",
+    "clock": "<hi>Ghadi ko chhuiye</hi>",
+    "caption": "<hi>06:15 ki baat, 06:00 par.</hi>",
+    "nextHeading": "<hi>Phir kya hua</hi>",
+    "next": "Agents found and addressed it in a local remediation version; the claim was narrowed.",
+    "warning": "That correction is not yet in the public default branch, and I am not saying every audit finding is fixed.",
+    "chip": "LOCAL-BRANCH fix · public branch is older"
+   }
   }
  ],
  "guess": {
   "label": "GUESS THE AUDIT RESULT",
-  "question": "How many problems did the separate audit find?",
+  "question": "How many problems did the audit find?",
   "options": [
    0,
    3,
@@ -438,7 +512,9 @@
   "below": "<hi>Kam socha? Aap akele nahi hain. 324 tests ne bhi wahi socha.</hi>",
   "exact": "<hi>Bilkul sahi. Tests ko yeh nahi dikha tha.</hi>",
   "plain": "324 of 324 tests passed. A separate audit then found 19 problems, two of them high.",
-  "chip": "324 / 324 tests pass"
+  "chip": "324 / 324 tests pass",
+  "tileCaption": "<hi>324 tiles, sab green. Phir 19 ne haath uthaya, do ne zor se.</hi>",
+  "chipAfter": "19 findings · 2 high"
  },
  "lateReply": {
   "label": "TEST THE LATE REPLY",
@@ -532,7 +608,7 @@
   "pull": "I didn't learn that every plan works. I learned to decide what to do when it doesn't."
  },
  "voice": {
-  "kicker": "THE FIRST CLUE WAS MY VOICE",
+  "kicker": "MY VOICE, FLOW'S TEXT",
   "heading": "<hi>Soch poori hone do</hi>",
   "sub": "Let people finish thinking.",
   "paras": [
@@ -585,13 +661,14 @@
    "heading": "Where this came from:",
    "text": "My Wispr Flow history · Wispr Flow · 2 Nov 2026 · Output matches Flow history word for word. \"As I said it\" is my own hand transcription of what I said, typed from my voice memo."
   },
-  "chip": "A real take, straight from my Flow history"
+  "chip": "A real take, straight from my Flow history",
+  "otherTake": "<hi>Doosra take</hi>"
  },
  "verdict": {
   "kicker": "YOUR VERDICT",
   "heading": "<hi>Seedhi baat</hi>",
   "paras": [
-   "AI helped implement and investigate. I mapped workflows, shaped architecture, made or approved decisions, identified bottlenecks, directed attempts to break the prototypes, and pursued fixes. I didn't personally write every line or discover every bug.",
+   "AI helped implement and investigate. I directed, approved and questioned; I didn't personally write every line or discover every bug.",
    "I haven't owned a growth channel or shipped these prototypes to customers. <hi>Yeh zimmedari main kamaana chahta hoon.</hi>"
   ],
   "pull": "I can't promise I'll always be right. I can show you what I do when I'm wrong.",
@@ -601,17 +678,15 @@
    "label": "VIEW MY RÉSUMÉ",
    "hint": "opens Google Drive"
   },
-  "evidenceLabel": "EVIDENCE DRAWER"
+  "evidenceLabel": "EVIDENCE DRAWER",
+  "rolesLink": "<hi>Kisne kya kiya: ROLES folder.</hi>"
  },
  "wish": {
   "kicker": "YOUR TURN",
   "heading": "<hi>Ab aapki baari</hi>",
   "lines": [
-   "<hi>Is baar soan papdi nahi, ek wish.</hi>",
-   "<hi>Mere paanch diye ab roshan hain. Ab ek aur: aapka apna.</hi>",
-   "<hi>Ek real insaan sochiye. Do-teen line, jo sirf aap unse keh sakte hain. Generic forward nahi.</hi>",
-   "<hi>Bolkar likhiye, jaise unse baat kar rahe hon. Flow ya koi voice typing ho toh bol dijiye; nahi ho toh type bhi chalega.</hi>",
-   "<hi>Deepavali ho ya na ho: koi achhi khabar, koi purani yaad, ya bas \"yaad aaye\". Sab chalega.</hi>"
+   "<hi>Mere paanch diye jal gaye. Ab ek aapka.</hi>",
+   "<hi>Ek real insaan ko do-teen line likhiye, jaise unse baat kar rahe hon. Generic forward nahi: woh toh sabke paas pehle se hain.</hi>"
   ],
   "english": "Write one short wish for one real person, in any language you like.",
   "ideas": {
@@ -667,7 +742,12 @@
    "copied": "<hi>Copy ho gaya.</hi>",
    "copyFailed": "<hi>Copy nahi ho paya. Link select karke copy kar lijiye.</hi>",
    "underCard": "<hi>Yeh wish sirf is tab mein hai. Bhejna ho toh abhi bhej dijiye.</hi>"
-  }
+  },
+  "voiceLine": "<hi>Bolkar likhna ho toh Flow ya koi voice typing chalegi; type bhi theek hai.</hi>",
+  "walk": "<hi>Lau chal rahi hai, diye se diye tak.</hi>",
+  "privacyShort": "<hi>Wish upload ya save nahi hoti.</hi>",
+  "privacyOpen": "<hi>Poori privacy baat</hi>",
+  "ideasOpen": "<hi>Kuch idea chahiye?</hi>"
  },
  "closure": {
   "rowCaption": {
@@ -705,7 +785,7 @@
  },
  "evidence": {
   "title": "Evidence drawer",
-  "intro": "Every figure above has a source and a status. Statuses are plain text: PUBLIC, LOCAL-BRANCH, REPO-REPORTED, PERSONALLY CONFIRMED, UNRESOLVED, PROPOSED. <hi>Jahan jawab abhi adhura hai, wahan UNRESOLVED likha hai.</hi>",
+  "intro": "Every figure on this page has a source and a status. Statuses are plain text: PUBLIC, LOCAL-BRANCH, REPO-REPORTED, PERSONALLY CONFIRMED, UNRESOLVED, PROPOSED. <hi>Koi ek claim chuniye, evidence kholiye. Jahan jawab abhi adhura hai, wahan UNRESOLVED likha hai.</hi>",
   "fieldLabels": {
    "purpose": "Plain-English purpose",
    "finding": "The central finding",
@@ -959,7 +1039,7 @@
    {
     "id": "c7",
     "name": "THE PERSON AND THE VOICE: Sources",
-    "blurb": "<hi>Voice takes kahan se aaye, aur kya abhi baaki hai.</hi>",
+    "blurb": "<hi>Essay, résumé aur voice takes kahan se aaye, aur kya abhi baaki hai.</hi>",
     "body": {
      "purpose": "Where to read more, and what is and is not claimed about the voice exhibit.",
      "results": "The two takes on this page are from 2 November 2026, at 7:27 pm and 7:30 pm. The “As I said it” text is my own hand transcription of a separate voice memo; it is not an automatically produced transcript. No audio is published on this page. A recorded build in which Flow dictation drives a builder, followed by a spoken correction, has not been supplied, so that exhibit is pending. The original engineering repositories were not built with Flow.",
@@ -989,25 +1069,47 @@
     "name": "INDIA GROWTH TEST: The proposed protocol",
     "blurb": "<hi>Poora protocol. Proposed, not run.</hi>",
     "body": {
-     "purpose": "Can an actual message-first Hinglish demonstration help Indian students and early-career workers experience the value of Flow more effectively than a speed-focused pitch?",
-     "finding": "Audience: a small, reachable group of students and early-career users who naturally write Hindi-English messages. I would not assume that every Indian student uses Hinglish.\n\nVariant A, speed: “Say the message. Skip typing it.”\n\nVariant B, expression: “Don't stop the thought halfway through. Say it naturally.”",
-     "mine": "Design: the same real task and demo duration, rotated message order, success defined in advance, consent collected, no sensitive content. A small exploratory sample with counts per variant; no causal certainty claimed. Record what objection people raise and what they actually do.",
-     "results": "First useful action: the recipient creates a usable first dictation in a real app without needing a full rewrite. Return action: a second useful dictation within 24 hours, confirmed appropriately, not merely opening the app. Failure condition: no improvement on first success or second use, or results too small or noisy. Next iteration: revise the framing, user segment or first-message context based on the objections, and test again.",
-     "more": [
-      "A separate self-only experiment: five paired tasks, typed versus Flow, alternating order and recording time, edit count and whether the result was usable. That would give a personal workflow observation, not a claim about user behavior."
+     "fields": [
+      [
+       "Plain-English purpose",
+       "Test whether a setup script for the family member who installs Flow on an older relative's phone (Hinglish on, their people's names added, first dictation a real message to someone they love) makes that relative dictate again on their own, after the helper has left the room."
+      ],
+      [
+       "Audience and variants",
+       "Pairs of a young helper (18 to 25) and a relative (parent, grandparent, aunt or uncle) who writes Hindi or Hinglish on WhatsApp, on an Android 13+ phone or an iPhone, free plan. A, Speed demo (control): the helper installs with default settings, says \"Mummy, ye typing se kaafi tez hai. Bolke dekhiye.\", the relative dictates a test sentence, the helper leaves. B, Handover script: the helper picks Hinglish in the language setting on the relative's own phone, adds five names that matter to the relative to the personal dictionary, and says \"Mummy, ek message boliye jo aap Aarav ko bhejna chahti hain.\"; the text appears in Latin letters, the helper checks the names, the relative sends it in WhatsApp; the helper then leaves the room and the house for that session. Both arms: same phone mix, same follow-up card, same consent, same leave step. B bundles three changes (Hinglish, names, real message); a pilot cannot separate them."
+      ],
+      [
+       "Design",
+       "12 dyads (6 and 6, assigned by coin flip), one week plus a day-7 call. Exploratory only. No significance claims. Twelve dyads cannot show cause; they can show whether the idea is worth real instrumentation."
+      ],
+      [
+       "Metrics",
+       "Primary: a first usable dictation (sent in a real chat with at most one small fix), then an unassisted second dictation within 24 hours of the first, when the helper was not in the room. Secondary: any unassisted dictation on day 7; names right on first try, out of the five; helper minutes spent on setup; total words in 7 days, descriptive only. Guardrails: any language setting changed away from Hinglish (and why); any weekly limit message seen; discomfort or \"bahut mushkil hai\" feedback; helper stress; any privacy concern. Any guardrail breach in B is reported first."
+      ],
+      [
+       "Measurement",
+       "With consent: the sent message arriving in the family chat (timestamp), the relative's one-tap answer (\"bola ya type kiya?\"), a photo of the Flow history or statistics screen where the app shows one, and a 3-question check by call on day 1 and day 7. I will not read chats or hold audio. No Wispr data is used."
+      ],
+      [
+       "Decision rule (written before dyad 1)",
+       "Scale (to about 40 dyads, or hand the script to Wispr as a spec): B has at least 4 of 6 unassisted second dictations AND at least 2 more dyads than A. Change: B leads by exactly 1, or ties on the primary but is clearly better on names or day-7; re-cut the script and rerun. Kill this version: A equals or beats B on the primary, or B has any guardrail breach."
+      ],
+      [
+       "Cost (my estimate, first run)",
+       "About ₹2,000 to ₹2,500: thank-you snacks for 12 dyads about ₹1,800, a printed one-page setup card and follow-up about ₹200, data and travel about ₹300. Free plan only; nobody is asked to pay."
+      ],
+      [
+       "Risks",
+       "Helper skill differs across dyads. People try harder when watched. Novelty in week one. Older users may stop for reasons unrelated to the script. Free-plan limits could hit mid-week. Consent: informed, spoken-and-written consent in the participant's language; adults only; free to stop any time; no audio recording; data deleted after the write-up."
+      ]
      ],
      "status": [
       [
        "PROPOSED",
-       "No activation result, conversion lift, sample count or cohort metric is claimed. Neither experiment has been run."
+       "The Handover Test. No result, lift, sample or Wispr data is claimed. Neither experiment has been run."
       ]
      ],
-     "labels": {
-      "finding": "Audience and variants",
-      "mine": "Design",
-      "results": "Actions, failure condition and next step",
-      "more": "A separate self-only experiment"
-     }
+     "labels": {}
     }
    }
   ]
@@ -1017,14 +1119,15 @@
   "hi": "<hi>Jaldi mein hain? Yeh padhiye.</hi>",
   "headline": "324 tests passed. A separate audit found 19 problems. Would you have shipped it?",
   "paras": [
-   "I'm Shriniwas, an engineering student applying to Wispr Flow's India growth internship. I mapped workflows and architectures, made or approved key design decisions, and used AI agents for implementation and investigation.",
-   "In one project, I approved further corrections after the first audit fixes weren't enough. In another, a watchdog called a late reply proof of a healthy connection. I questioned whether the tests actually proved the product's promise; the corrected test failed when its fix was removed.",
+   "Namaste. I'm Shriniwas, an engineering student applying to Wispr Flow's India growth internship. I mapped workflows and architectures, made or approved key design decisions, and used AI agents for implementation and investigation.",
+   "In one project, I approved further corrections after the first audit fixes weren't enough. In another, a watchdog called a late reply proof of a healthy connection; I questioned whether the tests actually proved the product's promise, and the corrected test failed when its fix was removed.",
    "I also withdrew a flattering speed claim, redirected an interrupted experiment between AI agents, and narrowed a database claim after a specific time-handling defect.",
-   "I have no growth wins to borrow. But I've used Flow, and I want to test whether a Hinglish-first demonstration helps Indian students reach their first useful dictation and return for another."
+   "I have no growth wins to borrow. But I've used Flow, and I want to test what happens after the helper leaves the room: when a younger relative sets Flow up for an older one, does the older person dictate again, alone, the next day? Proposed, not run."
   ],
   "pull": "I can't promise I'll always be right. I can show you what I do when I'm wrong.",
   "receiptCta": "OPEN ONE RECEIPT",
-  "inviteCta": "INVITE ME TO AN INTERVIEW"
+  "inviteCta": "INVITE ME TO AN INTERVIEW",
+  "baaki": "<hi>Baaki kahani chhat par hai.</hi>"
  },
  "footer": {
   "howMade": "",
@@ -1059,5 +1162,261 @@
  "alternates": {
   "headlineShare": "324 tests passed. 19 problems found. Ship karte?",
   "closureFull": "<hi>Sab diye jal uthe. Ab mujhse poochhiye.</hi>"
+ },
+ "terrace": {
+  "kicker": "THE FIVE LAMPS",
+  "entry": "<hi>Chhat par hawa thandi hai. Lamp 1 jal chuka; chaar diye aur, haath badhaiye.</hi>",
+  "autoBeat": [
+   "<hi>Paanch diye jal uthe. Kisi ki roshni kam nahi hui.</hi>",
+   "<hi>Kamra ab thoda sunehra ho gaya.</hi>"
+  ],
+  "toVoice": "<hi>Paanch diye jal chuke. Ab ek awaaz suniye: meri, aur Flow ke likhe text ki.</hi>"
+ },
+ "transitions": {
+  "toBaithak": "<hi>Diya jal gaya. Ab andar aaiye: baithak mein baat karte hain.</hi>",
+  "toTerrace": "<hi>Chaay khatam. Chhat par chaliye: baaki diye wahin intezaar kar rahe hain.</hi>",
+  "toLast": "<hi>Paanch diye jal chuke, ek awaaz bhi suni. Ab chhat ke sabse door wale kone mein dekhiye: ek diya abhi bujha hai.</hi>",
+  "toDoorstep": "<hi>Yeh diya bujha hai, par imaandaar. Ab jaane se pehle teen cheezein: meri seedhi baat, aapki wish, aur ek sawaal.</hi>"
+ },
+ "slots": {
+  "EXAM_ORDER_LINE": "",
+  "BUSINESS_CASE": "",
+  "DEBATE_MOTION": "",
+  "DEBATE_SIDE": "",
+  "DEBATE_LEVEL": "",
+  "DEBATE_LESSON": "",
+  "RESEARCH_PROJECT": "",
+  "RESEARCH_SPLIT": "",
+  "RESEARCH_MY_PART": "",
+  "ESSAY_IDEA": "",
+  "ESSAY_BERGGRUEN_LINE": "",
+  "LOOP_OWN_WORDS": "",
+  "OUTSIDE_TEST_LINE": ""
+ },
+ "baithak": {
+  "kicker": "MEET SHRINIWAS",
+  "heading": "<hi>Baithiye, chaay aa rahi hai.</hi>",
+  "intro": "I'm Shriniwas, a final-year VIT Pune engineering student applying for Wispr Flow's India growth internship. <hi>Strengths ki list résumé mein hai; yahan sirf chaay aur chaar khidkiyan.</hi>",
+  "hint": "<hi>Kisi khidki ko chhuiye.</hi>",
+  "panes": [
+   "Who I am",
+   "How I think",
+   "How I work",
+   "What I bring"
+  ],
+  "pull": "I didn't learn that every plan works. I learned to decide what to do when it doesn't.",
+  "c1": {
+   "title": "<hi>Pehle, main kaun?</hi>",
+   "face": "I'm a final-year VIT Pune student in Instrumentation and Control, graduating May 2027. <hi>Main software banata hoon, debate karta hoon, likhta hoon aur business strategy padhta hoon. Code jitna hi zaroori mere liye log hain.</hi>",
+   "chips": [
+    "Builds",
+    "Debates",
+    "Writes",
+    "Studies"
+   ],
+   "proof": "View my résumé"
+  },
+  "c2": {
+   "title": "<hi>Meri raah</hi>",
+   "hook": "<hi>Ek gap year, YouTube, ₹3,999 ka course, aur raasta VIT Pune tak.</hi>",
+   "face": "A gap year, unsuccessful entrance attempts, YouTube study and a ₹3,999 course formed my route to VIT Pune. I enjoy business case studies, essays and Advaita Vedanta.",
+   "father": "My father's accident brought serious financial pressure during my Class 12 exams.",
+   "caseLine": "A business case I studied: {BUSINESS_CASE}."
+  },
+  "c3": {
+   "title": "Debate",
+   "hook": "<hi>College debate mein doosra number.</hi>",
+   "face": "I placed second in a college debate. (Self-reported.)",
+   "filled": "Motion: {DEBATE_MOTION}. My side: {DEBATE_SIDE}. Level: {DEBATE_LEVEL}. What it taught me: {DEBATE_LESSON}.",
+   "flip": "<hi>Doosri taraf dekhiye</hi>",
+   "sideOne": [
+    "Ship karte.",
+    "324 of 324 tests passed."
+   ],
+   "sideTwo": [
+    "Ruk jaate.",
+    "A separate audit found 19 problems, two of them high."
+   ],
+   "caption": "An illustration from this page's facts, not a debate transcript."
+  },
+  "merged": {
+   "title": "<hi>Debate aur coordination</hi>",
+   "face": "I placed second in a college debate. I coordinated four research contributors."
+  },
+  "c4": {
+   "title": "Likhna: \"Who Audits the Auditor?\"",
+   "hook": "<hi>Ek lamba essay, ek chhoti si aadat: AI se kehna, \"apna jawab khud check karo.\"</hi>",
+   "face": "<hi>Essay ki shuruaat ek habit se hoti hai:</hi> before trusting an important answer, I ask the AI to check itself. <hi>Phir catch: jab wahi system apna audit karta hai, woh audit independent nahi hota.</hi> About 10,000 words.",
+   "tap": "<hi>Ek baar tap kijiye</hi>",
+   "ringLabel": "a separate check",
+   "caption": "A sketch of the essay's idea, not the essay.",
+   "back": "\"We were never outside the thing we were trying to change.\"",
+   "idea": "In my own words: {ESSAY_IDEA}.",
+   "link": "Read my long-form essay"
+  },
+  "c5": {
+   "title": "<hi>Chaar log, ek plan</hi>",
+   "face": "I coordinated four research contributors. With TipIndex, I directed a handoff from Codex to Claude Code and approved a verified disk cleanup (agents, not people).",
+   "filled": "The project: {RESEARCH_PROJECT}. What each of the four did: {RESEARCH_SPLIT}. What I coordinated: {RESEARCH_MY_PART}."
+  },
+  "c6": {
+   "title": "<hi>Mera loop: pehle rule likhiye, phir number maniye</hi>",
+   "steps": [
+    {
+     "h": "<hi>Rule pehle</hi>",
+     "g": "set the rule early",
+     "t": "TipIndex: a quiet-machine rule, limit 3.0 s, written after attempt one but before the reruns. certgen: the QR branch was held to a pre-agreed requirement and not merged."
+    },
+    {
+     "h": "<hi>Number saaf nikaliye</hi>",
+     "g": "measure cleanly",
+     "t": "Blitz: 1,205 ns came from an uncommitted tree; the controlled run gave 1,850. Vigil: a benchmark inherited a one-CPU affinity mask, so its comparison was invalid."
+    },
+    {
+     "h": "<hi>Todne ki koshish</hi>",
+     "g": "try to break it",
+     "t": "certgen: 324 tests, then 19 audit findings. Vigil: swap the guard for `if (false)` and exactly two targeted tests fail. Blitz: 3,059 crossed-at-rest states in 110,000 replay events."
+    },
+    {
+     "h": "<hi>Round ko rukne dijiye</hi>",
+     "g": "let a run stop when it should",
+     "t": "TipIndex: 9 of 10 rounds contaminated; attempt two stopped at 3.52 s against a 3.0 s limit; attempt three passed; 820 measured rounds."
+    },
+    {
+     "h": "<hi>Claim chhota kijiye</hi>",
+     "g": "narrow the claim",
+     "t": "Blitz: 3.1× to about 1.02×. PitDB: a 1 ms trimmed mean hid a 14.2 ms raw mean."
+    },
+    {
+     "h": "<hi>Agla test likhiye</hi>",
+     "g": "propose the next one",
+     "t": "India test: a setup script for the family member who installs Flow on a relative's phone, measured by whether the relative dictates again alone within 24 hours; success defined in advance. Proposed, not run."
+    }
+   ],
+   "warning": "Failed timing values were deleted at my instruction, despite a general \"preserve failures\" policy.",
+   "own": "My loop, in my own words: {LOOP_OWN_WORDS}.",
+   "outside": "Outside the five projects: {OUTSIDE_TEST_LINE}."
+  },
+  "c7": {
+   "title": "Five things the projects show",
+   "hook": "<hi>Har cheez ke saath saboot aur uski seema.</hi> I have no growth wins to borrow.",
+   "items": [
+    {
+     "h": "Experiment design.",
+     "proof": "TipIndex's rule written before the reruns; an India protocol that says in advance what counts as no improvement.",
+     "warn": "I have not run a growth experiment; the India test is proposed, not run.",
+     "view": "My view: decide success before the dashboard.",
+     "lamp": 4
+    },
+    {
+     "h": "Honest measurement.",
+     "proof": "Blitz 1,205 ns to 1,850 ns, 3.1× to about 1.02×; PitDB's 1 ms against 14.2 ms.",
+     "warn": "1,850 ns is historical, not today's number.",
+     "view": "My view: a flattering number is the easiest thing to ship.",
+     "lamp": 3
+    },
+    {
+     "h": "Writing that holds an argument.",
+     "proof": "the essay \"Who Audits the Auditor?\".",
+     "warn": "I haven't claimed published or product-marketing writing here.",
+     "view": "",
+     "lamp": 0
+    },
+    {
+     "h": "Coordination.",
+     "proof": "four research contributors; the Codex-to-Claude Code handoff.",
+     "warn": "the handoff coordinated AI agents, not people.",
+     "view": "",
+     "lamp": 4,
+     "filled": "What I coordinated: {RESEARCH_MY_PART}."
+    },
+    {
+     "h": "A student's view from India.",
+     "proof": "final-year at VIT Pune; YouTube study and a ₹3,999 course; my India test starts from what Wispr's own help page says: Hinglish is chosen by hand, not assumed.",
+     "warn": "one student's view, not a market study; I began using Flow on 1 November 2026.",
+     "view": "",
+     "lamp": 6,
+     "share": "TechCrunch, citing Sensor Tower (9 May 2026), put India at about 14% of installs and about 2% of in-app revenue."
+    }
+   ]
+  }
+ },
+ "growth": {
+  "kicker": "LAMP 6 · THE LAST LAMP · A TEST I HAVE NOT RUN",
+  "badge": "PROPOSED, NOT RUN",
+  "title": "<hi>Install ek favour hai.</hi>",
+  "hook": "The real test is the second dictation: the one that happens after the helper leaves the room.",
+  "body": "Wispr has said that older users are often onboarded by younger family members. Then the install measures the helper. What measures the user is the next dictation, done alone. <hi>Aapke ghar mein IT department kaun hai? Wahi is test ka asli user hai.</hi>",
+  "tryLight": "<hi>Yeh diya abhi nahi jalega. Test chala nahi. Bujha hua, par imaandaar.</hi>",
+  "taps": {
+   "head": "Three taps, under a minute. Nothing here is a result.",
+   "t1": {
+    "label": "<hi>Chuniye: Hindi · Hinglish</hi>",
+    "hindi": "कल मिलते हैं",
+    "hinglish": "kal milte hain",
+    "caption": "Wispr's help centre says Hinglish is not picked for you: you choose it in Settings, and it writes Hindi in Latin letters.",
+    "note": "An illustration of documented behaviour, not a recording."
+   },
+   "t2": {
+    "label": "<hi>Apna andaza lagaiye</hi>",
+    "a": "Speed demo: how many of 6 relatives dictate alone the next day?",
+    "b": "Handover script: how many?",
+    "scale": "Scale: B has at least 4 of 6 and beats A by at least 2.",
+    "change": "Change: B leads by exactly 1, or ties on the primary but is clearly better on names or day-7.",
+    "kill": "Kill this version: A equals or beats B on the primary, or B has any guardrail breach.",
+    "note": "The rule is fixed before any data. No result exists."
+   },
+   "t3": {
+    "label": "<hi>Bolkar dekhiye</hi>",
+    "rule": "Wispr's published referral rule: the referrer earns a month only once the friend has dictated 2,000 cumulative words. Signing up alone earns nothing.",
+    "note": "A simulated counter of a rule published in Wispr's help centre (read 3 November 2026)."
+   }
+  },
+  "cardHead": "The experiment, in short",
+  "card": "Mera experiment: The Handover Test (Haath Chhodke Dekho). Variant A is a speed demo. Variant B: the helper picks Hinglish by hand on the relative's own phone, adds five names that matter to the relative to the personal dictionary, and the first dictation is a real message to someone they love. Then the helper leaves the room. The question: does the relative dictate again, alone, within a day? Twelve family pairs, six per arm, one week, exploratory only. The rule is fixed in advance: scale only if B gets at least 4 of 6 and beats A by at least 2; otherwise change or kill. Cost about ₹2,000. Proposed, not run.",
+  "why": "Why this is my idea, not a template: A template would say \"test two pitches\". This tests what happens after the helper walks away.",
+  "limits": "Honest limits: Proposed, not run. I have never owned a growth channel. Twelve pairs cannot show cause, and I have no Wispr data. The \"India onboarding\" angle is my hypothesis, not something Wispr has said.",
+  "sourcesHead": "Where this comes from (links open Wispr's own pages in a new tab; each is read-only evidence):",
+  "sources": [
+   {
+    "url": "https://docs.wisprflow.ai/articles/3191899797-use-flow-with-multiple-languages",
+    "label": "Help page: using Flow with multiple languages",
+    "what": "Hinglish is chosen by hand; writes Hindi in Latin letters; one language per dictation",
+    "tag": "official"
+   },
+   {
+    "url": "https://docs.wisprflow.ai/articles/5899191431-flow-is-transcribing-in-the-wrong-language",
+    "label": "Help page: transcribing in another language",
+    "what": "the language setting is a known friction in Wispr's own help centre; a language set on another device does not carry to an iPhone",
+    "tag": "official"
+   },
+   {
+    "url": "https://docs.wisprflow.ai/articles/6496688316-how-to-find-your-referral-link",
+    "label": "Help page: your referral link",
+    "what": "30-day trial for the friend; the referrer earns a month after 2,000 cumulative words; \"Signing up alone earns you nothing\"",
+    "tag": "official"
+   },
+   {
+    "url": "https://techcrunch.com/2026/05/09/voice-ai-in-india-is-hard-wispr-flow-is-betting-on-it-anyway/",
+    "label": "TechCrunch: voice AI in India",
+    "what": "older users onboarded by younger family members; personal apps such as WhatsApp; India about 14% of installs and about 2% of in-app revenue per Sensor Tower",
+    "tag": "press, third-party data"
+   },
+   {
+    "url": "https://wisprflow.ai/india",
+    "label": "Wispr's India page",
+    "what": "",
+    "tag": "official"
+   },
+   {
+    "url": "https://challenge.wisprflow.ai/",
+    "label": "Wispr's challenge brief",
+    "what": "",
+    "tag": "official"
+   }
+  ],
+  "protocol": "<hi>Poora protocol</hi>",
+  "inviteLine": "<hi>Is test par baat karein?</hi>",
+  "exit": "<hi>Yeh diya bujha hai, par imaandaar.</hi>"
  }
 }

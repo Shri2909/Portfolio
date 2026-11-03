@@ -18,3 +18,11 @@ Done. `dist/og.png` is still produced (Playwright is available here).
 | Skyline | done | Readable at tone 0 and 1; about 14 lit windows at first load (G10); lit-window table is now 14, 20, 28, 36, 44, 56, 64. |
 Tests: `scripts/e2e/v3-phase1.mjs` (production build, 40+ checks): all pass. `check-build` allows the Gmail and Outlook hosts as visitor-tap outbound links.
 Not verified: the Gmail and Outlook compose pages actually accepting the pre-filled text (needs a logged-in browser), and a real phone mail app.
+
+## Phase 2: copy data
+| Item | Status | Notes |
+|---|---|---|
+| `website_copy_v3.md` | done | PART E extracted verbatim, plus an appendix with the evidence folder 8 text (PART F section 3 with the internal source ids such as "H1" removed, because they would mean nothing to a visitor) and a few small strings. `website_copy.md` (v2) is kept as history because PART E refers to it for every [SAME] string. |
+| `src/data/copy.json` | done | Added: per-lamp `stop` copy, `terrace`, `transitions`, `baithak` (four panes, cards 1 to 7, the six-step loop, five "what I bring" items), `growth` (the Handover Test act, three taps, experiment card, six source links), new invite-sheet labels, new opening, 60-second file, verdict, wish, drawer intro, share and meta text. Evidence folder 8 now holds the experiment card (`body.fields`). Old keys stay until the components that use them are replaced in phases 3 to 5. |
+| Slots and flags | done | All `meet.*` and `bring.indiaShare` flags are false and every slot (`slots.*`) is an empty string; `meet.mergeThin` is true. Nothing renders a placeholder. `check-copy` now fails if any of these flags is on. |
+| `scripts/check-copy.mjs` | done | Checks `copy.json` against `website_copy_v3.md`, `website_copy.md` and `reference/content.json`: 0 strings not found. 146 new interface labels are listed under `ui.extra` for approval (see the final report). |

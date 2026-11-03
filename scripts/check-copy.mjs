@@ -6,17 +6,17 @@ import path from 'node:path';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const copy = JSON.parse(fs.readFileSync(path.join(root, 'src/data/copy.json'), 'utf8'));
 const norm = (s) => s.replace(/\*\*/g, '').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
-const md = norm(fs.readFileSync(path.join(root, 'website_copy.md'), 'utf8'));
+const md = norm(['website_copy_v3.md', 'website_copy.md'].map((f) => fs.readFileSync(path.join(root, f), 'utf8')).join('\n'));   // v3 copy, plus v2 as history for the [SAME] strings
 const contentRaw = fs.readFileSync(path.join(root, 'reference/content.json'), 'utf8');
 const contentStrings = new Set();
 (function walk(v) { if (typeof v === 'string') contentStrings.add(v); else if (v && typeof v === 'object') Object.values(v).forEach(walk); })(JSON.parse(contentRaw));
 
 const SCHEMA_KEYS_OPEN = new Set(); // keys are free-form in this project; unknown-key check is against the allowed top level
-const TOP = ['version', '_review', 'flags', 'site', 'ui', 'opening', 'lamps', 'guess', 'lateReply', 'rowBreathes', 'lamp6', 'person', 'voice', 'verdict', 'wish', 'closure', 'evidence', 'sixty', 'footer', 'alternates'];
+const TOP = ['baithak', 'growth', 'terrace', 'transitions', 'slots', 'version', '_review', 'flags', 'site', 'ui', 'opening', 'lamps', 'guess', 'lateReply', 'rowBreathes', 'lamp6', 'person', 'voice', 'verdict', 'wish', 'closure', 'evidence', 'sixty', 'footer', 'alternates'];
 const problems = [], unmatched = [], approval = [];
 for (const k of Object.keys(copy)) if (!TOP.includes(k)) problems.push('unknown top-level key: ' + k);
 
-const NON_COPY = /^(id|n|folder|flag|href|key|url|min|max|step|start|deadline|version|lang|signoffSwitchAfter|answer|enabled|options|email|linkedin|resume|essay|interaction)$/;
+const NON_COPY = /^(url|id|n|lamp|folder|flag|href|key|url|min|max|step|start|deadline|version|lang|signoffSwitchAfter|answer|enabled|options|email|linkedin|resume|essay|interaction)$/;
 // spokenAfter is the second half of a pair given as one line in the source; aria strings are English labels (approval list).
 const APPROVAL_KEYS = /^(aria|spokenAfter)$/;
 function matches(s) {
@@ -45,6 +45,8 @@ const SPOKEN = (JSON.stringify(copy).match(/Spoken with Wispr Flow/g) || []).len
 if (SPOKEN !== 2) problems.push('"Spoken with Wispr Flow" appears ' + SPOKEN + ' times, expected 2');
 for (const f of ['ledgerGate_personFirstSentence', 'flowIntoEmergentRecorded', 'noAnalyticsLine', 'lamp6LanguageLine', 'footerHowMade'])
   if (copy.flags[f] !== false) problems.push('gated flag is ON: ' + f + ' (needs Shriniwas)');
+for (const f of Object.keys(copy.flags)) if ((f.startsWith('meet.') && f !== 'meet.mergeThin') || f.startsWith('bring.')) if (copy.flags[f] !== false) problems.push('gated flag is ON: ' + f);
+if (copy.flags['meet.mergeThin'] !== true) problems.push('meet.mergeThin should default ON');
 if (copy.voice.buildLine !== null) problems.push('voice.buildLine must be null');
 
 console.log(`check-copy: ${unmatched.length} strings not found word-for-word in the sources, ${approval.length} new interface labels under ui.extra (need approval).`);
