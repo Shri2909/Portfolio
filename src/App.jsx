@@ -28,6 +28,7 @@ import Closure from './components/Closure.jsx';
 import Footer from './components/Footer.jsx';
 import SixtyDialog from './components/SixtyDialog.jsx';
 import EvidenceDrawer from './components/EvidenceDrawer.jsx';
+import LampCard from './components/LampCard.jsx';
 
 export default function App() {
   const overlay = useStore((s) => s.overlay);
@@ -69,7 +70,7 @@ export default function App() {
       <Dock><TiltChip /></Dock>
       <SixtyDialog />
       <EvidenceDrawer />
-      <dialog id="lamp-sheet" className="overlay sheet" aria-label="Lamp story" />
+      <LampCard />
       {(text || printing) && <FullTextView onClose={closeText} />}
       <div id="announcer" role="status" aria-live="polite" className="sr-only">{live}</div>
     </>

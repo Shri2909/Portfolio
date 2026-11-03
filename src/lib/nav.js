@@ -25,3 +25,16 @@ export function wireOpeners() {
   window.addEventListener('sixty:open', () => openSixty());
   window.addEventListener('evidence:open', (e) => openEvidence((e.detail && e.detail.caseId) || null));
 }
+
+// ---- lamp card (G1): the lamp announces lamp:open, the card listens. Also callable directly. ----
+import { emit as _emit, on as _on } from './events.js';
+let cardOpener = null;
+export const openLampCard = (n, source = 'direct') => {
+  const s = getState();
+  if (!(n >= 1 && n <= 5) || s.lamps[n] !== 'lit') return false;     // unlit lamps never open a card
+  cardOpener = document.querySelectorAll('.lamp-btn')[n - 1] || document.activeElement;
+  actions.setLampCard(n);
+  return true;
+};
+export const closeLampCard = () => { actions.setLampCard(null); const o = cardOpener; cardOpener = null; requestAnimationFrame(() => o && o.isConnected && o.focus && o.focus({ preventScroll: true })); };
+export const wireLampCard = () => _on('lamp:open', ({ n, source }) => openLampCard(n, source));

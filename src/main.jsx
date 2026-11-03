@@ -3,6 +3,7 @@ import './styles/tokens.css';
 import './styles/base.css';
 import './styles/scene.css';
 import './styles/lamps.css';
+import './styles/card.css';
 import copy from './lib/copy.js';
 import App from './App.jsx';
 
