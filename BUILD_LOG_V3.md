@@ -58,3 +58,27 @@ Not done: the sitting room does not yet pan the skyline sideways by scroll posit
 - Old Lamp6, RowBreathes, Lamps removed; stale keys and the lamp-six language flag removed.
 - Verified by `scripts/e2e/v3-phase5.mjs` on the production build (34 checks pass, including the dist grep and "Spoken with Wispr Flow" exactly twice). check-copy: 0 unmatched strings, 155 interface labels awaiting approval.
 - Not verified: real phones, the official Wispr pages (not re-checked, per G14).
+
+## Phase 6: Verification and report
+Run on branch `v3-flow-and-growth`:
+- `npm test` 9/9. `npm run check`: check-copy 0 unmatched strings, check-build clean (JS 120.6 KB gzip, CSS 16.3 KB).
+- Browser suites pass: v3-phase1, v3-phase3, v3-phase4, v3-phase5 (34 checks), tones, smoke (19), and fx and wish after repairing them for the new layout (Ink now in the Menu, wish ideas collapsed). fx and tones need the dev server (`window.__ek`).
+- Screenshots in `docs/v3-shots/` at 390x844, 360x640, 412x915, 768x1024, 1366x768, 1366x650, 1920x1080. On all seven the lamp row sits fully inside the first screen with no horizontal scroll. I looked at 1366x650 only; the other six I checked by measurement, not by eye.
+
+### Done
+Six-act flow with on-page lamp stops; four-pane Meet Shriniwas room; Handover Test growth act with three taps, source links and evidence folder 8; Invite sheet (Gmail, Outlook, mail app, copy address, copy message); dock and layout fixes; V3 copy; all gated flags and slots OFF.
+
+### Partly done
+- Awe moments 3 and 5 (separate phuljhadi scene; the flame walking the whole row from the wish).
+- The sitting-room sideways pan is only a small shift. The pane windows are not themselves the buttons.
+- "One primary control per screen" is approximate.
+
+### Not done
+- `scripts/audit.mjs` and `audit-more.mjs` (pack 8) still walk the old structure; the run hung, so I did not update or re-run them.
+
+### Not verified
+Real phones and haptics, the share sheet, frame rate, Gmail and Outlook accepting the pre-filled text, the official Wispr pages (not re-verified, per G14), and the screenshots other than 1366x650 by eye.
+
+### For your approval
+- 155 interface labels under `ui.extra` (list: `node scripts/check-copy.mjs`).
+- Open flags: `meet.*`, `bring.indiaShare`, the no-analytics footer line, footer line 5, the recorded Flow-into-Emergent line, the person-block first sentence. All remain OFF; all `slots.*` empty until you fill them.
