@@ -56,37 +56,13 @@ def internal_keys_removed(content):
     """Strip build/dev notes that are not page content."""
     c = copy.deepcopy(content)
     c.pop("_meta", None)
-    if isinstance(c.get("exhibit0"), dict):
-        c["exhibit0"].pop("excludedTakes", None)
-    if isinstance(c.get("brief"), dict):
-        c["brief"].pop("note", None)
-    for m in (c.get("wispr") or {}).get("moments", []) or []:
-        m.pop("note", None)
     return c
 
 
 def gate_unconfirmed(content):
-    """Production only: while exhibitB.boundary.confirmed is false, unverified TipIndex claims are not in the file at all
-    (the 0.585 point, the call, ledger cases marked requiresConfirmation, claims about 1,000 symbols, the title that says
-    'until it was worse', the crossover sentence). The review build keeps everything."""
-    c = copy.deepcopy(content)
-    eb = c.get("exhibitB") or {}
-    bd = eb.get("boundary") or {}
-    if bd.get("confirmed"):
-        return c
-    sentences = lambda s: re.split(r"(?<=[.!?])\s+", s.strip()) if s else []
-    bd["points"] = [p for p in bd.get("points", []) if not p.get("requiresConfirmation")]
-    if bd.get("note"):
-        bd["note"] = " ".join(s for s in sentences(bd["note"]) if "crossover" not in s.lower())
-    if (eb.get("call") or {}).get("requiresConfirmation"):
-        eb["call"] = None
-    eb.pop("title", None)
-    led = c.get("ledger") or {}
-    led["cases"] = [x for x in led.get("cases", []) if not x.get("requiresConfirmation")]
-    for sp in c.get("specialties", []):
-        if sp.get("evidence"):
-            sp["evidence"] = " ".join(s for s in sentences(sp["evidence"]) if "1,000 symbols" not in s)
-    return c
+    """Production hook for claims that wait on a confirmation. Nothing is gated at the moment: every visible fact
+    in content.json comes from the final copy and evidence package. Kept so a future gate has one place to live."""
+    return copy.deepcopy(content)
 
 
 def set_path(root, path, value):
@@ -121,71 +97,24 @@ def leaf_paths(value, prefix):
 
 
 def review_content(content, draft):
-    """Fill only EMPTY fields from draft.json. Returns (data, filled_paths)."""
+    """Fill only EMPTY fields from draft.json, at the same path. Returns (data, filled_paths)."""
     data = copy.deepcopy(content)
     filled = []
 
-    def fill(path, value):
-        if is_empty(value):
-            return
-        cur = get_path(data, path)
-        if not is_empty(cur):
-            return
-        set_path(data, path, copy.deepcopy(value))
-        filled.extend(leaf_paths(value, path))
+    def walk(node, d, path):
+        if isinstance(node, dict) and isinstance(d, dict):
+            for k, v in d.items():
+                if k in node:
+                    if is_empty(node[k]) and not is_empty(v):
+                        node[k] = copy.deepcopy(v)
+                        filled.extend(leaf_paths(v, path + [k]))
+                    else:
+                        walk(node[k], v, path + [k])
+        elif isinstance(node, list) and isinstance(d, list):
+            for i, (n, v) in enumerate(zip(node, d)):
+                walk(n, v, path + [i])
 
-    d = draft
-    fill(["brief", "summary"], (d.get("brief") or {}).get("summary"))
-    fill(["against", "reasons"], (d.get("against") or {}).get("reasons"))
-
-    worth = d.get("specialtyWorth") or {}
-    for i, sp in enumerate(data.get("specialties", [])):
-        fill(["specialties", i, "worth"], worth.get(sp.get("id")))
-
-    for ex in ("exhibitA", "exhibitB"):
-        dx = d.get(ex) or {}
-        for beat in ("did", "didnt", "learned", "next"):
-            fill([ex, "beats", beat], (dx.get("beats") or {}).get(beat))
-        fill([ex, "crossExam"], dx.get("crossExam"))
-
-    pit = (d.get("pitdb") or {}).get("text")
-    for i, case in enumerate((data.get("ledger") or {}).get("cases", [])):
-        if case.get("id") == "c1" and pit and "note" not in case:
-            case["note"] = pit
-            filled.append("ledger.cases.%d.note" % i)
-
-    de = d.get("effects") or {}
-    intro = "\n\n".join(x for x in (de.get("setbacks"), de.get("debate")) if x)
-    fill(["effects", "intro"], intro)
-    fill(["effects", "timeline"], de.get("timeline"))
-    fill(["effects", "philosophy", "text"], (de.get("philosophy") or {}).get("text"))
-
-    dd = {f.get("id"): f for f in (d.get("decisions") or {}).get("forks", [])}
-    for i, fk in enumerate((data.get("decisions") or {}).get("forks", [])):
-        src = dd.get(fk.get("id")) or {}
-        fill(["decisions", "forks", i, "changeMyMind"], src.get("changeMyMind"))
-        if src.get("narration") and "narration" not in fk:
-            fk["narration"] = src["narration"]
-            filled.append("decisions.forks.%d.narration" % i)
-
-    dl = d.get("lab") or {}
-    for key in ("hypothesis", "usableDefinition", "preregisteredAt"):
-        fill(["lab", key], dl.get(key))
-    if dl.get("protocol") and "protocol" not in data.get("lab", {}):
-        data["lab"]["protocol"] = dl["protocol"]
-        filled.append("lab.protocol")
-
-    dw = (d.get("wispr") or {}).get("moments") or {}
-    for i, m in enumerate((data.get("wispr") or {}).get("moments", [])):
-        src = dw.get(m.get("id")) or {}
-        fill(["wispr", "moments", i, "suggests"], src.get("suggests"))
-        fill(["wispr", "moments", i, "firstTest"], src.get("firstTest"))
-    fill(["wispr", "pov", "text"], ((d.get("wispr") or {}).get("pov") or {}).get("text"))
-
-    dc = d.get("closing") or {}
-    fill(["closing", "findings"], dc.get("findings"))
-    fill(["closing", "line"], dc.get("line"))
-    fill(["closing", "openQuestions"], dc.get("openQuestions"))
+    walk(data, draft, [])
     return data, sorted(set(filled))
 
 

@@ -213,3 +213,28 @@ None in any test run.
 ### Rules check (CLAUDE.md)
 
 No invented copy or numbers. No audio. No external requests (test-enforced). Take 3 stays excluded. "Spoken with Flow" is not claimed anywhere yet. Warm-words grep over the visible UI strings: not yet run as a full audit (Stage 14); none of the banned words is in the opening's chrome.
+
+
+## 3 Nov 2026: rebuilt around the Final Website Copy (supersedes the Stage 1 to 3 page)
+
+Sources, in the order they rank: Final Website Copy (all primary public text, used word for word), Final Master Document (seven-beat story, look, three interactions), Evidence Package (the evidence drawer, the 60-second file). Instruction from Shriniwas: do not introduce unsupported claims or expand the primary narrative.
+
+**What changed.** `content/content.json` was replaced (the earlier version is in git history). Sections are now: the contradiction (hero), Exhibit A with the audit guess, Exhibit B with the late-reply model, three more files, the person, the voice (compare the two real takes), the verdict, and the evidence drawer (eight folders). The 60-second file is a dialog (also `#sixty`). Navigation is `The case`, `Evidence` and a quiet `60-second file` link. Kept: shell look, fonts, build pipeline, the word-level diff engine (now powering interaction 3), review build. Removed: the old opening, briefing, clues, Fair warning, ledger, forks, Lab, Wispr field notes, chapter seals, tour, atmosphere props, and the Stage 1 to 3 test and preview scripts. `content/draft.json` is now empty (the final copy needs no drafted fields).
+
+**Three interactions only.** (1) Guess the audit result: 324 green tiles, four guesses, 19 findings (two high) land beside the wall, never inside it. (2) The late reply: a native range input, original versus corrected logic, labelled MODEL OF DOCUMENTED BEHAVIOR. (3) Real Flow take compare: Take 1 and Take 2 only; Take 3 stays excluded. Every interaction has an always-visible plain-text version.
+
+**Deliberate departures from CLAUDE.md** (the final copy wins where they conflict):
+- The title contains "SUSPECT" and the Exhibit B copy contains "failed", words rule 9 bans. They are the authoritative copy, so they are kept. The interface labels I wrote avoid the banned words.
+- No Chapter Seals: they would be new copy that is not in the Final Website Copy.
+- Visible text lives in `content.json`, except the small status sentences the two widgets build (for example "Reply arrives at 4.5 s, after the 3-second deadline.").
+- Old section order and ids in CLAUDE.md and `SECTIONS_SPEC.md` no longer apply.
+
+**Not built, on purpose.**
+- `INVITE ME TO AN INTERVIEW`: `site.contact` is empty, and the rules forbid inventing contact details. The button renders only when `contact.email` or `contact.linkedin` is filled in.
+- A voice-to-builder (Flow into Emergent) exhibit: no real recording was supplied. This page was not made that way and says nothing of the kind.
+- Per-figure evidence slips: the drawer has one folder per case instead.
+- Evidence Package lines left out of the drawer because they conflict with the old truth ledger and wait for confirmation: TipIndex 40.62x and 0.585; PitDB 629.70x, 2.7x, 26.5x and 1.08x.
+
+**Tests.** `node scripts/test.mjs` (set `COPY_FILE` to the Focused Website Copy and `AXE_PATH` to axe.min.js): 94 passed, 0 failed. Covers build guard, forbidden strings, zero console errors and zero network requests at 390x844 and 1366x650, 44px targets, sticky bar, every interaction (including the keyboard), the engine invariants for both takes, reduced motion, storage disabled, axe-core (zero violations), and that all 49 lines of the final copy are on the page.
+
+**Not verified.** Real phones, Safari, Firefox, a screen reader, and whether the GitHub and Drive links open for a visitor (the sandbox cannot reach them). Public repos still lag the local fixes the page describes.

@@ -78,3 +78,15 @@ Growth wins; channel ownership; measured activation lift; Flow use before 1 Nov 
 - TipIndex F-01: polling budget gives better p99 per poll but higher total work; cause not fully resolved. S.
 - Vigil: every spawned thread inherited CPU-0 pinning; fixed with affinity reset, per-thread CPU reporting, interleaved trials; run-to-run instability disclosed. S.
 - PitDB: full closure of 18 audit findings is NOT established. Say only what he said: the DST-fold issue was found, fixed and resolved before the resume claim. Never "eliminated look-ahead bias".
+
+## Addendum, 3 Nov 2026 (from the Evidence Package, supplied by Shriniwas; repo-reported unless stated)
+
+Now on the page, per the Final Website Copy and the drawer:
+- certgen: 479 main-suite and 232 audit-suite tests (separate suites, not 711). About 26 MB request to about 192 MB response. Two of the 19 findings are high. Who commissioned the audit is still UNRESOLVED.
+- Vigil: 105 of 105 tests; replacing the guard with `if (false)` fails exactly two targeted tests. Verified locally in an agent session, not CI. Simulated connections only.
+- Blitz: 1,205 ns came from an uncommitted tree; 1,850 ns controlled run (historical, never current); 3.1x became about 1.02x; commit f46a9cb; 3,059 crossed-at-rest states in 110,000 replay events (2.78%), zero after remediation, latency not remeasured.
+- TipIndex: 820 measured rounds; 5,364 original P6 files byte-identical; P7 attempts (9 of 10 contaminated, 3.52 s against 3.0 s, third passed). "Full working knowledge" is still UNRESOLVED until a live walkthrough.
+- PitDB: 06:15 UTC record visible at a 06:00 UTC cutoff in one direct-ingestion DST fold; 346 local tests; the fix is on a local branch and public `main` is the older version.
+- Voice: Take 1 and Take 2 only. Hand transcriptions are not automatically produced transcripts. No voice-to-builder recording exists yet.
+
+Held out of production until confirmed (they conflict with the ledger above or with the resume): TipIndex 40.62x and 0.585 (direction of the ratio); PitDB 629.70x retraction, 2.7x memory comparison, 26.5x and 1.08x narrow and broad query figures.

@@ -7,23 +7,22 @@ const ctx = await b.newContext({ viewport: { width: 1200, height: 630 }, deviceS
 const page = await ctx.newPage();
 await page.goto(fileUrl('index.html'));
 await page.waitForFunction(() => document.documentElement.classList.contains('ready'));
-const seal = await page.evaluate(() => window.CF.sealMarkup);
-const subject = await page.evaluate(() => window.CF.data.site.subject);
-await page.evaluate(([seal, subject]) => {
+const d = await page.evaluate(() => ({ title: CF.data.hero.title, headline: CF.data.hero.headline, q: CF.data.hero.question, by: CF.data.hero.byline }));
+await page.evaluate((d) => {
   document.documentElement.className = '';
   document.body.innerHTML = '';
   document.body.style.cssText = 'margin:0;width:1200px;height:630px;overflow:hidden;position:relative;background:radial-gradient(120% 95% at 50% 40%,#15211B 52%,#0F1713 100%)';
   const glow = document.createElement('div');
   glow.style.cssText = 'position:absolute;left:150px;top:-250px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,214,150,.30),transparent)';
   const sheet = document.createElement('div');
-  sheet.style.cssText = 'position:absolute;left:120px;top:92px;width:960px;height:446px;background:#F6F0E3;transform:rotate(-1.2deg);box-shadow:0 30px 60px -12px rgba(0,0,0,.6),inset 0 0 50px rgba(120,90,40,.1);color:#231F1A;font-family:Fraunces,Georgia,serif';
+  sheet.style.cssText = 'position:absolute;left:100px;top:70px;width:1000px;height:490px;background:#F6F0E3;transform:rotate(-.8deg);box-shadow:0 30px 60px -12px rgba(0,0,0,.6),inset 0 0 50px rgba(120,90,40,.1);color:#231F1A;font-family:Fraunces,Georgia,serif';
+  const headline = d.headline.replace('324', '<span style="color:#2E6B3A">324</span>').replace('19', '<span style="color:#B23A26;border-bottom:7px solid #D2452E">19</span>');
   sheet.innerHTML = '<i style="position:absolute;left:0;top:0;width:60px;height:60px;background:linear-gradient(135deg,#E2BE6A,#B8872B 45%,#7a5714);clip-path:polygon(0 0,100% 0,0 100%)"></i>' +
-    '<div style="position:absolute;left:80px;top:70px;font-weight:800;font-size:92px;line-height:1;letter-spacing:.03em">CASE FILE<br>No. 001</div>' +
-    '<div style="position:absolute;left:84px;top:300px;font-family:Courier Prime,monospace;font-weight:700;font-size:24px;letter-spacing:.1em;color:#8A5E12">SUBJECT:</div>' +
-    '<div style="position:absolute;left:84px;top:336px;font-weight:650;font-size:54px;letter-spacing:.02em">' + subject.toUpperCase() + '</div>' +
-    '<div style="position:absolute;right:48px;top:44px;width:230px;height:230px;transform:rotate(-8deg);mix-blend-mode:multiply;opacity:.92">' + seal + '</div>';
+    '<div style="position:absolute;left:84px;top:54px;font-family:Courier Prime,monospace;font-weight:700;font-size:20px;letter-spacing:.1em;color:#8A5E12">' + d.title + '</div>' +
+    '<div style="position:absolute;left:84px;top:112px;width:840px;font-weight:800;font-size:84px;line-height:1.04">' + headline + '</div>' +
+    '<div style="position:absolute;left:84px;top:400px;font-style:italic;font-weight:650;font-size:44px">' + d.q + '</div>';
   document.body.append(glow, sheet);
-}, [seal, subject]);
+}, d);
 await page.waitForTimeout(400);
 await page.screenshot({ path: join(ROOT, 'dist', 'og.png'), clip: { x: 0, y: 0, width: 1200, height: 630 } });
 for (const [size, name] of [[32, 'favicon-32.png'], [180, 'apple-touch-icon.png']]) {
