@@ -1,15 +1,10 @@
-# Case File No. 001
+# Ek Diya Se Doosra
 
-A friendly detective-study portfolio for Shriniwas Kholkute (Wispr Flow India growth internship challenge).
+Shriniwas Kholkute's night page for Wispr Flow's India growth internship: one lamp lights another. Five projects, five lamps, one wish for one real person, and a lamp of your own at the end.
 
-Start here:
-
-1. Open this folder in Claude Code. It reads `CLAUDE.md` automatically.
-2. Paste Stage 0 from `docs/CLAUDE_CODE_PROMPTS.md`, then one stage at a time.
-3. In parallel, record the scripts in `docs/FLOW_SCRIPTS.md` with Wispr Flow (core five first: S02, S03, S04, S06, S14). Save each as a text file in `content/recordings/`.
-4. Confirm the items in `docs/TRUTH_CHECK.md` before speaking them.
-5. When recordings exist, paste Stage 15 (load recordings), then Stage 16 to publish.
-
-Folders: `docs/` specs, ledger, prompts, scripts to speak. `content/content.json` production content. `content/draft.json` drafted scripts (review build only). `scripts/` build, tests, script renderer. `src/` the site. `dist/` build output.
-
-Regenerate the speaking scripts: `python3 scripts/render_flow_scripts.py`.
+- Copy: `website_copy.md` (every visible word) is loaded into `src/data/copy.json`. Build briefs: `build_prompts.md` (packs 1 to 7; pack 8 is not built).
+- Stack: React + Vite, no other runtime dependency, system fonts, no analytics, cookies, storage or third-party requests.
+- `npm run dev` to work on it, `npm run build` to produce `dist/` and run the checks, `npm test` for the unit tests, `npm run check` to re-run the copy and build checks.
+- Browser tests are in `scripts/e2e/` (start `npm run dev -- --port 5199` first); `scripts/smoke.mjs` tests the production build.
+- Progress, open flags and every decision are in `BUILD_LOG.md`. Hosting is in `HOSTING.md`.
+- The previous detective-style site is kept at git tag `detective-site-final`.

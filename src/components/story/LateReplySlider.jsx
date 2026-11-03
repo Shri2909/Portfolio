@@ -39,7 +39,7 @@ export default function LateReplySlider() {
         </div>
         <input type="range" min="0" max={Math.round(sl.max / sl.step)} step="1" value={i} aria-label={sl.assistive}
           aria-valuetext={tpl(after ? sl.spokenAfter : sl.spokenBefore, { t: tt })} onChange={(e) => setI(+e.target.value)} />
-        {after && <span className={`mark ${counted ? 'counted' : 'not-counted'}`} aria-hidden="true" />}
+        {after && <span className={`reply-mark ${counted ? 'counted' : 'not-counted'}`} aria-hidden="true" />}
       </div>
       <p className="caption" aria-hidden="true">{rich(hiOf(copy.lamps[1].what.paras[1]))}</p>
       <p className="readout" role="status" aria-live="polite">{rich(tpl(readout, { t: tts }))}</p>

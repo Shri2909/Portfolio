@@ -17,7 +17,7 @@ export default function TopBar() {
   const nav = copy.ui.nav;
   return (
     <header id="topbar">
-      <a className="mark" href="#night" onClick={(e) => { e.preventDefault(); scrollToId('night'); }}>{copy.opening.label.split(' · ')[0]}</a>
+      <a className="wordmark" href="#night" onClick={(e) => { e.preventDefault(); scrollToId('night'); }}>{copy.opening.label.split(' · ')[0]}</a>
       <div className="right">
         {inviteVisible() && <a className="btn btn-primary" href={contactHref(getState().row.count + 1)} aria-label={copy.ui.invite.long + ', ' + X('mailAria')}>{copy.ui.invite.short}</a>}
         <button ref={btn} className="btn" aria-expanded={open} aria-controls="menu" aria-label={X('menu')} onClick={() => setOpen(!open)}>{X('menu')}</button>
