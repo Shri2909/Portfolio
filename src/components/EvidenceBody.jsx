@@ -18,7 +18,8 @@ export default function EvidenceBody({ folder }) {
       {ins && (
         <div className="ev-field">
           <h4>{L.inspect}</h4>
-          {ins.url && <p><a href={ins.url} target="_blank" rel="noopener noreferrer" aria-label={tpl(X('repoAria'), { project, label: ins.label })}>{ins.label}</a></p>}
+          {ins.url && copy.evidence.linkOverrides && copy.evidence.linkOverrides[folder.id] === 'on-request' && <p>{X('onRequest')}</p>}
+          {ins.url && !(copy.evidence.linkOverrides && copy.evidence.linkOverrides[folder.id]) && <p><a href={ins.url} target="_blank" rel="noopener noreferrer" aria-label={tpl(X('repoAria'), { project, label: ins.label })}>{ins.label}</a></p>}
           {ins.files && ins.files.length > 0 && <ul className="mono">{ins.files.map((f) => <li key={f}>{f}</li>)}</ul>}
           {ins.note && <p>{ins.note}</p>}
         </div>

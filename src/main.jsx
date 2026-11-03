@@ -5,6 +5,7 @@ import './styles/scene.css';
 import './styles/lamps.css';
 import './styles/card.css';
 import './styles/wish.css';
+import './styles/story.css';
 import copy from './lib/copy.js';
 import App from './App.jsx';
 import { initRow } from './lib/row.js';

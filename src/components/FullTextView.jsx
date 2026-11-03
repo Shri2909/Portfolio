@@ -8,6 +8,7 @@ import { shownCount } from '../lib/rowhash.js';
 import EvidenceBody from './EvidenceBody.jsx';
 import { contactHref, inviteVisible } from '../lib/mail.js';
 import { personParas } from '../lib/personText.js';
+import { signoffLines } from '../lib/signoff.js';
 import WishForm from './WishForm.jsx';
 import { wishState } from '../lib/wishState.js';
 import { cardContent, shareText, sendCard, copyText } from '../lib/cardActions.js';
@@ -47,7 +48,7 @@ export default function FullTextView({ onClose }) {
   const made = useWishVersionState().made;
   const n = row.count;
   const caption = n === 0 ? copy.closure.rowCaption.zero : n === 1 ? copy.closure.rowCaption.one : copy.closure.rowCaption.many;
-  const so = new Date() >= new Date('2026-11-10T00:00:00') ? copy.closure.signoff.after : copy.closure.signoff.before;
+  const so = signoffLines();
   const g = copy.guess, lr = copy.lateReply, l6 = copy.lamp6, v = copy.voice, vd = copy.verdict, w = copy.wish, cl = copy.closure, sx = copy.sixty;
   return (
     <div id="fulltext" className="fulltext" lang="en-IN">
