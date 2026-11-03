@@ -193,7 +193,35 @@
    ],
    "fromHomeFlame": "the home flame",
    "tiltOn": "Tilt on",
-   "lampRow": "The five lamps"
+   "lampRow": "The five lamps",
+   "inviteTitle": "Invite me to an interview",
+   "inviteSub": "Bas ek message. Aapka time, aapke sawaal.",
+   "inviteGmail": "Open Gmail",
+   "inviteGmailSub": "Opens a new Gmail message with everything filled in.",
+   "inviteOutlook": "Open Outlook",
+   "inviteMailApp": "Open my mail app",
+   "inviteMailSub": "Uses the mail app on this device.",
+   "inviteCopyAddr": "Copy address",
+   "inviteCopyMsg": "Copy message",
+   "inviteCopied": "Copied",
+   "inviteAddrCopied": "Address copied",
+   "inviteMsgCopied": "Message copied",
+   "inviteCopyFail": "Select the address above and press Ctrl+C (Cmd+C on Mac)",
+   "inviteFallback": "Kuch na khule toh address copy kijiye aur apne mail mein paste kar dijiye:",
+   "invitePreview": "See the message",
+   "inviteLinkedin": "Message on LinkedIn",
+   "inviteTabAria": ", opens a new tab",
+   "inviteAria": ", opens a form with ways to write",
+   "inviteSubject": "Interview invitation: Shriniwas Kholkute, Wispr Flow India growth internship",
+   "inviteBody": [
+    "Hi Shriniwas,",
+    "I visited Ek Diya Se Doosra and would like to invite you to an interview.",
+    "My lamp number on your page: {n}",
+    "Proposed time: [your suggestion]\nFormat: [call / video / in person]\nA project or question you'd like me to start with: [optional]",
+    "Regards,\n[your name and role]"
+   ],
+   "calmCorner": "Calm",
+   "calmCornerAria": "Calm mode: fewer moving things"
   }
  },
  "opening": {

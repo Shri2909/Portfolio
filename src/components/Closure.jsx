@@ -7,7 +7,8 @@ import { useStore } from '../lib/useStore.js';
 import { emit } from '../lib/events.js';
 import { announce } from '../lib/announce.js';
 import { haptic } from '../lib/haptic.js';
-import { contactHref, inviteVisible } from '../lib/mail.js';
+import { emailOf, inviteVisible } from '../lib/mail.js';
+import InviteButton from './InviteButton.jsx';
 import { signoffLines } from '../lib/signoff.js';
 import { captionFor } from './RowFragment.jsx';
 
@@ -69,18 +70,18 @@ export default function Closure() {
   const tapLamp = () => { if (!vl) return; haptic(10); if (calm) return; setFlick(true); setTimeout(() => setFlick(false), 600); };
   const caption = captionFor(base), so = signoffLines();
   const ended = phase === 'done', playing = phase === 'playing';
-  const email = copy.site.contact && copy.site.contact.email;
+  const email = emailOf();
   return (
     <section id="closure" ref={sec} className={`sec ${ended ? 'ended' : ''} ${playing ? 'playing' : ''}`} aria-labelledby="closure-h">
-      <p className="cl-cap cl-fade" style={{ '--at': '0s' }}>{rich(caption)}</p>
-      <p className="fine cl-fade" style={{ '--at': '0.1s' }}>{copy.ui.rowFine}</p>
+      <p className="cl-cap">{rich(caption)}</p>
+      <p className="fine">{copy.ui.rowFine}</p>
       <div ref={rowEl} className="cl-row" role="img" aria-label={C.altText} data-row-mount>
         <div aria-hidden="true" className="cl-lamps">
           {base > 7 && <i className="cl-dots" />}
           {[1, 2, 3, 4, 5].map((n) => <i key={n} className={`cl-lamp mine ${lamps[n] === 'lit' || ended || playing ? 'lit' : ''}`} style={{ '--i': n }} />)}
           <i className="cl-gap" />
           {Array.from({ length: show }, (_, i) => <i key={i} className="cl-lamp theirs lit" style={{ '--i': 6 + i }} />)}
-          <button ref={slot} className={`cl-lamp slot ${vl ? 'lit newest' : ''} ${flick ? 'flicker' : ''}`} aria-label={X('yourLampAria')} data-visitor-lamp onClick={tapLamp} tabIndex={vl ? 0 : -1} />
+          <button className="cl-slot-btn" aria-label={X('yourLampAria')} data-visitor-lamp onClick={tapLamp} tabIndex={vl ? 0 : -1}><i ref={slot} className={`cl-lamp slot ${vl ? 'lit newest' : ''} ${flick ? 'flicker' : ''}`} /></button>
           <i ref={spark} className="cl-spark" />
         </div>
       </div>
@@ -90,7 +91,7 @@ export default function Closure() {
       <p className="cl-fade" style={{ '--at': '5.2s' }}>{rich(C.para)}</p>
       {inviteVisible() && (
         <div className="cl-invite cl-fade" style={{ '--at': '5.8s' }}>
-          <a className="btn btn-primary" href={contactHref(base + 1)} aria-label={`${C.invite.label}, ${X('mailAria')}`}>{C.invite.label}</a>
+          <InviteButton label={C.invite.label} />
           <p className="sub">{rich(C.invite.sub)}</p>
           {email && <p className="mono addr">{email}</p>}
         </div>

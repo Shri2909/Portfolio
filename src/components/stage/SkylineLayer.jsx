@@ -4,7 +4,7 @@ import { useStore } from '../../lib/useStore.js';
 
 // Indian apartment-block skyline in three SVG layers. 64 windows (+1 for the visitor), each a home.
 // Lit count by tone: 5, 14, 23, 32, 41, 56, 64. The first 5 are fixed ("already home").
-const W = 1200, H = 500, LIT = [5, 14, 23, 32, 41, 56, 64];
+const W = 1200, H = 500, LIT = [14, 20, 28, 36, 44, 56, 64];
 const LAMP_X = [250, 450, 600, 750, 950]; // viewBox x of the lamp row (approximate), used only to order windows
 
 function layer(r, name, nBlocks, hMin, hMax, nWin, ww, wh) {
@@ -26,17 +26,17 @@ function build() {
   const order = shuffle(all.map((w) => w.id), r);
   order.forEach((id, k) => { const w = all[id]; w.color = k < 3 ? 'tv' : (() => { const q = r(); return q < 0.7 ? 'core' : q < 0.9 ? 'a' : 'cream'; })(); w.tvDur = 1.7 + r() * 1.5; });
   // fixed five, from the visible centre band across the layers
-  const band = (l, n) => all.filter((w) => w.layer === l && w.x > 380 && w.x < 820 && w.color !== 'tv').slice(0, n);
-  const fixed = [...band('far', 1), ...band('mid', 2), ...band('near', 2)];
-  for (const f of all) if (!fixed.includes(f) && fixed.length < 5 && f.x > 300 && f.x < 900 && f.color !== 'tv') fixed.push(f);
+  const band = (l, n) => all.filter((w) => w.layer === l && w.x > 300 && w.x < 900 && w.color !== 'tv').slice(0, n);
+  const fixed = [...band('far', 3), ...band('mid', 5), ...band('near', 5)];
+  for (const f of all) if (!fixed.includes(f) && fixed.length < 14 && f.x > 250 && f.x < 950 && f.color !== 'tv') fixed.push(f);
   const rank = new Map(); fixed.forEach((w, i) => rank.set(w.id, i));
-  let pool = all.filter((w) => !rank.has(w.id)), k = 5;
-  for (let lamp = 0; lamp < 4; lamp++) { pool.sort((a, b) => Math.abs(a.x - LAMP_X[lamp]) - Math.abs(b.x - LAMP_X[lamp])); pool.splice(0, 9).forEach((w) => rank.set(w.id, k++)); }
-  pool.sort((a, b) => Math.abs(a.x - LAMP_X[4]) - Math.abs(b.x - LAMP_X[4])); pool.splice(0, 15).forEach((w) => rank.set(w.id, k++));
+  let pool = all.filter((w) => !rank.has(w.id)), k = 14;
+  [6, 8, 8, 8].forEach((cnt, lamp) => { pool.sort((a, b) => Math.abs(a.x - LAMP_X[lamp]) - Math.abs(b.x - LAMP_X[lamp])); pool.splice(0, cnt).forEach((w) => rank.set(w.id, k++)); });
+  pool.sort((a, b) => Math.abs(a.x - LAMP_X[4]) - Math.abs(b.x - LAMP_X[4])); pool.splice(0, 12).forEach((w) => rank.set(w.id, k++));
   pool.forEach((w) => rank.set(w.id, k++));
   all.forEach((w) => { w.rank = rank.get(w.id); });
   far.wins = all.filter((w) => w.layer === 'far'); mid.wins = all.filter((w) => w.layer === 'mid'); near.wins = all.filter((w) => w.layer === 'near');
-  const fan = all.find((w) => w.layer === 'near' && w.rank >= 5 && w.rank < 23);
+  const fan = all.find((w) => w.layer === 'near' && w.rank >= 14 && w.rank < 28);
   // rooftop kit on the mid layer
   const roof = [];
   const rr = mulberry32(77);

@@ -12,9 +12,9 @@ import { startFavicon } from './lib/favicon.js';
 import { wireOpeners, openSixty, openEvidence, openText, closeOverlay, closeText, scrollToId } from './lib/nav.js';
 import { rich } from './lib/rich.jsx';
 import Stage from './components/stage/Stage.jsx';
-import TiltChip from './components/TiltChip.jsx';
 import TopBar from './components/TopBar.jsx';
-import Dock from './components/Dock.jsx';
+import { CalmCorner } from './components/Dock.jsx';
+import InviteSheet from './components/InviteSheet.jsx';
 import Overlay from './components/Overlay.jsx';
 import FullTextView from './components/FullTextView.jsx';
 import Night from './components/Night.jsx';
@@ -69,8 +69,9 @@ export default function App() {
         <Closure />
       </main>
       <Footer />
-      <Dock><TiltChip /></Dock>
+      <CalmCorner />
       <SixtyDialog />
+      <InviteSheet />
       <EvidenceDrawer />
       <LampCard />
       {(text || printing) && <FullTextView onClose={closeText} />}

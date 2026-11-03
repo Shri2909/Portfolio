@@ -133,9 +133,8 @@ function Cat({ lamp3 }) {
 export default function Terrace() {
   const { w } = useWindowSize();
   const lit = useStore((s) => s.litCount), tone = useStore((s) => s.tone);
-  const [mode, setMode] = useState(0);
-  const cycle = () => { const m = (mode + 1) % 4; setMode(m); announce(tpl(X('stringMode'), { mode: copy.ui.extra.stringModes[m] })); };
-  const lampX = [0.1, 0.3, 0.5, 0.7, 0.9];
+  const mode = 0;
+    const lampX = [0.1, 0.3, 0.5, 0.7, 0.9];
   return (
     <>
       <div id="terrace" aria-hidden="true">
@@ -155,8 +154,6 @@ export default function Terrace() {
         <div className="pools">{lampX.map((x, i) => <i key={i} className={i < lit ? 'on' : ''} style={{ left: x * 100 + '%' }} />)}</div>
         <svg className="inkline" viewBox="0 0 100 2" preserveAspectRatio="none"><path pathLength="1" d="M10 1H90" style={{ strokeDashoffset: 1 - Math.max(0, lit - 1) / 4 }} /></svg>
       </div>
-      <button className="lights-ctl" onClick={cycle} aria-label={X('stringAria')} aria-describedby="lights-mode"><i /></button>
-      <span id="lights-mode" className="sr-only">{copy.ui.extra.stringModes[mode]}</span>
     </>
   );
 }

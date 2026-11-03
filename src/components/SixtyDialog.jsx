@@ -2,7 +2,7 @@ import copy, { X } from '../lib/copy.js';
 import { rich } from '../lib/rich.jsx';
 import { useStore } from '../lib/useStore.js';
 import { closeOverlay } from '../lib/nav.js';
-import { contactHref, inviteVisible } from '../lib/mail.js';
+import InviteButton from './InviteButton.jsx';
 import Overlay from './Overlay.jsx';
 
 // The 60-second file: a bottom sheet (native modal dialog). Never writes to the address bar.
@@ -21,7 +21,7 @@ export default function SixtyDialog() {
         <p><em>{S.pull}</em></p>
         <p className="btn-row">
           <button className="btn btn-primary" data-evidence="c1">{S.receiptCta}</button>
-          {inviteVisible() && <a className="btn" href={contactHref(vl ? row.count : null)} aria-label={`${S.inviteCta}, ${X('mailAria')}`}>{S.inviteCta}</a>}
+          <InviteButton label={S.inviteCta} className="btn" />
         </p>
       </div>
     </Overlay>

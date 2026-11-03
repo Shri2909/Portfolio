@@ -13,7 +13,7 @@ const src = walk(path.join(root, 'src')).filter((f) => /\.(js|jsx|css|json)$/.te
 
 // 1. outside hosts in dist (library strings and the visitor-clicked outbound links are allowed)
 const ALLOWED_LIB = ['www.w3.org', 'reactjs.org', 'react.dev'];
-const ALLOWED_OUT = ['drive.google.com', 'github.com', 'wa.me'];
+const ALLOWED_OUT = ['drive.google.com', 'github.com', 'wa.me', 'mail.google.com', 'outlook.live.com', 'docs.wisprflow.ai', 'wisprflow.ai', 'challenge.wisprflow.ai', 'techcrunch.com']; // outbound only on a visitor's own tap
 const hosts = new Map();
 for (const f of text) {
   const s = fs.readFileSync(f, 'utf8');

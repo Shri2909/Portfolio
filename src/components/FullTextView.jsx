@@ -6,7 +6,7 @@ import { useStore } from '../lib/useStore.js';
 import { closeText } from '../lib/nav.js';
 import { shownCount } from '../lib/rowhash.js';
 import EvidenceBody from './EvidenceBody.jsx';
-import { contactHref, inviteVisible } from '../lib/mail.js';
+import { inviteVisible, inviteUrls } from '../lib/mail.js';
 import { personParas } from '../lib/personText.js';
 import { signoffLines } from '../lib/signoff.js';
 import WishForm from './WishForm.jsx';
@@ -153,7 +153,7 @@ export default function FullTextView({ onClose }) {
           <h2 id="ft-closure">{cl.headings.map((h, i) => <span key={i}>{rich(h)} </span>)}</h2>
           <p>{rich(tpl(caption, { count: shownCount(n) }))}</p><p>{copy.ui.rowFine}</p>
           <P t={cl.para} />
-          {inviteVisible() && <p><a href={contactHref(n + 1)}>{cl.invite.label}</a> ({X('mailAria')}) {rich(cl.invite.sub)}</p>}
+          {inviteVisible() && (() => { const u = inviteUrls(); return (<div><p><strong>{cl.invite.label}</strong> {rich(cl.invite.sub)}</p><p className="mono">{u.email}</p><p><a href={u.gmail} target="_blank" rel="noopener noreferrer">{X('inviteGmail')}</a> · <a href={u.mailto}>{X('inviteMailApp')}</a></p><pre>{u.subject + '\n\n' + u.body}</pre></div>); })()}
           <P t={cl.recap} /><P t={cl.closing} />
           <p>{so.map((l, i) => <span key={i}>{rich(l)} </span>)}</p>
         </section>
