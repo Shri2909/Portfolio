@@ -1,0 +1,66 @@
+/* E1.1 colour script per act + grading pipeline, E1.4 depth model.
+   The per-act palette is stored in plain (non-registered) variables on html, so an act change costs ONE style recalc.
+   Each consuming element copies them into its own REGISTERED, non-inheriting colour property, which is what transitions:
+   only that one layer repaints during the 1.6 s grade, never the whole tree. */
+@property --c-sky0 { syntax: '<color>'; inherits: false; initial-value: #04050C; }
+@property --c-sky1 { syntax: '<color>'; inherits: false; initial-value: #0A0C1E; }
+@property --c-sky2 { syntax: '<color>'; inherits: false; initial-value: #1A1636; }
+@property --c-hz { syntax: '<color>'; inherits: false; initial-value: #3A2347; }
+@property --c-key { syntax: '<color>'; inherits: false; initial-value: #FFB347; }
+@property --c-haze { syntax: '<color>'; inherits: false; initial-value: #2A2650; }
+
+html[data-elev="1"] { --a-sky0: #04050C; --a-sky1: #0A0C1E; --a-sky2: #1A1636; --a-hz: #3A2347; --a-haze: #2A2650; --a-key: #FFB347; --a-fill: #6E86C8; --a-lift: #14102A; --a-vig: .55; --a-tonew: 1; --a-mist: .18; --a-rim: .22; }
+html[data-elev="1"][data-act="baithak"] { --a-sky0: #120C12; --a-sky1: #2A1810; --a-sky2: #4A2A14; --a-hz: #7A4A1E; --a-haze: #5A3A22; --a-key: #FFC067; --a-fill: #B86B3A; --a-lift: #241410; --a-vig: .42; --a-tonew: 0; --a-mist: .30; }
+html[data-elev="1"][data-act="chhat"] { --a-sky0: #0A0A1E; --a-sky1: #1B1430; --a-sky2: #3D1D2F; --a-hz: #5A2A2C; --a-haze: #3A2A5A; --a-key: #FFB347; --a-fill: #7F8FD6; --a-lift: #1A1226; --a-vig: .44; --a-tonew: 1; --a-mist: calc(.18 + var(--tone, 0) * .06); }
+html[data-elev="1"][data-act="awaaz"] { --a-sky0: #070A14; --a-sky1: #0C1424; --a-sky2: #14202E; --a-hz: #1E2E3A; --a-haze: #1E2A40; --a-key: #FFD27A; --a-fill: #4F7C8A; --a-lift: #0E1626; --a-vig: .50; --a-tonew: .35; --a-mist: .10; }
+html[data-elev="1"][data-act="aakhri"] { --a-sky0: #030308; --a-sky1: #06060C; --a-sky2: #0B0810; --a-hz: #1A0C0C; --a-haze: #120C18; --a-key: #FF7A1A; --a-fill: #3A2A3A; --a-lift: #0A0810; --a-vig: .70; --a-tonew: 0; --a-mist: .05; }
+html[data-elev="1"][data-act="vidaai"] { --a-sky0: #22152B; --a-sky1: #6B3440; --a-sky2: #C9703A; --a-hz: #F2A94E; --a-haze: #E9A56A; --a-key: #FFE2A0; --a-fill: #FFB347; --a-lift: #3A1E24; --a-vig: .22; --a-tonew: 1; --a-mist: .60; --a-rim: .35; }
+
+/* sky: the gradient is read from the act, the warm layers are weighted so acts 4 and 5 are not blanketed by dusk-gold */
+html[data-elev="1"]:not([data-ink="1"]) .sky-night {
+  --c-sky0: var(--a-sky0); --c-sky1: var(--a-sky1); --c-sky2: var(--a-sky2);
+  background: linear-gradient(var(--c-sky0), var(--c-sky1) 45%, var(--c-sky2) 100%);
+  transition: --c-sky0 var(--dur-xl) var(--ease-in-out-quint), --c-sky1 var(--dur-xl) var(--ease-in-out-quint), --c-sky2 var(--dur-xl) var(--ease-in-out-quint), opacity var(--tone-ms) ease;
+}
+html[data-elev="1"]:not([data-ink="1"]) .sky-ember { opacity: calc(clamp(0, calc((var(--tone) - 1) / 3), 1) * var(--a-tonew)); }
+html[data-elev="1"]:not([data-ink="1"]) .sky-gold { opacity: calc(clamp(0, calc((var(--tone) - 4) * .85), 1) * var(--a-tonew)); }
+html[data-elev="1"][data-act="aakhri"] .sky-gold, html[data-elev="1"][data-act="aakhri"] .sky-ember { opacity: 0; }
+html[data-elev="1"] #vignette { background: radial-gradient(ellipse at 50% 45%, transparent 40%, rgba(0, 0, 0, var(--a-vig)) 100%); transition: opacity var(--dur-xl); }
+
+/* the grade: three fixed layers inside #stage, never above text. High tier only (see tiers below). */
+html[data-elev="1"] .grade { position: absolute; inset: 0; pointer-events: none; display: none; }
+html[data-elev="1"][data-quality="high"]:not([data-ink="1"]) #g-bloom { display: block; }  /* g-lift and g-warm are shed (full-screen blend layers cost too much frame time); the lift is baked into the sky below */
+html[data-elev="1"] #g-bloom { --c-key: var(--a-key); background: radial-gradient(circle at var(--lx, 50%) var(--ly, 70%), color-mix(in srgb, var(--c-key) 28%, transparent), transparent 55%); opacity: calc(.12 + var(--tone, 0) * .03); transition: --c-key var(--dur-xl) var(--ease-in-out-quint); }
+/* mid and low: the lift is baked into the sky by a plain tint, no blend layers */
+html[data-elev="1"]:not([data-ink="1"]) .sky-night { background: linear-gradient(var(--c-sky0), var(--c-sky1) 45%, color-mix(in srgb, var(--c-sky2) 85%, var(--a-lift)) 100%); }
+html[data-elev="1"][data-calm="1"] .sky-night, html[data-elev="1"][data-calm="1"] #g-bloom { transition: none; }
+
+/* reading safety: copy blocks sit on a scrim of at least .72 so text is AA over the brightest horizon */
+html[data-elev="1"]:not([data-ink="1"]) :is(.panel, .take-card, .person-panel) { --c-scrim: #120A06; --scrim-a: .82; background: color-mix(in srgb, var(--c-scrim) calc(var(--scrim-a) * 100%), transparent); border-color: rgba(120, 80, 40, .35); }
+
+/* E1.4 depth: far = closest to the mist colour, near = darkest. The V3 lavender overrides are beaten by the #skyline id. */
+html[data-elev="1"]:not([data-ink="1"]) #skyline { --c-haze: var(--a-haze); }
+html[data-elev="1"]:not([data-ink="1"]) #skyline .lay.far rect:not(.pane):not(.halo):not(.rim) { fill: color-mix(in oklab, #07050A 38%, var(--c-haze) 62%); }
+html[data-elev="1"]:not([data-ink="1"]) #skyline .lay.mid > rect:not(.pane):not(.halo):not(.rim) { fill: color-mix(in oklab, #07050A 66%, var(--c-haze) 34%); }
+html[data-elev="1"]:not([data-ink="1"]) #skyline .lay.near > g > rect:first-child { fill: color-mix(in oklab, #07050A 88%, var(--c-haze) 12%); }
+html[data-elev="1"][data-quality="high"]:not([data-ink="1"]) #skyline .lay rect:not(.pane):not(.halo):not(.rim) { transition: fill var(--dur-xl) var(--ease-in-out-quint); }
+html[data-elev="1"]:not([data-ink="1"]) #skyline .lay.far .pane { opacity: .7; }
+html[data-elev="1"]:not([data-ink="1"]) #skyline .lay.far .halo { opacity: .3; }
+html[data-elev="1"] #skyline::after { display: none; }
+html[data-elev="1"] .skyline-mist { position: absolute; left: 0; right: 0; bottom: 0; height: 55%; pointer-events: none; --c-hz: var(--a-hz); background: linear-gradient(to top, var(--c-hz), transparent); opacity: var(--a-mist); transition: opacity var(--dur-xl) var(--ease-in-out-quint), --c-hz var(--dur-xl) var(--ease-in-out-quint); }
+html[data-elev="1"][data-ink="1"] .skyline-mist, html[data-elev="1"][data-ink="1"] #bokeh, html[data-elev="1"][data-ink="1"] #grain-layer, html[data-elev="1"][data-ink="1"] #dust-layer { display: none; }
+html[data-elev="1"] #skyline .rim { fill: var(--a-key); opacity: var(--a-rim); }
+html[data-elev="1"][data-quality="mid"] #skyline .rim, html[data-elev="1"][data-quality="low"] #skyline .rim { display: none; }
+
+/* terrace: gritty floor with perspective joints, parapet contact shadow and plaster */
+html[data-elev="1"]:not([data-ink="1"]) .floor { background-image: var(--tx-grit, none), linear-gradient(var(--ground-3), var(--ground-2)); background-blend-mode: overlay, normal; box-shadow: inset 0 18px 22px -14px rgba(0, 0, 0, .55); }
+html[data-elev="1"] .floor .joints { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+html[data-elev="1"][data-quality="low"] .floor .joints { display: none; }
+html[data-elev="1"] .parapet { position: relative; background-image: var(--tx-grit, none); background-blend-mode: overlay; }
+html[data-elev="1"] .parapet::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 14px; background: linear-gradient(rgba(0, 0, 0, .45), transparent); pointer-events: none; }
+html[data-elev="1"][data-tone="3"] .parapet, html[data-elev="1"][data-tone="4"] .parapet, html[data-elev="1"][data-tone="5"] .parapet, html[data-elev="1"][data-tone="6"] .parapet { border-top-color: rgba(255, 243, 220, .38); }
+
+/* foreground bokeh (P6): out-of-focus lens discs in the corners, never above text; no filter, no blur */
+html[data-elev="1"] #bokeh { position: absolute; inset: 0; pointer-events: none; opacity: calc(.35 + var(--tone, 0) * .05); }
+html[data-elev="1"] #bokeh i { position: absolute; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--bk, #FFB347) 30%, transparent), color-mix(in srgb, var(--bk, #FFB347) 12%, transparent) 55%, transparent 70%); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--bk, #FFB347) 22%, transparent); }
+html[data-elev="1"][data-quality="mid"] #bokeh i:nth-child(n + 5), html[data-elev="1"][data-quality="low"] #bokeh { display: none; }

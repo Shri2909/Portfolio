@@ -38,3 +38,19 @@ html[data-elev="1"][data-calm="1"] #stage { transition: none; }
 html[data-elev="1"][data-calm="1"] #veil { transition: none; animation: none; }
 html[data-elev="1"][data-calm="1"][data-act="aakhri"] #veil { background: radial-gradient(circle at var(--l6x) var(--l6y), transparent 18vmin, #000 calc(18vmin + 14vmin)); }
 html[data-elev="1"][data-busy="1"] #stage { --cam: 0; }
+
+/* E1.5 rack focus (contributed to the camera file, per R1). Gated by data-camera because the camera is off by default:
+   focus 0 = far windows crisp, 1 = near lamps sharp and the city melts to glowing discs. Opacity crossfade only, no blur
+   except one static blur(1px) on the far layer on the high tier once focus is above .8 (class toggle, never animated). */
+@property --focus { syntax: '<number>'; inherits: true; initial-value: 0; }
+html[data-elev="1"][data-camera="1"] { --focus: .15; transition: --focus var(--dur-xl) var(--ease-in-out-quint); }
+html[data-elev="1"][data-camera="1"][data-act="baithak"] { --focus: .45; }
+html[data-elev="1"][data-camera="1"][data-act="chhat"] { --focus: 1; }
+html[data-elev="1"][data-camera="1"][data-act="awaaz"] { --focus: .8; }
+html[data-elev="1"][data-camera="1"][data-act="aakhri"] { --focus: 1; }
+html[data-elev="1"][data-camera="1"][data-act="vidaai"] { --focus: .3; }
+html[data-elev="1"][data-camera="1"] #skyline .lay.far .pane, html[data-elev="1"][data-camera="1"] #skyline .lay.mid .pane { opacity: calc(1 - var(--focus) * .55); }
+html[data-elev="1"][data-camera="1"] #skyline .lay.far .halo { opacity: calc(.18 + var(--focus) * .5); }
+html[data-elev="1"][data-camera="1"] #bokeh { opacity: calc(.25 + (1 - var(--focus)) * .5); }
+html[data-elev="1"][data-camera="1"][data-quality="high"][data-focus="near"] #skyline .lay.far { filter: blur(1px); }
+html[data-elev="1"][data-calm="1"] { transition: none; }

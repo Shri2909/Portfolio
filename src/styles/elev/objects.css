@@ -1,0 +1,34 @@
+/* E1.3 hero objects: clay diya, cotton wick, marigold toran, window glass (nodes are added at runtime by src/elev/art.js) */
+html[data-elev="1"] { --clay: #C2410C; --clay-hi: #E36A2E; --clay-dark: #6E2306; }
+html[data-elev="1"] .lamp .e-throw { fill: none; stroke: rgba(0, 0, 0, .18); stroke-width: .8; stroke-linecap: round; }
+html[data-elev="1"] .lamp .e-dent { fill: var(--clay-dark); opacity: .7; }
+html[data-elev="1"] .lamp .e-fleck-c { fill: none; stroke: #FFE9C2; stroke-width: 1.7; stroke-linecap: round; opacity: .5; }
+html[data-elev="1"] .lamp .e-fleck-d { fill: none; stroke: #3A1204; stroke-width: 1.7; stroke-linecap: round; opacity: .6; }
+html[data-elev="1"] .lamp .e-glow { opacity: 0; transition: opacity var(--dur-l) ease; }
+html[data-elev="1"] .lamp.is-lit .e-glow, html[data-elev="1"] .lamp.is-lighting .e-glow { opacity: calc(var(--li, .7) * .9); }
+html[data-elev="1"][data-quality="low"] .lamp .e-glow { display: none; }
+html[data-elev="1"] .lamp .e-rim { fill: none; stroke: rgba(255, 214, 150, .6); stroke-width: 1; opacity: 0; transition: opacity var(--dur-l) ease; }
+html[data-elev="1"] .lamp.is-lit .e-rim { opacity: 1; }
+html[data-elev="1"] .lamp .e-twist { fill: none; stroke: #B9A883; stroke-width: 3; stroke-dasharray: 1.2 2.2; stroke-linecap: butt; }
+html[data-elev="1"] .lamp .e-wet { fill: none; stroke-width: 3; stroke-linecap: round; }
+html[data-elev="1"] .lamp .e-fibre { fill: none; stroke: #E9DCC0; stroke-width: .8; stroke-linecap: round; }
+html[data-elev="1"] .lamp .wick { stroke: #E9DCC0; }
+html[data-elev="1"] .lamp .e-ember { fill: #FF5A10; opacity: 0; }
+html[data-elev="1"] .lamp.is-lit .e-ember { opacity: .85; animation: elev-ember 1.4s ease-in-out infinite alternate; }
+@keyframes elev-ember { from { opacity: .7; } to { opacity: 1; } }
+html[data-elev="1"][data-calm="1"] .lamp.is-lit .e-ember { animation: none; opacity: .9; }
+html[data-elev="1"][data-ink="1"] .lamp .e-glow, html[data-elev="1"][data-ink="1"] .lamp .e-ember, html[data-elev="1"][data-ink="1"] .lamp .e-rim { display: none; }
+
+/* marigold toran: 14 backlit flowers drawn from symbols; the flat circles they replace are hidden */
+html[data-elev="1"] .toran .e-flat { display: none; }
+html[data-elev="1"] .toran .e-mari { overflow: visible; }
+html[data-elev="1"] .toran .e-leaf { fill: #2F6B4F; }
+html[data-elev="1"] .toran .e-leafvein { fill: none; stroke: #4C8F6F; stroke-width: .6; }
+
+/* window glass: mullions on mid and near, curtains and reflections on near; five temperatures */
+html[data-elev="1"] .win .mull { fill: none; stroke: rgba(20, 10, 5, .55); stroke-width: .7; }
+
+html[data-elev="1"] .win .refl { fill: #fff; opacity: .10; }
+html[data-elev="1"] .win.c-core { color: #FFC067; } html[data-elev="1"] .win.c-a { color: #FFD98A; } html[data-elev="1"] .win.c-cream { color: #E8F0D8; } html[data-elev="1"] .win.c-tv { color: #8FB4E8; }
+html[data-elev="1"][data-quality="mid"] .win .refl, html[data-elev="1"][data-quality="low"] .win .refl, html[data-elev="1"][data-quality="low"] .win .curt, html[data-elev="1"][data-quality="low"] .win .mull { display: none; }
+html[data-elev="1"][data-ink="1"] .win .mull, html[data-elev="1"][data-ink="1"] .win .curt, html[data-elev="1"][data-ink="1"] .win .refl { display: none; }

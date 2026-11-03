@@ -1,0 +1,65 @@
+/* E1.7 chrome in the same world. Things you read at length are paper; things you press are brass or clay; the world is light and dark.
+   Existing class names are restyled (not renamed) so V3 markup is untouched; .brass is also available as a utility. */
+html[data-elev="1"]:not([data-ink="1"]) :is(.btn-primary, .brass) {
+  border: 3px solid transparent; color: #1B1208; font-weight: 700;
+  background: linear-gradient(#E7BE6A, #D2A04A) padding-box, conic-gradient(from 210deg at 30% 20%, #6B4A14, #E8C06A 12%, #8A6120 25%, #F4D98C 38%, #7A5418 55%, #D8AB55 70%, #6B4A14) border-box;
+  box-shadow: inset 0 1px 0 rgba(255, 240, 200, .7), inset 0 -2px 3px rgba(60, 30, 0, .45), 0 6px 14px rgba(0, 0, 0, .45);
+}
+html[data-elev="1"][data-quality="low"]:not([data-ink="1"]) :is(.btn-primary, .brass) { background: #D8AB55; border-color: #8A6120; box-shadow: none; }
+html[data-elev="1"][data-quality="mid"]:not([data-ink="1"]) :is(.btn-primary, .brass) { background: linear-gradient(#E7BE6A, #D2A04A) padding-box, #A87B2C border-box; }
+html[data-elev="1"]:not([data-ink="1"]) :is(.btn-primary, .brass).is-down { transform: translateY(1px) scale(.97); box-shadow: inset 0 -2px 3px rgba(60, 30, 0, .45), 0 3px 8px rgba(0, 0, 0, .45); }
+html[data-elev="1"][data-lit]:not([data-ink="1"]) :is(.btn-primary, .brass) { background-image: radial-gradient(circle at 25% 20%, rgba(255, 224, 150, calc(var(--tone, 0) * .05)), transparent 55%), linear-gradient(#E7BE6A, #D2A04A), conic-gradient(from 210deg at 30% 20%, #6B4A14, #E8C06A 12%, #8A6120 25%, #F4D98C 38%, #7A5418 55%, #D8AB55 70%, #6B4A14); background-clip: padding-box, padding-box, border-box; }
+/* the invite stays demoted: it must not be the loudest object */
+html[data-elev="1"] :is(.btn-primary, .brass).invite, html[data-elev="1"] #topbar .btn-primary { min-height: 44px; padding: 8px 14px; }
+/* paper buttons inside letters keep ink faces */
+html[data-elev="1"]:not([data-ink="1"]) :is(.card, .paper, .note-paper, dialog.overlay) :is(.btn-primary, .brass) { color: #F6E8C8; background: #1B1208; border-color: #1B1208; box-shadow: 0 4px 10px rgba(0, 0, 0, .35); }
+html[data-elev="1"]:not([data-ink="1"]) .btn:not(.btn-primary):not(.brass) { border-width: 1.5px; border-color: rgba(227, 207, 174, .7); }
+html[data-elev="1"]:not([data-ink="1"]) .btn:not(.btn-primary):not(.brass):is(:hover, :focus-visible) { box-shadow: 0 0 0 4px rgba(255, 179, 71, .18), 0 0 24px rgba(255, 179, 71, .25); }
+html[data-elev="1"][data-ink="1"] :is(.btn-primary, .brass) { background: #F2EFE8; color: #000; border: 2px solid #000; box-shadow: none; }
+
+/* luggage-tag labels tied to the lit lamps: paper, notched corner, punched hole, never under 11px */
+html[data-elev="1"]:not([data-ink="1"]) .lamp-btn .chip {
+  font-size: 11px; font-weight: 700; padding: 4px 3px 4px 9px; letter-spacing: -.02em; border: 0; border-radius: 0; color: #16110C; background: #F6E7C6;
+  clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
+  background-image: radial-gradient(circle at 6px 7px, transparent 1.6px, rgba(0, 0, 0, .35) 2.2px, transparent 2.6px), var(--tx-fibre, none);
+  box-shadow: 0 0 14px rgba(255, 179, 71, .35); transform-origin: 6px 7px; animation: elev-tag 280ms var(--ease-spring) both;
+}
+html[data-elev="1"][data-ink="1"] .lamp-btn .chip { background: #F2EFE8; color: #000; border: 1px solid #000; font-size: 11px; }
+html[data-elev="1"] .lamp-btn.lit .chip { border: 0; }
+@keyframes elev-tag { from { transform: rotate(-14deg); opacity: 0; } to { transform: none; opacity: 1; } }
+html[data-elev="1"][data-calm="1"] .lamp-btn .chip, html[data-elev="1"][data-quality="low"] .lamp-btn .chip { animation: none; }
+html[data-elev="1"] .lamp-btn .chip.dashed { background: transparent; color: var(--cream); border: 1px dashed var(--text-dim); font-size: 11px; clip-path: none; box-shadow: none; }
+
+/* focus: the 3px ring stays (accessibility); the halo breathes on the high tier */
+html[data-elev="1"][data-quality="high"]:not([data-calm="1"]) :focus-visible { animation: elev-breathe 2.4s ease-in-out infinite alternate; box-shadow: 0 0 0 7px rgba(255, 179, 71, .28), 0 0 22px 6px rgba(255, 140, 40, .35); }
+@keyframes elev-breathe { to { box-shadow: 0 0 0 9px rgba(255, 179, 71, .28), 0 0 22px 6px rgba(255, 140, 40, .35); } }
+html[data-elev="1"][data-ink="1"] :focus-visible { outline: 3px solid #fff; box-shadow: 0 0 0 5px #000; animation: none; }
+html[data-elev="1"] .btn:focus-visible::after, html[data-elev="1"] .lamp-btn:focus-visible::after { content: ""; position: absolute; right: -5px; top: -9px; width: 7px; height: 10px; border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%; background: radial-gradient(circle at 50% 70%, #FFF3DC, var(--flame-b)); pointer-events: none; }
+html[data-elev="1"] .btn { position: relative; }
+
+/* dialogs as letters: paper surface, ink text. The tokens are re-pointed inside the letter so every V3 rule flips at once. */
+html[data-elev="1"]:not([data-ink="1"]) dialog.overlay { --cream: #16110C; --text-dim: #4A3A28; --flame-core: #7A2E06; --ground-2: transparent; --ground-4: rgba(80, 50, 20, .15); --ground-5: rgba(80, 50, 20, .35); --marigold: #7A2E06; border-radius: 6px 14px 10px 16px; box-shadow: 0 14px 30px rgba(0, 0, 0, .5); }
+html[data-elev="1"]:not([data-ink="1"]) dialog.overlay.sheet { border-radius: 22px 22px 0 0; }
+html[data-elev="1"]:not([data-ink="1"]) dialog.overlay :is(h1, h2, h3, h4) { color: #16110C; font-family: var(--font-display); }
+html[data-elev="1"]:not([data-ink="1"]) dialog.overlay .kicker { color: #8A3A08; }
+html[data-elev="1"]:not([data-ink="1"]) dialog.overlay a:not(.btn) { color: #7A2E06; }
+html[data-elev="1"]:not([data-ink="1"]) dialog.overlay .btn:not(.btn-primary) { color: #16110C; border-color: rgba(22, 17, 12, .6); }
+html[data-elev="1"]:not([data-ink="1"]) dialog.overlay .panel { background: transparent; border-color: rgba(80, 50, 20, .3); }
+html[data-elev="1"]:not([data-ink="1"]) dialog.overlay .overlay-in { position: relative; }
+html[data-elev="1"]:not([data-ink="1"]) dialog.overlay .overlay-in::before { content: ""; position: absolute; left: 0; right: 0; top: 34%; height: 3px; background: linear-gradient(transparent, rgba(80, 50, 20, .10) 50%, transparent); pointer-events: none; }
+html[data-elev="1"]:not([data-ink="1"]) dialog.overlay .overlay-in::after { content: ""; position: absolute; right: 10px; top: 8px; width: 18px; height: 18px; border-radius: 60% 40% 60% 40%; background: radial-gradient(circle at 40% 35%, #FFC93C, #F5A623 60%, #D6531A); transform: rotate(18deg); opacity: .85; pointer-events: none; }
+html[data-elev="1"] dialog.overlay::backdrop { background: rgba(5, 3, 2, .72); }
+html[data-elev="1"]:not([data-ink="1"]) :is(.note-paper, .paper, .folder-body) .btn:not(.btn-primary):not(.brass) { color: #16110C; border-color: rgba(22, 17, 12, .6); background: transparent; }
+/* controls that sit on the stage (not on paper) carry their own dark ground so their text is AA over the brightest horizon */
+html[data-elev="1"]:not([data-ink="1"]) main :is(.btn:not(.btn-primary):not(.btn-ghost):not(.brass):not([aria-pressed="true"]):not([aria-selected="true"])) { background: rgba(18, 10, 6, .72); }
+html[data-elev="1"]:not([data-ink="1"]) :is(.note-paper, .paper, .folder-body, .card, dialog.overlay) .btn:not(.btn-primary):not(.brass) { background: transparent; }
+/* closing copy and the footer sit on one soft scrim column, never straight on the dusk-gold horizon */
+html[data-elev="1"]:not([data-ink="1"]) #closure { background: linear-gradient(rgba(18, 10, 6, 0), rgba(18, 10, 6, .84) 90px); }
+html[data-elev="1"]:not([data-ink="1"]) footer#footer { background: linear-gradient(rgba(18, 10, 6, .84) calc(100% - 80px), rgba(18, 10, 6, 0)); }
+/* tags hang at two heights so the longer names never overlap; the chevron is decoration and is dropped from the tag */
+html[data-elev="1"]:not([data-ink="1"]) .lamp-btn .chip { width: max-content; position: relative; left: 50%; translate: -50% 0; text-transform: uppercase; }
+html[data-elev="1"] .lamp-btn .chip .chev { display: none; }
+html[data-elev="1"] .lamp-row li:nth-child(even) .lamp-btn .chip { margin-top: 22px; }
+html[data-elev="1"] .lamp-row li:nth-child(even) .lamp-btn { padding-bottom: 0; }
+/* the pressed Calm corner keeps its dark ground (V3 left ink text on it, unreadable); a lit ring shows it is on */
+html[data-elev="1"] #calm-corner[aria-pressed="true"] { color: var(--cream); border-color: var(--flame-core); box-shadow: inset 0 0 0 1.5px var(--flame-core); }

@@ -6,3 +6,4 @@ previews/
 
 dist-perf/
 perf/report-*.json
+qa/shots/

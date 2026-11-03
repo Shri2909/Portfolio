@@ -42,7 +42,7 @@
  {
   "name": "card: animation baseline sane",
   "ok": true,
-  "info": "49"
+  "info": "52"
  },
  {
   "name": "calm: no non-essential animations running after 1.5 s",

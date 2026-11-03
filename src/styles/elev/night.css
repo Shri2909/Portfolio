@@ -1,0 +1,15 @@
+/* E1.8 first-screen composition: one loud object (the lit numerals), one action (the flame), breathing room. Hierarchy comes from
+   scale, colour and spacing only; no new words. */
+html[data-elev="1"] #topbar .wordmark { color: rgba(255, 243, 220, .78); }
+html[data-elev="1"] #night .night-copy { position: relative; }
+html[data-elev="1"]:not([data-ink="1"]) #night .night-copy::before { content: ""; position: absolute; inset: -28px -20px -20px; z-index: -1; pointer-events: none; background: linear-gradient(rgba(18, 10, 6, 0), rgba(18, 10, 6, .55) 40%, rgba(18, 10, 6, .55) 60%, rgba(18, 10, 6, 0)); }
+html[data-elev="1"] #night .kicker { display: flex; align-items: center; gap: 10px; color: var(--flame-core); }
+html[data-elev="1"] #night .kicker::before { content: ""; width: 16px; height: 1px; background: var(--flame-core); opacity: .7; flex: none; }
+html[data-elev="1"] #night .ask { font-family: var(--font-display); font-size: clamp(1.15rem, 5vw, 1.4rem); line-height: 1.3; }
+html[data-elev="1"] #night .lines { font-size: 15px; color: rgba(255, 243, 220, .82); }
+html[data-elev="1"] #night .sixty-link { margin-top: 22px; opacity: .85; }
+@media (min-width: 1024px) {
+  html[data-elev="1"] #night { max-width: none; padding-left: 8%; padding-right: 8%; }
+  html[data-elev="1"] #night .night-copy { max-width: 38rem; }
+  html[data-elev="1"] #night h1 { font-size: clamp(3.5rem, 4.4vw, 4rem); }
+}

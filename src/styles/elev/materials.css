@@ -1,0 +1,25 @@
+/* E1.2 material kit. Textures are data-URL tiles painted at idle into --tx-* (html.mat-ready); before that, plain colour and gradients stand alone. */
+html[data-elev="1"] .paper-s, html[data-elev="1"]:not([data-ink="1"]) :is(.paper, .note-paper, .card, .folder-body, dialog.overlay) {
+  background-color: #F6E8C8; background-image: var(--tx-fibre, none); color: var(--ink);
+}
+html[data-elev="1"]:not([data-ink="1"]) :is(.note-paper, .paper) { background-image: var(--tx-fibre, none), repeating-linear-gradient(transparent 0 31px, rgba(120, 90, 50, .13) 31px 32px); }
+/* raking light: fibres re-light when the flame moves (E4 supplies --ldx/--ldy; default light from above) */
+html[data-elev="1"][data-quality="high"]:not([data-ink="1"]) :is(.note-paper, .paper)::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; background-image: var(--tx-fibre, none), var(--tx-fibre, none);
+  background-position: calc(var(--ldx, 0) * 1px) calc(var(--ldy, -.6) * 1px), calc(var(--ldx, 0) * -1px) calc(var(--ldy, -.6) * -1px);
+  opacity: .18;
+}
+html[data-elev="1"] .grit { background-image: var(--tx-grit, none); background-blend-mode: overlay; }
+html[data-elev="1"] .cloth {
+  background-image: repeating-linear-gradient(0deg, rgba(0, 0, 0, .10) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(255, 255, 255, .05) 0 1px, transparent 1px 3px), linear-gradient(105deg, transparent 35%, rgba(255, 230, 170, .28) 48%, transparent 60%);
+  background-size: auto, auto, 300% 100%; background-position: 0 0, 0 0, calc(var(--act-progress, 0) * 100%) 0;
+}
+/* grain and dust: fixed layers inside #stage above the grade */
+html[data-elev="1"] #grain-layer, html[data-elev="1"] #dust-layer { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 600ms ease; }
+html[data-elev="1"].mat-ready #grain-layer { background-image: var(--tx-grain); background-size: 128px 128px; opacity: .05; }
+/* shed for frame time (software rasteriser): no blend mode and no 3-step jitter on the grain; see BUILD_LOG_ELEVATION. */
+html[data-elev="1"].mat-ready[data-quality="mid"] #grain-layer { opacity: .035; }
+html[data-elev="1"].mat-ready #dust-layer { background-image: var(--tx-dust); background-size: 320px 320px; opacity: .3; }
+html[data-elev="1"][data-quality="mid"] #dust-layer, html[data-elev="1"][data-quality="low"] #dust-layer, html[data-elev="1"][data-quality="low"] #grain-layer { display: none; }
+@keyframes elev-grainstep { 0% { background-position: 0 0; } 33% { background-position: -40px 22px; } 66% { background-position: 27px -51px; } 100% { background-position: 0 0; } }
+html[data-elev="1"][data-calm="1"] #grain-layer { animation: none; }

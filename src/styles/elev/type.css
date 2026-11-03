@@ -1,0 +1,34 @@
+/* E1.6 type system. Fraunces (SIL OFL 1.1), subset to Latin, two files, same origin. System serif stays as the fallback. */
+@font-face { font-family: "Fraunces"; font-style: normal; font-weight: 420 700; font-display: swap; src: url('../../fonts/fraunces-roman.woff2') format('woff2'); }
+@font-face { font-family: "Fraunces"; font-style: italic; font-weight: 440 620; font-display: swap; src: url('../../fonts/fraunces-italic.woff2') format('woff2'); }
+@font-face { font-family: "Fraunces Fallback"; src: local("Georgia"), local("Noto Serif"), local("Times New Roman"); size-adjust: 104%; ascent-override: 92%; descent-override: 24%; line-gap-override: 0%; }
+
+html[data-elev="1"] { --font-display: "Fraunces", "Fraunces Fallback", "Iowan Old Style", "Noto Serif", Georgia, "Noto Serif Devanagari", serif; --stagger-w: 70ms; --stagger-c: 28ms; font-optical-sizing: auto; }
+html[data-elev="1"] :is(h1, h2, h3) { font-optical-sizing: auto; }
+html[data-elev="1"] h1 { font-weight: 560; font-size: clamp(1.9rem, min(8.2vw, calc(6.4svh + 1.1rem)), 4.5rem); line-height: 1.04; }
+@media (min-width: 768px) { html[data-elev="1"] h1 { letter-spacing: -.012em; } }
+html[data-elev="1"] h2 { font-weight: 540; font-size: clamp(1.6rem, 6.4vw, 2.75rem); }
+html[data-elev="1"] h3 { font-weight: 600; font-size: 1.25rem; }
+
+/* numerals that burn: hot core, amber base */
+html[data-elev="1"] .num { font-feature-settings: "lnum", "tnum"; color: #FFD27A; font-variant-numeric: lining-nums tabular-nums; }
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  html[data-elev="1"]:not([data-ink="1"]) .num { background: linear-gradient(#FFF0C2, #FFD27A 50%, #FFB347); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; text-shadow: none; filter: drop-shadow(0 0 .35em rgba(255, 179, 71, .45)); }
+}
+html[data-elev="1"][data-ink="1"] .num { color: var(--cream); background: none; -webkit-text-fill-color: currentColor; filter: none; }
+
+/* Hinglish is the second voice: italic serif. UI controls and labels keep the UI sans, upright. */
+html[data-elev="1"] [lang="hi-Latn"] { font-family: var(--font-display); font-style: italic; font-weight: 480; font-size: 1.04em; letter-spacing: .005em; }
+html[data-elev="1"] :is(.btn, .chip, .tag, .kicker, button, .menu, .mono) [lang="hi-Latn"], html[data-elev="1"] :is(.btn, .chip, .tag, .kicker, button, .menu) [lang="hi-Latn"] { font-family: var(--font-body); font-style: normal; font-weight: inherit; font-size: inherit; letter-spacing: inherit; }
+html[data-elev="1"] [lang="hi-Latn"] strong, html[data-elev="1"] strong [lang="hi-Latn"] { font-style: italic; font-weight: 600; }
+
+/* kinetic-ready: letters light as a flame passes (E3 decides where) */
+html[data-elev="1"] .ignite .c { display: inline-block; animation: elev-ignite 700ms var(--ease-out-expo) calc(var(--i, 0) * var(--stagger-c)) both; }
+@keyframes elev-ignite { from { color: #FF7A1A; opacity: .3; } to { color: inherit; opacity: 1; } }
+html[data-elev="1"][data-calm="1"] .ignite .c { animation: none; }
+
+/* nothing under 11px, anywhere */
+html[data-elev="1"] .stone { font-size: 11px; width: 62px; }
+html[data-elev="1"] .dial .tlabel { font-size: 11px; }
+html[data-elev="1"] .dial .utc, html[data-elev="1"] .dial text { font-size: 11px; }
+html[data-elev="1"] .ring-c text { font-size: 11px; }

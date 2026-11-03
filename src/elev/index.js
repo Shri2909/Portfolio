@@ -9,12 +9,14 @@ import * as camera from './camera.js';
 import * as scrollFeel from './scrollFeel.js';
 import * as text from './textMotion.js';
 import * as controls from './controls.js';
+import * as materials from './materials.js';
+import * as art from './art.js';
 
 const MODULES = [
   { name: 'motion', start() { startSkip(); installCard(); }, stop() { stopSkip(); uninstallCard(); } },
   text, // before the director so its data-cue attributes are observed
-  director, camera, scrollFeel, controls,
-].map((m, i) => ({ name: m.name || ['motion', 'text', 'director', 'camera', 'scrollFeel', 'controls'][i], start: m.start, stop: m.stop }));
+  director, camera, scrollFeel, controls, materials, art,
+].map((m, i) => ({ name: m.name || ['motion', 'text', 'director', 'camera', 'scrollFeel', 'controls', 'materials', 'art'][i], start: m.start, stop: m.stop }));
 const started = [];
 let panicOn = false, panicTimer = 0;
 
