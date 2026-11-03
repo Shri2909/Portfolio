@@ -20,12 +20,18 @@ import * as energy from './energy.js';
 import * as governor from './governor.js';
 import * as promoteMod from './promote.js';
 import * as render from './render.js';
+import * as hushMod from './hush.js';
+import * as opening from './opening.js';
+import * as wake from './wake.js';
+import * as hold from './hold.js';
+import * as attract from './attract.js';
+import * as shared from './shared.js';
 
 const MODULES = [
   { name: 'motion', start() { startSkip(); installCard(); }, stop() { stopSkip(); uninstallCard(); } },
   text, // before the director so its data-cue attributes are observed
-  director, camera, scrollFeel, controls, materials, art, energy, light, lightmap, flames, choreo, blueprint, render, promoteMod, governor,
-].map((m, i) => ({ name: m.name || ['motion', 'text', 'director', 'camera', 'scrollFeel', 'controls', 'materials', 'art', 'energy', 'light', 'lightmap', 'flames', 'choreo', 'blueprint', 'render', 'promote', 'governor'][i], start: m.start, stop: m.stop }));
+  director, camera, scrollFeel, controls, materials, art, energy, light, lightmap, flames, choreo, blueprint, render, promoteMod, hushMod, opening, wake, hold, attract, shared, governor,
+].map((m, i) => ({ name: m.name || ['motion', 'text', 'director', 'camera', 'scrollFeel', 'controls', 'materials', 'art', 'energy', 'light', 'lightmap', 'flames', 'choreo', 'blueprint', 'render', 'promote', 'hush', 'opening', 'wake', 'hold', 'attract', 'shared', 'governor'][i], start: m.start, stop: m.stop }));
 const started = [];
 let panicOn = false, panicTimer = 0;
 
