@@ -1,0 +1,31 @@
+/* E2.1 motion tokens. Rule: animate only transform, opacity, clip-path, mask-position and registered custom
+   properties on elements under 300x300 px; never width/height/top/left/margin/box-shadow/filter on larger layers.
+   will-change only while moving (.moving). */
+@property --sweep { syntax: '<percentage>'; inherits: false; initial-value: -20%; }
+@property --hole { syntax: '<length>'; inherits: false; initial-value: 100vmax; }
+@property --act-progress { syntax: '<number>'; inherits: true; initial-value: 0; }
+
+html[data-elev="1"] {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-quad: cubic-bezier(0.5, 0, 0.75, 0);
+  --ease-spring: cubic-bezier(0.34, 1.45, 0.64, 1);
+  --dur-xs: 120ms; --dur-s: 240ms; --dur-m: 480ms; --dur-l: 900ms; --dur-xl: 1600ms;
+  --tone-ms: var(--dur-l);
+}
+@supports (transition-timing-function: linear(0, 1)) {
+  html[data-elev="1"] { --ease-spring: linear(0, 0.037, 0.129, 0.254, 0.393, 0.533, 0.662, 0.777, 0.872, 0.948, 1.004, 1.044, 1.068, 1.077, 1.084, 1.077, 1.072, 1.061, 1.05, 1.038, 1.027, 1.018, 1.01, 1.004, 1); }
+}
+/* Calm collapses time by token. (--tone-ms keeps V3's own calm rules.) */
+html[data-elev="1"][data-calm="1"] { --dur-xs: 0ms; --dur-s: 0ms; --dur-m: 0ms; --dur-l: 0ms; --dur-xl: 0ms; }
+/* Native smooth scrolling has no duration control and fights snap: the eased scroller (scrollFeel.js) replaces it. */
+html[data-elev="1"][data-calm="0"] { scroll-behavior: auto; }
+/* Snap restraint (E2.5): only about-one-screen stops snap; tall reading blocks never do. Never mandatory. */
+html[data-elev="1"] #baithak, html[data-elev="1"] #voice, html[data-elev="1"] #wish { scroll-snap-align: none; }
+html[data-elev="1"] #lamp-1, html[data-elev="1"] #lamp-2, html[data-elev="1"] #lamp-3, html[data-elev="1"] #lamp-4, html[data-elev="1"] #lamp-5 { scroll-snap-align: start; scroll-snap-stop: normal; }
+html[data-elev="1"][data-busy="1"], html[data-elev="1"][data-fg="1"] { scroll-snap-type: none; }
+/* runway: the lamp's interaction stays on screen while about 20svh of scroll passes (no sticky pinning; see BUILD_LOG_ELEVATION) */
+html[data-elev="1"] #lamp-1, html[data-elev="1"] #lamp-2, html[data-elev="1"] #lamp-3, html[data-elev="1"] #lamp-4, html[data-elev="1"] #lamp-5 { padding-bottom: calc(56px + 12svh); }
+html[data-elev="1"] dialog { overscroll-behavior-y: contain; }
+@media (prefers-reduced-motion: reduce) { html[data-elev="1"] { scroll-behavior: auto !important; } }

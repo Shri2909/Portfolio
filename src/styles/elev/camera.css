@@ -1,0 +1,40 @@
+/* E2.3: the camera (layer translate/scale is gated by data-camera, set only when VITE_CAMERA=1: it regressed frame time under the software rasteriser, see BUILD_LOG_ELEVATION; poses, veil and light still change per act) is the pose variables below, applied with the individual translate/scale properties so that
+   parallax.js (which owns `transform`) composes with it. Near layers lead, the sky lags: that lag is the depth.
+   Poses: --cx (vw) --cy (svh) --cz (multiplier on the 1.08 overscan) --veil (opacity). */
+html[data-elev="1"] { --cx: 0; --cy: 0; --cz: 1; --veil: 0; --l6x: 50%; --l6y: 62%; }
+html[data-elev="1"][data-act="doorstep"] { --cx: 0; --cy: 0; --cz: 1; --veil: 0; }
+html[data-elev="1"][data-act="baithak"] { --cx: -6; --cy: -1; --cz: 1.06; --veil: .35; }
+html[data-elev="1"][data-act="chhat"] { --cx: 4; --cy: 0; --cz: 1; --veil: .15; }
+html[data-elev="1"][data-act="awaaz"] { --cx: 0; --cy: -2; --cz: 1.03; --veil: .4; }
+html[data-elev="1"][data-act="aakhri"] { --cx: 0; --cy: 0; --cz: 1.12; --veil: .82; }
+html[data-elev="1"][data-act="vidaai"] { --cx: 0; --cy: 8; --cz: 1; --veil: .3; }
+
+html[data-elev="1"] #sky { --d: .15; --lag: calc(var(--dur-xl) + 300ms); }
+html[data-elev="1"] #skyline { --d: .7; --lag: calc(var(--dur-xl) + 100ms); }
+html[data-elev="1"] #terrace { --d: 1; --lag: var(--dur-xl); }
+html[data-elev="1"][data-camera="1"] #sky, html[data-elev="1"][data-camera="1"] #skyline, html[data-elev="1"][data-camera="1"] #terrace {
+  translate: calc((var(--cx) + var(--cam, 0) * 1.5) * var(--d) * 1vw) calc(var(--cy) * var(--d) * 1svh);
+  scale: calc(1.08 * var(--cz));
+  transition: translate var(--lag) var(--ease-in-out-quint), scale var(--lag) var(--ease-in-out-quint);
+}
+html[data-elev="1"][data-camera="1"] #stage.moving #sky, html[data-elev="1"][data-camera="1"] #stage.moving #skyline, html[data-elev="1"][data-camera="1"] #stage.moving #terrace { will-change: translate, scale; }
+html[data-elev="1"][data-camera="1"] #stage { transition: rotate var(--dur-xl) var(--ease-in-out-quint); }
+html[data-elev="1"][data-camera="1"][data-act="vidaai"] #stage { rotate: 1.2deg; }
+/* the veil is driven by the pose; V3's data-veil rule is overridden */
+html[data-elev="1"] #veil { opacity: var(--veil); transition: opacity var(--dur-xl) var(--ease-in-out-quint); }
+html[data-elev="1"][data-act="aakhri"][data-quality="high"] #veil {
+  background: radial-gradient(circle at var(--l6x) var(--l6y), transparent var(--hole), #000 calc(var(--hole) + 14vmin));
+  opacity: .9; animation: elev-hole var(--dur-xl) var(--ease-in-out-quint) both;
+}
+@keyframes elev-hole { from { --hole: 100vmax; } to { --hole: 18vmin; } }
+/* mid: no drift or roll; low: no camera translate or scale at all, only veil and crossfades */
+html[data-elev="1"][data-quality="mid"] #stage { --cam: 0; rotate: none; }
+html[data-elev="1"][data-quality="low"] #sky, html[data-elev="1"][data-quality="low"] #skyline, html[data-elev="1"][data-quality="low"] #terrace { translate: none; scale: none; transition: none; }
+html[data-elev="1"][data-quality="low"] #stage { rotate: none; }
+html[data-elev="1"][data-quality="low"] #veil { transition: opacity var(--dur-m) ease; }
+/* Calm: the act's still pose applies instantly, no drift */
+html[data-elev="1"][data-calm="1"] #sky, html[data-elev="1"][data-calm="1"] #skyline, html[data-elev="1"][data-calm="1"] #terrace { transition: none; translate: calc(var(--cx) * var(--d) * 1vw) calc(var(--cy) * var(--d) * 1svh); }
+html[data-elev="1"][data-calm="1"] #stage { transition: none; }
+html[data-elev="1"][data-calm="1"] #veil { transition: none; animation: none; }
+html[data-elev="1"][data-calm="1"][data-act="aakhri"] #veil { background: radial-gradient(circle at var(--l6x) var(--l6y), transparent 18vmin, #000 calc(18vmin + 14vmin)); }
+html[data-elev="1"][data-busy="1"] #stage { --cam: 0; }

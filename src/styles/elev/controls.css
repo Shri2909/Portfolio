@@ -1,0 +1,19 @@
+/* E2.7: controls feel like small objects. `scale` and `translate` are the individual properties, so they never
+   collide with V3's own transforms. The glow ring is a box-shadow on small elements only (never above 300 px). */
+html[data-elev="1"] :is(.btn, button, a[href], .lamp-btn, [data-press]) { touch-action: manipulation; }
+html[data-elev="1"] :is(.btn, button, [data-press]) {
+  transition: scale var(--dur-s) var(--ease-spring), translate var(--dur-s) var(--ease-out-quart), box-shadow var(--dur-s) var(--ease-out-quart), outline-offset var(--dur-xs) var(--ease-out-quart);
+}
+html[data-elev="1"] :is(.btn, button, a[href], .lamp-btn, [data-press]).is-down {
+  scale: .96; box-shadow: 0 0 0 6px rgba(255, 179, 71, .28); transition-duration: var(--dur-xs), var(--dur-xs), var(--dur-xs), var(--dur-xs); transition-timing-function: var(--ease-out-quart);
+}
+html[data-elev="1"] :is(button, .btn):disabled, html[data-elev="1"] :is(button, .btn)[aria-disabled="true"] { transition: none; scale: none; }
+@media (hover: hover) and (pointer: fine) {
+  html[data-elev="1"] :is(.btn, button:not(.lamp-btn), [data-press]):not(:disabled):hover { translate: 0 -1px; }
+}
+html[data-elev="1"] :is(a, button, input, .btn, [tabindex]):focus-visible { outline-offset: 3px; animation: elev-ignite var(--dur-xs) var(--ease-out-quart) both; }
+@keyframes elev-ignite { from { outline-offset: 7px; } to { outline-offset: 3px; } }
+html[data-elev="1"][data-quality="low"] :is(.btn, button, a[href], .lamp-btn, [data-press]).is-down { box-shadow: none; }
+html[data-elev="1"][data-calm="1"] :is(.btn, button, a[href], .lamp-btn, [data-press]) { transition: none; }
+html[data-elev="1"][data-calm="1"] :is(.btn, button, a[href], .lamp-btn, [data-press]).is-down { scale: .98; box-shadow: none; }
+html[data-elev="1"][data-calm="1"] :is(.btn, button, [data-press]):hover { translate: none; }

@@ -5,3 +5,5 @@ export const on = (name, fn) => {
   window.addEventListener(name, h);
   return () => window.removeEventListener(name, h);
 };
+// Hook slots for elevation: null in V3, filled by src/elev modules (and emptied again on stop()).
+export const hooks = { scrollTo: null, cardOpen: null, cardClose: null };

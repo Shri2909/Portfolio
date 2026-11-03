@@ -1,0 +1,7 @@
+/* E2.6: ember-read. The clip exists only during the sweep; the settled state is plain cream (AA at rest). */
+html[data-elev="1"] .ember {
+  background: linear-gradient(100deg, var(--cream) calc(var(--sweep) - 14%), var(--flame-core, #FFD27A) calc(var(--sweep) - 4%), rgba(255, 243, 220, .16) calc(var(--sweep) + 6%));
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 .3em rgba(255, 179, 71, .5));
+}
+html[data-elev="1"][data-calm="1"] .ember { background: none; color: inherit; -webkit-text-fill-color: currentColor; filter: none; }

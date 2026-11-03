@@ -1,8 +1,20 @@
 // The single entry for every elevation module. Pack authors add their module to MODULES and nowhere else.
 // Each module is { name, start(), stop() }; start/stop must be idempotent and remove everything they add.
+import { PERF } from '../elevation.js';
 import '../styles/elev/index.css';
 
-const MODULES = []; // e.g. { name: 'motion', start, stop }
+import { startSkip, stopSkip, installCard, uninstallCard } from './motion.js';
+import * as director from './stageDirector.js';
+import * as camera from './camera.js';
+import * as scrollFeel from './scrollFeel.js';
+import * as text from './textMotion.js';
+import * as controls from './controls.js';
+
+const MODULES = [
+  { name: 'motion', start() { startSkip(); installCard(); }, stop() { stopSkip(); uninstallCard(); } },
+  text, // before the director so its data-cue attributes are observed
+  director, camera, scrollFeel, controls,
+].map((m, i) => ({ name: m.name || ['motion', 'text', 'director', 'camera', 'scrollFeel', 'controls'][i], start: m.start, stop: m.stop }));
 const started = [];
 let panicOn = false, panicTimer = 0;
 
@@ -29,7 +41,9 @@ export function startElevation() {
   window.addEventListener('error', onErr);
   window.addEventListener('unhandledrejection', onRej);
   panicTimer = setTimeout(() => { panicOn = false; window.removeEventListener('error', onErr); window.removeEventListener('unhandledrejection', onRej); }, 5000);
+  const off = PERF ? (new URLSearchParams(location.search).get('off') || '').split(',') : []; // perf build only: bisect modules
   for (const m of MODULES) {
+    if (off.includes(m.name)) continue;
     try { m.start(); started.push(m); } catch { disableElevation('init:' + m.name); return; }
   }
 }

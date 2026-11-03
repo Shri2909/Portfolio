@@ -1,5 +1,5 @@
 import { actions, getState } from './store.js';
-import { emit } from './events.js';
+import { emit, hooks } from './events.js';
 // Overlay openers. They never write to the address bar (the fragment belongs to the lamp count).
 export const openSixty = () => actions.setOverlay('sixty');
 export const openEvidence = (caseId = null) => { actions.setOverlay('evidence', caseId); emit('evidence:opened', { caseId }); };
@@ -11,7 +11,7 @@ export const scrollToId = (id) => {
   const el = document.getElementById(id);
   if (!el) return;
   const calm = getState().calm;
-  el.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' });
+  if (!(hooks.scrollTo && hooks.scrollTo(el))) el.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' });
   const h = el.querySelector('h1,h2,h3');
   if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
 };

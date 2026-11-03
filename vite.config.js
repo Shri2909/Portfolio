@@ -55,5 +55,6 @@ function copyPlugin() {
 export default defineConfig({
   base: './',
   plugins: [copyPlugin(), react()],
-  build: { target: 'es2020', modulePreload: { polyfill: false }, assetsInlineLimit: 0, cssCodeSplit: false, sourcemap: false },
+  build: { target: 'es2020', modulePreload: { polyfill: false }, assetsInlineLimit: 0, cssCodeSplit: false, sourcemap: false,
+    rollupOptions: { output: { chunkFileNames: (c) => (c.facadeModuleId && /\/src\/elev\//.test(c.facadeModuleId) ? 'assets/elev-[hash].js' : 'assets/[name]-[hash].js') } } },
 });

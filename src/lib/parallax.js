@@ -3,9 +3,10 @@ import { getState } from './store.js';
 // Pointer (desktop) or Tilt (phones, opt-in) parallax. Far 0.2, mid 0.5, near 1.0, sky 0.05. Max 10 px.
 const cur = { x: 0, y: 0 }, tgt = { x: 0, y: 0 };
 let stop = null;
+let layers = [];
 const apply = () => {
-  document.querySelectorAll('[data-par]').forEach((el) => {
-    const f = parseFloat(el.dataset.par);
+  if (!layers.length || !layers[0].el.isConnected) layers = Array.from(document.querySelectorAll('[data-par]'), (el) => ({ el, f: parseFloat(el.dataset.par) })); // cached: no per-frame DOM query
+  layers.forEach(({ el, f }) => {
     el.style.transform = `translate3d(${(cur.x * f * 10).toFixed(2)}px, ${(cur.y * f * 4).toFixed(2)}px, 0)`;
   });
 };

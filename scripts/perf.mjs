@@ -29,6 +29,7 @@ const cfgs = full
   ? [['390', 1], ['390', 4], ['1366', 1], ['1366', 4]].flatMap(([v, c]) => ['high', 'mid', 'low'].flatMap((q) => [false, true].map((calm) => ({ v, cpu: c, q, calm }))))
   : ['high', 'mid'].flatMap((q) => [false, true].map((calm) => ({ v: '390', cpu: 4, q, calm })));
 
+if (arg('quick')) cfgs.splice(1); // one config: 390@4x high
 const browser = await chromium.launch({ args: ['--no-sandbox', '--enable-gpu-rasterization'] });
 const results = [], hardFail = [];
 for (const c of cfgs) {
@@ -38,7 +39,7 @@ for (const c of cfgs) {
   await page.addInitScript(INIT);
   const hosts = new Set(); page.on('request', (r) => { try { const u = new URL(r.url()); if (!/^(data|blob):/.test(u.protocol) && u.host !== new URL(base).host) hosts.add(u.host); } catch {} });
   const cons = []; page.on('console', (m) => m.type() === 'error' && cons.push(m.text())); page.on('pageerror', (e) => cons.push(String(e)));
-  await page.goto(base + '?q=' + c.q, { waitUntil: 'load' }); await page.waitForTimeout(4000);
+  await page.goto(base + '?q=' + c.q + (process.env.OFF ? '&off=' + process.env.OFF : ''), { waitUntil: 'load' }); await page.waitForTimeout(4000);
   const label = `${c.v}@${c.cpu}x ${c.q}${c.calm ? ' calm' : ''}`;
   const windows = {}, skipped = [];
   for (const id of IDS) {

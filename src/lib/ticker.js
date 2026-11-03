@@ -6,7 +6,7 @@ const frame = (t) => {
   if (document.hidden || !subs.size) { last = 0; return; }
   const dt = last ? Math.min(t - last, 100) : 16.7;
   last = t;
-  for (const fn of [...subs]) fn(dt, t);
+  subs.forEach((fn) => fn(dt, t));
   if (subs.size) raf = requestAnimationFrame(frame);
 };
 const kick = () => { if (!raf && !document.hidden && subs.size) { last = 0; raf = requestAnimationFrame(frame); } };

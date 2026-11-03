@@ -5,7 +5,7 @@ import { rich } from '../lib/rich.jsx';
 import { actions, getState } from '../lib/store.js';
 import { useStore } from '../lib/useStore.js';
 import { closeLampCard, scrollToId, wireLampCard } from '../lib/nav.js';
-import { emit, on } from '../lib/events.js';
+import { emit, on, hooks } from '../lib/events.js';
 import Flame from './Flame.jsx';
 
 // A letter that rises out of the lamp it belongs to. Native dialog (top layer, Escape, focus trap), styled as a floating card.
@@ -45,7 +45,8 @@ export default function LampCard() {
       d.showModal();
       const b = body.current, lr = lampEl(n) && lampEl(n).getBoundingClientRect(), br = b.getBoundingClientRect();
       const reduce = getState().calm;
-      if (reduce) b.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 160 });
+      if (hooks.cardOpen && hooks.cardOpen(b, lampEl(n))) { /* elevation plays the open */ }
+      else if (reduce) b.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 160 });
       else if (lr) { const dx = lr.left + lr.width / 2 - (br.left + br.width / 2), dy = lr.top + lr.height / 2 - (br.top + br.height / 2); b.animate([{ transform: `translate(${dx}px, ${dy}px) scale(.12)`, opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 450, easing: 'cubic-bezier(.2,.8,.2,1)' }); emit('fx:burst', { kind: 'spark', x: lr.left + lr.width / 2, y: lr.top }); }
       const t = d.querySelector('[data-title]'); if (t) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); }
       setTimeout(() => setK((x) => { let y = Math.max(x, 1); while (y < 3 && visible.current.has(y)) y++; return y; }), reduce ? 0 : 480);
@@ -71,6 +72,7 @@ export default function LampCard() {
     const finish = () => { flare(m); closeLampCard(); after && after(); };
     if (!d || !d.open) return finish();
     const lr = lampEl(m) && lampEl(m).getBoundingClientRect(), br = b.getBoundingClientRect();
+    if (hooks.cardClose && hooks.cardClose(b, lampEl(m), finish)) return;
     if (getState().calm || !lr) { finish(); return; }
     const dx = lr.left + lr.width / 2 - (br.left + br.width / 2), dy = lr.top + lr.height / 2 - (br.top + br.height / 2);
     b.animate([{ transform: 'none', opacity: 1 }, { transform: `translate(${dx}px, ${dy}px) scale(.12)`, opacity: 0 }], { duration: 300, easing: 'ease-in', fill: 'forwards' }).onfinish = finish;
