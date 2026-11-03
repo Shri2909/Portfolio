@@ -4,3 +4,5 @@ node_modules/
 .tmp/
 previews/
 
+dist-perf/
+perf/report-*.json

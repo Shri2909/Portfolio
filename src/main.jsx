@@ -9,7 +9,9 @@ import './styles/story.css';
 import copy from './lib/copy.js';
 import App from './App.jsx';
 import { initRow } from './lib/row.js';
+import { ELEVATION } from './elevation.js';
 
 document.documentElement.lang = copy.site.lang;
 initRow(); // read the share fragment once, before the first render
 createRoot(document.getElementById('root')).render(<App />);
+if (ELEVATION) import('./elev/index.js').then((m) => m.startElevation()).catch(() => {});

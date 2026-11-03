@@ -66,8 +66,18 @@ if (!/Content-Security-Policy/.test(fs.readFileSync(path.join(dist, 'index.html'
 const gz = (f) => zlib.gzipSync(fs.readFileSync(f)).length;
 const sum = (re) => files.filter((f) => re.test(f)).reduce((a, f) => a + gz(f), 0);
 const js = sum(/\.js$/), css = sum(/\.css$/), fonts = sum(/\.(woff2?|ttf)$/);
-if (js > 250 * 1024) fail.push(`JS ${(js / 1024).toFixed(1)} KB gzip over 250 KB`);
-if (css > 40 * 1024) fail.push(`CSS ${(css / 1024).toFixed(1)} KB gzip over 40 KB`);
+if (js > 200 * 1024) fail.push(`JS ${(js / 1024).toFixed(1)} KB gzip over 200 KB`);
+if (css > 45 * 1024) fail.push(`CSS ${(css / 1024).toFixed(1)} KB gzip over 45 KB`);
+if (js > 170 * 1024) warn.push(`JS at ${(js / 1024).toFixed(0)} KB gzip, over 85% of its 200 KB budget`);
+const idx = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
+const entry = (/<script[^>]+src="\.?\/?(assets\/[^"]+\.js)"/.exec(idx) || [])[1];
+if (entry && fs.existsSync(path.join(dist, entry))) {
+  const e = gz(path.join(dist, entry));
+  if (e > 140 * 1024) fail.push(`entry JS ${(e / 1024).toFixed(1)} KB gzip over 140 KB`);
+  console.log('elevation: ' + (files.filter((f) => f.endsWith('.js')).some((f) => /data-elev/.test(fs.readFileSync(f, 'utf8'))) ? 'ON' : 'OFF'));
+}
+for (const f of text.filter((f) => /\.(js|html)$/.test(f))) if (/__perf|VITE_PERF/.test(fs.readFileSync(f, 'utf8'))) fail.push(`perf code in dist/${path.relative(dist, f)}`);
+for (const f of files.filter((f) => /\.(js|css)$/.test(f))) console.log('  chunk ' + path.relative(dist, f) + '  ' + (gz(f) / 1024).toFixed(1) + ' KB gz');
 if (fonts > 90 * 1024) fail.push(`fonts ${(fonts / 1024).toFixed(1)} KB over 90 KB`);
 const og = path.join(dist, 'og.png');
 if (fs.existsSync(og) && fs.statSync(og).size > 300 * 1024) fail.push('og.png over 300 KB');
