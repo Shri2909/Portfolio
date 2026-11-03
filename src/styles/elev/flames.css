@@ -1,0 +1,6 @@
+/* E4.4: wick glow and warm clay lip. The lip only warms once the lamp is lit. */
+html[data-elev="1"] .e-lip { opacity: 0; transition: opacity var(--dur-l, .9s) ease; pointer-events: none; }
+html[data-elev="1"] .lamp.is-lit .e-lip { opacity: .5; }
+html[data-elev="1"] svg.flame .f-wick { pointer-events: none; }
+html[data-elev="1"][data-ink="1"] .e-lip { display: none; }
+html[data-elev="1"][data-quality="low"] svg.flame .f-wick { display: none; }

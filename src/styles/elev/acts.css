@@ -30,7 +30,7 @@ html[data-elev="1"] #vignette { background: radial-gradient(ellipse at 50% 45%, 
 /* the grade: three fixed layers inside #stage, never above text. High tier only (see tiers below). */
 html[data-elev="1"] .grade { position: absolute; inset: 0; pointer-events: none; display: none; }
 html[data-elev="1"][data-quality="high"]:not([data-ink="1"]) #g-bloom { display: block; }  /* g-lift and g-warm are shed (full-screen blend layers cost too much frame time); the lift is baked into the sky below */
-html[data-elev="1"] #g-bloom { --c-key: var(--a-key); background: radial-gradient(circle at var(--lx, 50%) var(--ly, 70%), color-mix(in srgb, var(--c-key) 28%, transparent), transparent 55%); opacity: calc(.12 + var(--tone, 0) * .03); transition: --c-key var(--dur-xl) var(--ease-in-out-quint); }
+html[data-elev="1"] #g-bloom { --c-key: var(--a-key); background: radial-gradient(circle at var(--cast-x, 50%) var(--cast-y, 70%), color-mix(in srgb, var(--c-key) 28%, transparent), transparent 55%); opacity: calc(.12 + var(--tone, 0) * .03); transition: --c-key var(--dur-xl) var(--ease-in-out-quint); }
 /* mid and low: the lift is baked into the sky by a plain tint, no blend layers */
 html[data-elev="1"]:not([data-ink="1"]) .sky-night { background: linear-gradient(var(--c-sky0), var(--c-sky1) 45%, color-mix(in srgb, var(--c-sky2) 85%, var(--a-lift)) 100%); }
 html[data-elev="1"][data-calm="1"] .sky-night, html[data-elev="1"][data-calm="1"] #g-bloom { transition: none; }

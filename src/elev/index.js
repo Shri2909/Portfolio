@@ -11,12 +11,18 @@ import * as text from './textMotion.js';
 import * as controls from './controls.js';
 import * as materials from './materials.js';
 import * as art from './art.js';
+import * as light from './light.js';
+import * as lightmap from './lightmap.js';
+import * as flames from './flames.js';
+import * as choreo from './choreo.js';
+import * as blueprint from './blueprint.js';
+import * as energy from './energy.js';
 
 const MODULES = [
   { name: 'motion', start() { startSkip(); installCard(); }, stop() { stopSkip(); uninstallCard(); } },
   text, // before the director so its data-cue attributes are observed
-  director, camera, scrollFeel, controls, materials, art,
-].map((m, i) => ({ name: m.name || ['motion', 'text', 'director', 'camera', 'scrollFeel', 'controls', 'materials', 'art'][i], start: m.start, stop: m.stop }));
+  director, camera, scrollFeel, controls, materials, art, energy, light, lightmap, flames, choreo, blueprint,
+].map((m, i) => ({ name: m.name || ['motion', 'text', 'director', 'camera', 'scrollFeel', 'controls', 'materials', 'art', 'energy', 'light', 'lightmap', 'flames', 'choreo', 'blueprint'][i], start: m.start, stop: m.stop }));
 const started = [];
 let panicOn = false, panicTimer = 0;
 

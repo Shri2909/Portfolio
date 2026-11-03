@@ -12,7 +12,7 @@ import { startDirector } from '../../lib/director.js';
 export default function Stage() {
   useEffect(() => {
     startPointerParallax(); startDirector();
-    const a = on('diya:lit', ({ x, y }) => { if (x || y) { const r = document.documentElement; r.style.setProperty('--lx', x + 'px'); r.style.setProperty('--ly', y + 'px'); } });
+    const a = on('diya:lit', ({ x, y }) => { if (x || y) { const r = document.documentElement; r.style.setProperty('--cast-x', x + 'px'); r.style.setProperty('--cast-y', y + 'px'); } });
     // Reading veil: dim the scene by 25% while a section after #lamps is on screen.
     const ids = ['baithak', 'voice', 'lamp-6', 'verdict', 'wish', 'closure'], seen = new Set();
     const io = new IntersectionObserver((es) => {

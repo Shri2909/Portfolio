@@ -1,5 +1,5 @@
 import copy, { X } from './copy.js';
-import { on, emit } from './events.js';
+import { on, emit, hooks } from './events.js';
 import { getState, subscribe } from './store.js';
 import { lampRegistry } from './lampRegistry.js';
 import { haptic } from './haptic.js';
@@ -33,6 +33,7 @@ export function startDirector() {
   // C4 all five lit: rockets bloom behind the skyline after the card closes
   on('diya:allLit', () => {
     if (duskPlayed) return; duskPlayed = true;
+    if (hooks.choreo && hooks.choreo('allLit', {})) return; // elevation: the cue-sheet choreography takes over
     const t0 = performance.now(), go = () => {
       const s = getState(); if (s.lampCard && performance.now() - t0 < 20000) return setTimeout(go, 400);
       const W = innerWidth, H = innerHeight, targets = [[0.3, 'chrysanthemum', 1.4], [0.7, 'willow', 3.2], [0.5, 'chrysanthemum', 5.0]];
@@ -50,6 +51,7 @@ export function startDirector() {
   // C8 the visitor's lamp: spark, a tall soft anar, and a flight of row lanterns (one per diya in the count, up to 12, the visitor's last and brightest)
   on('diya:visitorLit', ({ x, y }) => {
     if (vlPlayed) return; vlPlayed = true; const s = getState();
+    if (hooks.choreo && hooks.choreo('visitorLit', { x, y })) return;
     if (s.calm) { glow({ x, y, r: 110, color: 'rgba(255,210,122,.45)', fadeIn: 800, hold: 3000, fadeOut: 1500 }); return; }
     fire({ kind: 'spark', x, y, count: tier(12, 8, 5) }); fire({ kind: 'anar', x, y, power: 6, rate: tier(110, 60, 24) });
     const n = Math.min(12, s.row.count - 1), maxL = tier(13, 8, 3), count = Math.min(n, maxL - 1);
