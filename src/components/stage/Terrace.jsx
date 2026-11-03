@@ -84,7 +84,7 @@ const MODES = ['steady', 'chase', 'twinkle', 'fade'];
 const BULB = ['#FFD27A', '#FFB347', '#F5A623', '#FFF3DC', '#9FD3B0'];
 function StringLights({ w, mode }) {
   const quality = useStore((s) => s.quality);
-  const n = 18, sag = 22;
+  const n = { high: 14, mid: 12, low: 8 }[quality], sag = 22;
   const bulbs = Array.from({ length: n }, (_, i) => { const t = (i + 0.5) / n; return { x: t * w, y: 8 + 4 * sag * t * (1 - t), c: BULB[i % 5], i }; });
   return (
     <svg className={`lights deco mode-${mode} q-${quality}`} width={w} height="48" viewBox={`0 0 ${w} 48`} aria-hidden="true">

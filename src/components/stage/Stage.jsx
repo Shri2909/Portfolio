@@ -5,12 +5,13 @@ import Terrace from './Terrace.jsx';
 import Dusk from './Dusk.jsx';
 import { on } from '../../lib/events.js';
 import { startPointerParallax } from '../../lib/parallax.js';
+import { startDirector } from '../../lib/director.js';
 
 // Fixed night stage behind the page. Order: sky, fx canvas, skyline, terrace, light overlays.
 // Stage layers are decorative (aria-hidden); the only real control here is the string-light button inside Terrace.
 export default function Stage() {
   useEffect(() => {
-    startPointerParallax();
+    startPointerParallax(); startDirector();
     const a = on('diya:lit', ({ x, y }) => { if (x || y) { const r = document.documentElement; r.style.setProperty('--lx', x + 'px'); r.style.setProperty('--ly', y + 'px'); } });
     // Reading veil: dim the scene by 25% while a section after #lamps is on screen.
     const ids = ['row-breathes', 'lamp-6', 'person', 'voice', 'verdict', 'wish', 'closure'], seen = new Set();
@@ -25,6 +26,7 @@ export default function Stage() {
     <div id="stage">
       <SkyLayer />
       <canvas id="fx" aria-hidden="true" />
+      <div id="fx-glows" aria-hidden="true" />
       <SkylineLayer />
       <Terrace />
       <Dusk />

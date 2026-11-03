@@ -126,3 +126,10 @@ main { pointer-events: none; } main .sec > * { pointer-events: auto; }
 h1 { text-shadow: 0 0 calc(var(--tone) * 3px) rgba(255, 179, 71, calc(var(--tone) * .05)); }
 .sec .panel { background: color-mix(in srgb, var(--ground-2) 90%, transparent); }
 .night-copy { max-width: 36rem; }
+/* Pack 5 effects */
+#fx-glows { inset: 0; position: absolute; } .fx-halo { position: fixed; transform: translate(-50%, -50%); border-radius: 50%; opacity: 0; pointer-events: none; }
+.lights.wave .bulb { animation: wave .9s ease-out 1; } @keyframes wave { 40% { opacity: 1; } }
+html[data-calm="1"] .lights.wave .bulb { animation: none; }
+.sparkler-wire { position: fixed; width: 2px; background: var(--cream); transform: translate(-50%, 0); z-index: 7; pointer-events: none; opacity: .8; }
+html.sparkling, html.sparkling body { touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.whisper { position: fixed; left: 50%; bottom: 120px; transform: translateX(-50%); z-index: 6; padding: 6px 14px; border-radius: 999px; background: rgba(10, 7, 5, .8); color: var(--cream); font: italic 14px var(--font-body); pointer-events: none; transition: opacity .9s; }

@@ -27,9 +27,9 @@ function watchdog() {
     if (getState().calm) return;
     if (cool > 0) { cool -= dt; return; }
     n++; sum += Math.min(dt, 100);
-    if (n >= 120) {
-      slow = sum / n > 22 ? slow + 1 : 0; n = 0; sum = 0;
-      if (slow >= 2) { slow = 0; cool = 3000; down(); }
+    if (n >= 20) { // smoothed frame time above 24 ms for about 20 frames: one tier down, then wait 3 s
+      const avg = sum / n; n = 0; sum = 0;
+      if (avg > 24 && avg < 100) { cool = 3000; down(); }
     }
   });
 }

@@ -33,6 +33,7 @@ log((await p.locator('.hold-label').innerText()).includes('Dabaye rakhiye'), 'ho
 await p.mouse.move(bx.x + bx.width / 2, bx.y + 20); await p.mouse.down(); await p.waitForTimeout(1100); await p.mouse.up(); await p.waitForTimeout(300);
 log((await st(p)).lit === 1, 'full hold lights lamp 1', JSON.stringify(await st(p)));
 log((await p.locator('#announcer').innerText()).includes('Lamp 1 is lit. 1 of 5 lamps lit.'), 'announces "Lamp 1 is lit. 1 of 5 lamps lit."');
+await p.waitForTimeout(1400); await p.keyboard.press('Escape'); await p.waitForTimeout(700); // lamp 1 opens its card by itself; close it
 // quick tap lights lamp 2 within about a second
 bx = await box(p, '.lamp-btn', 1);
 await p.mouse.click(bx.x + bx.width / 2, bx.y + 20); await p.waitForTimeout(900);
@@ -66,10 +67,10 @@ log(p.errs.length === 0, 'no console errors', p.errs.join('|').slice(0, 200));
 await p.close();
 // Light all
 p = await mk();
-await p.getByRole('button', { name: /Sab diye ek saath jalaiye/ }).click(); await p.waitForTimeout(6500);
+await p.locator('#night').getByRole('button', { name: /Sab diye ek saath jalaiye/ }).click(); await p.waitForTimeout(6500);
 log((await st(p)).lit === 5, 'Light all lights five in order', JSON.stringify(await st(p)));
 log((await p.locator('.status-line').innerText()).includes('Paanchon jal uthe'), 'progress line ends on "Paanchon jal uthe."', await p.locator('.status-line').innerText());
-log(await p.getByRole('button', { name: /Sab diye ek saath jalaiye/ }).count() === 0, 'Light all hides at five');
+log(await p.locator('#night').getByRole('button', { name: /Sab diye ek saath jalaiye/ }).count() === 0, 'Light all hides at five');
 await p.screenshot({ path: `${out}/p3-all.png` });
 await p.close();
 // Calm: single tap lights instantly
