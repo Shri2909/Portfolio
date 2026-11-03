@@ -71,3 +71,14 @@ CF.trapFocus = function (dlg) {
     else if (!e.shiftKey && (document.activeElement === last || !dlg.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
   });
 };
+
+/* Scroll to a sheet and keep aiming: sheets that open as you pass them (the envelope) change the page height under a smooth scroll,
+   so check again once it settles and correct if the target drifted. */
+CF.goTo = function (el, focus) {
+  if (!el) return;
+  if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
+  const aim = () => el.scrollIntoView({ behavior: CF.reduced ? 'auto' : 'smooth', block: 'start' });
+  aim();
+  if (!CF.reduced) [900, 1900].forEach((ms) => setTimeout(() => { const top = el.getBoundingClientRect().top; if (Math.abs(top - parseFloat(getComputedStyle(el).scrollMarginTop || 0)) > 80) aim(); }, ms));
+  if (focus !== false) el.focus({ preventScroll: true });
+};

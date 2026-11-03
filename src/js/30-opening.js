@@ -133,9 +133,7 @@ CF.mountOpening = function (data, mount) {
   function openFile() {
     const next = document.querySelector('#main > section:not(#exhibit0)');
     if (next) {
-      next.scrollIntoView({ behavior: CF.reduced ? 'auto' : 'smooth', block: 'start' });
-      if (!next.hasAttribute('tabindex')) next.setAttribute('tabindex', '-1');
-      next.focus({ preventScroll: true });
+      CF.goTo(next);
     } else {
       window.scrollTo({ top: document.documentElement.scrollHeight, behavior: CF.reduced ? 'auto' : 'smooth' });
     }

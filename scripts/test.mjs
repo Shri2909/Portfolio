@@ -1166,6 +1166,123 @@ if (run(14)) {
   }
 }
 
+
+// ------------------------------------------------------------------ Stage 13 and the B-tier chapters (thumbprint, journey map), tour
+if (run(13)) {
+  console.log('\nM5: thumbprint, journey map, delight pass, the 90-second read');
+  const T = content.ui;
+  { // thumbprint
+    const { page, ctx, log } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(400);
+    const order = await page.evaluate(() => [...document.querySelectorAll('#main > section')].map((s) => s.id));
+    check('thumbprint sits after the ledger and before the forks', order.indexOf('thumbprint') === order.indexOf('ledger') + 1 && order.indexOf('decisions') === order.indexOf('thumbprint') + 1, order.join());
+    await scrollTo(page, '#thumbprint');
+    const tp = await page.evaluate(() => ({ cap: document.querySelector('#thumbprint .tp-cap').textContent, title: document.querySelector('#thumbprint .sheet-title').textContent, chips: [...document.querySelectorAll('#thumbprint .tp-chip')].map((c) => c.textContent), list: [...document.querySelectorAll('#thumbprint ul.sr-only li')].map((l) => l.textContent), svgHidden: document.querySelector('#thumbprint .tprint').getAttribute('aria-hidden'), ridges: document.querySelectorAll('#thumbprint .ridge').length, svg: document.querySelector('#thumbprint .tprint').innerHTML }));
+    const prodCases = content.ledger.cases.filter((c) => !c.requiresConfirmation).length;
+    check('thumbprint: caption is exactly ui.thumbprintCaption, title ui.thumbprintTitle, svg is decorative', tp.cap === T.thumbprintCaption && tp.title === T.thumbprintTitle && tp.svgHidden === 'true');
+    check('thumbprint: ridge groups come from the counts (3 forks, 5 clues, plot twists, 19 findings, 324 tests) with a text list', tp.chips.length === 5 && tp.chips[0].startsWith('3 forks') && tp.chips[1].startsWith('5 clues') && tp.chips[2].startsWith(prodCases + ' plot twists') && tp.chips[3].startsWith('19 audit findings') && tp.chips[4].startsWith('324 passing tests') && tp.list.length === 5, JSON.stringify(tp.chips));
+    check('thumbprint: ridge count is 3+5+cases+19+18', tp.ridges === 3 + 5 + prodCases + 19 + 18, String(tp.ridges));
+    await page.tap('#thumbprint .tp-chip:nth-child(3)'); await sleep(300);
+    const hot = await page.evaluate(() => ({ g: document.querySelector('#thumbprint .rg.hot') && document.querySelector('#thumbprint .rg.hot').dataset.g, info: document.querySelector('#thumbprint .tp-info').textContent }));
+    check('tapping a chip highlights its ridge group and names its source', hot.g === 'twists' && hot.info === prodCases + ' plot twists', JSON.stringify(hot));
+    const pt = await page.evaluate(() => { const svg = document.querySelector('#thumbprint .tprint'); const m = svg.getScreenCTM(); const x = 100, y = 118 + (12 + 3 * 3.1 + 2 * 3.1) * 1.22; return [x * m.a + m.e, y * m.d + m.f]; });
+    await page.touchscreen.tap(pt[0], pt[1]); await sleep(300);
+    check('tapping a ridge group in the print itself works (a clues ring in the centre)', (await page.evaluate(() => document.querySelector('#thumbprint .rg.hot') && document.querySelector('#thumbprint .rg.hot').dataset.g)) === 'clues');
+    await page.reload(); await ready(page); await sleep(300);
+    check('the print is deterministic: identical after a reload', (await page.evaluate(() => document.querySelector('#thumbprint .tprint').innerHTML)) === tp.svg);
+    check('thumbprint: no console errors', log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+    const c2 = await openWithData(browser, (d) => { d.ledger.cases = d.ledger.cases.slice(0, 3); }, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(c2.page); await sleep(300);
+    check('the print changes when the counts change', (await c2.page.evaluate(() => document.querySelector('#thumbprint .tprint').innerHTML)) !== tp.svg);
+    await c2.ctx.close();
+  }
+  { // journey map
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(300);
+    check('production: no journey map while Roots is hidden', (await page.locator('.journey').count()) === 0);
+    await ctx.close();
+    const r = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html' });
+    await ready(r.page); await sleep(500);
+    await scrollTo(r.page, '.journey', 700); await sleep(500);
+    const off1 = await r.page.evaluate(() => parseFloat(document.querySelector('.journey .jn-path').style.strokeDashoffset) / parseFloat(document.querySelector('.journey .jn-path').style.strokeDasharray));
+    await scrollTo(r.page, '.journey', -250); await sleep(500);
+    const off2 = await r.page.evaluate(() => parseFloat(document.querySelector('.journey .jn-path').style.strokeDashoffset) / parseFloat(document.querySelector('.journey .jn-path').style.strokeDasharray));
+    const j = await r.page.evaluate(() => ({ head: document.querySelector('.journey .label-brass').textContent, note: document.querySelector('.journey .jn-note').textContent, stops: [...document.querySelectorAll('.journey .jn-l')].map((x) => x.textContent), dashed: [...document.querySelectorAll('.jn-pin')].map((b) => b.classList.contains('dashed')), ys: [...document.querySelectorAll('.jn-pin')].map((b) => b.getBoundingClientRect().top), size: Math.min(...[...document.querySelectorAll('.jn-pin')].map((b) => b.getBoundingClientRect().height)), dpath: document.querySelectorAll('.journey .jn-path.dashed').length }));
+    check('journey: title and note from ui, one stop per timeline event plus a dashed "willing to relocate" Bengaluru stop (the draft brief says so)', j.head === T.journeyTitle && j.note === T.journeyNote && j.stops.length === 6 && j.stops[5].startsWith('Bengaluru') && j.stops[5].includes('willing to relocate') && j.dashed.join() === 'false,false,false,false,false,true' && j.dpath === 1, JSON.stringify(j.stops));
+    check('journey: vertical route on a phone, pins are 44px targets', j.ys.every((y, i) => i === 0 || y > j.ys[i - 1]) && j.size >= 44);
+    check('journey: the route draws itself with scroll (more of the string is drawn further down)', off2 < off1 - 0.15, `${off1.toFixed(2)} -> ${off2.toFixed(2)}`);
+    await r.page.tap('.jn-stop:nth-child(2) .jn-pin'); await sleep(300);
+    check('tapping a pin opens that stop\'s text', (await r.page.evaluate(() => document.querySelector('.jn-detail').innerText)).includes('Prepared from YouTube'));
+    await r.ctx.close();
+    const m = await openWithData(browser, (d) => { d.brief.summary = 'I am applying.'; }, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html' });
+    await ready(m.page); await sleep(400);
+    check('no relocation sentence in the brief: no Bengaluru stop', (await m.page.evaluate(() => [...document.querySelectorAll('.jn-l')].map((x) => x.textContent).join())).indexOf('Bengaluru') < 0);
+    await m.ctx.close();
+    const m2 = await openWithData(browser, (d) => { d.effects.timeline = [{ label: 'Only', text: 'x' }]; d.effects.items = [{ id: 'a', title: 'A', tag: 'link', url: 'https://example.com' }]; }, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(m2.page); await sleep(300);
+    check('fewer than two stops: Roots may show (it has items) but the journey map does not', (await m2.page.locator('.journey').count()) === 0 && (await m2.page.locator('#effects').count()) === 1);
+    await m2.ctx.close();
+    const rm = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html', reducedMotion: true });
+    await ready(rm.page); await sleep(500);
+    check('reduced motion: the route is fully drawn', (await rm.page.evaluate(() => { const p = document.querySelector('.journey .jn-path'); return parseFloat(p.style.strokeDashoffset) === 0; })));
+    await rm.ctx.close();
+  }
+  { // delight: eggs carry no claims, hover lift, string tightening
+    const { page, ctx } = await openPage(browser, { viewport: { width: 1400, height: 900 }, build: 'review.html' });
+    await ready(page); await sleep(400);
+    const eggs = [T.teaSlip, T.coffeeRingSlip, T.elementary];
+    check('easter egg texts come from ui and contain no numbers or claims', eggs.every((e) => has(e) && !/\d/.test(e) && !/(won|built|owned|customers|users|hired)/i.test(e)), eggs.join(' | '));
+    await scrollTo(page, '#against'); await page.hover('#against'); await sleep(500);
+    const tr = await page.evaluate(() => new DOMMatrix(getComputedStyle(document.querySelector('#against')).transform).m42);
+    check('sheets lift 2px on hover (desktop)', Math.abs(tr + 2) < 0.6, String(tr));
+    await scrollTo(page, '#brief'); await sleep(1500);
+    await page.evaluate(() => window.CF.board.afterRail());
+    await page.click('.bpin'); await sleep(100);
+    check('tapping a board pin tightens the red string rail', await page.evaluate(() => document.getElementById('rail').classList.contains('tight')));
+    await ctx.close();
+  }
+  { // the 90-second read
+    const { page, ctx, log } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(400);
+    await page.evaluate(() => window.CF.opening.skip()); await sleep(800);
+    await page.tap('.tb-btn[aria-controls="jump"]'); await sleep(300);
+    const lab = await page.evaluate(() => (document.querySelector('.tour-start') || {}).textContent);
+    check('the jump menu offers "90-second read"', lab === T.tour, String(lab));
+    await page.tap('.tour-start'); await sleep(900);
+    const vis = await visibleSecs(page);
+    const stops = ['exhibit0', 'against', 'exhibitA', 'exhibitB', 'closing'].filter((x) => vis.includes(x));
+    const s1 = await page.evaluate(() => ({ n: document.querySelector('.tour-n').textContent, t: document.querySelector('.tour-t').textContent, role: document.querySelector('.tour').getAttribute('role'), back: document.querySelector('.tour-prev').disabled }));
+    check(`tour: "1 / ${stops.length}" with the stop's name; hidden sections are skipped (production has no Fair warning)`, s1.n === `1 / ${stops.length}` && stops.length === 4 && !stops.includes('against') && s1.back && s1.role === 'region', JSON.stringify(s1));
+    await page.tap('.tour-next'); await sleep(3200);
+    const s2 = await page.evaluate(() => ({ n: document.querySelector('.tour-n').textContent, t: document.querySelector('.tour-t').textContent, top: Math.round(document.getElementById('exhibitA').getBoundingClientRect().top) }));
+    check('Next scrolls to Exhibit A and updates the caption', s2.n === `2 / ${stops.length}` && s2.top < 160 && s2.top > -40, JSON.stringify(s2));
+    await page.tap('.tour-prev'); await sleep(900);
+    check('Back returns to stop 1', (await page.evaluate(() => document.querySelector('.tour-n').textContent)) === `1 / ${stops.length}`);
+    const barH = await page.evaluate(() => [...document.querySelectorAll('.tour .btn')].map((b) => Math.round(b.getBoundingClientRect().height)));
+    check('tour buttons are 44px targets', barH.every((x) => x >= 44), barH.join());
+    await page.keyboard.press('Escape'); await sleep(300);
+    check('Esc leaves the tour and focus returns to the menu button', (await page.locator('.tour').count()) === 0 && (await page.evaluate(() => document.activeElement.getAttribute('aria-controls'))) === 'jump');
+    await page.tap('.tb-btn[aria-controls="jump"]'); await page.tap('.tour-start'); await sleep(500);
+    await sleep(15800);
+    check('about 15 s a stop: it moves on by itself', (await page.evaluate(() => document.querySelector('.tour-n').textContent)) === `2 / ${stops.length}`);
+    await page.tap('.tour-stop'); await sleep(300);
+    check('Stop removes the bar', (await page.locator('.tour').count()) === 0);
+    check('tour: no console errors', log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+    const rv = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html' });
+    await ready(rv.page); await sleep(300);
+    await rv.page.evaluate(() => window.CF.tour.start(null)); await sleep(300);
+    check('review: five stops including Fair warning', (await rv.page.evaluate(() => document.querySelector('.tour-n').textContent)) === '1 / 5');
+    await rv.ctx.close();
+    const rr = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, reducedMotion: true });
+    await ready(rr.page); await sleep(300);
+    await rr.page.evaluate(() => window.CF.tour.start(null)); await sleep(16500);
+    check('reduced motion: the tour never advances by itself', (await rr.page.evaluate(() => document.querySelector('.tour-n').textContent)) === '1 / 4');
+    await rr.ctx.close();
+  }
+}
+
 const failed = summary();
 await browser.close();
 process.exit(failed ? 1 : 0);

@@ -1,11 +1,11 @@
 /* The cosy shell: section registry, chapters, top bar, jump menu, red string rail, footer.
    A section renders nothing when its content is empty. */
-CF.order = ['exhibit0', 'brief', 'against', 'exhibitA', 'exhibitB', 'ledger', 'decisions', 'effects', 'lab', 'wispr', 'locker', 'closing', 'exhibitZ'];
+CF.order = ['exhibit0', 'brief', 'against', 'exhibitA', 'exhibitB', 'ledger', 'thumbprint', 'decisions', 'effects', 'lab', 'wispr', 'locker', 'closing', 'exhibitZ'];
 CF.defs = {};
 CF.defineSection = (id, mount) => { CF.defs[id] = mount; };
 CF.reached = new Set();
 
-const SECTION_TITLE_KEY = { against: 'warningTitle', ledger: 'ledgerTitle', decisions: 'decisionsTitle', lab: 'labTitle', wispr: 'wisprTitle', effects: 'effectsTitle', locker: 'lockerTitle', closing: 'closingTitle' };
+const SECTION_TITLE_KEY = { thumbprint: 'thumbprintTitle', against: 'warningTitle', ledger: 'ledgerTitle', decisions: 'decisionsTitle', lab: 'labTitle', wispr: 'wisprTitle', effects: 'effectsTitle', locker: 'lockerTitle', closing: 'closingTitle' };
 
 /* The name of a section for pins, menus and the notebook: chapter title when it anchors a chapter, otherwise ui.*Title or the exhibit title. */
 CF.sectionLabel = function (id) {
@@ -71,6 +71,8 @@ CF.shell = (function () {
     const entries = CF.chapters.map((c) => ({ id: c.members[0], title: c.chapter.title }));
     if (entries.length < 2) return;
     const btn = h('button', { class: 'tb-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'jump', 'aria-label': 'Chapters' }, CF.icon('menu'));
+    const stopsOk = ['exhibit0', 'against', 'exhibitA', 'exhibitB', 'closing'].filter((id) => CF.visibleSections.includes(id)).length >= 2;
+    if (stopsOk && has(data.ui.tour) && CF.tour) nav.appendChild(h('button', { class: 'btn tour-start', type: 'button', text: data.ui.tour, onclick: () => { close(); CF.tour.start(btn); } }));
     nav.appendChild(h('ol', null, entries.map((e, i) => h('li', null, h('a', { href: '#' + e.id }, h('span', { class: 'n', text: String(i + 1) }), h('span', { text: e.title }))))));
     const close = () => { nav.hidden = true; btn.setAttribute('aria-expanded', 'false'); };
     btn.addEventListener('click', () => { const open = nav.hidden; nav.hidden = !open; btn.setAttribute('aria-expanded', String(open)); });

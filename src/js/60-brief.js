@@ -85,7 +85,7 @@ CF.defineSection('brief', function (d) {
       if (!has(label)) return;
       const b = h('button', { class: 'bpin' + (CF.reached.has(id) ? ' reached' : ''), type: 'button', 'data-id': id, 'aria-label': 'Go to ' + label },
         h('span', { class: 'dot', 'aria-hidden': 'true' }), h('span', { class: 'plbl', text: label }));
-      b.addEventListener('click', () => { const t = document.getElementById(id); t.scrollIntoView({ behavior: CF.reduced ? 'auto' : 'smooth', block: 'start' }); if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); });
+      b.addEventListener('click', () => { const rl = document.getElementById('rail'); rl.classList.remove('tight'); void rl.offsetWidth; if (!CF.reduced) rl.classList.add('tight'); const t = document.getElementById(id); CF.goTo(t); });
       pinBtns[id] = b;
       pinList.appendChild(h('li', null, b));
     });

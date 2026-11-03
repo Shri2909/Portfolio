@@ -18,7 +18,9 @@ const gallery = []; // {file, caption, vp}
 const browser = await launch();
 const landed = (page) => page.waitForFunction(() => window.CF && window.CF.opening && window.CF.opening.landed, null, { timeout: 25000 });
 
+let prefix = '';
 async function snap(page, file, caption, vp) {
+  file = prefix + file;
   await page.screenshot({ path: join(shots, file) });
   gallery.push({ file: 'screenshots/' + file, caption, vp });
 }
@@ -207,6 +209,55 @@ sets.M4 = async () => {
 };
 sets.M4.vp = true;
 
+sets.M5 = async () => {
+  for (const [vn, vp, touch, label] of [['phone', VIEWPORTS.phone, true, '390x844'], ['laptop', VIEWPORTS.laptop, false, '1366x650']]) {
+    const { page, ctx } = await openPage(browser, { viewport: vp, touch });
+    await rdy(page); await sleep(400);
+    const tap = (s) => (touch ? page.tap(s) : page.click(s));
+    await scr(page, '#thumbprint'); await tap('#thumbprint .tp-chip:nth-child(3)'); await sleep(700);
+    await snap(page, `${vn}-1-thumbprint.png`, `The thumbprint of the case, drawn from the counts in the file (3 forks, 5 clues, the plot twists, 19 findings, 324 tests). The 9-or-so plot-twist ridges are highlighted; caption exactly as in content, ${label}.`, label);
+    await page.evaluate(() => window.CF.opening.skip()); await sleep(700);
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' })); await sleep(300);
+    await tap('.tb-btn[aria-controls="jump"]'); await sleep(500);
+    await snap(page, `${vn}-2-menu-with-tour.png`, `The chapter menu now starts with "90-second read", ${label}.`, label);
+    await tap('.tour-start'); await sleep(2800);
+    await tap('.tour-next'); await sleep(3400);
+    await snap(page, `${vn}-3-tour.png`, `The 90-second read: a guided walk (here at stop 2), caption "n / total", Back, Next, Stop; Esc leaves; about 15 s a stop, ${label}.`, label);
+    await page.keyboard.press('Escape'); await sleep(300);
+    await ctx.close();
+  }
+  {
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html' });
+    await rdy(page); await sleep(400);
+    await page.evaluate(() => { const t = document.querySelector('.journey'); window.scrollTo({ top: t.getBoundingClientRect().top + scrollY - 80, behavior: 'instant' }); }); await sleep(300);
+    await page.evaluate(() => window.scrollBy({ top: 120, behavior: 'instant' })); await sleep(700);
+    await snap(page, 'phone-4-journey-drawing.png', 'Review build: the route so far, half drawn as you scroll (pins fill as the string reaches them).', '390x844');
+    await page.evaluate(() => window.scrollBy({ top: 350, behavior: 'instant' })); await sleep(900);
+    await page.tap('.jn-stop:nth-child(2) .jn-pin'); await sleep(400);
+    await snap(page, 'phone-5-journey-complete.png', 'Review build: the finished route, one stop opened, and the dashed final stop "Bengaluru: willing to relocate" (shown only because the drafted brief says so).', '390x844');
+    await ctx.close();
+  }
+  {
+    const { page, ctx } = await openPage(browser, { viewport: { width: 1600, height: 900 } });
+    await rdy(page); await sleep(300); await page.evaluate(() => window.CF.opening.skip()); await sleep(1700);
+    await page.keyboard.type('elementary', { delay: 40 }); await sleep(500);
+    await snap(page, 'wide-1-elementary.png', 'Easter egg: typing "elementary" flickers the lamp once and shows the slip from content. (1600px wide desk.)', '1366x650');
+    await sleep(4300);
+    await page.locator('button.teacup').click(); await sleep(700);
+    await snap(page, 'wide-2-teacup.png', 'Easter egg: the teacup is a button; the steam puffs and a slip appears for 4 seconds.', '1366x650');
+    await scr(page, '#thumbprint'); await page.hover('#thumbprint'); await sleep(600);
+    await snap(page, 'wide-3-paper-lift.png', 'Delight pass: a sheet lifts 2px and straightens under the pointer (desktop only).', '1366x650');
+    await ctx.close();
+  }
+};
+sets.M5.vp = true;
+
+sets.final = async () => {
+  for (const m of ['M3', 'M4', 'M5']) { prefix = m.toLowerCase() + '-'; await sets[m](); }
+  prefix = '';
+};
+sets.final.vp = true;
+
 /* ------------------------------------------------------------ demo video */
 const scrollThrough = (page, pxPerSec = 520) => page.evaluate(async (v) => {
   const t0 = performance.now();
@@ -222,6 +273,19 @@ const scrollThrough = (page, pxPerSec = 520) => page.evaluate(async (v) => {
   });
 }, pxPerSec);
 const videos = {
+  M5: async (page) => {
+    await page.waitForFunction(() => window.CF && window.CF.opening);
+    await page.evaluate(() => window.CF.opening.skip()); await sleep(1500);
+    await page.tap('.tb-btn[aria-controls="jump"]'); await sleep(900);
+    await page.tap('.tour-start'); await sleep(3000);
+    await page.tap('.tour-next'); await sleep(4000);
+    await page.tap('.tour-next'); await sleep(4500);
+    await page.tap('.tour-next'); await sleep(4500);
+    await page.tap('.tour-stop'); await sleep(600);
+    await page.evaluate(() => { const t = document.querySelector('#thumbprint'); window.scrollTo({ top: t.getBoundingClientRect().top + scrollY - 60, behavior: 'smooth' }); }); await sleep(2500);
+    await page.tap('#thumbprint .tp-chip:nth-child(4)'); await sleep(1500);
+    await page.tap('#thumbprint .tp-chip:nth-child(5)'); await sleep(1500);
+  },
   M4: async (page) => {
     await page.waitForFunction(() => window.CF && window.CF.opening);
     await page.evaluate(() => window.CF.opening.skip()); await sleep(1600);

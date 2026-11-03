@@ -818,6 +818,55 @@ dialog.notebook[open] { animation: nbin .35s var(--ease); }
 .ztag { flex: 0 0 auto; font-family: var(--type); font-size: 11.5px; font-weight: 700; letter-spacing: .04em; padding: 2px 8px; border: 1px dashed var(--muted); border-radius: 10px; color: var(--muted); height: fit-content; }
 .zseg.flow .ztag { border-style: solid; border-color: var(--brass-text); color: var(--brass-text); }
 
+/* thumbprint */
+.tp-wrap { display: grid; place-items: center; margin: 10px 0 6px; }
+.tprint { width: min(260px, 70%); height: auto; cursor: pointer; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .15)); }
+.ridge { stroke: #5a3d12; stroke-width: .9; stroke-linecap: round; opacity: .7; transition: stroke .3s, stroke-width .3s, opacity .3s; }
+.rg.hot .ridge { stroke: #B8872B; stroke-width: 2; opacity: 1; }
+.tp-cap { text-align: center; font-style: italic; color: var(--muted); font-size: 14.5px; line-height: 1.4; max-width: 460px; margin: 0 auto; }
+.tp-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 12px; }
+.tp-chip { min-height: 44px; padding: 0 14px; cursor: pointer; background: #FBF6EA; color: var(--ink); border: 1.5px solid var(--brass-art); border-radius: 22px; font-family: var(--serif); font-size: 14px; }
+.tp-chip[aria-pressed="true"] { background: #EBD49B; border-color: var(--brass-text); }
+.tp-info { min-height: 1.6em; margin-top: 8px; text-align: center; font-family: var(--type); font-size: 13px; color: var(--brass-text); }
+
+/* journey map */
+.journey { margin-top: 24px; }
+.jn-note { color: var(--muted); font-style: italic; font-size: 14.5px; margin: 2px 0 6px; }
+.jn-body { position: relative; }
+.jn-svg { position: absolute; left: 0; top: 0; width: 100%; pointer-events: none; overflow: visible; }
+.jn-path { stroke: var(--string); stroke-width: 3; stroke-linecap: round; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .25)); }
+.jn-path.dashed { stroke-dasharray: 3 9; transition: opacity .6s; }
+.jn-stops { position: relative; list-style: none; margin: 0; padding: 0; }
+.jn-stop { display: flex; align-items: center; gap: 12px; min-height: 84px; }
+.jn-stop.l { padding-left: 14%; } .jn-stop.r { padding-left: 52%; flex-direction: row; }
+.jn-pin { flex: 0 0 auto; width: 44px; height: 44px; display: grid; place-items: center; padding: 0; background: none; border: 0; cursor: pointer; border-radius: 50%; }
+.jn-pin i { width: 18px; height: 18px; border-radius: 50%; background: var(--paper); border: 3px solid var(--string); transition: background .4s; }
+.jn-pin.lit i { background: var(--string); }
+.jn-pin.dashed i { border-style: dashed; background: transparent; }
+.jn-pin[aria-expanded="true"] i { box-shadow: 0 0 0 4px rgba(210, 69, 46, .25); }
+.jn-l { font-family: var(--display); font-weight: 600; font-size: 16px; line-height: 1.25; } .jn-l em { display: block; font-family: var(--serif); font-size: 13px; font-weight: 400; color: var(--muted); }
+.jn-stop.dashed .jn-l { color: var(--muted); }
+.jn-detail { margin-top: 6px; }
+@media (min-width: 700px) { .jn-stop.l { padding-left: 20%; } .jn-stop.r { padding-left: 50%; } }
+
+/* delight: a gentle paper lift on hover (desktop), the rail string tightens when a pin is tapped */
+@media (hover: hover) and (min-width: 900px) {
+  .sheet { transition: transform .3s var(--ease), box-shadow .3s var(--ease); }
+  .sheet:hover { transform: translateY(-2px) rotate(0deg); box-shadow: 0 1px 1px rgba(0, 0, 0, .25), 0 8px 14px -2px rgba(0, 0, 0, .35), 0 28px 46px -10px rgba(0, 0, 0, .5), inset 0 0 40px rgba(120, 90, 40, .07); }
+}
+.rail.tight .rail-line { animation: tight .5s var(--ease); }
+@keyframes tight { 40% { width: 4px; left: 1px; filter: brightness(1.25); } }
+
+/* the 90-second read */
+.tour { position: fixed; z-index: 45; left: 8px; right: 8px; bottom: 8px; max-width: 560px; margin: 0 auto; padding: 10px 12px; display: grid; gap: 8px; background: var(--desk-vig); color: var(--cream-on-dark); border: 1px solid var(--brass-art); border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, .6); }
+.tour-top { display: flex; align-items: center; gap: 10px; }
+.tour-n { font-family: var(--type); font-weight: 700; font-size: 14px; color: var(--highlighter); } .tour-t { flex: 1; font-size: 15px; line-height: 1.3; }
+.tour-btns { display: flex; gap: 8px; } .tour-btns .btn { flex: 1; }
+.tour-bar { height: 3px; background: rgba(184, 135, 43, .3); border-radius: 2px; overflow: hidden; } .tour-bar i { display: block; height: 100%; width: 100%; background: var(--brass-art); transform-origin: left; transform: scaleX(0); }
+.tour-bar.run i { animation: tourbar 15s linear forwards; } @keyframes tourbar { to { transform: scaleX(1); } }
+body.touring .foot { padding-bottom: 110px; }
+.jump .tour-start { width: 100%; margin: 0 0 6px; justify-content: flex-start; }
+
 /* Review build only. */
 .cf-filled { outline: 2px dotted #E8A317; outline-offset: 3px; }
 .review-mark { position: fixed; inset: 0; z-index: 40; pointer-events: none; overflow: hidden; display: flex; align-items: center; justify-content: center; }
@@ -934,6 +983,17 @@ CF.trapFocus = function (dlg) {
   });
 };
 
+/* Scroll to a sheet and keep aiming: sheets that open as you pass them (the envelope) change the page height under a smooth scroll,
+   so check again once it settles and correct if the target drifted. */
+CF.goTo = function (el, focus) {
+  if (!el) return;
+  if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
+  const aim = () => el.scrollIntoView({ behavior: CF.reduced ? 'auto' : 'smooth', block: 'start' });
+  aim();
+  if (!CF.reduced) [900, 1900].forEach((ms) => setTimeout(() => { const top = el.getBoundingClientRect().top; if (Math.abs(top - parseFloat(getComputedStyle(el).scrollMarginTop || 0)) > 80) aim(); }, ms));
+  if (focus !== false) el.focus({ preventScroll: true });
+};
+
 /* ---- 10-engine.js ---- */
 /* The opening engine: computed, never hand-marked.
    normalize -> word-level LCS -> ONE merged token stream (MATCHED, RAW-ONLY, ADDED, BREAK). */
@@ -1002,12 +1062,12 @@ CF.engine = (function () {
 /* ---- 20-shell.js ---- */
 /* The cosy shell: section registry, chapters, top bar, jump menu, red string rail, footer.
    A section renders nothing when its content is empty. */
-CF.order = ['exhibit0', 'brief', 'against', 'exhibitA', 'exhibitB', 'ledger', 'decisions', 'effects', 'lab', 'wispr', 'locker', 'closing', 'exhibitZ'];
+CF.order = ['exhibit0', 'brief', 'against', 'exhibitA', 'exhibitB', 'ledger', 'thumbprint', 'decisions', 'effects', 'lab', 'wispr', 'locker', 'closing', 'exhibitZ'];
 CF.defs = {};
 CF.defineSection = (id, mount) => { CF.defs[id] = mount; };
 CF.reached = new Set();
 
-const SECTION_TITLE_KEY = { against: 'warningTitle', ledger: 'ledgerTitle', decisions: 'decisionsTitle', lab: 'labTitle', wispr: 'wisprTitle', effects: 'effectsTitle', locker: 'lockerTitle', closing: 'closingTitle' };
+const SECTION_TITLE_KEY = { thumbprint: 'thumbprintTitle', against: 'warningTitle', ledger: 'ledgerTitle', decisions: 'decisionsTitle', lab: 'labTitle', wispr: 'wisprTitle', effects: 'effectsTitle', locker: 'lockerTitle', closing: 'closingTitle' };
 
 /* The name of a section for pins, menus and the notebook: chapter title when it anchors a chapter, otherwise ui.*Title or the exhibit title. */
 CF.sectionLabel = function (id) {
@@ -1073,6 +1133,8 @@ CF.shell = (function () {
     const entries = CF.chapters.map((c) => ({ id: c.members[0], title: c.chapter.title }));
     if (entries.length < 2) return;
     const btn = h('button', { class: 'tb-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'jump', 'aria-label': 'Chapters' }, CF.icon('menu'));
+    const stopsOk = ['exhibit0', 'against', 'exhibitA', 'exhibitB', 'closing'].filter((id) => CF.visibleSections.includes(id)).length >= 2;
+    if (stopsOk && has(data.ui.tour) && CF.tour) nav.appendChild(h('button', { class: 'btn tour-start', type: 'button', text: data.ui.tour, onclick: () => { close(); CF.tour.start(btn); } }));
     nav.appendChild(h('ol', null, entries.map((e, i) => h('li', null, h('a', { href: '#' + e.id }, h('span', { class: 'n', text: String(i + 1) }), h('span', { text: e.title }))))));
     const close = () => { nav.hidden = true; btn.setAttribute('aria-expanded', 'false'); };
     btn.addEventListener('click', () => { const open = nav.hidden; nav.hidden = !open; btn.setAttribute('aria-expanded', String(open)); });
@@ -1300,9 +1362,7 @@ CF.mountOpening = function (data, mount) {
   function openFile() {
     const next = document.querySelector('#main > section:not(#exhibit0)');
     if (next) {
-      next.scrollIntoView({ behavior: CF.reduced ? 'auto' : 'smooth', block: 'start' });
-      if (!next.hasAttribute('tabindex')) next.setAttribute('tabindex', '-1');
-      next.focus({ preventScroll: true });
+      CF.goTo(next);
     } else {
       window.scrollTo({ top: document.documentElement.scrollHeight, behavior: CF.reduced ? 'auto' : 'smooth' });
     }
@@ -1838,12 +1898,7 @@ CF.clues = (function () {
 /* Chapter Seals: a folded note after each chapter with one question about what comes next. Never a claim. Tap or Enter goes to the next chapter. */
 CF.makeSeal = function (chapter, target) {
   const ui = CF.data.ui || {};
-  const go = () => {
-    if (!target) return;
-    if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
-    target.scrollIntoView({ behavior: CF.reduced ? 'auto' : 'smooth', block: 'start' });
-    target.focus({ preventScroll: true });
-  };
+  const go = () => CF.goTo(target);
   const btn = h('button', { class: 'seal-btn', type: 'button', onclick: go },
     h('span', { class: 'sc-cue', text: ui.sealCue || '' }), h('span', { class: 'sc-q', text: chapter.teaser }), CF.icon('down'));
   const note = h('div', { class: 'seal-note', 'data-chapter': chapter.id }, h('i', { class: 'clip', 'aria-hidden': 'true' }), btn);
@@ -1943,7 +1998,7 @@ CF.defineSection('brief', function (d) {
       if (!has(label)) return;
       const b = h('button', { class: 'bpin' + (CF.reached.has(id) ? ' reached' : ''), type: 'button', 'data-id': id, 'aria-label': 'Go to ' + label },
         h('span', { class: 'dot', 'aria-hidden': 'true' }), h('span', { class: 'plbl', text: label }));
-      b.addEventListener('click', () => { const t = document.getElementById(id); t.scrollIntoView({ behavior: CF.reduced ? 'auto' : 'smooth', block: 'start' }); if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); });
+      b.addEventListener('click', () => { const rl = document.getElementById('rail'); rl.classList.remove('tight'); void rl.offsetWidth; if (!CF.reduced) rl.classList.add('tight'); const t = document.getElementById(id); CF.goTo(t); });
       pinBtns[id] = b;
       pinList.appendChild(h('li', null, b));
     });
@@ -2409,8 +2464,67 @@ CF.defineSection('effects', function (d) {
   const intro = has(e.intro) ? e.intro.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean).map((p) => h('p', { class: 'intro-p', path: 'effects.intro', text: p })) : null;
   const phil = e.philosophy && has(e.philosophy.text)
     ? h('aside', { class: 'philo' }, e.philosophy.text.split(/\n\s*\n/).map((p) => h('p', { path: 'effects.philosophy.text', text: p.trim() }))) : null;
+  /* the route so far: a hand-drawn SVG route that draws itself as you scroll; one tappable pin per timeline stop.
+     A final dashed stop only if the brief says he is willing to relocate to Bengaluru. */
+  function journey() {
+    if (tl.length < 2) return null;
+    const sum = (d.brief && d.brief.summary) || '';
+    const stops = tl.map((x) => ({ label: x.label, text: x.text, date: x.date, dashed: false }));
+    if (/willing to relocate/i.test(sum) && /Bengaluru/.test(sum)) stops.push({ label: 'Bengaluru', text: 'willing to relocate', dashed: true });
+    const detail = h('div', { class: 'jn-detail', 'aria-live': 'polite' });
+    const pinBtns = [];
+    const ol = h('ol', { class: 'jn-stops' }, stops.map((st, i) => {
+      const b = h('button', { class: 'jn-pin' + (st.dashed ? ' dashed' : ''), type: 'button', 'aria-expanded': 'false', 'aria-label': st.label + (st.dashed ? ', ' + st.text : '') }, h('i', { 'aria-hidden': 'true' }));
+      b.addEventListener('click', () => {
+        const same = b.getAttribute('aria-expanded') === 'true';
+        pinBtns.forEach((x) => x.setAttribute('aria-expanded', 'false')); detail.textContent = '';
+        if (same) return;
+        b.setAttribute('aria-expanded', 'true');
+        put(detail, h('div', { class: 'slipcard' }, h('h3', { text: st.label }), has(st.date) ? h('p', { class: 'tl-d', text: st.date }) : null, has(st.text) ? h('p', { text: st.text }) : null));
+      });
+      pinBtns.push(b);
+      return h('li', { class: 'jn-stop ' + (i % 2 ? 'r' : 'l') + (st.dashed ? ' dashed' : '') }, b, h('span', { class: 'jn-l' }, st.label, st.dashed ? h('em', { text: st.text }) : null));
+    }));
+    const svg = s('svg', { class: 'jn-svg', 'aria-hidden': 'true', focusable: 'false' });
+    const wrap = h('div', { class: 'journey' }, h('p', { class: 'label-brass', text: ui.journeyTitle || '' }), has(ui.journeyNote) ? h('p', { class: 'jn-note', text: ui.journeyNote }) : null, h('div', { class: 'jn-body' }, svg, ol), detail);
+    let solid = null, dashedP = null, L1 = 0;
+    function layout() {
+      const br = wrap.querySelector('.jn-body').getBoundingClientRect();
+      if (!br.width) return;
+      svg.setAttribute('viewBox', '0 0 ' + br.width + ' ' + br.height); svg.style.height = br.height + 'px';
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      const pts = pinBtns.map((b) => { const r = b.getBoundingClientRect(); return [r.left + r.width / 2 - br.left, r.top + r.height / 2 - br.top]; });
+      let seed2 = 11; const rnd = () => { seed2 = (seed2 * 16807) % 2147483647; return seed2 / 2147483647; };
+      const seg = (a, c) => { const my = (a[1] + c[1]) / 2; const j = (rnd() - .5) * 14; return ' C' + (a[0] + j) + ' ' + (my - 8) + ' ' + (c[0] - j) + ' ' + (my + 8) + ' ' + c[0] + ' ' + c[1]; };
+      const lastSolid = stops.reduce((n, st, i) => (st.dashed ? n : i), 0);
+      let dS = 'M' + pts[0][0] + ' ' + pts[0][1];
+      for (let i = 1; i <= lastSolid; i++) dS += seg(pts[i - 1], pts[i]);
+      solid = s('path', { d: dS, class: 'jn-path', fill: 'none' });
+      svg.appendChild(solid);
+      L1 = solid.getTotalLength();
+      dashedP = null;
+      if (lastSolid < stops.length - 1) { dashedP = s('path', { d: 'M' + pts[lastSolid][0] + ' ' + pts[lastSolid][1] + seg(pts[lastSolid], pts[lastSolid + 1]), class: 'jn-path dashed', fill: 'none' }); svg.appendChild(dashedP); }
+      draw();
+    }
+    function draw() {
+      if (!solid) return;
+      const r = wrap.getBoundingClientRect();
+      const p = CF.reduced ? 1 : clamp01((window.innerHeight * 0.85 - r.top) / (r.height * 0.9));
+      solid.style.strokeDasharray = L1; solid.style.strokeDashoffset = L1 * (1 - p);
+      if (dashedP) dashedP.style.opacity = p > 0.97 ? 1 : 0;
+      wrap.style.setProperty('--jp', p.toFixed(3));
+      pinBtns.forEach((b, i) => b.classList.toggle('lit', p >= (i / Math.max(1, stops.length - 1)) * 0.96));
+    }
+    let tick = false;
+    window.addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(() => { tick = false; draw(); }); } }, { passive: true });
+    if (window.ResizeObserver) new ResizeObserver(layout).observe(wrap.querySelector('.jn-body')); else window.addEventListener('resize', layout);
+    document.addEventListener('cf:layout', () => requestAnimationFrame(layout));
+    setTimeout(layout, 0);
+    return wrap;
+  }
+
   return CF.sheet('effects', { title: ui.effectsTitle, cls: 'effects' },
-    intro, tl.length >= 2 ? CF.ex.timeline(tl, 'effects') : null,
+    intro, tl.length >= 2 ? CF.ex.timeline(tl, 'effects') : null, journey(),
     bags.length ? h('div', { class: 'bags' }, bags) : null, bags.length ? detail : null, phil);
 });
 
@@ -2629,6 +2743,131 @@ CF.defineSection('exhibitZ', function (d) {
 /* ---- 90-main.js ---- */
 /* Boot once the DOM is parsed (the script sits at the end of the body). */
 CF.shell.boot();
+
+/* ---- 90-thumbprint.js ---- */
+/* The thumbprint of the case: a decorative fingerprint whose ridges are drawn from the counts in this file with a seeded function.
+   It measures nothing about a person (the caption says so). Tap a ridge group to see where its count comes from. */
+CF.defineSection('thumbprint', function (d) {
+  const ui = d.ui || {};
+  const cases = ((d.ledger && d.ledger.cases) || []).filter((c) => has(c.title));
+  if (!cases.length) return null;
+  const forks = ((d.decisions && d.decisions.forks) || []).length;
+  const tests = d.exhibitA && d.exhibitA.stats && d.exhibitA.stats.tests;
+  const finds = d.exhibitA && d.exhibitA.stats && d.exhibitA.stats.findings;
+  const clues = (d.clues || []).length;
+  // groups from the centre outwards; ridges per group come from the counts
+  const groups = [
+    forks && { id: 'forks', n: forks, label: forks + ' forks in the road' },
+    clues && { id: 'clues', n: clues, label: clues + ' clues' },
+    { id: 'twists', n: cases.length, label: cases.length + ' plot twists' },
+    finds && { id: 'finds', n: finds, label: finds + ' audit findings' },
+    tests && { id: 'tests', n: Math.max(1, Math.round(Math.sqrt(tests))), label: tests + ' passing tests (drawn as ' + Math.round(Math.sqrt(tests)) + ' ridges)' },
+  ].filter(Boolean);
+  const seedBase = groups.reduce((a, g) => a * 31 + g.n, 7) >>> 0;
+  let seed = seedBase;
+  const rnd = () => { seed = (seed + 0x6D2B79F5) >>> 0; let t = seed; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+
+  const CX = 100, CY = 118, STEP = 3.1, R0 = 12;
+  const svg = s('svg', { viewBox: '0 0 200 240', class: 'tprint', 'aria-hidden': 'true', focusable: 'false' });
+  let k = 0;
+  const bands = [];
+  groups.forEach((g) => {
+    const gEl = s('g', { class: 'rg', 'data-g': g.id });
+    const r0 = R0 + k * STEP;
+    for (let i = 0; i < g.n; i++, k++) {
+      const r = R0 + k * STEP;
+      const ph = [rnd() * 6.28, rnd() * 6.28, rnd() * 6.28], amp = [0.6 + rnd() * 1.4, 0.4 + rnd() * 1.1, 0.3 + rnd() * 0.8];
+      const gapStart = rnd() * 6.28, gapLen = rnd() < 0.55 ? 0.25 + rnd() * 0.6 : 0, pts = [];
+      const N = 120;
+      for (let j = 0; j <= N; j++) {
+        const a = (j / N) * 6.2832;
+        const rel = (a - gapStart + 12.566) % 6.2832;
+        if (rel < gapLen) { if (pts.length) { pts.push(null); } continue; }
+        const rr = r + amp[0] * Math.sin(3 * a + ph[0]) + amp[1] * Math.sin(5 * a + ph[1]) + amp[2] * Math.sin(8 * a + ph[2]);
+        pts.push([CX + rr * Math.cos(a), CY + rr * 1.22 * Math.sin(a) - (a > 0 && a < 3.14 ? 0 : 0)]);
+      }
+      let dStr = '', pen = false;
+      pts.forEach((p) => { if (!p) { pen = false; return; } dStr += (pen ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); pen = true; });
+      gEl.appendChild(s('path', { d: dStr, class: 'ridge', fill: 'none' }));
+    }
+    bands.push({ id: g.id, from: r0 - STEP / 2, to: R0 + k * STEP - STEP / 2 });
+    svg.appendChild(gEl);
+  });
+
+  const info = h('p', { class: 'tp-info', 'aria-live': 'polite' });
+  function pick(id) {
+    svg.querySelectorAll('.rg').forEach((e) => e.classList.toggle('hot', e.dataset.g === id));
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.g === id)));
+    const g = groups.find((x) => x.id === id);
+    info.textContent = g ? g.label : '';
+  }
+  const chips = groups.map((g) => { const b = h('button', { class: 'tp-chip', type: 'button', 'aria-pressed': 'false', 'data-g': g.id, text: g.label }); b.addEventListener('click', () => pick(b.getAttribute('aria-pressed') === 'true' ? null : g.id)); return b; });
+  svg.addEventListener('click', (e) => {
+    const m = svg.getScreenCTM(); if (!m) return;
+    const x = (e.clientX - m.e) / m.a, y = (e.clientY - m.f) / m.d;
+    const rr = Math.hypot(x - CX, (y - CY) / 1.22);
+    const b = bands.find((q) => rr >= q.from && rr < q.to);
+    pick(b ? b.id : null);
+  });
+  const list = h('ul', { class: 'sr-only' }, groups.map((g) => h('li', { text: g.label })));
+  return CF.sheet('thumbprint', { title: ui.thumbprintTitle, cls: 'thumbprint' },
+    h('div', { class: 'tp-wrap' }, svg), h('p', { class: 'tp-cap', text: ui.thumbprintCaption || '' }),
+    h('div', { class: 'tp-chips' }, chips), info, list);
+});
+
+/* ---- 92-tour.js ---- */
+/* The 90-second read: a guided walk through the opening, Fair warning, Exhibit A, Exhibit B and the closing (hidden ones are skipped). About 15 s a stop, Esc leaves. */
+CF.tour = (function () {
+  let bar = null, idx = 0, timer = 0, ids = [], opener = null;
+  const ui = () => (CF.data && CF.data.ui) || {};
+
+  function stop() {
+    clearTimeout(timer);
+    if (bar) { bar.remove(); bar = null; }
+    document.body.classList.remove('touring');
+    CF.pageStrings && CF.pageStrings.clear();
+    if (opener) opener.focus({ preventScroll: true });
+  }
+  function go(i, fromAuto) {
+    idx = Math.max(0, Math.min(ids.length - 1, i));
+    clearTimeout(timer);
+    const el = document.getElementById(ids[idx]);
+    CF.goTo(el, false);
+    bar.querySelector('.tour-n').textContent = (idx + 1) + ' / ' + ids.length;
+    bar.querySelector('.tour-t').textContent = CF.sectionLabel(ids[idx]);
+    bar.querySelector('.tour-prev').disabled = idx === 0;
+    const nextBtn = bar.querySelector('.tour-next');
+    nextBtn.disabled = idx === ids.length - 1;
+    const pb = bar.querySelector('.tour-bar');
+    pb.classList.remove('run'); void pb.offsetWidth;
+    if (!CF.reduced) {
+      pb.classList.add('run');
+      if (idx < ids.length - 1) timer = setTimeout(() => go(idx + 1, true), 15000);
+    }
+    const rail = document.getElementById('rail'); rail.classList.remove('tight'); void rail.offsetWidth; if (!CF.reduced) rail.classList.add('tight');
+    const live = bar.querySelector('.sr-only'); live.textContent = 'Stop ' + (idx + 1) + ' of ' + ids.length + ': ' + CF.sectionLabel(ids[idx]);
+  }
+  function start(from) {
+    ids = ['exhibit0', 'against', 'exhibitA', 'exhibitB', 'closing'].filter((id) => CF.visibleSections.includes(id));
+    if (ids.length < 2 || bar) return;
+    opener = from || null;
+    bar = h('div', { class: 'tour', role: 'region', 'aria-label': ui().tour || '' },
+      h('div', { class: 'tour-top' }, h('span', { class: 'tour-n' }), h('span', { class: 'tour-t' })),
+      h('div', { class: 'tour-bar', 'aria-hidden': 'true' }, h('i')),
+      h('div', { class: 'tour-btns' },
+        h('button', { class: 'btn tour-prev', type: 'button', text: 'Back', onclick: () => go(idx - 1) }),
+        h('button', { class: 'btn tour-next', type: 'button', text: 'Next', onclick: () => go(idx + 1) }),
+        h('button', { class: 'btn tour-stop', type: 'button', text: 'Stop', onclick: stop })),
+      h('span', { class: 'sr-only', 'aria-live': 'polite' }));
+    bar.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.stopPropagation(); stop(); } });
+    document.body.appendChild(bar);
+    document.body.classList.add('touring');
+    go(0);
+    bar.querySelector('.tour-next').focus({ preventScroll: true });
+  }
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && bar) stop(); });
+  return { start, stop, active: () => !!bar };
+})();
 
 })();
 (function () {
