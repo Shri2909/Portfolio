@@ -7,7 +7,7 @@ import { closeText } from '../lib/nav.js';
 import { shownCount } from '../lib/rowhash.js';
 import EvidenceBody from './EvidenceBody.jsx';
 import { inviteVisible, inviteUrls } from '../lib/mail.js';
-import { personParas } from '../lib/personText.js';
+import { meetCards } from '../lib/meet.js';
 import { signoffLines } from '../lib/signoff.js';
 import WishForm from './WishForm.jsx';
 import { wishState } from '../lib/wishState.js';
@@ -111,13 +111,22 @@ export default function FullTextView({ onClose }) {
           <p>{rich(l6.tryLight)}</p>
           <p><a href="#evidence" data-evidence={l6.cta.folder}>{l6.cta.label}</a></p>
         </section>
-        {copy.person.enabled && (
-          <section aria-labelledby="ft-person">
-            <h2 id="ft-person">{rich(copy.person.heading)}</h2>
-            {personParas().map((p, i) => <P key={i} t={p} />)}
-            <p><strong>{copy.person.pull}</strong></p>
-          </section>
-        )}
+        <section aria-labelledby="ft-baithak">
+          <p className="kicker">{copy.baithak.kicker}</p>
+          <h2 id="ft-baithak">{rich(copy.baithak.heading)}</h2>
+          <P t={copy.baithak.intro} />
+          {(() => { const { order } = meetCards(); return order.map((c) => (
+            <div key={c.id}>
+              <h3>{rich(c.title)}</h3>
+              {c.hook && <P t={c.hook} />}
+              {(c.body || []).filter(Boolean).map((t, i) => <P key={i} t={t} />)}
+              {c.steps && <ol>{c.steps.map((st, i) => <li key={i}>{rich(st.h)} ({st.g}). {st.t}</li>)}</ol>}
+              {c.warning && <p><strong>Fair warning.</strong> {c.warning}</p>}
+              {(c.extra || []).map((t, i) => <p key={i}>{t}</p>)}
+              {c.items && <ol>{c.items.map((it, i) => <li key={i}><strong>{it.h}</strong> {it.proof} {it.filledLine} Fair warning: {it.warn} {it.view} {it.share}</li>)}</ol>}
+            </div>)); })()}
+          <p><strong>{copy.baithak.pull}</strong></p>
+        </section>
         <section aria-labelledby="ft-voice">
           <h2 id="ft-voice">{rich(v.heading)}</h2>
           <p><em>{v.sub}</em></p>

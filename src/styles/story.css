@@ -147,3 +147,20 @@ html[data-calm="1"] .auto-beat.on { animation: none; opacity: 1; }
 html[data-act="baithak"] #skyline { transform: translateX(-4%); } #skyline { transition: transform 1.4s ease; } html[data-calm="1"] #skyline { transition: none; transform: none !important; }
 html[data-fg="1"] .cat-wrap, html[data-fg="1"] .lantern { opacity: .35; } html[data-fg="1"] .lantern .pend, html[data-fg="1"] .strand, html[data-fg="1"] .gust, html[data-fg="1"] .tw { animation-play-state: paused; }
 .wish-form .ideas summary, .privacy summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: 700; }
+/* V3 phase 4: sitting room */
+.pane-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; } .pane-tabs .btn[aria-selected="true"] { background: var(--cream); color: var(--ink); border-color: var(--cream); }
+.meet-card { margin: 10px 0 18px; padding: 12px 0; border-top: 1px solid var(--ground-5); } .meet-card h3 { margin-bottom: .3em; } .meet-card .hook { font-size: 1.02rem; margin-bottom: 8px; }
+.meet-body { margin-top: 10px; } .meet-card .plain summary, .loop .plain summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; color: var(--text-dim); }
+.proof-chip { margin-top: 6px; } .stop.hl .panel { box-shadow: 0 0 0 2px var(--flame-core), 0 0 30px rgba(255, 179, 71, .35); transition: box-shadow .4s; }
+.loop-ring, .bring-lamps { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; } .loop-stop, .bring-lamp { min-width: 44px; padding: 0; } .loop-stop.on, .bring-lamp.on { background: var(--cream); color: var(--ink); border-color: var(--cream); }
+.essay-ring svg { width: 140px; display: block; } .ring-lamp { fill: #4a2a12; } .ring-lamp.on { fill: var(--flame-a); } .ring-line { fill: none; stroke: var(--text-dim); stroke-dasharray: 2 3; } .ring-lamp.outer { transition: opacity .6s, cx .6s, cy .6s; }
+.small { font-size: 12px; margin: 0; min-height: 1.2em; } .caption { font-style: italic; } .quote { font-style: italic; border-left: 2px solid var(--flame-core); padding-left: 10px; }
+.window-scene .panes rect.act { opacity: 1 !important; fill: #FFD27A; }
+.meet-card table { border-collapse: collapse; } .meet-card th, .meet-card td { text-align: left; vertical-align: top; padding: 4px 8px 4px 0; border-top: 1px solid var(--ground-5); }
+/* window scene (from the earlier person block) */
+.window-scene { position: relative; height: 200px; border-radius: 16px 16px 0 0; overflow: hidden; margin-bottom: -16px; }
+.window-scene svg { width: 100%; height: 100%; display: block; } .window-scene .frame { fill: none; stroke: #3a2a1a; stroke-width: 1.4; } .window-scene .sill { fill: #2a1c10; }
+.window-scene .panes rect { fill: #FFB347; opacity: .1; transition: opacity 1.5s ease, fill .4s; } .seen .window-scene .panes rect { opacity: .6; }
+.farwin rect { fill: var(--flame-core); opacity: 0; transition: opacity .6s ease; } .seen .farwin rect { opacity: .7; }
+html[data-calm="1"] .window-scene .panes rect, html[data-calm="1"] .farwin rect, .q-low .farwin rect { transition: none; }
+.sill-diya { --ls: 46px; position: absolute; left: 50%; bottom: 36px; width: var(--ls); transform: translateX(-50%); cursor: pointer; }

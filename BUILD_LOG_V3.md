@@ -41,3 +41,14 @@ Browser test: `scripts/e2e/v3-phase3.mjs` (production build), all checks pass; `
 | Voice | done | Opens on Take 2; "Doosra take" switches to Take 1; both stay in the full text. |
 | Verdict, wish, closure, 60-second file | done | Verdict is two paragraphs plus the signature line and a ROLES link; wish is two short lines with the idea chips and the long privacy text collapsed (short privacy line always visible); closure adds the 60-second file link; the 60-second file has the new copy and "Take the whole walk". |
 Removed: the old lamps, cards, story and modes browser suites (they tested structure that no longer exists). `audit.mjs` still walks the old structure and is not updated yet (see phase 6).
+
+## Phase 4: Meet Shriniwas (PART D)
+Browser test: `scripts/e2e/v3-phase4.mjs` (production build plus a dev-server check of the flags), all checks pass; phases 1 and 3 still pass.
+| Item | Status | Notes |
+|---|---|---|
+| Four-pane window | done | The lit-window scene (now in `Baithak.jsx`, replacing `Person.jsx`) with four tabs (Who I am, How I think, How I work, What I bring), arrow keys and Home/End, the first pane open. A card shows one hook line; the body opens with "Aur dekhiye"; every card has a Plain text disclosure in the page. |
+| Cards | done | Pehle, main kaun? (with Builds / Debates / Writes / Studies chips that jump to the matching pane, résumé link that says it opens Google Drive), Meri raah, Debate (with the "Doosri taraf dekhiye" illustration, labelled as not a transcript), Likhna (the three-lamp essay ring and the essay's last line, essay link), Chaar log ek plan, the six-step loop ring with the honest warning about deleted timings, and the five things the projects show with proof chips that jump to and highlight the matching lamp. |
+| Flags | done | With every flag OFF: no braces, no placeholder, no father's-accident sentence, no exam names (JEE, Physics Wallah), no Berggruen, no India-share number; debate and research show only the merged two-sentence card (`meet.mergeThin` ON). A line that needs a slot renders only if its flag is on AND every slot in it is filled (checked in the dev server with the flags forced on: a half-filled line renders nothing). |
+| Wording rules | done | G9: the TipIndex rule is "written after attempt one but before the reruns"; "predeclared" appears nowhere. "Hydra" never appears. The essay is not linked to Berggruen. |
+| Full text | done | The full-text view lists the sitting-room cards in order (with the loop and the five items as lists). |
+Not done: the sitting room does not yet pan the skyline sideways by scroll position beyond the 4 percent shift in phase 3; the pane windows are not themselves the buttons (the four tabs sit under the window picture and light the matching pane).
