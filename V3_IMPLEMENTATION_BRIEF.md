@@ -64,6 +64,8 @@ Do not block on these. Ship with every slot hidden. Each answer unlocks a flag i
 
 # PART B: BUGS TO FIX FIRST (Invite me, layout, dock), with fixes proven by CSS injection
 
+**Note on current branch state:** after PART B was written, the branch received the commits `Pack 8: audit report, build log` (adds `docs/PACK8_AUDIT.md`) and `Fix desktop opening layout, dock overlap, voice slider clearance, skyline visibility` (touches `src/styles/scene.css` and `src/styles/story.css`). That commit already applies part of the layout and slider fixes below. Before changing any CSS, read the current `scene.css`, `story.css`, `base.css` and `lamps.css`, compare with the rules below, and apply only what is still missing, so nothing is duplicated or fought. The Invite sheet, the closure invisible-link fix, the wrong lamp number, the string-lights control, the top bar and the 44px targets are NOT yet fixed. Re-measure with the viewport table after your changes.
+
 
 ## 1. INVITE ME: root causes (with evidence)
 
