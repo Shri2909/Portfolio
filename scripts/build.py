@@ -202,6 +202,8 @@ FAVICON = (
 def render(template, data, mode, filled=None):
     site = data.get("site") or {}
     css = (SRC / "styles.css").read_text(encoding="utf-8")
+    for extra in sorted((SRC / "css").glob("*.css")):
+        css += "\n" + extra.read_text(encoding="utf-8")
     head_extra, body_extra = "", ""
     js = bundle_js()
     if mode == "review":

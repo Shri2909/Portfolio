@@ -43,7 +43,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { background: var(--desk); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+html { overflow-x: clip; background: var(--desk); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
 body {
   margin: 0; min-height: 100vh; min-height: 100svh;
   background: var(--desk); color: var(--cream-on-dark);
@@ -80,10 +80,14 @@ button { font: inherit; color: inherit; }
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
   background-size: 160px 160px;
 }
-.lamp {
-  position: fixed; inset: 0; z-index: 1; pointer-events: none;
-  background: radial-gradient(52vmax 46vmax at var(--lx) var(--ly), var(--lamp), rgba(255, 214, 150, .07) 45%, transparent 72%);
+.lamp { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.lamp-glow {
+  position: absolute; left: 0; top: 0; width: 120vmax; height: 120vmax; margin: -60vmax 0 0 -60vmax; will-change: transform;
+  transform: translate3d(50vw, 14vh, 0);
+  background: radial-gradient(closest-side, var(--lamp), rgba(255, 214, 150, .07) 58%, transparent 100%);
 }
+.lamp.flicker { animation: flicker .7s steps(1, end) 1; }
+@keyframes flicker { 0% { opacity: .35; } 20% { opacity: 1; } 35% { opacity: .5; } 55% { opacity: 1; } 70% { opacity: .65; } 100% { opacity: 1; } }
 .page { position: relative; z-index: 2; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
 
 /* ---------- top bar ---------- */
@@ -310,7 +314,7 @@ button { font: inherit; color: inherit; }
 /* phones: Skip sits where the cue will land (bottom, under the thumb); 600px and up: top-right corner */
 .skipbtn { position: absolute; z-index: 4; left: 12px; bottom: 10px; min-height: 44px; padding: 0 16px; font-size: 14px; }
 .seal {
-  position: absolute; z-index: 5; top: -13px; right: -8px; width: 76px; height: 76px; margin: 0; opacity: 0; pointer-events: none;
+  position: absolute; z-index: 5; top: -13px; right: 0; width: 76px; height: 76px; margin: 0; opacity: 0; pointer-events: none;
   mix-blend-mode: multiply; transform: rotate(-8deg); touch-action: manipulation; -webkit-user-select: none; user-select: none;
 }
 .seal svg { display: block; width: 100%; height: 100%; overflow: visible; }
@@ -387,13 +391,205 @@ dialog.plain form { margin-top: 10px; text-align: right; }
   .sheet:nth-of-type(odd), .sheet:nth-of-type(even) { transform: none; }
 }
 
+/* Atmosphere: motes, props, slips, pencil marginalia */
+:root { --dw: 720px; }
+@media (min-width: 900px) and (max-height: 800px) { :root { --dw: min(94vw, 1000px); } }
+.motes { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.mote { position: absolute; border-radius: 50%; background: rgba(255, 225, 170, .55); opacity: 0; animation: mote linear infinite; will-change: transform, opacity; }
+@keyframes mote { 0% { transform: translate(0, 0); opacity: 0; } 15% { opacity: .55; } 85% { opacity: .45; } 100% { transform: translate(var(--dx), var(--dy)); opacity: 0; } }
+.motes.paused .mote { animation-play-state: paused; }
+
+.slip {
+  position: fixed; z-index: 60; left: 50%; bottom: 18px; max-width: min(420px, calc(100vw - 32px)); padding: 12px 18px; pointer-events: none;
+  background: #FBF6EA; color: var(--ink); border: 1px solid var(--brass-art); border-radius: 4px; box-shadow: 0 8px 22px rgba(0, 0, 0, .45);
+  font-style: italic; font-size: 15px; line-height: 1.4; text-align: center; opacity: 0; transform: translate(-50%, 10px) rotate(-.6deg); visibility: hidden;
+  transition: opacity .35s var(--ease), transform .35s var(--ease), visibility 0s .35s;
+}
+.slip.show { opacity: 1; visibility: visible; transform: translate(-50%, 0) rotate(-.6deg); transition-delay: 0s; }
+
+.props { display: none; }
+@media (min-width: 1100px) {
+  .props { display: block; position: absolute; z-index: 2; left: 0; right: 0; top: 96px; height: 0; pointer-events: none; }
+  .props-l, .props-r, .props-l-btn { position: absolute; width: min(230px, calc(50vw - max(var(--dw), 760px) / 2 - 30px)); pointer-events: none; }
+  .props-l { right: calc(50% + max(var(--dw), 760px) / 2 + 22px); }
+  .props-r { left: calc(50% + max(var(--dw), 760px) / 2 + 22px); }
+  .props-l svg, .props-r svg { display: block; width: 100%; height: auto; filter: drop-shadow(0 8px 10px rgba(0, 0, 0, .4)); }
+  .props-l .p-lamp { width: 70%; margin-left: 20%; }
+  .props-r .p-mag { width: 56%; margin-left: 10%; }
+  .props-r .p-pens { width: 80%; margin-top: 18px; }
+  .props-r .p-book { width: 60%; margin: 14px 0 0 28%; }
+  .props-l-btn { right: calc(50% + max(var(--dw), 760px) / 2 + 22px); top: 220px; }
+  .teacup { pointer-events: auto; display: block; width: 62%; margin-left: 24%; padding: 6px; background: none; border: 0; cursor: pointer; border-radius: 12px; }
+  .teacup:focus-visible { outline-color: var(--highlighter); }
+  .teacup svg { filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .4)); }
+  .teacup .steam path { opacity: .0; animation: steam 5s ease-in-out infinite; transform-box: fill-box; }
+  .teacup .steam path:nth-child(2) { animation-delay: 1.4s; } .teacup .steam path:nth-child(3) { animation-delay: 2.8s; }
+  .teacup.puff .steam path { animation-duration: 1.2s; animation-iteration-count: 2; }
+}
+@keyframes steam { 0% { opacity: 0; transform: translateY(6px); } 30% { opacity: .55; } 100% { opacity: 0; transform: translateY(-10px); } }
+@media (min-width: 900px) and (max-height: 800px) and (max-width: 1299px) { .props { display: none; } }
+@media (min-width: 900px) { .rail { left: calc(50% - max(var(--dw), 760px) / 2 - 22px); } }
+
+/* pencil marginalia: faint until the lamp passes */
+.pencil {
+  position: absolute; z-index: 1; top: 3px; right: 14px; max-width: 58%; margin: 0; padding: 0; pointer-events: none;
+  font-family: var(--serif); font-style: italic; font-size: 12px; line-height: 1.25; color: var(--pencil); text-align: right;
+  opacity: 0; transform: rotate(-1.4deg); transition: opacity .45s var(--ease);
+}
+.pencil.lit { opacity: .88; }
+.pencil.under { top: auto; right: auto; left: 14px; bottom: -22px; max-width: calc(100% - 28px); color: rgba(246, 240, 227, .85); text-align: left; }
+.hint-slip {
+  position: relative; width: calc(100vw - 20px); max-width: 560px; margin: 30px auto 10px; padding: 8px 8px 8px 16px; display: flex; align-items: center; gap: 10px;
+  background: #FBF6EA; color: var(--ink); border: 1px dashed var(--brass-art); border-radius: 4px; font-style: italic; font-size: 14px; line-height: 1.35;
+}
+.hint-slip p { flex: 1; }
+.hint-slip .btn { min-height: 44px; }
+
+/* Top bar extras, clues, notebook, briefing, board, Fair warning, chapter seals */
+@media (max-width: 420px) { .brand { letter-spacing: .07em; font-size: 13px; } }
+.tb-btn.clues { flex-direction: column; gap: 0; padding: 2px 10px; line-height: 1.1; }
+.tb-btn .l1 { font-size: 13px; } .tb-btn .l2 { font-size: 11px; font-weight: 500; opacity: .88; white-space: nowrap; }
+.ping { animation: ping .3s ease-out; }
+@keyframes ping { 50% { transform: scale(1.08); box-shadow: 0 0 0 4px rgba(184, 135, 43, .4); } }
+
+/* clue magnifiers peek from the sheet's edge */
+.clue-tag { position: absolute; z-index: 3; top: -24px; width: 44px; height: 44px; padding: 0; background: none; border: 0; border-radius: 10px; cursor: pointer; }
+.clue-tag.bottom { top: auto; bottom: -24px; }
+.tag-art { position: absolute; left: 4px; top: 0; width: 36px; height: 26px; padding-top: 3px; display: flex; justify-content: center; align-items: flex-start; color: #3a2706;
+  background: linear-gradient(#E2BE6A, var(--brass-art)); border-radius: 8px 8px 3px 3px; box-shadow: 0 2px 4px rgba(0, 0, 0, .4); animation: wobble 8s ease-in-out infinite; transform-origin: 50% 100%; }
+.clue-tag.bottom .tag-art { top: auto; bottom: 0; padding: 0 0 3px; align-items: flex-end; border-radius: 3px 3px 8px 8px; transform-origin: 50% 0; }
+.tag-art svg { width: 17px; height: 17px; }
+.clue-tag:hover .tag-art { filter: brightness(1.08); }
+@keyframes wobble { 0%, 90%, 100% { transform: rotate(0); } 92% { transform: rotate(-7deg); } 94% { transform: rotate(6deg); } 96% { transform: rotate(-4deg); } 98% { transform: rotate(2deg); } }
+
+dialog.clue-dlg { width: min(420px, calc(100vw - 24px)); padding: 18px 18px 14px; background: var(--paper); color: var(--ink); border: 1px solid var(--brass-art); border-radius: 6px; box-shadow: 0 20px 60px rgba(0, 0, 0, .6); }
+dialog.clue-dlg::backdrop, dialog.notebook::backdrop { background: rgba(10, 16, 13, .7); }
+.clue-text { font-size: 18px; line-height: 1.45; margin: 8px 0; }
+.clue-src { font-family: var(--type); font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+.clue-actions { text-align: right; margin-top: 8px; }
+
+dialog.notebook { position: fixed; inset: 0 0 0 auto; margin: 0; width: min(100vw, 440px); height: 100%; max-width: 100vw; max-height: 100%; padding: 16px 18px 28px 26px; overflow: auto;
+  background: var(--paper); color: var(--ink); border: 0; border-left: 12px solid var(--brass-art); box-shadow: -10px 0 30px rgba(0, 0, 0, .5); }
+dialog.notebook[open] { animation: nbin .35s var(--ease); }
+@keyframes nbin { from { transform: translateX(100%); } }
+.nb-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.nb-head h2 { font-family: var(--display); font-size: 26px; font-weight: 700; }
+.nb-close { font-size: 26px; line-height: 1; padding: 0 12px; }
+.nb-rank { margin-top: 2px; font-family: var(--type); font-weight: 700; font-size: 13px; color: var(--brass-text); letter-spacing: .04em; }
+.nb-prog { display: flex; align-items: center; gap: 10px; margin: 12px 0 4px; }
+.dots i { display: inline-block; width: 12px; height: 12px; margin-right: 6px; border-radius: 50%; border: 2px solid var(--brass-text); }
+.dots i.on { background: var(--brass-art); }
+.nb-count { font-family: var(--type); font-size: 13px; color: var(--muted); }
+.nb-empty, .nb-done { font-style: italic; color: var(--muted); margin: 8px 0; }
+.nb-list { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 12px; }
+.nb-list li { padding: 10px 12px; border-left: 3px solid var(--brass-art); background: rgba(255, 253, 246, .7); }
+.nb-list .ct { font-size: 16px; line-height: 1.45; }
+.nb-list .cs { font-family: var(--type); font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+.nb-list .locked { border-left-style: dashed; opacity: .85; } .nb-list .locked .ct { color: var(--muted); letter-spacing: .15em; }
+
+/* highlighting a lead's exhibits */
+.sheet.hl .tab, .dossier.hl .mtab { box-shadow: 0 0 0 3px rgba(247, 231, 161, .95), 0 0 18px 5px rgba(226, 190, 106, .85); transition: box-shadow .3s; }
+.sheet.hl { outline: 2px solid rgba(226, 190, 106, .7); outline-offset: 3px; }
+
+/* the briefing */
+.sheet.brief { padding-top: 14px; }
+.envelope { position: relative; }
+.env-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%; min-height: 44px; padding: 4px 0; background: none; border: 0; color: var(--ink); cursor: pointer; }
+.env-art { position: relative; display: block; width: min(250px, 80%); height: 104px; perspective: 600px; transition: height .4s var(--ease); }
+.env-body { position: absolute; inset: 24px 0 0 0; background: linear-gradient(#EADFC6, #E0D2B1); border: 1px solid #cdbb91; border-radius: 3px; box-shadow: 0 3px 8px rgba(0, 0, 0, .25); }
+.env-flap { position: absolute; left: 0; right: 0; top: 24px; height: 58px; background: linear-gradient(#F1E7CF, #E3D5B4); clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top; transition: transform .4s var(--ease); }
+.env-wax { position: absolute; left: 50%; top: 66px; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #E8604A, #B42A18); box-shadow: 0 2px 3px rgba(0, 0, 0, .35); transition: opacity .3s; }
+.env-cap { font-weight: 600; font-size: 15px; color: var(--brass-text); }
+.sheet.open .env-flap { transform: rotateX(180deg); }
+.sheet.open .env-wax, .sheet.open .env-cap { opacity: 0; }
+.sheet.open .env-cap { display: none; }
+.sheet.open .env-art { height: 50px; }
+.sheet.open .env-btn { cursor: default; min-height: 0; }
+.letter { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s var(--ease); }
+.sheet.open .letter { grid-template-rows: 1fr; }
+.letter-in { min-height: 0; overflow: hidden; padding: 0 4px; }
+.paper { position: relative; margin: 4px 0 6px; padding: 16px 14px 14px; background: #FFFCF3; border: 1px solid var(--paper-edge); box-shadow: 0 2px 6px rgba(0, 0, 0, .15); opacity: 0; transform: translateY(24px); transition: transform .45s var(--ease) .1s, opacity .3s ease .1s; }
+.sheet.open .paper { opacity: 1; transform: none; }
+.greeting { font-family: var(--display); font-weight: 700; font-size: 24px; line-height: 1.2; padding-right: 48px; }
+.summary { margin-top: 10px; font-size: 17px; line-height: 1.55; }
+.coffee-ring { position: absolute; top: 2px; right: 2px; width: 48px; height: 48px; padding: 4px; background: none; border: 0; cursor: pointer; opacity: .07; border-radius: 50%; transition: opacity .3s; }
+.coffee-ring:hover, .coffee-ring:focus-visible { opacity: .35; }
+.coffee-ring svg { display: block; width: 100%; height: 100%; }
+.leads-title { margin-top: 16px; font-family: var(--display); font-size: 20px; font-weight: 650; }
+.leads-hint { color: var(--muted); font-size: 14px; margin-top: 2px; }
+.leads { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.lead { position: relative; min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 28px; text-align: left; cursor: pointer; font-family: var(--serif); font-size: 14px; line-height: 1.25; color: var(--ink);
+  background: linear-gradient(#F3E2B3, #E8CF8C); border: 1.5px solid var(--brass-art); border-radius: 6px 14px 14px 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, .18); transition: transform .12s, box-shadow .25s; }
+.lead::before { content: ""; position: absolute; left: 9px; top: 50%; width: 9px; height: 9px; margin-top: -4.5px; border-radius: 50%; background: #FFFCF3; border: 1.5px solid var(--brass-art); }
+.lead svg { flex: 0 0 auto; width: 16px; height: 16px; color: var(--brass-text); }
+.lead:hover { box-shadow: 0 3px 8px rgba(120, 90, 40, .35); }
+.lead:active { transform: translateY(1px); }
+.lead[aria-pressed="true"] { background: linear-gradient(#EBD49B, #DDBE70); border-color: var(--brass-text); }
+.lead.notyet { border-style: dashed; background: #FBF6EA; }
+.lead .ny { display: block; font-family: var(--type); font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: .04em; }
+.lead-info { margin-top: 12px; }
+.lead-info p { padding: 10px 12px; margin-top: 6px; background: #FBF6EA; border-left: 3px solid var(--brass-art); font-size: 15px; line-height: 1.45; }
+.bpins { display: none; list-style: none; margin: 0; padding: 0; }
+.board-strings { display: none; }
+.page-strings { position: absolute; left: 0; top: 0; width: 100%; z-index: 8; pointer-events: none; overflow: visible; }
+.string-path { stroke: var(--string); stroke-width: 2.2; stroke-linecap: round; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .35)); }
+@media (min-width: 768px) {
+  .cork { position: relative; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 56px; margin-top: 12px; padding: 18px; border: 7px solid #6b4a24; border-radius: 6px;
+    background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, .12), transparent 40%), repeating-radial-gradient(circle at 30% 40%, rgba(90, 58, 24, .18) 0 2px, transparent 2px 7px), #B98B58; box-shadow: inset 0 2px 10px rgba(0, 0, 0, .35); }
+  .cork .leads { flex-direction: column; flex-wrap: nowrap; margin: 0; gap: 12px; }
+  .cork .lead { width: 100%; background: #FBF6EA; border-radius: 3px; transform: rotate(-.6deg); }
+  .cork .leads li:nth-child(even) .lead { transform: rotate(.7deg); }
+  .cork .lead[aria-pressed="true"] { background: #F7E7A1; }
+  .bpins { display: flex; flex-direction: column; gap: 8px; }
+  .board-strings { display: block; position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+  .bpin { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 4px 10px 4px 8px; text-align: left; cursor: pointer; font-family: var(--serif); font-size: 13px; line-height: 1.2; color: var(--ink);
+    background: rgba(251, 246, 234, .94); border: 1px solid #8a6a3a; border-radius: 3px; }
+  .bpin .plbl { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .bpin .dot { flex: 0 0 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #d8d2c0 60%, #999); border: 1px solid #777; box-shadow: 0 2px 2px rgba(0, 0, 0, .3); }
+  .bpin.reached .dot { background: radial-gradient(circle at 35% 30%, #F7E7A1, #B8872B 70%); border-color: #7a5714; }
+  .bpin.pulse .dot { animation: pinpulse 1s ease-in-out 3; }
+}
+@keyframes pinpulse { 50% { transform: scale(1.4); } }
+
+/* Fair warning */
+.sheet-title { font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1.15; margin: 6px 0 4px; }
+.sheet .sub { color: var(--muted); margin: 2px 0 18px; }
+.icards { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
+.icard { position: relative; padding: 14px 14px 2px; background: #FFFDF6 repeating-linear-gradient(transparent 0 25px, rgba(47, 93, 138, .11) 25px 26px); border: 1px solid var(--paper-edge); border-top: 3px solid #C8D6E8; box-shadow: 0 2px 5px rgba(0, 0, 0, .2); transform: rotate(-.5deg); }
+.icard.c1 { transform: rotate(.45deg); } .icard.c2 { transform: rotate(-.3deg); }
+.paperclip { position: absolute; top: -16px; right: 22px; width: 22px; height: 52px; pointer-events: none; }
+.paperclip svg { width: 100%; height: 100%; }
+.ic-btn { width: 100%; min-height: 44px; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 4px 0 8px; background: none; border: 0; text-align: left; cursor: pointer; font-family: var(--display); font-weight: 650; font-size: 19px; line-height: 1.25; color: var(--ink); }
+.ic-btn svg { flex: 0 0 auto; width: 22px; height: 22px; color: var(--brass-text); transition: transform .3s var(--ease); }
+.icard.open .ic-btn svg { transform: rotate(180deg); }
+.ic-body { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows .4s var(--ease), visibility 0s .4s; }
+.icard.open .ic-body { grid-template-rows: 1fr; visibility: visible; transition-delay: 0s; }
+.ic-in { min-height: 0; overflow: hidden; }
+.ic-in p { padding: 0 0 14px; font-size: 16px; line-height: 1.55; }
+.against .after { margin-top: 20px; font-style: italic; color: var(--muted); }
+
+/* chapter seals */
+.seal-note { position: relative; width: calc(100vw - 20px); max-width: 620px; margin: -8px auto 22px; perspective: 700px; filter: drop-shadow(0 3px 5px rgba(0, 0, 0, .4)); }
+.seal-btn { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; width: 100%; min-height: 56px; padding: 12px 16px 12px 20px; text-align: left; cursor: pointer; color: var(--ink);
+  background: linear-gradient(135deg, #FBF6EA, #F1E7CE); border: 0; clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%); transform-origin: top; transition: filter .25s; }
+.seal-btn::after { content: ""; position: absolute; right: 0; top: 0; width: 22px; height: 22px; background: linear-gradient(225deg, transparent 50%, #d9ccaa 50%); }
+.seal-btn:hover { filter: brightness(1.04); }
+.seal-btn:focus-visible { outline-offset: -5px; }
+.sc-cue { flex-basis: 100%; font-family: var(--type); font-weight: 700; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--brass-text); }
+.sc-q { flex: 1; font-style: italic; font-size: 17px; line-height: 1.3; }
+.seal-btn svg { width: 20px; height: 20px; color: var(--string); flex: 0 0 auto; }
+.seal-note .clip { position: absolute; z-index: 2; right: 64px; top: -9px; width: 12px; height: 28px; border: 2.5px solid var(--brass-art); border-radius: 6px; }
+.seal-note:not(.unfolded) .seal-btn { transform: rotateX(-82deg); opacity: 0; }
+.seal-note.unfolded .seal-btn { transform: none; opacity: 1; transition: transform .5s var(--ease), opacity .4s ease, filter .25s; }
+
 </style>
 
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to the file</a>
 <div class="desk" aria-hidden="true"></div>
-<div class="lamp" aria-hidden="true"></div>
+<div class="lamp" aria-hidden="true"><i class="lamp-glow"></i></div>
+<div class="motes" aria-hidden="true"></div>
 <div class="page" id="page">
   <header class="topbar" id="topbar" role="banner">
     <p class="brand">CASE FILE No. 001</p>
@@ -446,6 +642,8 @@ function fill(el, attrs, kids) {
     el.appendChild(typeof kid === 'string' ? document.createTextNode(kid) : kid);
   }
 }
+/* Append children, skipping null/false (native append() would print the word "null"). */
+function put(el, ...kids) { fill(el, null, kids); return el; }
 const has = (v) => typeof v === 'string' ? v.trim().length > 0 : Array.isArray(v) ? v.length > 0 : !!v;
 const clamp01 = (x) => x < 0 ? 0 : x > 1 ? 1 : x;
 const easeOut = (x) => 1 - Math.pow(1 - clamp01(x), 3);
@@ -468,6 +666,18 @@ CF.icon = function (name) {
     menu: [s('path', { d: 'M4 7 H20 M4 12 H20 M4 17 H20' })],
   };
   return s('svg', a, paths[name] || []);
+};
+
+/* Keep Tab inside a modal dialog (native dialogs already make the rest of the page inert; this stops focus escaping to browser chrome). */
+CF.trapFocus = function (dlg) {
+  dlg.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    const f = [...dlg.querySelectorAll('button, a[href], input, [tabindex]:not([tabindex="-1"])')].filter((x) => !x.disabled && x.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && (document.activeElement === first || !dlg.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && (document.activeElement === last || !dlg.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
+  });
 };
 
 /* ---- 10-engine.js ---- */
@@ -536,32 +746,77 @@ CF.engine = (function () {
 })();
 
 /* ---- 20-shell.js ---- */
-/* The cosy shell: top bar, jump menu, red string rail, footer, section registry.
+/* The cosy shell: section registry, chapters, top bar, jump menu, red string rail, footer.
    A section renders nothing when its content is empty. */
-CF.sections = [
-  /* id, label used in the jump menu when no chapter title exists, mount(data, parent) -> element | null */
-  { id: 'exhibit0', fallback: '', mount: (d, parent) => CF.mountOpening(d, parent) },
-];
+CF.order = ['exhibit0', 'brief', 'against', 'exhibitA', 'exhibitB', 'ledger', 'decisions', 'effects', 'lab', 'wispr', 'locker', 'closing', 'exhibitZ'];
+CF.defs = {};
+CF.defineSection = (id, mount) => { CF.defs[id] = mount; };
+CF.reached = new Set();
+
+const SECTION_TITLE_KEY = { against: 'warningTitle', ledger: 'ledgerTitle', decisions: 'decisionsTitle', lab: 'labTitle', wispr: 'wisprTitle', effects: 'effectsTitle', locker: 'lockerTitle', closing: 'closingTitle' };
+
+/* The name of a section for pins, menus and the notebook: chapter title when it anchors a chapter, otherwise ui.*Title or the exhibit title. */
+CF.sectionLabel = function (id) {
+  const d = CF.data || {};
+  const c = (d.chapters || []).find((x) => x.section === id);
+  if (c && has(c.title)) return c.title;
+  const k = SECTION_TITLE_KEY[id];
+  if (k && d.ui && has(d.ui[k])) return d.ui[k];
+  if ((id === 'exhibitA' || id === 'exhibitB') && d[id] && has(d[id].title)) return d[id].title;
+  if (id === 'exhibit0' && d.exhibit0) return d.exhibit0.label || '';
+  return '';
+};
+
+/* A sheet: cream paper with a brass index tab. Pass the section id, the tab letter and the heading text; the rest are children. */
+CF.sheet = function (id, opts, ...kids) {
+  opts = opts || {};
+  return h('section', { class: 'sheet' + (opts.cls ? ' ' + opts.cls : ''), id, 'data-section': id, 'aria-labelledby': opts.title ? id + '-h' : opts.labelledby },
+    h('div', { class: 'tab', 'aria-hidden': 'true' }, has(opts.tab) ? h('span', { class: 'tl', text: opts.tab }) : null, h('span', { class: 'chap' })),
+    opts.title ? h('h2', { class: 'sheet-title', id: id + '-h', text: opts.title }) : null, ...kids);
+};
 
 CF.shell = (function () {
-  let data, visible = [];
+  let data;
+  const visible = [];
 
-  function chapterTitle(id) {
-    const c = (data.chapters || []).find((x) => x.section === id);
-    return c && has(c.title) ? c.title : '';
+  /* ---- chapters: each chapter owns the sheets after the previous chapter's anchor up to its own anchor ---- */
+  function computeChapters() {
+    const idx = (id) => CF.order.indexOf(id);
+    const list = (data.chapters || []).filter((c) => idx(c.section) >= 0).sort((a, b) => idx(a.section) - idx(b.section));
+    let prev = -1;
+    const out = [];
+    list.forEach((c) => {
+      const a = idx(c.section);
+      const members = CF.order.filter((id, i) => i > prev && i <= a && visible.includes(id));
+      prev = a;
+      if (members.length) out.push({ chapter: c, members });
+    });
+    return out;
+  }
+  function finalizeChapters() {
+    const chs = computeChapters();
+    CF.chapters = chs;
+    const N = chs.length;
+    chs.forEach((c, i) => {
+      c.members.forEach((id) => {
+        const el = document.getElementById(id);
+        const lab = el && el.querySelector('.tab .chap');
+        if (lab && N >= 2) lab.textContent = 'Chapter ' + (i + 1) + ' of ' + N;
+      });
+      const next = chs[i + 1];
+      if (i > 0 && next && has(c.chapter.teaser) && CF.makeSeal) {
+        const last = document.getElementById(c.members[c.members.length - 1]);
+        last.after(CF.makeSeal(c.chapter, document.getElementById(next.members[0])));
+      }
+    });
+    CF.chapterNumber = (id) => { const i = chs.findIndex((c) => c.members.includes(id)); return i < 0 ? null : { n: i + 1, total: N }; };
   }
 
-  /* Chapter n of N counts only visible chapters. */
-  function chapterNumber(id) {
-    const ids = visible.filter((v) => (data.chapters || []).some((c) => c.section === v));
-    const i = ids.indexOf(id);
-    return i < 0 ? null : { n: i + 1, total: ids.length };
-  }
-
+  /* ---- jump menu ---- */
   function buildJump() {
     const nav = document.getElementById('jump');
     const right = document.getElementById('topbar-right');
-    const entries = visible.map((id) => ({ id, title: chapterTitle(id) })).filter((e) => e.title);
+    const entries = CF.chapters.map((c) => ({ id: c.members[0], title: c.chapter.title }));
     if (entries.length < 2) return;
     const btn = h('button', { class: 'tb-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'jump', 'aria-label': 'Chapters' }, CF.icon('menu'));
     nav.appendChild(h('ol', null, entries.map((e, i) => h('li', null, h('a', { href: '#' + e.id }, h('span', { class: 'n', text: String(i + 1) }), h('span', { text: e.title }))))));
@@ -573,50 +828,68 @@ CF.shell = (function () {
     right.appendChild(btn);
   }
 
-  /* The red string rail is decoration: it draws with scroll, pins fill when reached. No taps. */
+  /* ---- the red string rail (decoration: draws with scroll, pins fill when reached, no taps) ---- */
+  const pins = {};
   function buildRail() {
     const rail = document.getElementById('rail');
     const page = document.getElementById('page');
-    const pins = visible.map((id) => { const el = h('i', { class: 'pin' }); rail.appendChild(el); return { id, el }; });
+    visible.forEach((id) => { const el = h('i', { class: 'pin', 'data-id': id }); rail.appendChild(el); pins[id] = el; });
     let ticking = false;
-    const place = () => {
-      const base = page.getBoundingClientRect().top + window.scrollY + 44;
-      pins.forEach((p) => {
-        const sec = document.getElementById(p.id);
-        if (sec) p.el.style.top = Math.max(0, sec.getBoundingClientRect().top + window.scrollY - base) + 'px';
+    const place = (silent) => {
+      const base = rail.getBoundingClientRect().top + window.scrollY;
+      visible.forEach((id) => {
+        const sec = document.getElementById(id);
+        if (sec) pins[id].style.top = Math.max(0, Math.round(sec.getBoundingClientRect().top + window.scrollY - base)) + 'px';
       });
       update();
+      if (silent !== true) document.dispatchEvent(new CustomEvent('cf:layout'));
     };
     const update = () => {
       ticking = false;
       const doc = document.documentElement;
       const max = Math.max(1, doc.scrollHeight - window.innerHeight);
-      const prog = clamp01(window.scrollY / max);
-      rail.style.setProperty('--prog', prog.toFixed(4));
-      const mid = window.scrollY + window.innerHeight * 0.6;
-      pins.forEach((p) => {
-        const sec = document.getElementById(p.id);
-        p.el.classList.toggle('reached', !!sec && sec.getBoundingClientRect().top + window.scrollY < mid);
+      rail.style.setProperty('--prog', clamp01(window.scrollY / max).toFixed(4));
+      const mid = window.scrollY + window.innerHeight * 0.65;
+      let changed = false;
+      visible.forEach((id) => {
+        const sec = document.getElementById(id);
+        if (sec && !CF.reached.has(id) && sec.getBoundingClientRect().top + window.scrollY < mid) { CF.reached.add(id); pins[id].classList.add('reached'); changed = true; }
       });
+      if (changed) document.dispatchEvent(new CustomEvent('cf:reached'));
     };
     window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-    window.addEventListener('resize', place);
-    window.addEventListener('load', place);
+    window.addEventListener('resize', () => place());
+    if (window.ResizeObserver) new ResizeObserver(() => place()).observe(document.getElementById('main'));
+    CF.rail = { pins, place, rail, page };
     place();
   }
 
   function mountAll() {
     const main = document.getElementById('main');
-    CF.sections.forEach((def) => {
-      const el = def.mount(data, main);
-      if (el) visible.push(def.id);
+    CF.order.forEach((id) => {
+      const fn = CF.defs[id];
+      if (!fn) return;
+      const el = fn(data, main);
+      if (!el) return;
+      if (!el.parentNode) main.appendChild(el);
+      visible.push(id);
     });
     CF.visibleSections = visible;
-    CF.chapterNumber = chapterNumber;
     const foot = document.getElementById('foot');
     if (data.ui && has(data.ui.footer)) foot.textContent = data.ui.footer; else foot.hidden = true;
+    finalizeChapters();
+    if (CF.clues) CF.clues.init();
     buildJump();
     buildRail();
+    if (CF.board) CF.board.afterRail();
+    CF.atmosphere.init();
+    // the lamp hint appears once, only when there are pencil notes to find, and can be dismissed
+    const opening = document.getElementById('exhibit0');
+    if (opening && document.querySelector('.pencil') && data.ui && has(data.ui.marginaliaHint) && !store.get('hintDismissed', false)) {
+      const slip = h('div', { class: 'hint-slip', role: 'note' }, h('p', { text: data.ui.marginaliaHint }),
+        h('button', { class: 'btn', type: 'button', 'aria-label': 'Close', onclick: () => { store.set('hintDismissed', true); slip.remove(); } }, h('span', { 'aria-hidden': 'true', text: '×' })));
+      opening.after(slip);
+    }
     document.documentElement.classList.add('ready');
   }
 
@@ -750,7 +1023,7 @@ CF.mountOpening = function (data, mount) {
       ['Status', custody.status], ['Note', custody.note],
     ].filter((r) => has(r[1]));
     chipPanel.textContent = '';
-    chipPanel.append(h('h3', { text: ui.custody || '' }),
+    put(chipPanel, h('h3', { text: ui.custody || '' }),
       h('dl', null, rows.map((r) => [h('dt', { text: r[0] }), h('dd', { text: r[1] })])),
       custody.verified === true ? h('span', { class: 'stamp-verified', text: 'VERIFIED' }) : null);
   }
@@ -783,7 +1056,7 @@ CF.mountOpening = function (data, mount) {
   function openPlain() {
     const take = takes[S.takeIdx];
     plain.textContent = '';
-    plain.append(
+    put(plain, 
       h('h2', { id: 'cf-plain-h', text: ui.raw || '' }),
       ...take.raw.split(/\n\s*\n/).map((p) => h('p', { class: 'rawp', text: p.replace(/\s+/g, ' ').trim() })),
       h('h2', { text: ui.flow || '' }),
@@ -792,6 +1065,7 @@ CF.mountOpening = function (data, mount) {
     if (typeof plain.showModal === 'function') plain.showModal(); else plain.setAttribute('open', '');
   }
   plain.addEventListener('click', (e) => { if (e.target === plain) plain.close(); });
+  CF.trapFocus(plain);
 
   /* screen readers get both texts; the animated block is decoration of the same words */
   const a11y = h('div', { class: 'sr-only', id: 'cf-a11y' });
@@ -812,7 +1086,7 @@ CF.mountOpening = function (data, mount) {
       h('div', { class: 'slabels', 'aria-hidden': 'true' }, h('span', { text: ui.raw || '' }), h('span', { text: ui.flow || '' }))),
     h('div', { class: 'slot' }, hint, tagline),
     h('div', { class: 'aids' }, legend, h('div', { class: 'chipwrap' }, chip, chipPanel), controls),
-    cueWrap, plain);
+    cueWrap, plain, CF.pencil(custody.source, 'under'));
 
   /* ---------- tokens ---------- */
   function mountTokens() {
@@ -1061,6 +1335,464 @@ CF.mountOpening = function (data, mount) {
   };
   return root;
 };
+
+CF.defineSection('exhibit0', (d, main) => CF.mountOpening(d, main));
+
+/* ---- 40-atmosphere.js ---- */
+/* The cosy desk: lamp that follows a pointer or finger or focus, dust motes, desk props, tea, small slips, pencil marginalia.
+   Everything decorative is aria-hidden and pointer-events:none (the teacup and the coffee ring are real buttons). Transform and opacity only. */
+CF.slip = (function () {
+  let el = null, timer = 0;
+  return function (text, ms) {
+    if (!has(text)) return;
+    if (!el) { el = h('div', { class: 'slip', role: 'status', 'aria-live': 'polite' }); document.body.appendChild(el); }
+    el.textContent = text;
+    el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
+    clearTimeout(timer);
+    timer = setTimeout(() => el.classList.remove('show'), ms || 4000);
+  };
+})();
+
+/* A pencil note in a sheet margin: only ever a source line that already exists in content. */
+CF.pencil = function (text, extraClass) {
+  return has(text) ? h('p', { class: 'pencil ' + (extraClass || ''), 'aria-hidden': 'true', text }) : null;
+};
+
+CF.atmosphere = (function () {
+  const ui = () => (CF.data && CF.data.ui) || {};
+  const glow = document.querySelector('.lamp-glow');
+  const lamp = document.querySelector('.lamp');
+  let tx = window.innerWidth / 2, ty = window.innerHeight * 0.14, cx = tx, cy = ty, raf = 0;
+  let ptr = null; // last real pointer/finger position (viewport px), drives the pencil notes
+  let lit = new Set();
+
+  function draw() {
+    cx += (tx - cx) * 0.14; cy += (ty - cy) * 0.14;
+    const done = Math.abs(tx - cx) < 0.5 && Math.abs(ty - cy) < 0.5;
+    if (done) { cx = tx; cy = ty; }
+    glow.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0)';
+    updateNotes(cx, cy);
+    raf = done ? 0 : requestAnimationFrame(draw);
+  }
+  function moveLamp(x, y) {
+    if (CF.reduced) { updateNotes(x, y); return; } // static, centred lamp; notes still answer to the pointer
+    tx = x; ty = y;
+    if (!raf) raf = requestAnimationFrame(draw);
+  }
+
+  /* pencil notes light up inside the lamp circle (or when focus is inside their sheet) */
+  function updateNotes(x, y) {
+    const r = 150;
+    document.querySelectorAll('.pencil').forEach((n) => {
+      const b = n.getBoundingClientRect();
+      const dx = Math.max(b.left - x, 0, x - b.right), dy = Math.max(b.top - y, 0, y - b.bottom);
+      const on = Math.hypot(dx, dy) < r || n.closest('.sheet, .dossier').classList.contains('lit-sheet');
+      n.classList.toggle('lit', on);
+    });
+  }
+
+  function buildMotes() {
+    const box = document.querySelector('.motes');
+    if (CF.reduced || !box) return;
+    let seed = 7;
+    const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    for (let i = 0; i < 14; i++) {
+      const m = h('i', { class: 'mote' });
+      const s = 2 + Math.round(rnd() * 2);
+      m.style.cssText = 'left:' + (8 + rnd() * 84).toFixed(1) + '%;top:' + (6 + rnd() * 70).toFixed(1) + '%;width:' + s + 'px;height:' + s + 'px;' +
+        '--dx:' + (-30 + rnd() * 60).toFixed(0) + 'px;--dy:' + (-40 - rnd() * 60).toFixed(0) + 'px;animation-duration:' + (20 + rnd() * 18).toFixed(1) + 's;animation-delay:-' + (rnd() * 20).toFixed(1) + 's';
+      box.appendChild(m);
+    }
+    document.addEventListener('visibilitychange', () => box.classList.toggle('paused', document.hidden));
+  }
+
+  /* desk props (inline SVG, decorative, only at wide viewports via CSS) */
+  const PROPS_L =
+    '<svg class="p-lamp" viewBox="0 0 150 190" focusable="false"><defs><linearGradient id="pbr" x1="0" x2="1"><stop offset="0" stop-color="#8a5e12"/><stop offset=".5" stop-color="#e2be6a"/><stop offset="1" stop-color="#7a5714"/></linearGradient>' +
+    '<linearGradient id="pgl" x1="0" x2="1"><stop offset="0" stop-color="#14402a"/><stop offset=".45" stop-color="#2f7a52"/><stop offset="1" stop-color="#15402b"/></linearGradient></defs>' +
+    '<ellipse cx="75" cy="180" rx="46" ry="8" fill="rgba(0,0,0,.35)"/><path d="M38 178 Q40 160 75 158 Q110 160 112 178 Z" fill="url(#pbr)"/>' +
+    '<rect x="70" y="84" width="10" height="76" rx="3" fill="url(#pbr)"/><path d="M14 74 Q75 4 136 74 L124 90 Q75 52 26 90 Z" fill="url(#pgl)"/>' +
+    '<path d="M32 62 Q75 22 118 62" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="3" stroke-linecap="round"/><rect x="66" y="80" width="18" height="8" rx="3" fill="url(#pbr)"/>' +
+    '<path d="M118 84 q8 8 6 22" fill="none" stroke="#c9a24a" stroke-width="2"/><circle cx="124" cy="108" r="3" fill="#e2be6a"/></svg>';
+  const TEACUP =
+    '<svg viewBox="0 0 130 110" focusable="false"><ellipse cx="65" cy="100" rx="56" ry="8" fill="rgba(0,0,0,.3)"/><ellipse cx="65" cy="94" rx="54" ry="9" fill="#efe6cf" stroke="#c9b98f"/>' +
+    '<path d="M28 52 H102 Q102 90 65 90 Q28 90 28 52 Z" fill="#f6f0e3" stroke="#c9b98f" stroke-width="1.5"/><ellipse cx="65" cy="52" rx="37" ry="7" fill="#7a4a22"/>' +
+    '<path d="M102 58 Q126 56 120 74 Q115 82 100 78" fill="none" stroke="#c9b98f" stroke-width="5" stroke-linecap="round"/>' +
+    '<g class="steam" fill="none" stroke="rgba(246,240,227,.55)" stroke-width="3" stroke-linecap="round"><path d="M52 40 q-8 -10 0 -18 q8 -8 0 -16"/><path d="M68 40 q-8 -10 0 -18 q8 -8 0 -16"/><path d="M84 40 q-8 -10 0 -18 q8 -8 0 -16"/></g></svg>';
+  const PROPS_R =
+    '<svg class="p-mag" viewBox="0 0 130 150" focusable="false"><defs><linearGradient id="pbr2" x1="0" x2="1"><stop offset="0" stop-color="#8a5e12"/><stop offset=".5" stop-color="#e2be6a"/><stop offset="1" stop-color="#7a5714"/></linearGradient></defs>' +
+    '<rect x="68" y="78" width="14" height="62" rx="6" transform="rotate(-35 75 100)" fill="#4a2c14"/><circle cx="52" cy="52" r="34" fill="rgba(255,255,255,.1)" stroke="url(#pbr2)" stroke-width="9"/>' +
+    '<path d="M32 40 Q42 26 58 28" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="4" stroke-linecap="round"/></svg>' +
+    '<svg class="p-pens" viewBox="0 0 150 60" focusable="false"><g transform="rotate(-8 75 30)"><rect x="6" y="12" width="124" height="11" rx="2" fill="#e0a82e"/><path d="M130 12 L148 17.5 L130 23 Z" fill="#e8d3a0"/><path d="M142 15.5 L148 17.5 L142 19.5 Z" fill="#3a3a3a"/><rect x="6" y="12" width="10" height="11" rx="2" fill="#b4472e"/></g>' +
+    '<g transform="rotate(5 75 44)"><rect x="12" y="38" width="118" height="10" rx="2" fill="#2f5d8a"/><path d="M130 38 L146 43 L130 48 Z" fill="#e8d3a0"/><path d="M141 41.5 L146 43 L141 44.5 Z" fill="#3a3a3a"/><rect x="12" y="38" width="9" height="10" rx="2" fill="#c9c9c9"/></g></svg>' +
+    '<svg class="p-book" viewBox="0 0 130 110" focusable="false"><rect x="14" y="10" width="98" height="92" rx="5" fill="#5b2a1e"/><rect x="14" y="10" width="14" height="92" rx="4" fill="#44201a"/>' +
+    '<rect x="32" y="22" width="68" height="60" rx="3" fill="none" stroke="rgba(226,190,106,.5)" stroke-width="2"/><rect x="104" y="46" width="14" height="22" rx="3" fill="#e2be6a" stroke="#8a5e12"/><circle cx="111" cy="57" r="3" fill="#8a5e12"/></svg>';
+
+  function buildProps(page) {
+    const l = h('div', { class: 'props-l', 'aria-hidden': 'true' });
+    l.innerHTML = PROPS_L;
+    const cup = h('button', { class: 'teacup', type: 'button', 'aria-label': 'Teacup' });
+    cup.innerHTML = TEACUP;
+    cup.addEventListener('click', () => {
+      cup.classList.remove('puff'); void cup.offsetWidth; if (!CF.reduced) cup.classList.add('puff');
+      CF.slip(ui().teaSlip, 4000);
+    });
+    const r = h('div', { class: 'props-r', 'aria-hidden': 'true' });
+    r.innerHTML = PROPS_R;
+    // the teacup is a real button, so it lives outside the aria-hidden groups
+    page.insertBefore(h('div', { class: 'props' }, l, h('div', { class: 'props-l-btn' }, cup), r), document.getElementById('topbar').nextSibling);
+  }
+
+  function eggs() {
+    let buf = '';
+    document.addEventListener('keydown', (e) => {
+      const t = e.target;
+      if (t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable)) return;
+      if (e.key.length !== 1 || e.ctrlKey || e.metaKey || e.altKey) return;
+      buf = (buf + e.key.toLowerCase()).slice(-10);
+      if (buf.endsWith('elementary')) {
+        buf = '';
+        if (!CF.reduced) { lamp.classList.remove('flicker'); void lamp.offsetWidth; lamp.classList.add('flicker'); }
+        CF.slip(ui().elementary, 4000);
+      }
+    });
+  }
+
+  function init() {
+    window.addEventListener('pointermove', (e) => { ptr = [e.clientX, e.clientY]; moveLamp(e.clientX, e.clientY); }, { passive: true });
+    window.addEventListener('touchmove', (e) => { const t = e.touches[0]; if (t) { ptr = [t.clientX, t.clientY]; moveLamp(t.clientX, t.clientY); } }, { passive: true });
+    window.addEventListener('scroll', () => { if (ptr) updateNotes(ptr[0], ptr[1]); else updateNotes(cx, cy); }, { passive: true });
+    document.addEventListener('focusin', (e) => {
+      const el = e.target; if (!el.getBoundingClientRect) return;
+      const b = el.getBoundingClientRect();
+      moveLamp(b.left + b.width / 2, b.top + b.height / 2);
+      const sheet = el.closest('.sheet, .dossier'); document.querySelectorAll('.lit-sheet').forEach((s) => s.classList.remove('lit-sheet'));
+      if (sheet) sheet.classList.add('lit-sheet');
+      updateNotes(cx, cy);
+    });
+    document.addEventListener('focusout', () => { document.querySelectorAll('.lit-sheet').forEach((s) => s.classList.remove('lit-sheet')); });
+    buildMotes();
+    buildProps(document.getElementById('page'));
+    eggs();
+    updateNotes(cx, cy);
+  }
+  return { init, refresh: () => updateNotes(cx, cy) };
+})();
+
+/* ---- 50-clues.js ---- */
+/* Clues: small brass magnifiers peeking from sheet edges, the clue notebook (a modal dialog) and the friendly rank. No timers, no scores, nothing locked. */
+CF.clues = (function () {
+  let list = [], found = new Set(), btn = null, notebook = null, d = null;
+  const ui = () => d.ui || {};
+
+  const rankFor = (n) => {
+    const rs = (d.ranks || []).filter((r) => has(r.title)).sort((a, b) => a.minClues - b.minClues);
+    let cur = rs[0] || null;
+    rs.forEach((r) => { if (r.minClues <= n) cur = r; });
+    return cur ? cur.title : '';
+  };
+  const save = () => store.set('found', [...found]);
+  function ping(el) {
+    if (CF.reduced || !el) return;
+    el.classList.remove('ping'); void el.offsetWidth; el.classList.add('ping');
+  }
+
+  function renderButton() {
+    const n = found.size, N = list.length, rank = rankFor(n);
+    btn.textContent = '';
+    put(btn, h('span', { class: 'l1', text: (ui().clues || '') + ' ' + n + '/' + N }), has(rank) ? h('span', { class: 'l2', text: rank }) : null);
+    btn.setAttribute('aria-label', (ui().clues || '') + ' ' + n + ' of ' + N + (has(rank) ? '. ' + (ui().rankLabel || '') + ': ' + rank : ''));
+  }
+
+  function renderNotebook() {
+    const n = found.size, N = list.length, rank = rankFor(n);
+    notebook.textContent = '';
+    const dots = h('div', { class: 'dots', 'aria-hidden': 'true' }, list.map((c) => h('i', { class: found.has(c.id) ? 'on' : '' })));
+    const items = list.map((c, i) => found.has(c.id)
+      ? h('li', { class: 'found' }, h('p', { class: 'ct', text: c.text }), has(c.source) ? h('p', { class: 'cs', text: 'Verified in: ' + c.source }) : null)
+      : h('li', { class: 'locked' }, h('p', { class: 'ct', text: '???' }), h('p', { class: 'cs', text: (ui().clueLocked || '') + ' ' + CF.sectionLabel(c.section) })));
+    put(notebook, 
+      h('div', { class: 'nb-head' }, h('h2', { id: 'nb-h', text: ui().notebookTitle || '' }),
+        h('button', { class: 'btn nb-close', type: 'button', 'aria-label': 'Close', onclick: () => notebook.close() }, h('span', { 'aria-hidden': 'true', text: '×' }))),
+      has(rank) ? h('p', { class: 'nb-rank', text: (ui().rankLabel || '') + ': ' + rank }) : null,
+      h('div', { class: 'nb-prog' }, dots, h('span', { class: 'nb-count', text: n + '/' + N })),
+      n === 0 && has(ui().notebookEmpty) ? h('p', { class: 'nb-empty', text: ui().notebookEmpty }) : null,
+      n === N && has(ui().cluesDone) ? h('p', { class: 'nb-done', text: ui().cluesDone }) : null,
+      h('ol', { class: 'nb-list' }, items));
+  }
+
+  function openNotebook() {
+    renderNotebook();
+    if (typeof notebook.showModal === 'function') notebook.showModal(); else notebook.setAttribute('open', '');
+  }
+
+  function openClue(c, tag) {
+    const i = list.indexOf(c);
+    const dlg = h('dialog', { class: 'clue-dlg', 'aria-labelledby': 'clue-h' });
+    const wasFound = found.has(c.id);
+    put(dlg, 
+      h('h2', { id: 'clue-h', class: 'label-brass', text: 'Clue ' + (i + 1) + ' of ' + list.length }),
+      h('p', { class: 'clue-text', text: c.text }),
+      has(c.source) ? h('p', { class: 'clue-src', text: 'Verified in: ' + c.source }) : null,
+      h('form', { method: 'dialog', class: 'clue-actions' },
+        h('button', { class: 'btn', type: 'submit', text: ui().close || 'Close' })));
+    dlg.addEventListener('close', () => { dlg.remove(); tag.focus({ preventScroll: true }); });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+    CF.trapFocus(dlg);
+    document.body.appendChild(dlg);
+    if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+    if (!wasFound) {
+      const before = rankFor(found.size);
+      found.add(c.id); save(); renderButton();
+      ping(btn);
+      if (rankFor(found.size) !== before) setTimeout(() => ping(btn), 350);
+      document.dispatchEvent(new CustomEvent('cf:clue'));
+    }
+  }
+
+  function init() {
+    d = CF.data;
+    list = (d.clues || []).filter((c) => has(c.text) && CF.visibleSections.includes(c.section));
+    if (!list.length) return;
+    found = new Set((store.get('found', []) || []).filter((id) => list.some((c) => c.id === id)));
+    // tags peek from the top edge of each sheet (from the bottom edge of the opening dossier, whose top edge sits under the top bar)
+    const perSection = {};
+    list.forEach((c) => {
+      const sec = document.getElementById(c.section);
+      if (!sec) return;
+      const k = perSection[c.section] = (perSection[c.section] || 0) + 1;
+      const tag = h('button', { class: 'clue-tag' + (c.section === 'exhibit0' ? ' bottom' : ''), type: 'button', style: 'right:' + (28 + (k - 1) * 46) + 'px', 'aria-label': 'Clue ' + (list.indexOf(c) + 1) + ' of ' + list.length },
+        h('span', { class: 'tag-art', 'aria-hidden': 'true' }, CF.icon('magnifier')));
+      tag.addEventListener('click', () => openClue(c, tag));
+      sec.appendChild(tag);
+    });
+    btn = h('button', { class: 'tb-btn clues', type: 'button', 'aria-haspopup': 'dialog', onclick: openNotebook });
+    document.getElementById('topbar-right').prepend(btn);
+    notebook = h('dialog', { class: 'notebook', 'aria-labelledby': 'nb-h' });
+    notebook.addEventListener('click', (e) => { if (e.target === notebook) notebook.close(); });
+    notebook.addEventListener('close', () => btn.focus({ preventScroll: true }));
+    CF.trapFocus(notebook);
+    document.body.appendChild(notebook);
+    renderButton();
+  }
+  return { init, state: () => ({ found: found.size, total: list.length, rank: d ? rankFor(found.size) : '' }) };
+})();
+
+/* ---- 55-seals.js ---- */
+/* Chapter Seals: a folded note after each chapter with one question about what comes next. Never a claim. Tap or Enter goes to the next chapter. */
+CF.makeSeal = function (chapter, target) {
+  const ui = CF.data.ui || {};
+  const go = () => {
+    if (!target) return;
+    if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+    target.scrollIntoView({ behavior: CF.reduced ? 'auto' : 'smooth', block: 'start' });
+    target.focus({ preventScroll: true });
+  };
+  const btn = h('button', { class: 'seal-btn', type: 'button', onclick: go },
+    h('span', { class: 'sc-cue', text: ui.sealCue || '' }), h('span', { class: 'sc-q', text: chapter.teaser }), CF.icon('down'));
+  const note = h('aside', { class: 'seal-note', 'data-chapter': chapter.id, 'aria-label': ui.sealCue || undefined }, h('i', { class: 'clip', 'aria-hidden': 'true' }), btn);
+  if (CF.reduced || !window.IntersectionObserver) note.classList.add('unfolded');
+  else {
+    const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { note.classList.add('unfolded'); io.disconnect(); } }, { threshold: 0.5 });
+    io.observe(note);
+  }
+  return note;
+};
+
+/* ---- 60-brief.js ---- */
+/* The Briefing: a cream envelope that opens by itself, the leads (luggage tags on phones, the cork case board from 768px),
+   and the red string that runs from a lead to the pins of its exhibits. */
+CF.board = { afterRail() {} };
+
+CF.defineSection('brief', function (d) {
+  const ui = d.ui || {};
+  const leads = (d.specialties || []).filter((s) => has(s.title));
+  const summary = d.brief && d.brief.summary;
+  if (!has(summary) && !leads.length) return null;
+
+  const SVGS = {
+    ring: '<svg viewBox="0 0 80 80" focusable="false"><circle cx="40" cy="40" r="28" fill="none" stroke="#7a4a22" stroke-width="5"/><path d="M62 30 A28 28 0 0 1 46 67" fill="none" stroke="#7a4a22" stroke-width="2" opacity=".7"/></svg>',
+  };
+
+  /* ---- envelope ---- */
+  const art = h('span', { class: 'env-art', 'aria-hidden': 'true' },
+    h('i', { class: 'env-body' }), h('i', { class: 'env-flap' }), h('i', { class: 'env-wax' }));
+  const envBtn = h('button', { class: 'env-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'brief-letter' }, art,
+    has(ui.openBriefing) ? h('span', { class: 'env-cap', text: ui.openBriefing }) : null);
+
+  /* ---- leads ---- */
+  const sel = { id: null, timers: [] };
+  const info = h('div', { class: 'lead-info', 'aria-live': 'polite' });
+  const leadBtns = leads.map((s) => {
+    const b = h('button', { class: 'lead' + (s.status === 'not_shown' ? ' notyet' : ''), type: 'button', 'aria-pressed': 'false', 'data-id': s.id },
+      CF.icon('magnifier'), h('span', { class: 'lt' }, s.title,
+        s.status === 'not_shown' && has(ui.notYet) ? h('span', { class: 'ny', text: ui.notYet }) : null));
+    b.addEventListener('click', () => select(s, b));
+    return b;
+  });
+  const leadList = h('ul', { class: 'leads' }, leadBtns.map((b) => h('li', null, b)));
+
+  /* ---- the case board (>= 768px) ---- */
+  const boardIds = CF.order.filter((id) => id !== 'brief' && id !== 'exhibitZ');
+  const pinBtns = {};
+  const pinList = h('ul', { class: 'bpins' });
+  const stringsBoard = s('svg', { class: 'board-strings', 'aria-hidden': 'true', focusable: 'false' });
+  const board = h('div', { class: 'board' }, h('div', { class: 'cork' }, leadList, pinList, stringsBoard));
+
+  function buildPins() {
+    if (!CF.visibleSections) return;
+    pinList.textContent = '';
+    boardIds.filter((id) => CF.visibleSections.includes(id)).forEach((id) => {
+      const label = CF.sectionLabel(id);
+      if (!has(label)) return;
+      const b = h('button', { class: 'bpin' + (CF.reached.has(id) ? ' reached' : ''), type: 'button', 'data-id': id, 'aria-label': 'Go to ' + label },
+        h('span', { class: 'dot', 'aria-hidden': 'true' }), h('span', { class: 'plbl', text: label }));
+      b.addEventListener('click', () => { const t = document.getElementById(id); t.scrollIntoView({ behavior: CF.reduced ? 'auto' : 'smooth', block: 'start' }); if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); });
+      pinBtns[id] = b;
+      pinList.appendChild(h('li', null, b));
+    });
+  }
+  document.addEventListener('cf:reached', () => { Object.keys(pinBtns).forEach((id) => pinBtns[id].classList.toggle('reached', CF.reached.has(id))); });
+
+  /* ---- strings ---- */
+  const wide = () => window.matchMedia('(min-width: 768px)').matches;
+  let pageLayer = null;
+  function layer() {
+    if (!pageLayer) { pageLayer = s('svg', { class: 'page-strings', 'aria-hidden': 'true', focusable: 'false' }); document.getElementById('page').appendChild(pageLayer); }
+    return pageLayer;
+  }
+  function clearStrings() {
+    sel.timers.forEach(clearTimeout); sel.timers = [];
+    while (stringsBoard.firstChild) stringsBoard.removeChild(stringsBoard.firstChild);
+    if (pageLayer) while (pageLayer.firstChild) pageLayer.removeChild(pageLayer.firstChild);
+    document.querySelectorAll('.sheet.hl').forEach((e) => e.classList.remove('hl'));
+    document.querySelectorAll('.bpin.pulse').forEach((e) => e.classList.remove('pulse'));
+  }
+  function addPath(svg, dStr, animate) {
+    const p = s('path', { d: dStr, class: 'string-path', fill: 'none' });
+    svg.appendChild(p);
+    if (animate && !CF.reduced) {
+      const L = p.getTotalLength();
+      p.style.strokeDasharray = L; p.style.strokeDashoffset = L;
+      void p.getBoundingClientRect();
+      p.style.transition = 'stroke-dashoffset .6s cubic-bezier(.22,.61,.36,1)';
+      p.style.strokeDashoffset = 0;
+    }
+    return p;
+  }
+  function draw(lead, animate) {
+    if (CF.rail && !wide()) CF.rail.place(true);
+    const targets = (lead.exhibits || []).filter((id) => CF.visibleSections.includes(id));
+    const from = leadBtns.find((b) => b.dataset.id === lead.id);
+    if (!from || !targets.length) return;
+    if (wide() && pinList.children.length) {
+      const cr = stringsBoard.getBoundingClientRect(), fr = from.getBoundingClientRect();
+      stringsBoard.setAttribute('viewBox', '0 0 ' + cr.width + ' ' + cr.height);
+      targets.forEach((id) => {
+        const pb = pinBtns[id]; if (!pb) return;
+        const pr = pb.querySelector('.dot').getBoundingClientRect();
+        const x0 = fr.right - cr.left, y0 = fr.top + fr.height / 2 - cr.top, x1 = pr.left + pr.width / 2 - cr.left, y1 = pr.top + pr.height / 2 - cr.top;
+        const mx = (x0 + x1) / 2;
+        addPath(stringsBoard, 'M' + x0 + ' ' + y0 + ' C' + mx + ' ' + y0 + ' ' + mx + ' ' + y1 + ' ' + x1 + ' ' + y1, animate);
+        pb.classList.add('pulse');
+      });
+    } else {
+      const page = document.getElementById('page'), pgr = page.getBoundingClientRect(), svg = layer();
+      svg.setAttribute('viewBox', '0 0 ' + pgr.width + ' ' + page.scrollHeight);
+      svg.style.height = page.scrollHeight + 'px';
+      const fr = from.getBoundingClientRect();
+      const x0 = fr.left - pgr.left, y0 = fr.top + fr.height / 2 - pgr.top;
+      targets.forEach((id, i) => {
+        const pin = CF.rail && CF.rail.pins[id]; if (!pin) return;
+        const pr = pin.getBoundingClientRect();
+        const rx = pr.left + pr.width / 2 - pgr.left, y1 = pr.top + pr.height / 2 - pgr.top;
+        const dir = y1 >= y0 ? 1 : -1;
+        addPath(svg, 'M' + x0 + ' ' + y0 + ' L' + (rx + 14) + ' ' + y0 + ' Q' + rx + ' ' + y0 + ' ' + rx + ' ' + (y0 + 14 * dir) + ' L' + rx + ' ' + y1, animate);
+      });
+    }
+    targets.forEach((id) => { const sheet = document.getElementById(id); if (sheet) sheet.classList.add('hl'); });
+    sel.timers.push(setTimeout(() => { document.querySelectorAll('.sheet.hl').forEach((e) => e.classList.remove('hl')); document.querySelectorAll('.bpin.pulse').forEach((e) => e.classList.remove('pulse')); }, 3000));
+  }
+  function renderInfo(lead) {
+    info.textContent = '';
+    if (!lead) return;
+    put(info, 
+      has(lead.evidence) ? h('p', null, h('span', { class: 'label-brass', text: ui.evidence || '' }), ' ', lead.evidence) : null,
+      has(lead.worth) ? h('p', { path: 'specialties.' + d.specialties.indexOf(lead) + '.worth' }, h('span', { class: 'label-brass', text: ui.worth || '' }), ' ', lead.worth) : null);
+  }
+  function select(lead, btn) {
+    const same = sel.id === lead.id;
+    clearStrings();
+    leadBtns.forEach((b) => b.setAttribute('aria-pressed', 'false'));
+    if (same) { sel.id = null; renderInfo(null); return; }
+    sel.id = lead.id;
+    btn.setAttribute('aria-pressed', 'true');
+    renderInfo(lead);
+    draw(lead, true);
+  }
+  const redraw = () => { if (!sel.id) return; const lead = leads.find((l) => l.id === sel.id); const keep = sel.timers.slice(); clearStrings(); sel.timers = keep; draw(lead, false); };
+  document.addEventListener('cf:layout', redraw);
+  window.addEventListener('resize', () => { if (sel.id) { const lead = leads.find((l) => l.id === sel.id); const keep = sel.timers.slice(); clearStrings(); sel.timers = keep; draw(lead, false); } });
+
+  /* ---- the letter ---- */
+  const coffee = h('button', { class: 'coffee-ring', type: 'button', 'aria-label': 'Coffee ring', onclick: () => CF.slip(ui.coffeeRingSlip, 4000) });
+  coffee.innerHTML = SVGS.ring;
+  const paras = has(summary) ? summary.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean) : [];
+  const letterIn = h('div', { class: 'letter-in' },
+    h('div', { class: 'paper' },
+      coffee,
+      h('h2', { class: 'greeting', id: 'brief-greeting', text: ui.greeting || '' }),
+      paras.map((p) => h('p', { class: 'summary', path: 'brief.summary', text: p })),
+      leads.length ? [
+        h('h3', { class: 'leads-title', text: ui.leadsTitle || '' }),
+        has(ui.leadsHint) ? h('p', { class: 'leads-hint', text: ui.leadsHint }) : null,
+        h('div', { class: 'leads-wrap' }, board), info,
+      ] : null));
+  const letter = h('div', { class: 'letter', id: 'brief-letter', inert: true }, letterIn);
+  const sheet = CF.sheet('brief', { labelledby: 'brief-greeting', cls: 'brief' }, h('div', { class: 'envelope' }, envBtn, letter));
+
+  function open() {
+    if (sheet.classList.contains('open')) return;
+    sheet.classList.add('open');
+    envBtn.setAttribute('aria-expanded', 'true');
+    letter.removeAttribute('inert');
+    buildPins();
+  }
+  envBtn.addEventListener('click', open);
+  if (CF.reduced || !window.IntersectionObserver) open();
+  else {
+    const io = new IntersectionObserver((es) => { if (es.some((e) => e.intersectionRatio >= 0.4)) { open(); io.disconnect(); } }, { threshold: [0.4] });
+    io.observe(sheet);
+  }
+  // pins can only be built once the other sections are known; the letter is built after all sections mount
+  CF.board.afterRail = () => { if (sheet.classList.contains('open')) buildPins(); };
+  return sheet;
+});
+
+/* ---- 65-against.js ---- */
+/* Fair warning: up to three index cards with brass paper clips. Each unfolds in place on tap. Renders only when there is text. */
+CF.defineSection('against', function (d) {
+  const ui = d.ui || {};
+  const reasons = ((d.against && d.against.reasons) || []).filter((r) => has(r.title) || has(r.text)).slice(0, 3);
+  if (!reasons.length) return null;
+  const clip = () => { const i = h('i', { class: 'paperclip', 'aria-hidden': 'true' }); i.innerHTML = '<svg viewBox="0 0 24 56" focusable="false"><path d="M8 40 V12 a6 6 0 0 1 12 0 V44 a9 9 0 0 1 -18 0 V14" fill="none" stroke="#B8872B" stroke-width="2.6" stroke-linecap="round"/></svg>'; return i; };
+  const cards = reasons.map((r, i) => {
+    const body = h('div', { class: 'ic-body', id: 'warn-b' + i, role: 'region', 'aria-labelledby': 'warn-t' + i }, h('div', { class: 'ic-in' }, has(r.text) ? h('p', { path: 'against.reasons.' + i + '.text', text: r.text }) : null));
+    const btn = h('button', { class: 'ic-btn', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'warn-b' + i },
+      h('span', { class: 'ic-t', id: 'warn-t' + i, path: 'against.reasons.' + i + '.title', text: r.title || '' }), CF.icon('chevron'));
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      card.classList.toggle('open', !open);
+    });
+    const card = h('li', { class: 'icard c' + i }, clip(), btn, body);
+    return card;
+  });
+  return CF.sheet('against', { title: ui.warningTitle, tab: 'F', cls: 'against' },
+    has(ui.warningSub) ? h('p', { class: 'sub', text: ui.warningSub }) : null,
+    h('ul', { class: 'icards' }, cards),
+    has(ui.afterWarning) ? h('p', { class: 'after', text: ui.afterWarning }) : null);
+});
 
 /* ---- 90-main.js ---- */
 /* Boot once the DOM is parsed (the script sits at the end of the body). */

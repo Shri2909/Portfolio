@@ -34,6 +34,8 @@ function fill(el, attrs, kids) {
     el.appendChild(typeof kid === 'string' ? document.createTextNode(kid) : kid);
   }
 }
+/* Append children, skipping null/false (native append() would print the word "null"). */
+function put(el, ...kids) { fill(el, null, kids); return el; }
 const has = (v) => typeof v === 'string' ? v.trim().length > 0 : Array.isArray(v) ? v.length > 0 : !!v;
 const clamp01 = (x) => x < 0 ? 0 : x > 1 ? 1 : x;
 const easeOut = (x) => 1 - Math.pow(1 - clamp01(x), 3);
@@ -56,4 +58,16 @@ CF.icon = function (name) {
     menu: [s('path', { d: 'M4 7 H20 M4 12 H20 M4 17 H20' })],
   };
   return s('svg', a, paths[name] || []);
+};
+
+/* Keep Tab inside a modal dialog (native dialogs already make the rest of the page inert; this stops focus escaping to browser chrome). */
+CF.trapFocus = function (dlg) {
+  dlg.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    const f = [...dlg.querySelectorAll('button, a[href], input, [tabindex]:not([tabindex="-1"])')].filter((x) => !x.disabled && x.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && (document.activeElement === first || !dlg.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && (document.activeElement === last || !dlg.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
+  });
 };

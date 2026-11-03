@@ -111,7 +111,7 @@ CF.mountOpening = function (data, mount) {
       ['Status', custody.status], ['Note', custody.note],
     ].filter((r) => has(r[1]));
     chipPanel.textContent = '';
-    chipPanel.append(h('h3', { text: ui.custody || '' }),
+    put(chipPanel, h('h3', { text: ui.custody || '' }),
       h('dl', null, rows.map((r) => [h('dt', { text: r[0] }), h('dd', { text: r[1] })])),
       custody.verified === true ? h('span', { class: 'stamp-verified', text: 'VERIFIED' }) : null);
   }
@@ -144,7 +144,7 @@ CF.mountOpening = function (data, mount) {
   function openPlain() {
     const take = takes[S.takeIdx];
     plain.textContent = '';
-    plain.append(
+    put(plain, 
       h('h2', { id: 'cf-plain-h', text: ui.raw || '' }),
       ...take.raw.split(/\n\s*\n/).map((p) => h('p', { class: 'rawp', text: p.replace(/\s+/g, ' ').trim() })),
       h('h2', { text: ui.flow || '' }),
@@ -153,6 +153,7 @@ CF.mountOpening = function (data, mount) {
     if (typeof plain.showModal === 'function') plain.showModal(); else plain.setAttribute('open', '');
   }
   plain.addEventListener('click', (e) => { if (e.target === plain) plain.close(); });
+  CF.trapFocus(plain);
 
   /* screen readers get both texts; the animated block is decoration of the same words */
   const a11y = h('div', { class: 'sr-only', id: 'cf-a11y' });
@@ -173,7 +174,7 @@ CF.mountOpening = function (data, mount) {
       h('div', { class: 'slabels', 'aria-hidden': 'true' }, h('span', { text: ui.raw || '' }), h('span', { text: ui.flow || '' }))),
     h('div', { class: 'slot' }, hint, tagline),
     h('div', { class: 'aids' }, legend, h('div', { class: 'chipwrap' }, chip, chipPanel), controls),
-    cueWrap, plain);
+    cueWrap, plain, CF.pencil(custody.source, 'under'));
 
   /* ---------- tokens ---------- */
   function mountTokens() {
@@ -422,3 +423,5 @@ CF.mountOpening = function (data, mount) {
   };
   return root;
 };
+
+CF.defineSection('exhibit0', (d, main) => CF.mountOpening(d, main));

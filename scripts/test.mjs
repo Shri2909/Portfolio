@@ -11,6 +11,7 @@ const wanted = process.argv.slice(2).map(Number);
 const run = (n) => wanted.length === 0 || wanted.includes(n);
 
 const browser = await launch();
+const has = (v) => (typeof v === 'string' ? v.trim().length > 0 : !!v);
 const norm = (s) => s.replace(/\s+/g, ' ').trim();
 const content = JSON.parse(readFileSync(join(ROOT, 'content', 'content.json'), 'utf8'));
 const takesData = content.exhibit0.takes;
@@ -56,6 +57,7 @@ if (run(1)) {
         fontsLoaded: [...document.fonts].filter((f) => f.status === 'loaded').map((f) => f.family),
       }));
       const tag = `${vn} ${build}`;
+      check(`${tag}: no stray "null", "undefined" or "NaN" in the page text`, !/\b(null|undefined|NaN)\b/.test(await page.evaluate(() => document.body.innerText.replace(/\s+/g, ' '))));
       check(`${tag}: no console errors`, log.errors.length === 0, log.errors.join(' | '));
       check(`${tag}: zero network requests`, log.requests.length === 0, log.requests.join(' | '));
       check(`${tag}: landmarks and one h1`, info.h1 === 1 && info.header && info.main && info.footer && info.skip);
@@ -122,13 +124,13 @@ if (run(3)) {
   for (const [vn, vp] of [['phone 390x844', VIEWPORTS.phone], ['laptop 1366x650', VIEWPORTS.laptop], ['wide 1850x692', VIEWPORTS.wide]]) {
     const { page, ctx, log } = await openPage(browser, { viewport: vp, touch: vn.startsWith('phone') });
     await sleep(250);
-    const fit = () => page.evaluate((vh) => { window.__vh = vh;
+    const fit = () => page.evaluate(([vh, vw]) => { window.__vh = vh; window.__vw = vw;
       const d = document.querySelector('.dossier').getBoundingClientRect();
       const seal = document.querySelector('.seal').getBoundingClientRect();
-      const vis = [...document.querySelectorAll('.dossier button, .dossier input')].filter((e) => e.offsetParent && getComputedStyle(e.closest('.cuewrap') || document.body).visibility !== 'hidden');
+      const vis = [...document.querySelectorAll('.dossier button, .dossier input')].filter((e) => !e.classList.contains('clue-tag') && e.offsetParent && getComputedStyle(e.closest('.cuewrap') || document.body).visibility !== 'hidden');
       const lowest = Math.max(...vis.map((e) => e.getBoundingClientRect().bottom));
-      return { bottom: Math.round(d.bottom), vh: window.__vh, controlsBottom: Math.round(lowest), sealTop: Math.round(seal.top), sealInView: seal.top >= 0, hscroll: document.documentElement.scrollWidth > window.innerWidth + 1 };
-    }, vp.height);
+      return { bottom: Math.round(d.bottom), vh: window.__vh, controlsBottom: Math.round(lowest), sealTop: Math.round(seal.top), sealInView: seal.top >= 0, hscroll: document.documentElement.scrollWidth > window.__vw + 1 || window.innerWidth > window.__vw + 1 };
+    }, [vp.height, vp.width]);
     let f = await fit();
     check(`${vn}: dossier (first paint) fits without scrolling`, f.bottom <= f.vh, JSON.stringify(f));
     check(`${vn}: no horizontal scroll`, !f.hscroll);
@@ -351,7 +353,7 @@ if (run(3)) {
     await page.tap('.chip'); await sleep(200);
     const cu = await page.evaluate(() => ({ exp: document.querySelector('.chip').getAttribute('aria-expanded'), vis: !document.querySelector('.custody').hidden, text: document.querySelector('.custody').innerText, verified: !!document.querySelector('.stamp-verified') }));
     check('tap custody chip: expands "Where this came from" with source, tool, status', cu.exp === 'true' && cu.vis && cu.text.includes('Wispr Flow') && cu.text.includes(content.exhibit0.custody.status));
-    check('VERIFIED stamp not shown while custody.verified is false', !cu.verified);
+    check('VERIFIED stamp not shown while custody.verified is false, no stray null', !cu.verified && !/\bnull\b/.test(cu.text), cu.text);
     await page.screenshot({ path: join(SHOTS, 's3-phone-custody.png') });
     await page.tap('.chip'); await sleep(150);
 
@@ -427,6 +429,301 @@ if (run(3)) {
     const fps = await page.evaluate(() => { const f = window.__frames.slice(5); const avg = f.reduce((a, b) => a + b, 0) / f.length; const slow = f.filter((x) => x > 50).length; return { avgMs: +avg.toFixed(1), fps: Math.round(1000 / avg), slowFrames: slow, n: f.length }; });
     check('frame rate during the full run at 4x CPU throttle (report)', fps.fps >= 30, JSON.stringify(fps));
     console.log('       frame stats:', JSON.stringify(fps));
+    await ctx.close();
+  }
+}
+
+
+const ready = (page) => page.waitForFunction(() => document.documentElement.classList.contains('ready'), null, { timeout: 8000 });
+const visibleSecs = (page) => page.evaluate(() => window.CF.visibleSections.slice());
+const slipText = (page) => page.evaluate(() => { const s = document.querySelector('.slip'); return s && s.classList.contains('show') ? s.textContent : ''; });
+
+// ------------------------------------------------------------------ Stage 4
+if (run(4)) {
+  console.log('\nStage 4: the lamp, the margins, the cosy desk');
+  const big = { width: 1600, height: 900 };
+  {
+    const { page, ctx, log } = await openPage(browser, { viewport: big });
+    await ready(page); await sleep(400);
+    await page.mouse.move(300, 420); await sleep(900);
+    const g = await page.evaluate(() => { const m = new DOMMatrix(getComputedStyle(document.querySelector('.lamp-glow')).transform); return [Math.round(m.m41), Math.round(m.m42)]; });
+    check('lamp glow follows the pointer', Math.abs(g[0] - 300) < 4 && Math.abs(g[1] - 420) < 4, g.join(','));
+    const z = await page.evaluate(() => ({ lamp: +getComputedStyle(document.querySelector('.lamp')).zIndex, page: +getComputedStyle(document.querySelector('.page')).zIndex, bg: getComputedStyle(document.querySelector('.dossier')).backgroundColor, pe: ['.lamp', '.motes', '.desk'].map((s) => getComputedStyle(document.querySelector(s)).pointerEvents) }));
+    check('lamp sits under the paper (paper stays bright cream), all decor pointer-events:none', z.lamp < z.page && z.bg === 'rgb(246, 240, 227)' && z.pe.every((x) => x === 'none'), JSON.stringify(z));
+    const motes = await page.evaluate(() => ({ n: document.querySelectorAll('.mote').length, anim: getComputedStyle(document.querySelector('.mote')).animationName }));
+    check('14 dust motes, animated', motes.n === 14 && motes.anim === 'mote', JSON.stringify(motes));
+    const props = await page.evaluate(() => { const p = document.querySelector('.props'); return { shown: getComputedStyle(p).display !== 'none', bytes: p.outerHTML.length, hidden: [...p.querySelectorAll('.props-l, .props-r')].every((e) => e.getAttribute('aria-hidden') === 'true'), pe: [...p.querySelectorAll('svg')].filter((e) => !e.closest('button')).every((e) => getComputedStyle(e).pointerEvents === 'none'), rect: [...p.querySelectorAll('.props-l, .props-r')].map((e) => { const r = e.getBoundingClientRect(); return [Math.round(r.left), Math.round(r.right)]; }) }; });
+    check('desk props show at 1600px, aria-hidden, under 15 KB, never over the dossier', props.shown && props.hidden && props.pe && props.bytes < 15360, JSON.stringify(props).slice(0, 200));
+    const dos = await page.evaluate(() => { const r = document.querySelector('.dossier').getBoundingClientRect(); return [r.left, r.right]; });
+    check('props sit outside the dossier on both sides', props.rect[0][1] <= dos[0] && props.rect[1][0] >= dos[1] - 1, JSON.stringify([props.rect, dos]));
+    // teacup
+    const cup = page.locator('button.teacup');
+    check('the teacup is a real button labelled Teacup', (await cup.getAttribute('aria-label')) === 'Teacup');
+    await cup.click(); await sleep(500);
+    check('tap the teacup: paper slip with ui.teaSlip', (await slipText(page)) === content.ui.teaSlip);
+    await sleep(4300);
+    check('the tea slip fades after about 4 s', (await slipText(page)) === '');
+    // elementary
+    await page.keyboard.type('elementary', { delay: 40 }); await sleep(400);
+    check('typing "elementary" shows ui.elementary and flickers the lamp', (await slipText(page)) === content.ui.elementary && (await page.evaluate(() => document.querySelector('.lamp').classList.contains('flicker'))));
+    // marginalia: the dossier's note is the custody source, lit only near the lamp
+    const note = await page.evaluate(() => { const n = document.querySelector('.dossier .pencil'); return n ? n.textContent : null; });
+    check('pencil note on the dossier is exactly custody.source (no new claims)', note === content.exhibit0.custody.source, String(note));
+    await page.mouse.move(900, 100); await sleep(1000);
+    const far = await page.evaluate(() => document.querySelector('.dossier .pencil').classList.contains('lit'));
+    const nb = await page.evaluate(() => { const r = document.querySelector('.dossier .pencil').getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; });
+    await page.mouse.move(nb[0], nb[1]); await sleep(900);
+    const near = await page.evaluate(() => document.querySelector('.dossier .pencil').classList.contains('lit'));
+    check('pencil note is hidden away from the lamp and revealed under it', !far && near, `far=${far} near=${near}`);
+    check('lamp hint (ui.marginaliaHint) is shown once and can be dismissed', (await page.locator('.hint-slip p').textContent()) === content.ui.marginaliaHint);
+    await page.locator('.hint-slip button').click(); await sleep(100);
+    check('dismissing the hint removes it', (await page.locator('.hint-slip').count()) === 0);
+    check('stage 4 desktop: no console errors, no requests', log.errors.length === 0 && log.requests.length === 0, log.errors.join('|'));
+    await ctx.close();
+  }
+  { // keyboard focus lights the lamp and notes
+    const { page, ctx } = await openPage(browser, { viewport: big });
+    await ready(page); await sleep(300);
+    await page.focus('.dossier .chip'); await sleep(900);
+    check('keyboard focus inside the dossier lights its pencil note', await page.evaluate(() => document.querySelector('.dossier .pencil').classList.contains('lit')));
+    await ctx.close();
+  }
+  { // phone: no props, finger drag moves the lamp
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(300);
+    check('props are hidden on phones', await page.evaluate(() => getComputedStyle(document.querySelector('.props')).display === 'none'));
+    const cdp = await ctx.newCDPSession(page);
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 60, y: 600 }] });
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: 200, y: 640 }] });
+    await sleep(900);
+    const g = await page.evaluate(() => { const m = new DOMMatrix(getComputedStyle(document.querySelector('.lamp-glow')).transform); return [Math.round(m.m41), Math.round(m.m42)]; });
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    check('a dragging finger moves the lamp', Math.abs(g[0] - 200) < 6 && Math.abs(g[1] - 640) < 6, g.join(','));
+    await ctx.close();
+  }
+  { // reduced motion: static centred lamp, no motes, no props animation
+    const { page, ctx } = await openPage(browser, { viewport: big, reducedMotion: true });
+    await ready(page); await sleep(300);
+    const before = await page.evaluate(() => getComputedStyle(document.querySelector('.lamp-glow')).transform);
+    await page.mouse.move(200, 300); await sleep(600);
+    const after = await page.evaluate(() => getComputedStyle(document.querySelector('.lamp-glow')).transform);
+    check('reduced motion: lamp stays static and centred, no motes', before === after && (await page.evaluate(() => document.querySelectorAll('.mote').length)) === 0);
+    await ctx.close();
+  }
+  { // frame rate with everything on, 4x CPU throttle, while the pointer moves
+    const ctx = await browser.newContext({ viewport: big });
+    const page = await ctx.newPage();
+    const cdp = await ctx.newCDPSession(page);
+    await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+    await page.addInitScript(() => { window.__f = []; let l = performance.now(); const k = (t) => { window.__f.push(t - l); l = t; requestAnimationFrame(k); }; requestAnimationFrame(k); });
+    await page.goto('file://' + join(ROOT, 'dist', 'index.html'));
+    await ready(page); await sleep(500);
+    await page.evaluate(() => { window.__f = []; });
+    for (let i = 0; i < 40; i++) { await page.mouse.move(200 + i * 25, 200 + (i % 7) * 60); await sleep(30); }
+    const fps = await page.evaluate(() => { const f = window.__f.slice(3); const a = f.reduce((x, y) => x + y, 0) / f.length; return { fps: Math.round(1000 / a), slow: f.filter((x) => x > 50).length, n: f.length }; });
+    check('frame rate with lamp, motes and props at 4x CPU throttle is at least 45 fps', fps.fps >= 45, JSON.stringify(fps));
+    console.log('       frame stats:', JSON.stringify(fps));
+    await ctx.close();
+  }
+}
+
+// ------------------------------------------------------------------ Stage 5
+if (run(5)) {
+  console.log('\nStage 5: the briefing, the case board, clues and rank');
+  for (const build of ['index.html', 'review.html']) {
+    const { page, ctx, log } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build });
+    await ready(page); await sleep(500);
+    const closed = await page.evaluate(() => { const s = document.querySelector('#brief'); return { open: s.classList.contains('open'), cap: s.querySelector('.env-cap') && s.querySelector('.env-cap').textContent, inert: s.querySelector('.letter').hasAttribute('inert') }; });
+    check(`${build}: envelope starts closed with the caption "${content.ui.openBriefing}"`, !closed.open && closed.cap === content.ui.openBriefing && closed.inert, JSON.stringify(closed));
+    await page.evaluate(() => { const s = document.querySelector('#brief'); window.scrollTo(0, s.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.45); }); await sleep(1200);
+    const opened = await page.evaluate(() => { const s = document.querySelector('#brief'); return { open: s.classList.contains('open'), inert: s.querySelector('.letter').hasAttribute('inert'), greet: s.querySelector('.greeting').textContent, h: s.querySelector('.letter').getBoundingClientRect().height }; });
+    check(`${build}: the envelope opens by itself when 40% in view; greeting is ui.greeting`, opened.open && !opened.inert && opened.greet === content.ui.greeting && opened.h > 100, JSON.stringify(opened));
+    const sum = await page.evaluate(() => document.querySelectorAll('#brief .summary').length);
+    check(`${build}: brief.summary renders ${build === 'index.html' ? 'nothing (empty in content)' : 'only in the review build'}`, build === 'index.html' ? sum === 0 : sum > 0, String(sum));
+    const leads = await page.evaluate(() => [...document.querySelectorAll('#brief .lead')].map((b) => ({ t: b.querySelector('.lt').childNodes[0].textContent, ny: !!b.querySelector('.ny'), dashed: getComputedStyle(b).borderStyle, h: b.getBoundingClientRect().height })));
+    check(`${build}: all ${content.specialties.length} leads render as tags (44px tall); the not_shown lead is dashed and labelled "${content.ui.notYet}"`,
+      leads.length === content.specialties.length && leads.every((l) => l.h >= 44) && leads.filter((l) => l.ny && l.dashed.includes('dashed')).length === 1, JSON.stringify(leads).slice(0, 200));
+    check(`${build}: no console errors`, log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+  }
+  { // review build: worth lines come from draft (outlined); production has none
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html' });
+    await ready(page); await sleep(300);
+    await page.evaluate(() => { document.querySelector('#brief').scrollIntoView(); }); await sleep(1200);
+    await page.tap('#brief .lead:nth-child(1)'); await sleep(300);
+    const info = await page.evaluate(() => document.querySelector('.lead-info').innerText);
+    check('review: selecting a lead shows its Evidence and Why it matters lines', info.toLowerCase().includes(content.ui.evidence.toLowerCase()) && info.toLowerCase().includes(content.ui.worth.toLowerCase()), info.slice(0, 80));
+    check('review: draft-filled "worth" line is outlined amber', await page.evaluate(() => !!document.querySelector('.lead-info .cf-filled')));
+    check('review: draft-filled summary paragraphs are outlined amber', await page.evaluate(() => document.querySelectorAll('#brief .summary.cf-filled').length > 0));
+    await ctx.close();
+  }
+
+  // strings: stub exhibit targets are injected (test only) so the geometry can be checked before Stage 7 builds the real exhibits
+  for (const [vn, vp, touch] of [['phone', VIEWPORTS.phone, true], ['wide', { width: 1100, height: 800 }, false]]) {
+    const { page, ctx } = await openPage(browser, { viewport: vp, touch });
+    await ready(page); await sleep(300);
+    await page.evaluate(() => {
+      const main = document.getElementById('main');
+      ['exhibitA', 'exhibitB', 'ledger'].forEach((id) => {
+        if (document.getElementById(id)) return;
+        const s = document.createElement('section'); s.className = 'sheet'; s.id = id; s.style.height = '300px'; main.appendChild(s);
+        window.CF.visibleSections.push(id);
+        const pin = document.createElement('i'); pin.className = 'pin'; pin.dataset.id = id; document.getElementById('rail').appendChild(pin); window.CF.rail.pins[id] = pin;
+        const l = document.createElement('div'); l.className = 'tab'; s.appendChild(l);
+      });
+      window.CF.rail.place();
+    });
+    await page.evaluate(() => { document.querySelector('#brief').scrollIntoView(); }); await sleep(1500);
+    await page.evaluate(() => window.CF.board.afterRail());
+    if (vn === 'wide') check('wide: case board shows a pin per visible chapter/exhibit', (await page.locator('.bpin').count()) >= 3);
+    const sel = '#brief .lead:nth-child(1)';
+    const tap = (s) => touch ? page.tap(s) : page.click(s);
+    await tap(sel); await sleep(900);
+    const r = await page.evaluate((mode) => {
+      const paths = [...document.querySelectorAll(mode === 'wide' ? '.board-strings path' : '.page-strings path')];
+      const ends = paths.map((p) => { const svg = p.ownerSVGElement; const L = p.getTotalLength(); const pt = p.getPointAtLength(L); const m = svg.getScreenCTM(); return [pt.x * m.a + m.e, pt.y * m.d + m.f]; });
+      const targets = (mode === 'wide' ? [...document.querySelectorAll('.bpin')].filter((b) => ['exhibitA', 'exhibitB', 'ledger'].includes(b.dataset.id)).map((b) => b.querySelector('.dot')) : ['exhibitA', 'exhibitB', 'ledger'].map((id) => window.CF.rail.pins[id]));
+      const centers = targets.map((e) => { const q = e.getBoundingClientRect(); return [q.left + q.width / 2, q.top + q.height / 2]; });
+      const miss = ends.map((e) => Math.min(...centers.map((c) => Math.hypot(c[0] - e[0], c[1] - e[1]))));
+      return { n: paths.length, miss, hl: document.querySelectorAll('.sheet.hl').length };
+    }, vn);
+    check(`${vn}: tapping a lead draws one red string per visible exhibit (3), each lands on its pin`, r.n === 3 && r.miss.every((m) => m < 14), JSON.stringify(r));
+    check(`${vn}: the target tabs are highlighted`, r.hl === 3);
+    await sleep(3300);
+    check(`${vn}: the highlight fades after about 3 s`, (await page.evaluate(() => document.querySelectorAll('.sheet.hl').length)) === 0);
+    await tap(sel); await sleep(300);
+    check(`${vn}: tapping the lead again clears the strings`, (await page.evaluate(() => document.querySelectorAll('.string-path').length)) === 0);
+    // a lead whose targets are hidden skips them
+    await tap('#brief .leads li:nth-child(4) .lead'); await sleep(500);
+    check(`${vn}: a lead whose exhibits are hidden draws nothing and breaks nothing`, (await page.evaluate(() => document.querySelectorAll('.string-path').length)) === 0);
+    await ctx.close();
+  }
+
+  // clues, notebook, rank (production build: clue k1 on the opening is visible)
+  {
+    const { page, ctx, log } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(500);
+    const vis = await visibleSecs(page);
+    const expected = content.clues.filter((c) => vis.includes(c.section));
+    const btnText = () => page.evaluate(() => document.querySelector('.tb-btn.clues').getAttribute('aria-label'));
+    check(`N counts only visible clues (${expected.length} of ${content.clues.length})`, (await page.evaluate(() => document.querySelectorAll('.clue-tag').length)) === expected.length);
+    check('top-bar button shows Clues 0/N and the first rank', (await page.evaluate(() => document.querySelector('.tb-btn.clues .l1').textContent)) === `${content.ui.clues} 0/${expected.length}` && (await page.evaluate(() => document.querySelector('.tb-btn.clues .l2').textContent)) === content.ranks[0].title, await btnText());
+    const wob = await page.evaluate(() => getComputedStyle(document.querySelector('.tag-art')).animationName);
+    check('clue magnifier wobbles gently (about every 8 s)', wob === 'wobble');
+    const tb = await page.evaluate(() => { const r = document.querySelector('.tb-btn.clues').getBoundingClientRect(); const b = document.querySelector('.brand').getBoundingClientRect(); return { h: r.height, w: r.width, right: r.right, vw: innerWidth, overlap: r.left < b.right }; });
+    check('Clues button is 44px tall, fits the top bar on a phone, does not collide with the title', tb.h >= 44 && tb.right <= tb.vw && !tb.overlap, JSON.stringify(tb));
+    await page.evaluate(() => window.scrollTo(0, 120)); await sleep(200);
+    await page.tap('.dossier .clue-tag'); await sleep(400);
+    const dlg = await page.evaluate(() => { const d = document.querySelector('dialog.clue-dlg'); return { open: d && d.open, txt: d && d.innerText }; });
+    check('tap a clue magnifier: "Clue n of N", the text, "Verified in: <source>"', dlg.open && dlg.txt.toLowerCase().includes(`clue 1 of ${expected.length}`) && dlg.txt.includes(content.clues[0].text) && dlg.txt.includes('Verified in: ' + content.clues[0].source), dlg.txt);
+    await page.keyboard.press('Escape'); await sleep(200);
+    const after = await page.evaluate(() => ({ l1: document.querySelector('.tb-btn.clues .l1').textContent, l2: document.querySelector('.tb-btn.clues .l2').textContent, saved: localStorage.getItem('cf1:found'), ping: document.querySelector('.tb-btn.clues').classList.contains('ping') }));
+    check('finding it updates Clues 1/N, ranks up to "Junior sleuth", saves to localStorage, soft ping', after.l1 === `${content.ui.clues} 1/${expected.length}` && after.l2 === content.ranks[1].title && JSON.parse(after.saved).includes('k1') && after.ping, JSON.stringify(after));
+    await page.tap('.tb-btn.clues'); await sleep(500);
+    const nb = await page.evaluate(() => { const d = document.querySelector('dialog.notebook'); const r = d.getBoundingClientRect(); return { open: d.open, modal: d.matches(':modal'), text: d.innerText, w: r.width, vw: innerWidth, h: r.height, vh: innerHeight }; });
+    check('notebook opens as a modal dialog, full-screen on phone', nb.open && nb.modal && nb.w >= nb.vw - 1 && nb.h >= nb.vh - 1, JSON.stringify([nb.w, nb.vw, nb.h, nb.vh]));
+    check('notebook has no stray null text', !/\bnull\b/.test(nb.text), nb.text.slice(0, 120));
+    check('notebook shows the found clue with its source and the rank', nb.text.includes(content.clues[0].text) && nb.text.includes('Verified in: ' + content.clues[0].source) && nb.text.includes(content.ranks[1].title));
+    const lockedWant = expected.length > 1;
+    check('unfound clues show as "???" with ui.clueLocked and the section name', !lockedWant || (nb.text.includes('???') && nb.text.includes(content.ui.clueLocked)), nb.text.slice(0, 200));
+    check(expected.length === 1 ? 'all clues found: ui.cluesDone shows' : 'notebook is not "done" yet', expected.length === 1 ? nb.text.includes(content.ui.cluesDone) : !nb.text.includes(content.ui.cluesDone));
+    await page.keyboard.press('Tab'); await page.keyboard.press('Tab'); await page.keyboard.press('Tab');
+    const trapped = await page.evaluate(() => document.querySelector('dialog.notebook').contains(document.activeElement));
+    check('notebook traps focus', trapped);
+    await page.keyboard.press('Escape'); await sleep(200);
+    check('Esc closes the notebook and focus returns to the Clues button', (await page.evaluate(() => !document.querySelector('dialog.notebook').open && document.activeElement.classList.contains('clues'))));
+    await page.reload(); await ready(page); await sleep(400);
+    check('found clues are remembered after a reload', (await page.evaluate(() => document.querySelector('.tb-btn.clues .l1').textContent)) === `${content.ui.clues} 1/${expected.length}`);
+    check('clues: no console errors', log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+  }
+  { // empty notebook message, works with localStorage disabled
+    const { page, ctx, log } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, storage: false });
+    await ready(page); await sleep(400);
+    await page.tap('.tb-btn.clues'); await sleep(400);
+    check('before any clue: ui.notebookEmpty shows', (await page.evaluate(() => document.querySelector('dialog.notebook').innerText)).includes(content.ui.notebookEmpty));
+    await page.keyboard.press('Escape');
+    await page.evaluate(() => window.scrollTo(0, 100)); await sleep(150);
+    await page.tap('.dossier .clue-tag'); await sleep(300); await page.keyboard.press('Escape'); await sleep(200);
+    check('localStorage off: clues still work in the session, no errors', (await page.evaluate(() => document.querySelector('.tb-btn.clues .l1').textContent)).includes('1/') && log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+  }
+  { // coffee ring egg
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html' });
+    await ready(page); await sleep(300);
+    await page.evaluate(() => document.querySelector('#brief').scrollIntoView()); await sleep(1300);
+    await page.tap('.coffee-ring'); await sleep(400);
+    check('tap the coffee ring: ui.coffeeRingSlip', (await slipText(page)) === content.ui.coffeeRingSlip);
+    await ctx.close();
+  }
+  { // reduced motion: envelope open at load
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, reducedMotion: true, build: 'review.html' });
+    await ready(page); await sleep(400);
+    check('reduced motion: the briefing is already open, no wobble', (await page.evaluate(() => document.querySelector('#brief').classList.contains('open') && getComputedStyle(document.querySelector('.tag-art')).animationName === 'none')));
+    await ctx.close();
+  }
+}
+
+// ------------------------------------------------------------------ Stage 6
+if (run(6)) {
+  console.log('\nStage 6: Fair warning and the Chapter Seals');
+  {
+    const { page, ctx, log } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true });
+    await ready(page); await sleep(400);
+    const vis = await visibleSecs(page);
+    check('production: Fair warning is absent while against.reasons is empty', !vis.includes('against') && (await page.locator('#against').count()) === 0);
+    const ch = await page.evaluate(() => window.CF.chapters.map((c) => [c.chapter.id, c.members]));
+    check('production: chapter list counts only visible chapters', ch.every(([, m]) => m.every((id) => vis.includes(id))), JSON.stringify(ch));
+    const labels = await page.evaluate(() => [...document.querySelectorAll('.sheet .tab .chap')].map((e) => e.textContent));
+    check('production: chapter labels are "Chapter n of N" over visible chapters only', labels.every((l, i) => l === `Chapter ${Math.min(i + 2, ch.length)} of ${ch.length}` || /^Chapter \d+ of \d+$/.test(l)), JSON.stringify(labels));
+    check('production: no seal after the last chapter, none after chapter 1 (the opening has its own cue)', (await page.evaluate(() => document.querySelectorAll('.seal-note').length)) === Math.max(0, ch.length - 2));
+    check('production: no console errors', log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+  }
+  for (const [vn, vp, touch] of [['phone', VIEWPORTS.phone, true], ['laptop', VIEWPORTS.laptop, false]]) {
+    const { page, ctx, log } = await openPage(browser, { viewport: vp, touch, build: 'review.html' });
+    await ready(page); await sleep(500);
+    const vis = await visibleSecs(page);
+    check(`${vn} review: Fair warning is present with title, sub, 3 cards and the closing line`, vis.includes('against') && (await page.locator('#against .icard').count()) === 3
+      && (await page.locator('#against .sheet-title').textContent()) === content.ui.warningTitle && (await page.locator('#against .sub').textContent()) === content.ui.warningSub && (await page.locator('#against .after').textContent()) === content.ui.afterWarning);
+    await page.evaluate(() => document.querySelector('#against').scrollIntoView({ block: 'start' })); await sleep(500);
+    const h0 = await page.evaluate(() => document.querySelector('#against .ic-body').getBoundingClientRect().height);
+    const b0 = page.locator('#against .ic-btn').first();
+    if (touch) await page.tap('#against .ic-btn'); else await b0.click();
+    await sleep(700);
+    const st = await page.evaluate(() => ({ exp: document.querySelector('#against .ic-btn').getAttribute('aria-expanded'), h: document.querySelector('#against .ic-body').getBoundingClientRect().height, vis: getComputedStyle(document.querySelector('#against .ic-body')).visibility, txt: document.querySelector('#against .ic-body').innerText, btnH: document.querySelector('#against .ic-btn').getBoundingClientRect().height }));
+    check(`${vn} review: tapping a card unfolds it in place and shows its text`, h0 < 12 && st.exp === 'true' && st.exp === 'true' && st.h > 30 && st.vis === 'visible' && st.txt.length > 40, JSON.stringify({ h0, ...st }).slice(0, 200));
+    check(`${vn} review: card header is a 44px target`, st.btnH >= 44);
+    await page.focus('#against .icard:nth-child(2) .ic-btn'); await page.keyboard.press('Enter'); await sleep(600);
+    check(`${vn} review: keyboard Enter unfolds a card too`, (await page.evaluate(() => document.querySelector('#against .icard:nth-child(2) .ic-btn').getAttribute('aria-expanded'))) === 'true');
+    await page.keyboard.press('Space'); await sleep(600);
+    check(`${vn} review: Space folds it again`, (await page.evaluate(() => document.querySelector('#against .icard:nth-child(2) .ic-btn').getAttribute('aria-expanded'))) === 'false');
+    check(`${vn} review: card text is outlined amber (from draft)`, await page.evaluate(() => document.querySelectorAll('#against .cf-filled').length >= 3));
+    const chs = await page.evaluate(() => ({ n: window.CF.chapters.length, labels: [...document.querySelectorAll('.sheet .tab .chap')].map((e) => e.textContent), seals: [...document.querySelectorAll('.seal-note')].map((s) => s.innerText.replace(/\s+/g, ' ')) }));
+    check(`${vn} review: chapter labels are consistent ("Chapter n of ${chs.n}")`, chs.labels.length > 0 && chs.labels.every((l) => new RegExp(`^Chapter \\d of ${chs.n}$`).test(l)), JSON.stringify(chs.labels));
+    check(`${vn} review: seals carry ui.sealCue and the chapter's own question, and there is none after the last chapter`, chs.seals.length === chs.n - 2 && chs.seals.every((t) => t.toLowerCase().includes(content.ui.sealCue.toLowerCase()) && content.chapters.some((c) => has(c.teaser) && t.includes(c.teaser))), JSON.stringify(chs.seals));
+    check(`${vn} review: no console errors`, log.errors.length === 0, log.errors.join('|'));
+    await ctx.close();
+  }
+  { // seal behaviour (review build has chapter 2 then 3)
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html' });
+    await ready(page); await sleep(400);
+    const seal = page.locator('.seal-note').first();
+    const early = await page.evaluate(() => document.querySelector('.seal-note').classList.contains('unfolded'));
+    await page.evaluate(() => { const s = document.querySelector('.seal-note'); window.scrollTo(0, s.getBoundingClientRect().top + window.scrollY - 400); }); await sleep(900);
+    const late = await page.evaluate(() => document.querySelector('.seal-note').classList.contains('unfolded'));
+    check('a seal unfolds once, when it enters view', !early && late, `${early} ${late}`);
+    const h = await page.evaluate(() => document.querySelector('.seal-note .seal-btn').getBoundingClientRect().height);
+    check('seal is at least 44px tall', h >= 44, String(h));
+    await page.tap('.seal-note .seal-btn'); await sleep(1100);
+    const at = await page.evaluate(() => { const t = document.getElementById('against').getBoundingClientRect().top; return { top: Math.round(t), focus: document.activeElement.id }; });
+    check('tapping the seal goes to the next chapter (in view) and focuses it', at.top < 500 && at.top > -50 && at.focus === 'against', JSON.stringify(at));
+    await ctx.close();
+  }
+  { // reduced motion: seals already unfolded
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html', reducedMotion: true });
+    await ready(page); await sleep(400);
+    check('reduced motion: seals show unfolded', await page.evaluate(() => [...document.querySelectorAll('.seal-note')].every((s) => s.classList.contains('unfolded'))));
     await ctx.close();
   }
 }

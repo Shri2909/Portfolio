@@ -4,6 +4,36 @@ Newest milestone first. Honest reporting: "not tested" means nobody ran it.
 
 ---
 
+## M2 "The cosy desk and the board" (Stages 4, 5, 6)
+
+Run straight on after M1 at the user's request (no stop between M1 and M5; the user approved moving on).
+
+### What changed
+- **Stage 4 (`src/js/40-atmosphere.js`, `src/css/10-atmosphere.css`).** Lamp glow is one fixed layer moved with `transform` only; it follows a pointer, a dragging finger (touchmove) or keyboard focus, and sits under every sheet so paper stays cream. 14 dust motes (transform and opacity, paused when the tab is hidden). Desk props (banker's lamp, teacup, magnifier, pencils, notebook) as inline SVG, 3.8 KB, only at 1100px and up and only where there is room beside the dossier; decorative and aria-hidden. The teacup is a real button (`ui.teaSlip` for 4 s, steam puffs). Typing "elementary" outside inputs flickers the lamp and shows `ui.elementary`. Pencil marginalia: each note is exactly an existing source line (dossier: `exhibit0.custody.source`; later sheets: custody source or clue source), faint until the lamp passes or focus is inside its sheet; `ui.marginaliaHint` shows once and can be dismissed. Reduced motion: lamp static and centred, no motes, no steam, notes still reveal.
+- **Stage 5 (`50-clues.js`, `60-brief.js`).** Cream envelope with a wax seal that opens by itself at 40% in view (button too; open at load under reduced motion); greeting, `brief.summary` paragraphs (only if filled), a faint coffee ring (`ui.coffeeRingSlip`). Leads as brass tags (dashed and "Not shown yet" for `not_shown`, never hidden). Tapping a lead draws a red string (SVG, dash-offset over 600 ms) from the tag to each visible exhibit pin, highlights those tabs for 3 s, tap again clears; hidden targets are skipped. From 768px the leads sit on a cork case board with a pin per visible chapter that fill brass when scrolled to. Clue magnifiers peek from sheet edges (wobble about every 8 s), a modal clue slip ("Clue n of N", text, "Verified in: source"), top-bar Clues button with the friendly rank, brass-bound notebook dialog (full-screen on phone, focus trap, Esc, found clues with sources, "???" plus `ui.clueLocked` plus the section name for the rest, `ui.notebookEmpty`, `ui.cluesDone`). Found clues saved in localStorage inside try/catch.
+- **Stage 6 (`55-seals.js`, `65-against.js`).** Fair warning: up to three index cards with brass paper clips that unfold in place (button, aria-expanded, Enter and Space); renders only when reasons have text (so it exists in the review build, not in production). Chapter Seals: folded notes with `ui.sealCue` and the chapter teaser, tap or Enter goes to the next chapter, unfolds once on entering view; chapter labels "Chapter n of N" count only visible chapters.
+
+### Tests (`node scripts/test.mjs 1 2 3 4 5 6`)
+209+ checks pass. New ones cover: lamp follow (mouse, touch, keyboard focus), paper under the lamp, 14 motes, props under 15 KB and outside the dossier, teacup and elementary slips, pencil note equals `custody.source` and is lit only near the lamp, hint shown once, frame rate with everything on at 4x CPU throttle (53 fps), envelope auto-open, leads (44px, dashed not-shown), strings landing on pins within 14px (phone: rail pins; 1100px: board pins; with test-only stand-in exhibit sheets because the real exhibits arrive in M3), clue dialog, rank, localStorage save, reload, notebook modal and focus trap, `localStorage` disabled, coffee ring, Fair warning unfold by touch and keyboard, seals unfold once and go to the next chapter, reduced motion.
+
+### Bugs the tests caught and I fixed
+- Native `append(null)` printed the word "null" (custody panel from M1 and the notebook). All appends that can receive null now go through `put()`; a regression check looks for stray "null".
+- The invisible seal hung 8px past the dossier and widened the layout viewport on phones (393px instead of 390px). Seal pulled in, `overflow-x: clip` on `html`, and the horizontal-scroll test now compares against the nominal width (the M1 test could not see this).
+- String ends used pin positions from before the lead-info panel pushed the layout down; `draw()` now re-places the pins first and strings redraw on layout changes.
+
+### Decisions
+- **Page order.** The spec's section list puts lab and wispr before effects; the chapters list (and EXPERIENCE_DIRECTION) put Roots before the Lab. I followed the chapters: exhibit0, brief, against, exhibitA, exhibitB, ledger, decisions, effects, lab, wispr, locker, closing, exhibitZ.
+- **Chapter ownership.** A chapter owns the sheets after the previous chapter's anchor up to its own anchor (so Exhibit A and B form "The Builder's Bench", ledger and forks form "Plot Twists and Forks"). No seal after chapter 1: the opening's own cue and teaser already play that role.
+- **Brief in production.** `brief.summary` is empty in `content.json`, so production shows the envelope, greeting and leads only.
+- **Clue tag on the opening** peeks from the bottom edge (its top edge sits under the top bar).
+- **Rail pins** stay non-tappable (see M1).
+- Top-bar Clues button is two lines on phones ("Clues 0/N" over the rank) so it fits next to the title.
+
+### Not verified
+Real phone and Safari/Firefox; screen readers; the strings against the real exhibits (M3); Android haptics.
+
+---
+
 ## M1 "The opening" (Stages 1, 2, 3), Mon 2 Nov 2026
 
 ### What changed

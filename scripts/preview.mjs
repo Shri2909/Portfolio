@@ -68,8 +68,74 @@ const sets = {
   },
 };
 
+sets.M2 = async () => {
+  const rd = (page) => page.waitForFunction(() => document.documentElement.classList.contains('ready'));
+  const goto = (page, sel, extra = 0) => page.evaluate(([s, e]) => { const t = document.querySelector(s); window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 60 - e, behavior: 'instant' }); }, [sel, extra]);
+  // phone, review build (has the drafted text, so Fair warning and the summary exist)
+  {
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.phone, touch: true, build: 'review.html' });
+    await rd(page); await sleep(400); await page.evaluate(() => window.CF.opening.skip()); await sleep(1700);
+    await snap(page, 'phone-1-opening-with-clues-button.png', 'The opening with the new top bar: Clues 0/N and the friendly rank "Curious visitor" (review build).', '390x844');
+    await goto(page, '#brief', -200); await sleep(300);
+    await snap(page, 'phone-2-envelope-closed.png', 'The briefing arrives as a cream envelope with a wax seal. Caption: "Open the briefing".', '390x844');
+    await sleep(1400);
+    await snap(page, 'phone-3-envelope-open.png', 'It opened by itself at 40% in view: greeting, the (draft) summary outlined amber, and the leads as brass luggage tags. "Not shown yet" is dashed.', '390x844');
+    await goto(page, '#brief .leads', 80); await page.tap('#brief .leads li:nth-child(1) .lead'); await sleep(800);
+    await snap(page, 'phone-4-lead-tapped.png', 'A lead tapped: its Evidence and "Why it matters" lines. (The red string needs exhibits to land on; they arrive in M3, and the geometry is already tested with stand-ins.)', '390x844');
+    await page.tap('#brief .leads li:nth-child(1) .lead'); await sleep(200);
+    await goto(page, '#brief ~ .seal-note', 300); await sleep(900);
+    await snap(page, 'phone-5-chapter-seal.png', 'A Chapter Seal: a folded note with one question about what comes next. Tap it to go to the next chapter.', '390x844');
+    await goto(page, '#against', -20); await sleep(300);
+    await page.tap('#against .icard:nth-child(1) .ic-btn'); await sleep(800);
+    await snap(page, 'phone-6-fair-warning.png', 'Fair warning: three index cards with brass paper clips, one unfolded in place (draft text, outlined amber).', '390x844');
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' })); await sleep(200);
+    await page.tap('.dossier .clue-tag'); await sleep(500);
+    await snap(page, 'phone-7-clue-slip.png', 'A clue magnifier tapped: "Clue n of N", the text, "Verified in: <source>".', '390x844');
+    await page.keyboard.press('Escape'); await sleep(300);
+    await page.tap('.tb-btn.clues'); await sleep(700);
+    await snap(page, 'phone-8-notebook.png', 'The clue notebook (full-screen on phone): pencil-dot progress, found clue with its source, rank "Junior sleuth".', '390x844');
+    await ctx.close();
+  }
+  // laptop 1600x900 would hide the sizes; use the standard 1366x650 and a taller desktop for the props
+  {
+    const { page, ctx } = await openPage(browser, { viewport: VIEWPORTS.laptop, build: 'review.html' });
+    await rd(page); await sleep(300); await page.evaluate(() => window.CF.opening.skip()); await sleep(1700);
+    await page.mouse.move(700, 120); await sleep(800);
+    await snap(page, 'laptop-1-opening-lamp.png', 'Laptop: the lamp follows the pointer and only lights the desk, never the paper. Pencil notes appear under it.', '1366x650');
+    await goto(page, '#brief .cork', 160); await sleep(1700);
+    await snap(page, 'laptop-2-case-board.png', 'The case board (from 768px): leads as notes, a pin per chapter. Pins fill brass once scrolled to. Strings land on exhibit pins in M3.', '1366x650');
+    await goto(page, '#against', -20); await sleep(300);
+    await page.click('#against .icard:nth-child(2) .ic-btn'); await sleep(800);
+    await snap(page, 'laptop-3-fair-warning.png', 'Fair warning on a laptop.', '1366x650');
+    await ctx.close();
+  }
+  {
+    const { page, ctx } = await openPage(browser, { viewport: { width: 1600, height: 900 } });
+    await rd(page); await sleep(300); await page.evaluate(() => window.CF.opening.skip()); await sleep(1700);
+    await page.locator('button.teacup').click(); await sleep(600);
+    await snap(page, 'wide-1-props-and-tea.png', 'Wide desk (1600px): brass banker\'s lamp, teacup (tap it for a slip), magnifying glass, pencils, notebook, with the steam and dust motes. Production build.', '1850x692');
+    await ctx.close();
+  }
+};
+sets.M2.vp = true;
+
 /* ------------------------------------------------------------ demo video */
 const videos = {
+  M2: async (page) => {
+    await page.waitForFunction(() => window.CF && window.CF.opening);
+    await page.evaluate(() => window.CF.opening.skip()); await sleep(1500);
+    await page.evaluate(() => { const t = document.querySelector('#brief'); window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 120, behavior: 'smooth' }); });
+    await sleep(2800);
+    await page.evaluate(() => { const t = document.querySelector('#brief .leads'); window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 200, behavior: 'smooth' }); }); await sleep(1500);
+    await page.tap('#brief .leads li:nth-child(1) .lead'); await sleep(1800);
+    await page.tap('#brief .leads li:nth-child(5) .lead'); await sleep(1800);
+    await page.evaluate(() => { const t = document.querySelector('#against'); window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' }); }); await sleep(2200);
+    await page.tap('#against .icard:nth-child(1) .ic-btn'); await sleep(1500);
+    await page.tap('#against .icard:nth-child(2) .ic-btn'); await sleep(1500);
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'smooth' })); await sleep(2000);
+    await page.tap('.dossier .clue-tag'); await sleep(1800); await page.keyboard.press('Escape'); await sleep(600);
+    await page.tap('.tb-btn.clues'); await sleep(2200); await page.keyboard.press('Escape'); await sleep(800);
+  },
   M1: async (page) => {
     await page.waitForFunction(() => window.CF && window.CF.opening, null, { timeout: 5000 });
     await landed(page); await sleep(2200); // the full opening, seal lands
@@ -96,7 +162,7 @@ if (videos[name]) {
   const vb = await launch({ slowMo: 80 });
   const ctx = await vb.newContext({ viewport: VIEWPORTS.phone, hasTouch: true, isMobile: true, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
-  await page.goto('file://' + join(dir, 'index.html'));
+  await page.goto('file://' + join(dir, name === 'M1' ? 'index.html' : 'review.html'));
   const rec = await startRecording(page);
   await videos[name](page);
   const info = await rec.stop(join(dir, 'demo.webm'));
