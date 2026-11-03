@@ -27,7 +27,7 @@ export function wireRow() {
     if (visitorDone) return; visitorDone = true;
     const { row } = getState(), count = Math.min(row.base + 1, 46655), name = sanitiseName(getWish().from);
     actions.setRow({ count, name });
-    try { window.history.replaceState(null, '', window.location.pathname + window.location.search + formatRowHash(count, name)); } catch (e) { /* ignore */ }
+    try { window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search + formatRowHash(count, name)); } catch (e) { /* ignore */ }
     emit('row:changed', { count, name, lit: true });
   }));
   // When the sender name changes after the lamp is lit, rewrite only the name.
@@ -36,7 +36,7 @@ export function wireRow() {
     const { row } = getState(), name = sanitiseName(getWish().from);
     if (name === row.name) return;
     actions.setRow({ name });
-    try { window.history.replaceState(null, '', window.location.pathname + window.location.search + formatRowHash(row.count, name)); } catch (e) { /* ignore */ }
+    try { window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search + formatRowHash(row.count, name)); } catch (e) { /* ignore */ }
     emit('row:changed', { count: row.count, name, lit: true });
   }));
   const hc = () => {
@@ -44,7 +44,7 @@ export function wireRow() {
     if (/^#v/i.test(h)) { const r = parseRowHash(h); if (r.kind === 'ok') actions.setRow({ base: r.count, from: r.name }); else if (r.kind === 'bad') actions.setRow({ status: 'bad' }); return; }
     // some other anchor: let the browser scroll, then put the row fragment back
     const { row } = getState();
-    if (visitorDone || row.status === 'shared') requestAnimationFrame(() => { try { window.history.replaceState(null, '', window.location.pathname + window.location.search + formatRowHash(row.count, row.name)); } catch (e) { /* ignore */ } });
+    if (visitorDone || row.status === 'shared') requestAnimationFrame(() => { try { window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search + formatRowHash(row.count, row.name)); } catch (e) { /* ignore */ } });
   };
   window.addEventListener('hashchange', hc);
   return () => { off.forEach((f) => f()); window.removeEventListener('hashchange', hc); };

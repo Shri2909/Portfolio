@@ -27,12 +27,19 @@ import * as hold from './hold.js';
 import * as attract from './attract.js';
 import * as shared from './shared.js';
 import * as setpieces from './setpieces.js';
+import * as touch from './touch.js';
+import * as pointer from './pointer.js';
+import * as wayfinder from './wayfinder.js';
+import * as menu from './menu.js';
+import * as keys from './keys.js';
+import * as session from './session.js';
+import * as invite from './invite.js';
 
 const MODULES = [
   { name: 'motion', start() { startSkip(); installCard(); }, stop() { stopSkip(); uninstallCard(); } },
   text, // before the director so its data-cue attributes are observed
-  director, camera, scrollFeel, controls, materials, art, energy, light, lightmap, flames, choreo, blueprint, render, promoteMod, hushMod, opening, wake, hold, attract, shared, setpieces, governor,
-].map((m, i) => ({ name: m.name || ['motion', 'text', 'director', 'camera', 'scrollFeel', 'controls', 'materials', 'art', 'energy', 'light', 'lightmap', 'flames', 'choreo', 'blueprint', 'render', 'promote', 'hush', 'opening', 'wake', 'hold', 'attract', 'shared', 'setpieces', 'governor'][i], start: m.start, stop: m.stop }));
+  director, camera, scrollFeel, controls, materials, art, energy, light, lightmap, flames, choreo, blueprint, render, promoteMod, hushMod, opening, wake, hold, attract, shared, setpieces, touch, pointer, wayfinder, menu, keys, session, invite, governor,
+].map((m, i) => ({ name: m.name || ['motion', 'text', 'director', 'camera', 'scrollFeel', 'controls', 'materials', 'art', 'energy', 'light', 'lightmap', 'flames', 'choreo', 'blueprint', 'render', 'promote', 'hush', 'opening', 'wake', 'hold', 'attract', 'shared', 'setpieces', 'touch', 'pointer', 'wayfinder', 'menu', 'keys', 'session', 'invite', 'governor'][i], start: m.start, stop: m.stop }));
 const started = [];
 let panicOn = false, panicTimer = 0;
 

@@ -93,7 +93,7 @@
   "rowFine": "This number is written inside the link. It is not a visitor count and is not verified.",
   "extra": {
    "_needsApproval": true,
-   "proofBack": "Baithak par waapas",
+   "proofBack": "Baithak par waapas", "wayNav": "Where you are", "keysTitle": "Keys", "keysOn": "Keys on", "keysHint": "Press ? for keys", "hapticsLabel": "Haptics", "keyAct": "Previous or next act", "menuKeys": "Keys",
    "calm": "Calm",
    "calmHi": "Roshni kam karo",
    "calmOnHi": "Roshni waapas laao",

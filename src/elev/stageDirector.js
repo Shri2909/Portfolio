@@ -44,7 +44,8 @@ function commit(next, jump) {
 function frame(dt, now) {
   const dy = y - lastY; lastY = y;
   if (Math.abs(dy) >= 4) dir = dy > 0 ? 1 : -1;
-  v = v * 0.7 + (dy / Math.max(1, dt)) * 0.3;
+  if (Math.abs(dy) > 2.5 * innerHeight) { v = 0; gate = false; calmSince = 0; } // a teleport (hash link, Menu jump, scrollIntoView) is not a fling: do not wait for its velocity to decay
+  else v = v * 0.7 + (dy / Math.max(1, dt)) * 0.3;
   // velocity gate: closed above 2.5 px/ms, reopened after 80 ms under 0.6 px/ms
   if (Math.abs(v) > 2.5) { gate = true; calmSince = 0; }
   else if (gate) { if (Math.abs(v) < 0.6) { calmSince = calmSince || now; if (now - calmSince > 80) gate = false; } else calmSince = 0; }

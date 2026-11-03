@@ -1,5 +1,5 @@
 // Hash grammar. Pure functions, no DOM writes. Share fragments (#v...) are recognised, never edited.
-const SCROLL = ['night', 'lamps', 'row-breathes', 'lamp-6', 'person', 'voice', 'verdict', 'wish', 'closure'];
+const SCROLL = ['night', 'baithak', 'lamps', 'lamp-1', 'lamp-2', 'lamp-3', 'lamp-4', 'lamp-5', 'row-breathes', 'lamp-6', 'person', 'voice', 'verdict', 'wish', 'closure'];
 export const isShareFragment = (hash) => /^#v/i.test(hash || '');
 export function parseHash(hash) {
   const h = String(hash || '');

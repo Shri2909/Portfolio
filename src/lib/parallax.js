@@ -14,7 +14,7 @@ const apply = () => {
 const run = () => {
   if (stop) return;
   stop = ticker.add(() => {
-    cur.x += (tgt.x - cur.x) * 0.08; cur.y += (tgt.y - cur.y) * 0.08;
+    if (hooks.parallaxStep) hooks.parallaxStep(cur, tgt); else { cur.x += (tgt.x - cur.x) * 0.08; cur.y += (tgt.y - cur.y) * 0.08; }
     apply();
     if (Math.abs(tgt.x - cur.x) < 0.002 && Math.abs(tgt.y - cur.y) < 0.002) { stop(); stop = null; }
   });

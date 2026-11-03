@@ -74,7 +74,7 @@ const entry = (/<script[^>]+src="\.?\/?(assets\/[^"]+\.js)"/.exec(idx) || [])[1]
 if (entry && fs.existsSync(path.join(dist, entry))) {
   const e = gz(path.join(dist, entry));
   if (e > 140 * 1024) fail.push(`entry JS ${(e / 1024).toFixed(1)} KB gzip over 140 KB`);
-  console.log('elevation: ' + (files.filter((f) => f.endsWith('.js')).some((f) => /data-elev/.test(fs.readFileSync(f, 'utf8'))) ? 'ON' : 'OFF'));
+  console.log('elevation: ' + (files.filter((f) => /assets\/.*\.js$/.test(f) && !/assets\/elev-/.test(f)).some((f) => /elev-[\w-]+\.js/.test(fs.readFileSync(f, 'utf8'))) ? 'ON' : 'OFF'));
 }
 for (const f of text.filter((f) => /\.(js|html)$/.test(f))) if (/__perf|VITE_PERF/.test(fs.readFileSync(f, 'utf8'))) fail.push(`perf code in dist/${path.relative(dist, f)}`);
 for (const f of files.filter((f) => /\.(js|css)$/.test(f))) console.log('  chunk ' + path.relative(dist, f) + '  ' + (gz(f) / 1024).toFixed(1) + ' KB gz');
