@@ -184,6 +184,14 @@
     "twinkle",
     "fade"
    ],
+   "projectNames": [
+    "Certgen",
+    "Vigil",
+    "Blitz",
+    "TipIndex",
+    "PitDB"
+   ],
+   "fromHomeFlame": "the home flame",
    "tiltOn": "Tilt on",
    "lampRow": "The five lamps"
   }

@@ -16,6 +16,7 @@ import Dock from './components/Dock.jsx';
 import Overlay from './components/Overlay.jsx';
 import FullTextView from './components/FullTextView.jsx';
 import Night from './components/Night.jsx';
+import LampRow from './components/LampRow.jsx';
 import Lamps from './components/Lamps.jsx';
 import RowBreathes from './components/RowBreathes.jsx';
 import Lamp6 from './components/Lamp6.jsx';
@@ -54,7 +55,7 @@ export default function App() {
       <TopBar />
       <Stage />
       <main id="main" tabIndex={-1}>
-        <Night />
+        <Night><LampRow /></Night>
         <Lamps />
         <RowBreathes />
         <Lamp6 />
