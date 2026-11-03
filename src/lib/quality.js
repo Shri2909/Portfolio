@@ -1,5 +1,6 @@
 import { ticker } from './ticker.js';
 import { actions, getState } from './store.js';
+import { PERF } from '../elevation.js';
 // Quality governor: sample ~90 frames after first paint, then watch while anything animates.
 // Never moves up on its own. Particle caps and DPR caps are exposed for later packs.
 export const CAPS = { high: 400, mid: 180, low: 60 };
@@ -8,6 +9,7 @@ const order = ['high', 'mid', 'low'];
 const down = (to) => { const i = order.indexOf(getState().quality); const j = to ? order.indexOf(to) : i + 1; if (j > i) actions.setQuality(order[Math.min(j, 2)]); };
 
 export function startGovernor() {
+  if (PERF) { const q = new URLSearchParams(location.search).get('q'); if (order.includes(q)) { actions.setQuality(q); return; } } // perf build only: force a tier
   // initial sampler
   let skip = 10, buf = [];
   const stop = ticker.add((dt) => {

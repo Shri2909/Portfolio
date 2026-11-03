@@ -1,0 +1,454 @@
+[
+ {
+  "label": "390@4x high",
+  "windows": {
+   "night": {
+    "frames": 192,
+    "median": 33.4,
+    "p95": 50.1,
+    "p99": 66.7,
+    "max": 66.8,
+    "dropped": 91.7,
+    "jank": 0.541
+   },
+   "baithak": {
+    "frames": 249,
+    "median": 33.3,
+    "p95": 50,
+    "p99": 66.7,
+    "max": 150,
+    "dropped": 55,
+    "jank": 0.394
+   },
+   "lamp-1": {
+    "frames": 256,
+    "median": 33.3,
+    "p95": 33.4,
+    "p99": 50.1,
+    "max": 50.1,
+    "dropped": 55.1,
+    "jank": 0.369
+   },
+   "lamp-2": {
+    "frames": 241,
+    "median": 33.3,
+    "p95": 50,
+    "p99": 66.7,
+    "max": 83.4,
+    "dropped": 60.2,
+    "jank": 0.41
+   },
+   "lamp-3": {
+    "frames": 228,
+    "median": 33.3,
+    "p95": 50.1,
+    "p99": 66.8,
+    "max": 83.3,
+    "dropped": 62.7,
+    "jank": 0.445
+   },
+   "lamp-4": {
+    "frames": 240,
+    "median": 33.3,
+    "p95": 50,
+    "p99": 50.1,
+    "max": 66.7,
+    "dropped": 62.9,
+    "jank": 0.418
+   },
+   "lamp-5": {
+    "frames": 267,
+    "median": 16.7,
+    "p95": 33.4,
+    "p99": 50.1,
+    "max": 83.4,
+    "dropped": 47.6,
+    "jank": 0.348
+   },
+   "voice": {
+    "frames": 275,
+    "median": 16.8,
+    "p95": 33.4,
+    "p99": 50,
+    "max": 50.1,
+    "dropped": 49.5,
+    "jank": 0.346
+   },
+   "lamp-6": {
+    "frames": 253,
+    "median": 33.3,
+    "p95": 50,
+    "p99": 50.1,
+    "max": 116.7,
+    "dropped": 58.1,
+    "jank": 0.407
+   },
+   "verdict": {
+    "frames": 289,
+    "median": 16.7,
+    "p95": 33.4,
+    "p99": 50,
+    "max": 66.7,
+    "dropped": 37,
+    "jank": 0.286
+   },
+   "wish": {
+    "frames": 256,
+    "median": 33.3,
+    "p95": 50,
+    "p99": 50.1,
+    "max": 50.1,
+    "dropped": 55.5,
+    "jank": 0.398
+   },
+   "closure": {
+    "frames": 227,
+    "median": 16.7,
+    "p95": 33.4,
+    "p99": 50.1,
+    "max": 66.6,
+    "dropped": 31.7,
+    "jank": 0.26
+   }
+  }
+ },
+ {
+  "label": "390@4x high calm",
+  "windows": {
+   "night": {
+    "frames": 185,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "baithak": {
+    "frames": 185,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 33.3,
+    "dropped": 0.5,
+    "jank": 0.006
+   },
+   "lamp-1": {
+    "frames": 186,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "lamp-2": {
+    "frames": 195,
+    "median": 16.7,
+    "p95": 16.8,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "lamp-3": {
+    "frames": 185,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "lamp-4": {
+    "frames": 185,
+    "median": 16.7,
+    "p95": 16.8,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "lamp-5": {
+    "frames": 184,
+    "median": 16.7,
+    "p95": 16.8,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "voice": {
+    "frames": 184,
+    "median": 16.7,
+    "p95": 16.8,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "lamp-6": {
+    "frames": 184,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 50,
+    "dropped": 0.5,
+    "jank": 0.011
+   },
+   "verdict": {
+    "frames": 184,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "wish": {
+    "frames": 175,
+    "median": 16.7,
+    "p95": 16.8,
+    "p99": 66.7,
+    "max": 83.3,
+    "dropped": 1.7,
+    "jank": 0.054
+   },
+   "closure": {
+    "frames": 183,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   }
+  }
+ },
+ {
+  "label": "390@4x mid",
+  "windows": {
+   "night": {
+    "frames": 323,
+    "median": 16.7,
+    "p95": 33.4,
+    "p99": 50,
+    "max": 83.4,
+    "dropped": 18.9,
+    "jank": 0.174
+   },
+   "baithak": {
+    "frames": 330,
+    "median": 16.7,
+    "p95": 33.4,
+    "p99": 33.4,
+    "max": 50,
+    "dropped": 16.4,
+    "jank": 0.145
+   },
+   "lamp-1": {
+    "frames": 337,
+    "median": 16.7,
+    "p95": 33.4,
+    "p99": 33.4,
+    "max": 50,
+    "dropped": 16.6,
+    "jank": 0.144
+   },
+   "lamp-2": {
+    "frames": 297,
+    "median": 16.7,
+    "p95": 33.4,
+    "p99": 50,
+    "max": 83.3,
+    "dropped": 27.3,
+    "jank": 0.234
+   },
+   "lamp-3": {
+    "frames": 317,
+    "median": 16.7,
+    "p95": 33.4,
+    "p99": 33.4,
+    "max": 83.3,
+    "dropped": 21.1,
+    "jank": 0.185
+   },
+   "lamp-4": {
+    "frames": 291,
+    "median": 16.7,
+    "p95": 33.4,
+    "p99": 50.1,
+    "max": 83.3,
+    "dropped": 33.7,
+    "jank": 0.276
+   },
+   "lamp-5": {
+    "frames": 308,
+    "median": 16.7,
+    "p95": 33.4,
+    "p99": 50,
+    "max": 66.7,
+    "dropped": 26.3,
+    "jank": 0.228
+   },
+   "voice": {
+    "frames": 309,
+    "median": 16.7,
+    "p95": 33.4,
+    "p99": 33.4,
+    "max": 50.1,
+    "dropped": 28.5,
+    "jank": 0.227
+   },
+   "lamp-6": {
+    "frames": 317,
+    "median": 16.7,
+    "p95": 33.4,
+    "p99": 50,
+    "max": 50.1,
+    "dropped": 22.4,
+    "jank": 0.191
+   },
+   "verdict": {
+    "frames": 348,
+    "median": 16.7,
+    "p95": 33.3,
+    "p99": 33.4,
+    "max": 50,
+    "dropped": 10.9,
+    "jank": 0.101
+   },
+   "wish": {
+    "frames": 331,
+    "median": 16.7,
+    "p95": 33.4,
+    "p99": 33.4,
+    "max": 33.4,
+    "dropped": 18.4,
+    "jank": 0.155
+   },
+   "closure": {
+    "frames": 256,
+    "median": 16.7,
+    "p95": 33.3,
+    "p99": 33.4,
+    "max": 50,
+    "dropped": 13.7,
+    "jank": 0.123
+   }
+  }
+ },
+ {
+  "label": "390@4x mid calm",
+  "windows": {
+   "night": {
+    "frames": 184,
+    "median": 16.7,
+    "p95": 16.8,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "baithak": {
+    "frames": 186,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "lamp-1": {
+    "frames": 184,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "lamp-2": {
+    "frames": 184,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 33.3,
+    "dropped": 0.5,
+    "jank": 0.006
+   },
+   "lamp-3": {
+    "frames": 185,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "lamp-4": {
+    "frames": 184,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "lamp-5": {
+    "frames": 186,
+    "median": 16.7,
+    "p95": 16.8,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "voice": {
+    "frames": 185,
+    "median": 16.7,
+    "p95": 16.8,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "lamp-6": {
+    "frames": 186,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "verdict": {
+    "frames": 185,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "wish": {
+    "frames": 185,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   },
+   "closure": {
+    "frames": 184,
+    "median": 16.7,
+    "p95": 16.7,
+    "p99": 16.8,
+    "max": 16.8,
+    "dropped": 0,
+    "jank": 0
+   }
+  }
+ }
+]
