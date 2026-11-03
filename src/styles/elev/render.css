@@ -1,0 +1,14 @@
+/* E8.4 rendering rules (elevation only; V3 files stay untouched).
+   1. No permanent will-change: it is set only while moving (.moving) or by promote() (.promoted); at most 6 / 4 / 2 promoted layers.
+   2. Containment: the full-viewport fixed canvases are contain: strict; tall reading blocks below the fold use content-visibility.
+   3. No wasted cost: the topbar blur sat under a .94 alpha (invisible); box-shadow blur capped at 24px; glows are pre-rendered gradients.
+   4. Infinite CSS animations stop when their section is off screen (data-off) or the tab is hidden (data-hidden).
+   5. One rAF: JS motion goes through ticker.js; no setInterval in src/elev or fx.js; reads are cached on resize and stage:act.
+   6. Read then write: no layout reads in ticker callbacks (scripts/lint-render.mjs enforces the obvious cases). */
+html[data-elev="1"] #topbar { backdrop-filter: none; -webkit-backdrop-filter: none; }
+html[data-elev="1"] .traveller { will-change: auto; }
+html[data-elev="1"] #fx, html[data-elev="1"] #fx-glows { contain: strict; }
+html[data-elev="1"] #voice, html[data-elev="1"] #verdict, html[data-elev="1"] #wish { content-visibility: auto; contain-intrinsic-size: auto 100svh; }
+html[data-elev="1"] .promoted { will-change: transform, opacity; }
+html[data-elev="1"] [data-off="1"] *, html[data-elev="1"] [data-off="1"] *::before, html[data-elev="1"] [data-off="1"] *::after { animation-play-state: paused !important; }
+html[data-elev="1"][data-hidden="1"] *, html[data-elev="1"][data-hidden="1"] *::before, html[data-elev="1"][data-hidden="1"] *::after { animation-play-state: paused !important; }

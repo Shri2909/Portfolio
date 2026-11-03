@@ -21,7 +21,7 @@ function tick() {
 }
 const go = () => { if (!stopT) stopT = ticker.add(tick); };
 function setFull() { masked.forEach((m) => (full() ? m.el.removeAttribute('mask') : m.el.setAttribute('mask', m.mask))); }
-function toSvg(e) { const r = svg.getBoundingClientRect(); return { x: ((e.clientX - r.left) / r.width) * 240, y: ((e.clientY - r.top) / r.height) * 180 }; }
+function toSvg(e) { const r = svg.getBoundingClientRect(); return { x: ((e.clientX - r.left) / r.width) * 240, y: ((e.clientY - r.top) / r.height) * 180 }; } // lint:ok event-time read, not per frame
 export function start() {
   svg = document.querySelector('svg.sketch'); if (!svg || svg.querySelector('#bpMask')) return;
   const btn = svg.closest('.sketch-btn'), grid = svg.querySelector('rect[fill^="url"]'), g = svg.querySelector('g[transform]');

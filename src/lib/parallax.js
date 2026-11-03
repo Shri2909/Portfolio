@@ -1,5 +1,6 @@
 import { ticker } from './ticker.js';
 import { getState } from './store.js';
+import { hooks } from './events.js';
 // Pointer (desktop) or Tilt (phones, opt-in) parallax. Far 0.2, mid 0.5, near 1.0, sky 0.05. Max 10 px.
 const cur = { x: 0, y: 0 }, tgt = { x: 0, y: 0 };
 let stop = null;
@@ -20,7 +21,7 @@ const run = () => {
 };
 export const parallaxTarget = (x, y) => {
   const s = getState();
-  if (s.calm || s.quality === 'low') { tgt.x = tgt.y = 0; }
+  if (s.calm || s.quality === 'low' || (hooks.fx && hooks.fx.parallax() < 0.02)) { tgt.x = tgt.y = 0; }
   else { tgt.x = Math.max(-1, Math.min(1, x)); tgt.y = Math.max(-1, Math.min(1, y)); }
   run();
 };

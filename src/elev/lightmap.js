@@ -6,14 +6,15 @@ import { getState } from '../lib/store.js';
 import { on } from '../lib/events.js';
 import { light, LIGHT } from './light.js';
 import { energy, measured } from './energy.js';
-import { registry } from './registry.js';
+import { registerEffect, isOn, scale as fxScale, tickAwake, measure } from './budget.js';
 
-let scrolling = false, scT = 0, cv = null, ctx = null, sprites = [], offs = [], breathT = 0, sampler = null, sctx = null, off_ = null, bloomPts = [], lastList = [], lastEx = 1, w = 0, h = 0;
+let scrolling = false, scT = 0, cv = null, ctx = null, sprites = [], offs = [], tickStop = null, unreg = [], sctx = null, off_ = null, bloomPts = [], lastList = [], lastEx = 1, w = 0, h = 0;
 
 function sprite(rgb) { const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d'), r = g.createRadialGradient(32, 32, 0, 32, 32, 32); r.addColorStop(0, `rgba(${rgb},1)`); r.addColorStop(0.35, `rgba(${rgb},.55)`); r.addColorStop(1, `rgba(${rgb},0)`); g.fillStyle = r; g.fillRect(0, 0, 64, 64); return c; }
 function size() { w = Math.max(24, Math.ceil(innerWidth / 4)); h = Math.max(24, Math.ceil(innerHeight / 4)); if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; } }
-function draw(list = lastList, ex = lastEx) {
-  if (!ctx || document.hidden) return; lastList = list; lastEx = ex;
+function draw(list = lastList, ex = lastEx) { return measure('lightmap-pool', () => draw_(list, ex)); }
+function draw_(list, ex) {
+  if (!ctx || document.hidden || fxScale('lightmap-pool') < 0.02) return; lastList = list; lastEx = ex;
   const s = getState(), q = s.quality; if (q === 'low') return;
   ctx.clearRect(0, 0, w, h); ctx.globalCompositeOperation = 'lighter';
   const ink = s.ink, br = s.calm ? 0.5 : light.breath() , lim = q === 'high' ? 24 : 14;
@@ -51,10 +52,14 @@ export function start() {
   offs.push(on('bloom:set', (d) => { bloomPts.push({ x: d.x, y: d.y, r: d.r || 120, i: d.i || 0.6, dur: d.dur || 600, t0: performance.now(), hue: d.hue }); draw(); }));
   const rs = () => { size(); draw(); }; window.addEventListener('resize', rs); offs.push(() => window.removeEventListener('resize', rs));
   // slow breath: 8 Hz redraw, high tier only, never in Calm, never while hushed or hidden
-  breathT = setInterval(() => { const s = getState(); if (s.calm || s.ink || s.quality !== 'high' || document.hidden) return; const hu = document.documentElement.dataset.hush; if (hu && hu !== '0') return; draw(); }, 125);
-  sampler = setInterval(() => { if (!getState().calm) sample(); }, 500);
-  registry.register('lightmap', { kind: 'light', cost: 0.5, shed() { clearInterval(breathT); } });
+  let a1 = 0, a2 = 0; // ticker accumulators (no setInterval): breath every 125 ms, sampler every 500 ms
+  tickStop = tickAwake((dt) => {
+    a1 += dt; a2 += dt;
+    if (a1 >= 125) { a1 = 0; const s = getState(); if (!(s.calm || s.ink || s.quality !== 'high' || document.hidden || !isOn('lightmap-breath'))) { const hu = document.documentElement.dataset.hush; if (!hu || hu === '0') draw(); } }
+    if (a2 >= 500) { a2 = 0; sample(); }
+  });
+  unreg.push(registerEffect({ id: 'lightmap-pool', kind: 'canvas', priority: 4, ms: 0.5, onRestore: () => draw() }), registerEffect({ id: 'lightmap-breath', kind: 'canvas', priority: 7, ms: 0.3 }));
   light.mark(); setTimeout(() => { draw(); if (!getState().calm) sample(); }, 600);
 }
-export function stop() { clearInterval(breathT); clearInterval(sampler); offs.splice(0).forEach((f) => f()); cv && cv.remove(); cv = ctx = null; bloomPts = []; }
+export function stop() { tickStop && tickStop(); tickStop = null; unreg.splice(0).forEach((f) => f()); offs.splice(0).forEach((f) => f()); cv && cv.remove(); cv = ctx = null; bloomPts = []; }
 export const name = 'lightmap';

@@ -6,10 +6,10 @@ import { getState } from '../lib/store.js';
 import { on, emit } from '../lib/events.js';
 import { engine } from '../lib/flame.js';
 import { lampRegistry } from '../lib/lampRegistry.js';
-import { registry } from './registry.js';
+import { registerEffect, isOn } from './budget.js';
 
 const NS = 'http://www.w3.org/2000/svg';
-let offs = [], gustT = 0, wispT = 0, defs = null;
+let offs = [], unreg = [], gustT = 0, wispT = 0, defs = null;
 const hushed = () => { const h = document.documentElement.dataset.hush; return !!h && h !== '0'; };
 const rnd = (a, b) => a + Math.random() * (b - a);
 
@@ -33,12 +33,12 @@ function augment() {
 }
 function litWicks() { const s = getState(), out = []; const h = lampRegistry.wick(0); h && out.push(h); for (let n = 1; n <= 5; n++) if (s.lamps[n] === 'lit') { const p = lampRegistry.wick(n); p && out.push(p); } return out.filter((p) => p.y > 0 && p.y < innerHeight); }
 function gust() { gustT = setTimeout(gust, rnd(9000, 14000)); const s = getState(); if (s.calm || document.hidden || hushed()) return; const v = rnd(0.3, 0.6) * (Math.random() < 0.5 ? -1 : 1); engine.wind(v); emit('wind:gust', { v }); }
-function wisp() { wispT = setTimeout(wisp, rnd(2500, 6000)); const s = getState(); if (s.calm || s.ink || s.quality === 'low' || document.hidden || hushed()) return; const w = litWicks(); if (!w.length) return; const p = w[Math.floor(Math.random() * w.length)]; emit('fx:burst', { kind: 'ember', x: p.x, y: p.y - 30, count: 1 }); }
+function wisp() { wispT = setTimeout(wisp, rnd(2500, 6000)); const s = getState(); if (!isOn('flames') || s.calm || s.ink || s.quality === 'low' || document.hidden || hushed()) return; const w = litWicks(); if (!w.length) return; const p = w[Math.floor(Math.random() * w.length)]; emit('fx:burst', { kind: 'ember', x: p.x, y: p.y - 30, count: 1 }); }
 export function start() {
   augment();
   offs.push(on('diya:lit', () => setTimeout(augment, 60)));
   gustT = setTimeout(gust, rnd(6000, 10000)); wispT = setTimeout(wisp, rnd(3000, 6000));
-  registry.register('flames', { kind: 'ambient', cost: 0.1, shed() { clearTimeout(wispT); } });
+  unreg.push(registerEffect({ id: 'flames', kind: 'dom', priority: 2, ms: 0.1 })); // wisps stop while shed
 }
-export function stop() { offs.splice(0).forEach((f) => f()); clearTimeout(gustT); clearTimeout(wispT); document.querySelectorAll('.f-wick, .e-lip').forEach((n) => n.remove()); defs && defs.remove(); defs = null; }
+export function stop() { offs.splice(0).forEach((f) => f()); unreg.splice(0).forEach((f) => f()); clearTimeout(gustT); clearTimeout(wispT); document.querySelectorAll('.f-wick, .e-lip').forEach((n) => n.remove()); defs && defs.remove(); defs = null; }
 export const name = 'flames';

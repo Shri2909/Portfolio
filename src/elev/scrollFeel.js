@@ -31,7 +31,7 @@ export function scrollTo(y, { dur } = {}) {
 function scrollTo_instant(y) { const r = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; window.scrollTo(0, y); root.style.scrollBehavior = r; }
 export const start = () => {
   hooks.scrollTo = (el) => {
-    const top = el.getBoundingClientRect().top + scrollY - (parseFloat(getComputedStyle(root).scrollPaddingTop) || 0);
+    const top = el.getBoundingClientRect().top + scrollY - (parseFloat(getComputedStyle(root).scrollPaddingTop) || 0); // lint:ok event-time read, not per frame
     scrollTo(Math.max(0, top)); return true;
   };
 };

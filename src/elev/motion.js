@@ -84,7 +84,7 @@ export const stopSkip = () => SKIP_EVENTS.forEach((e) => window.removeEventListe
 // ---- FLIP (E2.4) ----
 /** Uniform FLIP for things with no text. `first` is the element's rect before the change. */
 export function flip(el, first, opts = {}) {
-  const last = el.getBoundingClientRect();
+  const last = el.getBoundingClientRect(); // lint:ok event-time read, not per frame
   if (!last.width || !last.height) return Promise.resolve();
   const dx = first.left - last.left, dy = first.top - last.top, sx = first.width / last.width, sy = first.height / last.height;
   el.style.transformOrigin = '0 0';
@@ -92,7 +92,7 @@ export function flip(el, first, opts = {}) {
 }
 /** Clip-path FLIP for things with text: the box stays final-size, the visible window grows from `first`. */
 export function clipFlip(el, first, { radius = 18, ...opts } = {}) {
-  const last = el.getBoundingClientRect();
+  const last = el.getBoundingClientRect(); // lint:ok event-time read, not per frame
   const t = Math.max(0, first.top - last.top), l = Math.max(0, first.left - last.left), r = Math.max(0, last.right - first.right), b = Math.max(0, last.bottom - first.bottom);
   return play(el, [{ clipPath: `inset(${t}px ${r}px ${b}px ${l}px round ${radius}px)` }, { clipPath: `inset(0px 0px 0px 0px round ${radius}px)` }], { dur: 'l', ease: 'outExpo', key: 'clip', ...opts });
 }
@@ -109,9 +109,9 @@ export async function transition(fn, { ready } = {}) {
 // ---- lamp card: the flame flies into the card corner while the card opens as an iris from the wick (E2.4) ----
 const flameOf = (lamp) => lamp && (lamp.querySelector('svg') || lamp);
 function flyFlame(from, to, { reverse = false } = {}) {
-  const f = flameOf(from), t = to && to.getBoundingClientRect();
+  const f = flameOf(from), t = to && to.getBoundingClientRect(); // lint:ok event-time read, not per frame
   if (!f || !t) return;
-  const r = f.getBoundingClientRect(); if (!r.width) return;
+  const r = f.getBoundingClientRect(); if (!r.width) return; // lint:ok event-time read, not per frame
   const c = f.cloneNode(true);
   Object.assign(c.style, { position: 'fixed', left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px', margin: 0, zIndex: 9999, pointerEvents: 'none', transformOrigin: '0 0' });
   c.setAttribute('aria-hidden', 'true'); document.body.appendChild(c);
@@ -120,7 +120,7 @@ function flyFlame(from, to, { reverse = false } = {}) {
   const a = c.animate(reverse ? kf.slice().reverse() : kf, { duration: dur(reverse ? 'm' : 'l') || 1, easing: reverse ? EASE.inOutQuint : EASE.outExpo, fill: 'both' });
   a.finished.then(() => c.remove(), () => c.remove());
 }
-const wick = (b, lamp) => { const br = b.getBoundingClientRect(), lr = lamp && lamp.getBoundingClientRect(); return lr ? [lr.left + lr.width / 2 - br.left, lr.top + lr.height / 2 - br.top] : [br.width / 2, br.height * 0.15]; };
+const wick = (b, lamp) => { const br = b.getBoundingClientRect(), lr = lamp && lamp.getBoundingClientRect(); return lr ? [lr.left + lr.width / 2 - br.left, lr.top + lr.height / 2 - br.top] : [br.width / 2, br.height * 0.15]; }; // lint:ok event-time read, not per frame
 export function installCard() {
   hooks.cardOpen = (b, lamp) => {
     const st = getState();

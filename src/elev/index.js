@@ -17,12 +17,15 @@ import * as flames from './flames.js';
 import * as choreo from './choreo.js';
 import * as blueprint from './blueprint.js';
 import * as energy from './energy.js';
+import * as governor from './governor.js';
+import * as promoteMod from './promote.js';
+import * as render from './render.js';
 
 const MODULES = [
   { name: 'motion', start() { startSkip(); installCard(); }, stop() { stopSkip(); uninstallCard(); } },
   text, // before the director so its data-cue attributes are observed
-  director, camera, scrollFeel, controls, materials, art, energy, light, lightmap, flames, choreo, blueprint,
-].map((m, i) => ({ name: m.name || ['motion', 'text', 'director', 'camera', 'scrollFeel', 'controls', 'materials', 'art', 'energy', 'light', 'lightmap', 'flames', 'choreo', 'blueprint'][i], start: m.start, stop: m.stop }));
+  director, camera, scrollFeel, controls, materials, art, energy, light, lightmap, flames, choreo, blueprint, render, promoteMod, governor,
+].map((m, i) => ({ name: m.name || ['motion', 'text', 'director', 'camera', 'scrollFeel', 'controls', 'materials', 'art', 'energy', 'light', 'lightmap', 'flames', 'choreo', 'blueprint', 'render', 'promote', 'governor'][i], start: m.start, stop: m.stop }));
 const started = [];
 let panicOn = false, panicTimer = 0;
 

@@ -25,7 +25,8 @@ const INIT = () => {
 const stats = (a) => { if (!a.length) return { frames: 0, median: 0, p95: 0, p99: 0, max: 0, dropped: 0, jank: 0 }; const s = [...a].sort((x, y) => x - y), q = (p) => s[Math.min(s.length - 1, Math.floor(s.length * p))]; const dur = a.reduce((x, y) => x + y, 0); return { frames: a.length, median: +q(0.5).toFixed(1), p95: +q(0.95).toFixed(1), p99: +q(0.99).toFixed(1), max: +s[s.length - 1].toFixed(1), dropped: +(100 * a.filter((v) => v > 25).length / a.length).toFixed(1), jank: +(a.reduce((x, v) => x + Math.max(0, v - 16.7), 0) / dur).toFixed(3) }; };
 const IDS = ['night', 'baithak', 'lamp-1', 'lamp-2', 'lamp-3', 'lamp-4', 'lamp-5', 'voice', 'lamp-6', 'verdict', 'wish', 'closure'];
 
-const cfgs = full
+const quick = !!arg('quick'); // one config: 390x844, 4x, tier high, normal
+const cfgs = quick ? [{ v: '390', cpu: 4, q: 'high', calm: false }] : full
   ? [['390', 1], ['390', 4], ['1366', 1], ['1366', 4]].flatMap(([v, c]) => ['high', 'mid', 'low'].flatMap((q) => [false, true].map((calm) => ({ v, cpu: c, q, calm }))))
   : ['high', 'mid'].flatMap((q) => [false, true].map((calm) => ({ v: '390', cpu: 4, q, calm })));
 
@@ -39,7 +40,7 @@ for (const c of cfgs) {
   await page.addInitScript(INIT);
   const hosts = new Set(); page.on('request', (r) => { try { const u = new URL(r.url()); if (!/^(data|blob):/.test(u.protocol) && u.host !== new URL(base).host) hosts.add(u.host); } catch {} });
   const cons = []; page.on('console', (m) => m.type() === 'error' && cons.push(m.text())); page.on('pageerror', (e) => cons.push(String(e)));
-  await page.goto(base + '?q=' + c.q + (process.env.OFF ? '&off=' + process.env.OFF : ''), { waitUntil: 'load' }); await page.waitForTimeout(4000);
+  await page.goto(base + (arg('auto') ? '?auto=1' : '?q=' + c.q) + (process.env.OFF ? '&off=' + process.env.OFF : ''), { waitUntil: 'load' }); await page.waitForTimeout(4000);
   const label = `${c.v}@${c.cpu}x ${c.q}${c.calm ? ' calm' : ''}`;
   const windows = {}, skipped = [];
   for (const id of IDS) {
@@ -62,6 +63,8 @@ for (const c of cfgs) {
     await page.waitForTimeout(500);
     inter.all = stats(Array.from(await page.evaluate((s) => Array.from(__p.dt.slice(s, __p.n)), n0)));
   } catch (e) { inter.error = String(e).slice(0, 80); }
+  const govState = await page.evaluate(() => (window.__perf ? { tier: document.documentElement.dataset.quality, fx: window.__perf.state().fx.filter(([, on]) => !on).map(([id]) => id) } : null)); if (arg('auto')) console.log('governor end state', label, JSON.stringify(govState));
+  const costs = await page.evaluate(() => (window.__perf ? window.__perf.cost() : [])); const st = await page.evaluate(() => (window.__perf ? window.__perf.state() : null));
   const p = await page.evaluate(() => ({ long: __p.long, cls: +__p.cls.toFixed(4), inp: Math.round(__p.inp), errs: __p.errs }));
   const lateLong = p.long.filter(([t, d]) => t > 4000 && d > 200);
   if (c.q === 'high' && c.cpu === 4 && c.v === '390') {
@@ -71,7 +74,7 @@ for (const c of cfgs) {
   }
   if (cons.length || p.errs.length) hardFail.push(`${label}: console/page errors: ${[...cons, ...p.errs].slice(0, 3).join(' | ')}`);
   if (hosts.size) hardFail.push(`${label}: third-party hosts: ${[...hosts].join(', ')}`);
-  results.push({ label, cfg: c, windows, interaction: inter, longTasks: p.long, cls: p.cls, inp: p.inp, skipped });
+  results.push({ label, cfg: c, costs, effectState: st, windows, interaction: inter, longTasks: p.long, cls: p.cls, inp: p.inp, skipped });
   await ctx.close();
 }
 await browser.close(); srv.close();
@@ -95,6 +98,11 @@ if (writeBase) { fs.writeFileSync(basePath, JSON.stringify(results.map(({ label,
 console.log('| config | act | frames | median | p95 | p99 | max | dropped% | jank |\n|---|---|---|---|---|---|---|---|---|');
 for (const r of results) for (const [id, w] of Object.entries(r.windows)) console.log(`| ${r.label} | ${id} | ${w.frames} | ${w.median} | ${w.p95} | ${w.p99} | ${w.max} | ${w.dropped} | ${w.jank} |`);
 for (const r of results) console.log(`${r.label}: CLS ${r.cls}, INP ${r.inp} ms, long tasks ${r.longTasks.length}${r.skipped.length ? ', skipped ' + r.skipped.join(',') : ''}`);
+const costRows = results.filter((r) => r.cfg.v === '390' && r.cfg.cpu === 4 && !r.cfg.calm).flatMap((r) => (r.costs || []).map((c) => ({ label: r.label, ...c })));
+if (costRows.length) {
+  const md = ['# Effect cost table (perf build, 390x844, 4x CPU, software rasteriser)', '', 'ms is the EWMA per measured use where an effect calls measure(); otherwise the registered estimate. An effect over 2.0 ms is flagged.', '', '| config | effect | kind | priority | ms | scale | shed | pinned |', '|---|---|---|---|---|---|---|---|', ...costRows.map((c) => `| ${c.label} | ${c.id} | ${c.kind} | ${c.priority} | ${c.ms}${c.ms > 2 ? ' FLAG' : ''} | ${c.scale} | ${c.shedCount} | ${c.pinned ? 'yes' : ''} |`)].join('\n');
+  fs.writeFileSync(path.join(root, 'perf/EFFECT_COST.md'), md + '\n'); console.log(md);
+}
 for (const w of warns) console.log('  warn  ' + w);
 for (const f of hardFail) console.log('  FAIL  ' + f);
 process.exit(hardFail.length || (strict && warns.length) ? 1 : 0);

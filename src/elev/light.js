@@ -6,7 +6,7 @@ import { on, emit } from '../lib/events.js';
 import { lampRegistry } from '../lib/lampRegistry.js';
 import { ticker } from '../lib/ticker.js';
 import { energy, flash } from './energy.js';
-import { registry } from './registry.js';
+import { registerEffect, scale as fxScale, measure } from './budget.js';
 
 export const LIGHT = { hues: [[255, 196, 110], [255, 150, 60], [238, 118, 138], [96, 104, 230], [255, 243, 220], [170, 190, 235]], LIT_CAP: 0.30, PERIOD: 4.8 };
 export const att = (s) => (s >= 1 ? 0 : ((1 - s * s) ** 2) / (1 + 4 * s * s));
@@ -15,7 +15,7 @@ const MAX = 32;
 const lights = new Map(); // id -> { x,y,r,i,hue,kind,get?,el? }
 const trans = [];          // transients: pulses and travellers
 const subs = new Set();    // draw listeners (lightmap)
-let surfaces = [], visible = new Set(), io = null, ro = null, offs = [], dirty = false, raf = 0, stopTick = null, accum = 0, started = false, scrollT = 0;
+let unregSurf = null, surfaces = [], visible = new Set(), io = null, ro = null, offs = [], dirty = false, raf = 0, stopTick = null, accum = 0, started = false, scrollT = 0;
 const SURF = '.sec .panel, .person-panel, .take-card, .rangoli-wrap, .sec h2, #night h1';
 const tierMax = () => ({ high: 12, mid: 8, low: 4 }[getState().quality] || 8);
 const tierHz = () => ({ high: 30, mid: 20, low: 8 }[getState().quality] || 20);
@@ -58,7 +58,7 @@ function step(now) {
   recompute();
   if (!trans.length && stopTick) { stopTick(); stopTick = null; mark(); }
 }
-function mark() { if (dirty || !started) return; dirty = true; raf = requestAnimationFrame(() => { dirty = false; refreshLamps(); recompute(); }); }
+function mark() { if (dirty || !started) return; dirty = true; raf = requestAnimationFrame(() => { dirty = false; refreshLamps(); measure('light-surfaces', recompute); }); }
 
 // -- sources
 function refreshLamps() {
@@ -93,10 +93,11 @@ function recompute() {
     for (const l of windowLights) list.push(l);
   }
   const act = list.length > 0;
+  const surfOff = fxScale('light-surfaces') < 0.02;
   for (const s of surfaces) {
-    if (!visible.has(s.el)) continue;
+    if (surfOff || !visible.has(s.el)) continue;
     if (n++ >= st) break;
-    const r = s.el.getBoundingClientRect(); // only visible, capped surfaces: at most 12 reads per recompute
+    const r = s.el.getBoundingClientRect(); // only visible, capped surfaces: at most 12 reads per recompute // lint:ok event-time read, not per frame
     let a1 = 0, a2 = 0, x1 = 0, y1 = 0, x2 = 0, y2 = 0;
     if (act) for (const l of list) { const a = att(Math.hypot(r.left + r.width / 2 - l.x, r.top + r.height / 2 - l.y) / (l.r + Math.max(r.width, r.height) * 0.25)) * l.i; if (a > a1) { a2 = a1; x2 = x1; y2 = y1; a1 = a; x1 = l.x; y1 = l.y; } else if (a > a2) { a2 = a; x2 = l.x; y2 = l.y; } }
     const w = a1 + a2 * 0.6, li = Math.round(Math.min(1, w) * ex * 50) / 50;
@@ -132,19 +133,19 @@ export function start() {
   const sc = () => { clearTimeout(scrollT); scrollT = setTimeout(mark, 140); }; window.addEventListener('scroll', sc, { passive: true }); offs.push(() => window.removeEventListener('scroll', sc));
   energy.listeners.add(mark);
   // keyboard users carry a light too (focus-visible)
-  const fin = (e) => { const t = e.target; if (!t || !t.matches || !t.matches(':focus-visible') || off()) return; const r = t.getBoundingClientRect(); light.add('focus', { x: r.left + r.width / 2, y: r.top + r.height / 2, r: 90, i: 0.4, hue: 4, kind: 'follow' }); };
+  const fin = (e) => { const t = e.target; if (!t || !t.matches || !t.matches(':focus-visible') || off()) return; const r = t.getBoundingClientRect(); light.add('focus', { x: r.left + r.width / 2, y: r.top + r.height / 2, r: 90, i: 0.4, hue: 4, kind: 'follow' }); }; // lint:ok event-time read, not per frame
   const fout = () => light.remove('focus');
   document.addEventListener('focusin', fin); document.addEventListener('focusout', fout); offs.push(() => { document.removeEventListener('focusin', fin); document.removeEventListener('focusout', fout); });
   // the travelling light: the ember that hops lamp to lamp is a real light
   offs.push(on('diya:lighting', ({ n, progress }) => { if (progress || off() || getState().quality === 'low') return; const a = lampRegistry.wick(n === 1 ? 0 : n - 1), b = lampRegistry.wick(n); a && b && light.traveller({ from: a, to: b, dur: 900, r: 200, i: 0.9 }); }));
   // light wipe across the act heading on each act change
-  offs.push(on('stage:act', ({ id, jump }) => { if (jump || off() || getState().quality === 'low') return; const sec = document.querySelector(`[data-act="${id}"]`), h = sec && sec.querySelector('h1, h2'); if (!h) return; const r = h.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return; light.traveller({ from: { x: r.left, y: r.top + r.height / 2 }, to: { x: r.right, y: r.top + r.height / 2 }, dur: 700, r: 120, i: 0.6 }); }));
-  registry.register('light-surfaces', { kind: 'light', cost: 0.4, shed() { visible.clear(); } });
+  offs.push(on('stage:act', ({ id, jump }) => { if (jump || off() || getState().quality === 'low') return; const sec = document.querySelector(`[data-act="${id}"]`), h = sec && sec.querySelector('h1, h2'); if (!h) return; const r = h.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return; light.traveller({ from: { x: r.left, y: r.top + r.height / 2 }, to: { x: r.right, y: r.top + r.height / 2 }, dur: 700, r: 120, i: 0.6 }); })); // lint:ok event-time read, not per frame
+  unregSurf = registerEffect({ id: 'light-surfaces', kind: 'dom', priority: 6, ms: 0.4, onRestore: () => mark() }); // CSS dims by --fxs-light-surfaces
   mark(); setTimeout(readWindows, 800);
   if (import.meta.env.VITE_PERF === '1' && /[?&]qa=1/.test(location.search)) window.__light = { lights, trans, energy, att, light, sample: light.sample, flash: () => light.flashStats() };
 }
 export function stop() {
-  started = false; cancelAnimationFrame(raf); dirty = false; offs.splice(0).forEach((f) => f()); stopTick && stopTick(); stopTick = null; trans.length = 0; lights.clear(); subs.clear();
+  unregSurf && unregSurf(); unregSurf = null; started = false; cancelAnimationFrame(raf); dirty = false; offs.splice(0).forEach((f) => f()); stopTick && stopTick(); stopTick = null; trans.length = 0; lights.clear(); subs.clear();
   io && io.disconnect(); ro && ro.disconnect(); clearTimeout(winT); clearTimeout(scrollT); windowLights = [];
   document.querySelectorAll('[data-elit-own]').forEach((el) => { ['--li', '--lx', '--ly'].forEach((p) => el.style.removeProperty(p)); if (el.dataset.elitPos) el.style.position = ''; delete el.dataset.elit; delete el.dataset.elitOwn; delete el.dataset.elitPos; });
   surfaces = []; visible = new Set();

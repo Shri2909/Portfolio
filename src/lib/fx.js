@@ -1,13 +1,13 @@
 import { ticker } from './ticker.js';
 import { getState, subscribe } from './store.js';
-import { on } from './events.js';
-import { CAPS } from './quality.js';
+import { on, hooks } from './events.js';
+import { CAPS, DPR } from './quality.js';
 
 // ParticleCanvas engine: ONE shared canvas, a fixed pool in typed arrays, a few pre-rendered glow sprites, no allocation in the loop.
 // Kinds: spark ember anar rocket chakri petals lantern twinkle phuljhadi ignite fizzle settle (unknown kinds are ignored) and glow (a DOM halo).
 // Standing rules: no audio, effects are decorative, never show a number or a claim, peak alpha 0.8, biggest sprite 96 px,
 // crackers (anar, rocket, chakri, phuljhadi) only after a reader action or a beat the reader triggered.
-const N = 256, CAP = { high: 220, mid: 120, low: 40 }, DPRC = { high: 1.75, mid: 1.5, low: 1 };
+const N = 256;
 const X = new Float32Array(N), Y = new Float32Array(N), VX = new Float32Array(N), VY = new Float32Array(N), AGE = new Float32Array(N), LIFE = new Float32Array(N), SZ = new Float32Array(N), GRAV = new Float32Array(N), DRAG = new Float32Array(N), A0 = new Float32Array(N), PH = new Float32Array(N), AUX = new Float32Array(N);
 const COL = new Uint8Array(N), TYPE = new Uint8Array(N), ALIVE = new Uint8Array(N), PRIO = new Uint8Array(N), FLG = new Uint8Array(N); // FLG bit1 additive, bit2 cooling
 const T = { spark: 1, ember: 2, star: 3, petal: 4, lantern: 5, firefly: 6, sparkler: 7, twinkle: 8, trail: 9 };
@@ -25,7 +25,7 @@ export function initFx() {
   cv = document.getElementById('fx'); if (!cv) return;
   ctx = cv.getContext('2d');
   sprites = HEX.map((c) => mkSprite(c)); petals = [0, 1, 2, 3, 4, 5].map((i) => mkPetal(i % 2 ? '#F5A623' : '#FFB347', i * 0.5)); lantern = mkLantern();
-  const size = () => { const q = getState().quality; dpr = Math.min(window.devicePixelRatio || 1, DPRC[q]); cv.width = Math.round(innerWidth * dpr); cv.height = Math.round(innerHeight * dpr); };
+  const size = () => { const q = getState().quality; dpr = Math.min(window.devicePixelRatio || 1, Math.max(1, DPR[q] * (hooks.fx ? hooks.fx.dpr() : 1))); cv.width = Math.round(innerWidth * dpr); cv.height = Math.round(innerHeight * dpr); };
   size(); window.addEventListener('resize', size);
   window.addEventListener('pointermove', (e) => { pointer.x = e.clientX; pointer.y = e.clientY; }, { passive: true });
   on('fx:burst', (d) => burst(d));
@@ -33,18 +33,20 @@ export function initFx() {
   let wasCalm = getState().calm;
   subscribe(() => { const c = getState().calm; if (c && !wasCalm) fadeAll(0.4); wasCalm = c; if (c && cv) cv.style.visibility = 'hidden'; else if (cv) cv.style.visibility = ''; });
 }
-const cap = () => CAP[getState().quality];
+const cap = () => Math.max(8, Math.round(CAPS[getState().quality] * (hooks.fx ? hooks.fx.cap() : 1)));
 export const liveCount = () => live;
 export const countType = (t) => { let n = 0; for (let i = 0; i < N; i++) if (ALIVE[i] && TYPE[i] === t) n++; return n; };
 export const TYPES = T;
 function fadeAll(sec) { for (let i = 0; i < N; i++) if (ALIVE[i]) { const rem = LIFE[i] - AGE[i]; if (rem > sec) LIFE[i] = AGE[i] + sec; } }
 function trim() { const c = cap(); let over = live - c; if (over <= 0) return; for (let i = 0; i < N && over > 0; i++) if (ALIVE[i] && PRIO[i] < 3) { LIFE[i] = Math.min(LIFE[i], AGE[i] + 0.33); over--; } }
 
+// A ticker-driven repeater (no setInterval): fn returns false to stop.
+function every(ms, fn) { let acc = 0; const stop = ticker.add((dt) => { acc += dt; while (acc >= ms) { acc -= ms; if (fn() === false) { stop(); return; } } }); return stop; }
 // raw spawn: {x,y,vx,vy,life,size,col,grav,drag,a,type,prio,add,cool,ph,aux}
 export function spawn(o) {
   const st = getState(); if (st.calm || !ctx) return -1;
   const c = cap(), prio = o.prio || 1;
-  if (AMBIENT.has(o.type) && live > 0.7 * c) return -1;
+  if (AMBIENT.has(o.type) && (live > 0.7 * c || (hooks.fx && Math.random() > hooks.fx.ambient()))) return -1; // graceful dimming thins ambient spawns
   let idx = -1;
   for (let k = 0; k < N; k++) { const i = (free + k) % N; if (!ALIVE[i]) { idx = i; free = i + 1; break; } }
   if (live >= c || idx < 0) { // pool full: only higher priority may replace the oldest lower-priority particle
@@ -123,15 +125,15 @@ export function burst(d) {
     case 'lantern': for (let k = 0; k < Math.min(12, d.count || 1); k++) spawn({ type: T.lantern, x: x + (k - 1) * 22, y, vy: -rnd(26, 34), life: rnd(8, 13), size: d.bright ? 36 : 26, ph: rnd(0, 6), a: d.bright ? 0.8 : 0.7, prio: 1 }); break;
     case 'anar': { // fountain, cone +-18 deg, scaled by power; one alive at a time
       const m = 0.4 + 0.6 * ((d.power ?? st.tone) / 6), rate = d.rate || tier(110, 60, 24); let n = 0; const total = Math.round(rate * m * 2.2 * 0.5);
-      const id = setInterval(() => { if (getState().calm || ++n > 22) return clearInterval(id); for (let k = 0; k < Math.ceil(total / 22); k++) { const a = -Math.PI / 2 + rnd(-0.314, 0.314), v = rnd(260, 420) * m; spawn({ type: T.spark, x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: rnd(0.6, 1.2), size: rnd(5, 8), col: 0, grav: 600, drag: 0.99, a: 0.75, prio: 2, add: true, cool: true }); } }, 100); break; }
-    case 'chakri': { let n = 0; const id = setInterval(() => { if (getState().calm || ++n > 32) return clearInterval(id); const w = 6 + (1 - n / 32) * 2, a = n * w * 0.35, r = 40 * Math.sin(n * 0.2); for (let arm = 0; arm < 2; arm++) { const t = a + arm * Math.PI; spawn({ type: T.spark, x: x + r * Math.cos(n * 0.2), y: y + r * 0.4 * Math.sin(n * 0.2), vx: Math.cos(t) * 90, vy: Math.sin(t) * 40, life: 0.5, size: 6, col: 0, drag: 0.95, a: 0.7, prio: 2, add: true, cool: true }); } }, 100); break; }
+      every(100, () => { if (getState().calm || ++n > 22) return false; for (let k = 0; k < Math.ceil(total / 22); k++) { const a = -Math.PI / 2 + rnd(-0.314, 0.314), v = rnd(260, 420) * m; spawn({ type: T.spark, x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: rnd(0.6, 1.2), size: rnd(5, 8), col: 0, grav: 600, drag: 0.99, a: 0.75, prio: 2, add: true, cool: true }); } }); break; }
+    case 'chakri': { let n = 0; every(100, () => { if (getState().calm || ++n > 32) return false; const w = 6 + (1 - n / 32) * 2, a = n * w * 0.35, r = 40 * Math.sin(n * 0.2); for (let arm = 0; arm < 2; arm++) { const t = a + arm * Math.PI; spawn({ type: T.spark, x: x + r * Math.cos(n * 0.2), y: y + r * 0.4 * Math.sin(n * 0.2), vx: Math.cos(t) * 90, vy: Math.sin(t) * 40, life: 0.5, size: 6, col: 0, drag: 0.95, a: 0.7, prio: 2, add: true, cool: true }); } }); break; }
     case 'rocket': rocket(d); break;
     default: break; // unknown kinds are ignored, never an error
   }
 }
 function rocket(d) {
   const { x, y } = d, tx = d.tx ?? x, ty = d.ty ?? y * 0.4, dur = rnd(1.4, 1.9), sh = d.shape || 'chrysanthemum'; let t = 0;
-  const id = setInterval(() => { if (getState().calm || document.hidden) return; t += 0.05; const k = Math.min(1, t / dur), px = x + (tx - x) * k + Math.sin(k * 14) * 3, py = y + (ty - y) * (1 - Math.pow(1 - k, 2)); spawn({ type: T.trail, x: px, y: py, life: 0.3, size: 6, col: 1, a: 0.6, prio: 2, add: true }); spawn({ type: T.spark, x: px, y: py, life: 0.2, size: 8, col: 0, a: 0.8, prio: 3, add: true });
-    if (k >= 1) { clearInterval(id); const n = sh === 'willow' ? tier(40, 24, 10) : tier(54, 32, 14); for (let q = 0; q < n; q++) { const a = (q / n) * 6.28 + rnd(-0.05, 0.05), v = sh === 'willow' ? rnd(80, 110) : rnd(110, 150); spawn({ type: T.star, x: px, y: py, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: sh === 'willow' ? rnd(3.6, 4.5) : rnd(2.4, 3.2), size: sh === 'willow' ? 10 : 8, col: sh === 'willow' ? 0 : q % 2, grav: sh === 'willow' ? 70 : 40, drag: sh === 'willow' ? 0.985 : 0.965, a: 0.65, prio: 2, add: true }); } } }, 50);
+  every(50, () => { if (getState().calm || document.hidden) return; t += 0.05; const k = Math.min(1, t / dur), px = x + (tx - x) * k + Math.sin(k * 14) * 3, py = y + (ty - y) * (1 - Math.pow(1 - k, 2)); spawn({ type: T.trail, x: px, y: py, life: 0.3, size: 6, col: 1, a: 0.6, prio: 2, add: true }); spawn({ type: T.spark, x: px, y: py, life: 0.2, size: 8, col: 0, a: 0.8, prio: 3, add: true });
+    if (k >= 1) { const n = sh === 'willow' ? tier(40, 24, 10) : tier(54, 32, 14); for (let q = 0; q < n; q++) { const a = (q / n) * 6.28 + rnd(-0.05, 0.05), v = sh === 'willow' ? rnd(80, 110) : rnd(110, 150); spawn({ type: T.star, x: px, y: py, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: sh === 'willow' ? rnd(3.6, 4.5) : rnd(2.4, 3.2), size: sh === 'willow' ? 10 : 8, col: sh === 'willow' ? 0 : q % 2, grav: sh === 'willow' ? 70 : 40, drag: sh === 'willow' ? 0.985 : 0.965, a: 0.65, prio: 2, add: true }); } return false; } });
 }
 export const fxPointer = pointer;

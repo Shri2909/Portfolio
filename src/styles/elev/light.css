@@ -1,12 +1,12 @@
 /* E4.1: surface light. Written by src/elev/light.js as element-local --lx --ly --li. Ceiling: LIT_CAP .30 overlay (AA kept). */
 html[data-elev="1"] [data-elit] { --li: 0; --lx: 50%; --ly: 50%; isolation: isolate; }
-html[data-elev="1"] [data-elit="panel"]::before, html[data-elev="1"] [data-elit="card"]::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1; background: radial-gradient(circle at var(--lx) var(--ly), rgba(255, 196, 110, calc(var(--li) * .30)) 0, rgba(255, 150, 60, calc(var(--li) * .12)) 38%, transparent 72%); }
-html[data-elev="1"] [data-elit="rangoli"] { filter: none; opacity: calc(.82 + var(--li) * .18); }
-html[data-elev="1"] [data-elit="text"] { text-shadow: 0 0 calc(var(--li) * 14px) rgba(255, 179, 71, calc(var(--li) * .35)); }
+html[data-elev="1"] [data-elit="panel"]::before, html[data-elev="1"] [data-elit="card"]::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1; background: radial-gradient(circle at var(--lx) var(--ly), rgba(255, 196, 110, calc(var(--li) * var(--fxs-light-surfaces, 1) * .30)) 0, rgba(255, 150, 60, calc(var(--li) * var(--fxs-light-surfaces, 1) * .12)) 38%, transparent 72%); }
+html[data-elev="1"] [data-elit="rangoli"] { filter: none; opacity: calc(.82 + var(--li) * var(--fxs-light-surfaces, 1) * .18); }
+html[data-elev="1"] [data-elit="text"] { text-shadow: 0 0 calc(var(--li) * var(--fxs-light-surfaces, 1) * 14px) rgba(255, 179, 71, calc(var(--li) * var(--fxs-light-surfaces, 1) * .35)); }
 html[data-elev="1"][data-calm="1"] [data-elit="text"], html[data-elev="1"][data-ink="1"] [data-elit] { text-shadow: none; }
 html[data-elev="1"][data-ink="1"] [data-elit]::before { display: none; }
-html[data-elev="1"] #lightmap { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-html[data-elev="1"][data-ink="1"] #lightmap { opacity: .55; }
+html[data-elev="1"] #lightmap { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: var(--fxs-lightmap-pool, 1); }
+html[data-elev="1"][data-ink="1"] #lightmap { opacity: calc(.55 * var(--fxs-lightmap-pool, 1)); }
 html[data-elev="1"][data-quality="low"] #lightmap { display: none; }
 /* E4.7: the blueprint's detail is masked until a flame is held to it; Calm and Ink drop the mask in JS. */
 html[data-elev="1"] .sketch [data-e-mask] { stroke-opacity: 1; }
