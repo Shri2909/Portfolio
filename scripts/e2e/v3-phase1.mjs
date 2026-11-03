@@ -8,7 +8,8 @@ const esc = (p) => p.keyboard.press('Escape').then(() => p.waitForTimeout(500));
 const lightAll = async (p) => { await p.evaluate(() => document.getElementById('lamp-menu-all')?.click()); };
 let p = await mk(390, 844, '#v1.5.Asha');
 // entry points
-log(await p.locator('#topbar [data-invite]').count() === 1, 'top bar has an INVITE ME button (not a link)');
+await p.evaluate(() => document.getElementById('lamp-2').scrollIntoView({ behavior: 'instant' })); await p.waitForTimeout(400);
+log(await p.locator('#topbar [data-invite]').count() === 1, 'top bar has an INVITE ME button (not a link) once Act 2 is passed');
 await p.locator('#topbar [data-invite]').click(); await p.waitForTimeout(400);
 log(await p.evaluate(() => document.getElementById('invite').open && document.activeElement.id === 'invite-h'), '1: sheet opens and focus lands on its title');
 const tab = []; for (let i = 0; i < 12; i++) { await p.keyboard.press('Tab'); tab.push(await p.evaluate(() => document.activeElement === document.body || !!document.activeElement.closest('#invite'))); }
@@ -44,8 +45,7 @@ for (let n = 0; n < 5; n++) { await p.locator('.lamp-btn').nth(n).focus(); await
 await p.waitForTimeout(3000); await p.evaluate(() => document.getElementById('closure').scrollIntoView({ behavior: 'instant' })); await p.waitForTimeout(8500);
 await p.locator('#closure [data-invite]').click(); await p.waitForTimeout(400);
 log(/lamp number on your page: 6/.test(await pre()) && !/page: 7/.test(await pre()), '4: after the visitor lamp the message says 6 (count 5 + 1), never 7');
-await esc(p); await p.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
-await p.locator('#topbar [data-invite]').click(); await p.waitForTimeout(300); log(/lamp number on your page: 6/.test(await pre()), '4: the top bar says 6 as well'); await esc(p);
+await esc(p); await p.locator('#topbar [data-invite]').click(); await p.waitForTimeout(300); log(/lamp number on your page: 6/.test(await pre()), '4: the top bar says 6 as well'); await esc(p);
 log(p.cons.length === 0, '13: console clean', p.cons.join('|').slice(0, 200)); await p.context().close();
 // layout across viewports
 for (const [w, h] of [[1366, 768], [1366, 650], [1280, 720], [1536, 730], [1440, 900], [1920, 1080], [390, 844], [360, 640], [412, 915], [768, 1024]]) {
@@ -56,7 +56,7 @@ for (const [w, h] of [[1366, 768], [1366, 650], [1280, 720], [1536, 730], [1440,
 // voice slider thumb is the topmost element
 for (const [w, h] of [[390, 844], [360, 640], [412, 915]]) {
   const q = await mk(w, h);
-  const ok = await q.evaluate(async (h) => { const c = document.querySelector('.take-card'); const top = c.getBoundingClientRect().top + scrollY; scrollTo({ top: top + 120, behavior: 'instant' }); await new Promise((r) => setTimeout(r, 300)); const i = document.querySelector('.slider-row input'), r = i.getBoundingClientRect(), e = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return { top: e === i, bottom: Math.round(r.bottom), vh: innerHeight }; }, h);
+  const ok = await q.evaluate(async (h) => { const c = [...document.querySelectorAll('.take-card')].find((e) => e.offsetParent); const top = c.getBoundingClientRect().top + scrollY; scrollTo({ top: top + 120, behavior: 'instant' }); await new Promise((r) => setTimeout(r, 300)); const i = [...document.querySelectorAll('.slider-row input')].find((e) => e.offsetParent), r = i.getBoundingClientRect(), e = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return { top: e === i, bottom: Math.round(r.bottom), vh: innerHeight }; }, h);
   log(ok.top, `8: ${w}x${h}: the voice slider is the topmost element at its thumb`, JSON.stringify(ok)); await q.context().close(); }
 // menu and calm corner, targets, skyline, hold
 p = await mk(390, 844);

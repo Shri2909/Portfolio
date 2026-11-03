@@ -51,7 +51,7 @@ function Take({ take, calm, quality, plainOn, hintId }) {
 }
 export default function Voice() {
   const V = copy.voice, C = V.compare, calm = useStore((s) => s.calm), quality = useStore((s) => s.quality);
-  const [plainOn, setPlain] = useState(false);
+  const [plainOn, setPlain] = useState(false), [which, setWhich] = useState(1);
   const show = flags.flowIntoEmergentRecorded && V.recordingLink && V.gatedBuildLine;
   const parts = show ? V.gatedBuildLine.split('linked here') : null;
   return (
@@ -69,7 +69,8 @@ export default function Voice() {
         <p className="legend"><span className="sw trim-sw" aria-hidden="true">abc</span><span className="sw new-sw" aria-hidden="true">abc</span> {C.legend}</p>
         <button role="switch" aria-checked={plainOn} className="btn plain-switch" onClick={() => setPlain(!plainOn)}>{C.plainToggle}</button>
         <p className="sr-only">{C.altText}</p>
-        {V.takes.map((t) => <Take key={t.id} take={t} calm={calm} quality={quality} plainOn={plainOn} hintId="compare-hint" />)}
+        <button className="btn" onClick={() => setWhich(which ? 0 : 1)}>{rich(V.otherTake)}</button>
+        {V.takes.map((t, i) => <div key={t.id} hidden={i !== which}><Take take={t} calm={calm} quality={quality} plainOn={plainOn} hintId="compare-hint" /></div>)}
         <p className="provenance"><strong>{V.provenance.heading}</strong> {V.provenance.text}</p>
       </div>
     </section>

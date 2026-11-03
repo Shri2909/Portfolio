@@ -104,6 +104,7 @@ const tier = (a, b, c) => ({ high: a, mid: b, low: c }[getState().quality]);
 export function burst(d) {
   const st = getState(), { kind, x, y } = d; if (!kind || x == null) return;
   const calm = st.calm, ink = st.ink;
+  if (document.documentElement.dataset.fg === '1' && ['ember', 'twinkle', 'petals', 'lantern', 'spark'].includes(kind) && !d.essential) return; // at most 3 effects: optional sparks pause while a foreground interaction runs
   if (ink && (kind === 'anar' || kind === 'rocket' || kind === 'chakri' || kind === 'phuljhadi')) return; // crackers dropped in Ink
   if (calm) { // Calm: every effect becomes a still glow or nothing
     if (kind === 'anar') glow({ x, y, r: 90, color: 'rgba(255,179,71,.5)', fadeIn: 1200, hold: 1600, fadeOut: 1200 });

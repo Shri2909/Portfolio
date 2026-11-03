@@ -6,6 +6,7 @@ import { actions, getState } from '../lib/store.js';
 import { useStore } from '../lib/useStore.js';
 import { emit, on } from '../lib/events.js';
 import { announce } from '../lib/announce.js';
+import { scrollToId } from '../lib/nav.js';
 import { haptic } from '../lib/haptic.js';
 import { lampRegistry } from '../lib/lampRegistry.js';
 import { engine } from '../lib/flame.js';
@@ -52,9 +53,8 @@ export default function LampRow() {
     emit('fx:burst', { kind: 'ignite', x: b.x, y: b.y });
     if (!fromKeyboard) haptic(20);
     if (!allBusy.current) announce(tpl(X('lampLitLive'), { n }));
-    const lit = copy.lamps[n - 1].lit;
+    const lit = n === 1 ? copy.opening.awe1 : copy.lamps[n - 1].lit;
     showLine(lit, 4000); setTip(0); setFlash(n); setTimeout(() => setFlash(0), 450);
-    if (n === 1) setTimeout(() => emit('lamp:open', { n: 1, source: 'auto' }), 1100);
     busy.current = false; seq.current = null;
   }, []);
 
@@ -97,7 +97,7 @@ export default function LampRow() {
   const press = useCallback((n, e) => {
     if (n === 6) return;
     const s = getState();
-    if (s.lamps[n] === 'lit') { emit('lamp:open', { n, source: 'tap' }); return; }
+    if (s.lamps[n] === 'lit') { scrollToId('lamp-' + n); return; }
     if (n > 1 && s.lamps[n - 1] !== 'lit') return notReady(n);
     if (s.calm) return; // handled on pointer up / click
     if (busy.current) return;
@@ -128,7 +128,7 @@ export default function LampRow() {
     handled.current = true; setTimeout(() => { handled.current = false; }, 700);
     if (n === 6) return trySix(true);
     if (getState().calm) {
-      const up = () => { window.removeEventListener('pointerup', up); if (getState().lamps[n] === 'lit') emit('lamp:open', { n, source: 'tap' }); else instant(n, false); };
+      const up = () => { window.removeEventListener('pointerup', up); if (getState().lamps[n] === 'lit') scrollToId('lamp-' + n); else instant(n, false); };
       window.addEventListener('pointerup', up, { once: true });
       return;
     }
@@ -138,7 +138,7 @@ export default function LampRow() {
     if (handled.current) { handled.current = false; return; }       // a pointer sequence already handled it
     if (n === 6) return trySix(false);
     const s = getState();
-    if (s.lamps[n] === 'lit') return emit('lamp:open', { n, source: 'key' });
+    if (s.lamps[n] === 'lit') return scrollToId('lamp-' + n);
     if (n > 1 && s.lamps[n - 1] !== 'lit') return notReady(n);
     if (s.calm) return instant(n, true);
     if (!busy.current) shortIgnite(n, 0, true);                      // keyboard, assistive tech, voice control
@@ -221,10 +221,12 @@ export default function LampRow() {
     T(1250, () => { const wait = () => (sixHeld.current ? setTimeout(wait, 120) : die()); wait(); });
   };
 
+  const api = useRef({}); api.current = { lightAll, request: (n) => { handled.current = false; onClick(n)(); } };
+  useEffect(() => { const a = on('lamp:lightAll', () => api.current.lightAll()), b = on('lamp:request', ({ n }) => api.current.request(n)); return () => { a(); b(); }; }, []);
   const ringR = 'var(--ring-r)';
   const lit5 = litCount === 5;
   const doneLine = litCount === 5 ? copy.ui.progress.all : tpl(copy.ui.progress.some, { n: litCount, rest: 5 - litCount });
-  const shown = six.line && line === null ? six.line : line || doneLine;
+  const shown = six.line && line === null ? six.line : line || '';
 
   return (
     <div className="lamp-stage" data-calm={calm ? '1' : '0'}>
@@ -248,7 +250,7 @@ export default function LampRow() {
                   <svg className="ring" viewBox="-50 -50 100 100" aria-hidden="true"><circle ref={(el) => (rings.current[n] = el)} r="46" pathLength="1" /></svg>
                   {tip === n && <span className="holding-tip" aria-hidden="true">{rich(copy.ui.holding)}</span>}
                 </Lamp>
-                <span className="chip mono">{names[i]}{lit && <i className="chev" aria-hidden="true">›</i>}</span>
+                {lit && <span className="chip mono">{names[i]}<i className="chev" aria-hidden="true">›</i></span>}
               </button>
               <span id={`ld${n}`} className="sr-only">{desc}</span>
             </li>
@@ -261,15 +263,10 @@ export default function LampRow() {
               {six.ember && <i className="six-ember" />}
               {six.phase !== 'idle' && !six.ember && <svg className="smoke" viewBox="0 0 20 30" aria-hidden="true"><path d="M10 28c-5-6 5-10 0-16s4-8 0-12" /></svg>}
             </Lamp>
-            <span className="chip mono dashed">{copy.lamp6.badge}</span>
           </button>
           <span id="ld6" className="sr-only">{X('lamp6Aria')}</span>
         </li>
       </ol>
-      <div className="row-actions">
-        {!lit5 && <button className="btn btn-ghost" onClick={lightAll}>{rich(copy.ui.lightAll)}</button>}
-        <button className="btn" data-evidence={copy.lamp6.cta.folder}>{copy.lamp6.cta.label}</button>
-      </div>
       {calm && <p className="calm-note">{rich(copy.ui.calmNote)}</p>}
       <svg ref={trav} className="traveller" viewBox="-20 -80 40 84" aria-hidden="true" style={{ opacity: 0 }}>
         <path className="f-b" d="M0 0C-11-13-10-44 0-72C10-44 11-13 0 0Z" /><path className="f-c" d="M0 0C-4-8-4-22 0-34C4-22 4-8 0 0Z" />

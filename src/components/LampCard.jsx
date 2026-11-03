@@ -7,15 +7,9 @@ import { useStore } from '../lib/useStore.js';
 import { closeLampCard, scrollToId, wireLampCard } from '../lib/nav.js';
 import { emit, on } from '../lib/events.js';
 import Flame from './Flame.jsx';
-import GuessAudit from './story/GuessAudit.jsx';
-import LateReplySlider from './story/LateReplySlider.jsx';
-import StoryPriceTag from './story/StoryPriceTag.jsx';
-import StoryHandoff from './story/StoryHandoff.jsx';
-import StoryCutoffClock from './story/StoryCutoffClock.jsx';
 
 // A letter that rises out of the lamp it belongs to. Native dialog (top layer, Escape, focus trap), styled as a floating card.
 // Three parts that ink in as you read, a receipt, a quiet "Agla diya" corner, swipe down to close.
-const DEVICE = { 1: GuessAudit, 2: LateReplySlider, 3: StoryPriceTag, 4: StoryHandoff, 5: StoryCutoffClock };
 
 function Part({ part, idx, on_, className = '', children, device }) {
   return (
@@ -123,7 +117,6 @@ export default function LampCard() {
     if (n < 5 && getState().lamps[n + 1] === 'lit') { actions.setLampCard(n + 1); return; }
     requestClose(() => { if (n < 5) { const e = document.querySelectorAll('.lamp-btn')[n]; e && e.focus(); } else scrollToId('lamp-6'); });
   };
-  const Device = n ? DEVICE[n] : null;
   const nextLabel = n === 5 ? X('aglaLamp6') : X('aglaNext');
   return (
     <dialog ref={dlg} id="lamp-card" className="lamp-card" aria-labelledby="card-title" onCancel={(e) => { e.preventDefault(); requestClose(); }} onClick={(e) => { if (e.target === dlg.current) requestClose(); }}>
@@ -136,8 +129,8 @@ export default function LampCard() {
             <p className="kicker">{lamp.kicker}</p>
             <h2 id="card-title" data-title>{rich(lamp.title)}</h2>
             <div className="parts">
-              <Part part={lamp.what} idx={0} on_={k >= 1} device="after">{Device && n !== 4 ? <Device lamp={lamp} /> : null}</Part>
-              <Part part={lamp.next} idx={1} on_={k >= 2} device="before">{n === 4 && Device ? <Device lamp={lamp} /> : null}</Part>
+              <Part part={lamp.what} idx={0} on_={k >= 1} />
+              <Part part={lamp.next} idx={1} on_={k >= 2} />
               <Part part={lamp.warning} idx={2} on_={k >= 3} className={n === 5 ? 'band' : ''} />
             </div>
             <div className="card-foot">

@@ -32,6 +32,7 @@ export default function Wish() {
         <h2 id="wish-h" tabIndex={-1}>{rich(W.heading)}</h2>
         {W.lines.map((l, i) => <p key={i}>{rich(l)}</p>)}
         <p className="en">{W.english}</p>
+        <p>{rich(W.voiceLine)}</p>
         <WishForm onMake={make} />
       </div>
       {st.made && <CardStage onEdit={edit} onAgain={again} />}

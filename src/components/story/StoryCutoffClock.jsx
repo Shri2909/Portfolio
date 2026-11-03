@@ -43,7 +43,8 @@ export default function StoryCutoffClock() {
         <input type="range" min="0" max="2" step="1" value={stop} aria-label={ex.cutoffLabel} aria-valuetext={tpl(ex.cutoffSpoken, { time })} onChange={(e) => set(+e.target.value)} />
       </label>
       <p className="readout" role="status" aria-live="polite">{text}</p>
-      <p className="caption">{rich(hiOf(copy.lamps[4].what.paras[0]))}</p>
+      <p className="tap-line">{rich(copy.lamps[4].stop.clock)}</p>
+      <p className="caption">{rich(copy.lamps[4].stop.caption)}</p>
       <p className="band-note"><strong>{copy.lamps[4].warning.paras[0].match(/\*\*(.*?)\*\*/)[1]}</strong></p>
     </div>
   );

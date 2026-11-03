@@ -63,7 +63,7 @@ export default function FullTextView({ onClose }) {
           <p><strong>{rich(copy.opening.ask)}</strong></p>
           {copy.opening.lines.map((l, i) => <P key={i} t={l} />)}
           {copy.opening.below.map((l, i) => <P key={i} t={l} />)}
-          <p>{rich(copy.opening.sixtyPrompt)} <a href="#sixty" data-sixty>{copy.opening.sixtyCta}</a></p>
+          <p><a href="#sixty" data-sixty>{rich(copy.opening.quick)}</a></p>
         </section>
         {copy.lamps.map((l) => (
           <section key={l.id} aria-labelledby={`ft-${l.id}`}>
@@ -98,8 +98,8 @@ export default function FullTextView({ onClose }) {
           </section>
         ))}
         <section aria-labelledby="ft-row">
-          <h2 id="ft-row">{rich(copy.rowBreathes.lines[0])}</h2>
-          <P t={copy.rowBreathes.lines[1]} /><P t={copy.rowBreathes.after} />
+          <h2 id="ft-row">{rich(copy.terrace.autoBeat[0])}</h2>
+          <P t={copy.terrace.autoBeat[1]} />
         </section>
         <section aria-labelledby="ft-l6">
           <h2 id="ft-l6">{l6.kicker}: {rich(l6.title)}</h2>

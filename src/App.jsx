@@ -19,10 +19,9 @@ import Overlay from './components/Overlay.jsx';
 import FullTextView from './components/FullTextView.jsx';
 import Night from './components/Night.jsx';
 import LampRow from './components/LampRow.jsx';
-import Lamps from './components/Lamps.jsx';
-import RowBreathes from './components/RowBreathes.jsx';
+import LampStop from './components/LampStop.jsx';
+import Baithak from './components/Baithak.jsx';
 import Lamp6 from './components/Lamp6.jsx';
-import Person from './components/Person.jsx';
 import Voice from './components/Voice.jsx';
 import Verdict from './components/Verdict.jsx';
 import Wish from './components/Wish.jsx';
@@ -38,6 +37,8 @@ export default function App() {
   const live = useSyncExternalStore(announcer.subscribe, announcer.get);
   const [printing, setPrinting] = useState(false);
   useEffect(() => {
+    let fgT = 0; const fg = (e) => { if (e.target.closest && e.target.closest('.device,.compare,.guess')) { document.documentElement.dataset.fg = '1'; clearTimeout(fgT); fgT = setTimeout(() => { delete document.documentElement.dataset.fg; }, 4000); } };
+    window.addEventListener('pointerdown', fg);
     wireOpeners(); startGovernor(); startFavicon(); const offRow = wireRow();
     const route = () => {
       const r = parseHash(window.location.hash);
@@ -59,11 +60,11 @@ export default function App() {
       <Stage />
       <main id="main" tabIndex={-1}>
         <Night banner={<ShareBanner />}><LampRow /></Night>
-        <Lamps />
-        <RowBreathes />
-        <Lamp6 />
-        <Person />
+        <LampStop n={1} />
+        <Baithak />
+        {[2, 3, 4, 5].map((n) => <LampStop key={n} n={n} />)}
         <Voice />
+        <Lamp6 />
         <Verdict />
         <Wish />
         <Closure />

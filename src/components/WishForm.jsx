@@ -39,10 +39,13 @@ export default function WishForm({ plain = false, onMake }) {
   return (
     <form className={`wish-form ${plain ? 'plain' : ''}`} onSubmit={(e) => e.preventDefault()} noValidate autoComplete="off">
       {!plain && (
-        <div className="chips" role="group" aria-label={W.ideas.heading.replace(/<\/?hi>/g, '')}>
-          <p className="chips-h">{rich(W.ideas.heading)}</p>
-          {W.ideas.chips.map((c, i) => <button type="button" key={i} className="btn chip-btn" aria-pressed={chip === i} onClick={() => { setChip(chip === i ? null : i); ta.current && ta.current.focus(); }}>{rich(c)}</button>)}
-        </div>
+        <details className="ideas">
+          <summary>{rich(W.ideasOpen)}</summary>
+          <div className="chips" role="group" aria-label={W.ideas.heading.replace(/<\/?hi>/g, '')}>
+            <p className="chips-h">{rich(W.ideas.heading)}</p>
+            {W.ideas.chips.map((c, i) => <button type="button" key={i} className="btn chip-btn" aria-pressed={chip === i} onClick={() => { setChip(chip === i ? null : i); ta.current && ta.current.focus(); }}>{rich(c)}</button>)}
+          </div>
+        </details>
       )}
       <label htmlFor={id + 'wish-to'}>{rich(W.form.toLabel)}</label>
       <input id={id + 'wish-to'} type="text" value={w.to || ''} onChange={onTo} onCompositionStart={() => { composing.current = true; }} onCompositionEnd={(e) => { composing.current = false; actions.setWish({ to: cutGraphemes(e.target.value, TO_MAX) }); }} autoComplete="off" spellCheck="false" dir="auto" onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()} />
@@ -59,8 +62,9 @@ export default function WishForm({ plain = false, onMake }) {
       <p className="msg" role="status" aria-live="polite">{msg ? rich(msg) : ''}</p>
       <button type="button" className="btn btn-primary make" onClick={make}>{rich(W.submit)}</button>
       <div className="privacy">
-        <p>{rich(W.privacy.hi)}</p>
-        <p className="en">{W.privacy.en}</p>
+        {plain ? <><p>{rich(W.privacy.hi)}</p><p className="en">{W.privacy.en}</p></> : (
+          <><p>{rich(W.privacyShort)}</p><details><summary>{rich(W.privacyOpen)}</summary><p>{rich(W.privacy.hi)}</p><p className="en">{W.privacy.en}</p></details></>
+        )}
       </div>
     </form>
   );

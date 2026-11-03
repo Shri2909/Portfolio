@@ -39,7 +39,7 @@ export function startDirector() {
       const plan = s.quality === 'low' ? [targets[1]] : s.quality === 'mid' ? targets.slice(0, 2) : targets;
       const stillGlows = s.calm || s.ink || s.lampCard;
       plan.forEach(([fx, shape, at]) => setTimeout(() => {
-        const st = getState(); if (document.hidden || window.scrollY > document.getElementById('row-breathes').offsetTop + innerHeight) return;
+        const st = getState(); if (document.hidden || window.scrollY > (document.getElementById('lamp-5') || document.body).offsetTop + innerHeight * 2) return;
         if (stillGlows || st.calm) glow({ x: W * fx, y: H * 0.28, r: 140, color: st.ink ? 'rgba(255,243,220,.3)' : 'rgba(255,210,122,.3)', fadeIn: 2400, hold: 0, fadeOut: 0 });
         else fire({ kind: 'rocket', x: W * fx, y: roofY(), tx: W * fx, ty: H * 0.28, shape });
       }, at * 1000));

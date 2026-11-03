@@ -70,7 +70,7 @@ export default function GuessAudit() {
   const onTap = (e) => { if (calm) return; const r = cv.current.getBoundingClientRect(); st.current.ripple = { x: (e.clientX - r.left) / r.width * W, y: (e.clientY - r.top) / r.height * H, t: performance.now() }; };
   return (
     <div className="device audit" data-no-swipe>
-      <p className="chip-line"><span className="chip-pill">{g.chip}</span></p>
+      <p className="chip-line"><span className="chip-pill">{stage >= 1 ? g.chipAfter : g.chip}</span></p>
       <canvas ref={cv} className="wall" style={{ width: '100%', aspectRatio: `${W} / ${H}` }} onPointerDown={onTap} aria-hidden="true" />
       <p className="picture-only">{X('pictureOnly')}</p>
       <p className="plain">{g.plain}</p>
@@ -86,6 +86,7 @@ export default function GuessAudit() {
         <p className="ask">{rich(g.ask)}</p>
       </fieldset>
       <div className="reveal" aria-live="polite" data-show={stage >= 1 || calm && guess !== null ? '1' : '0'}>
+        {guess !== null && stage >= 1 && <p className="tile-cap">{rich(g.tileCaption)}</p>}
         {guess !== null && stage >= 1 && <p>{g.reveal}</p>}
         {guess !== null && stage >= 2 && <p className="branch">{rich(guess < g.answer ? g.below : g.exact)}</p>}
         {guess !== null && stage >= 2 && <button className="btn" onClick={again}>{rich(copy.ui.startAgain)}</button>}

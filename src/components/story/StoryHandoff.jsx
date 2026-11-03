@@ -52,7 +52,7 @@ export default function StoryHandoff() {
           </span>
           <span className={`lantern-l right ${baton >= 4 ? 'lit' : ''}`}><i />{ex.claudeCode}</span>
         </button>
-        <p className="caption">{rich(hiOf(p0))}</p>
+        <p className="caption">{rich(copy.lamps[3].stop.pass)}</p>
       </div>
       <div className="half lower">
         <p className="chip-line"><span className="chip-pill">{ex.roundsChip}</span></p>

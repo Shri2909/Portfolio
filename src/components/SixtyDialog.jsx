@@ -4,6 +4,7 @@ import { useStore } from '../lib/useStore.js';
 import { closeOverlay } from '../lib/nav.js';
 import InviteButton from './InviteButton.jsx';
 import Overlay from './Overlay.jsx';
+import { scrollToId } from '../lib/nav.js';
 
 // The 60-second file: a bottom sheet (native modal dialog). Never writes to the address bar.
 export default function SixtyDialog() {
@@ -19,9 +20,11 @@ export default function SixtyDialog() {
         <h2>{S.headline}</h2>
         {S.paras.map((p, i) => <p key={i}>{p}</p>)}
         <p><em>{S.pull}</em></p>
+        <p>{rich(S.baaki)}</p>
         <p className="btn-row">
           <button className="btn btn-primary" data-evidence="c1">{S.receiptCta}</button>
           <InviteButton label={S.inviteCta} className="btn" />
+          <button className="btn" onClick={() => { closeOverlay(); setTimeout(() => scrollToId('night'), 50); }}>{X('fastLane')}</button>
         </p>
       </div>
     </Overlay>

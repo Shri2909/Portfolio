@@ -97,7 +97,7 @@ export default function Closure() {
         </div>
       )}
       <p className="cl-links cl-fade" style={{ '--at': '6.2s' }}>
-        <a href={copy.site.links.resume} target="_blank" rel="noopener noreferrer" aria-label={tpl(X('driveAria'), { label: C.links.resume })}>{C.links.resume}</a> · <a href="#evidence" data-evidence="">{C.links.evidence}</a>
+        <a href={copy.site.links.resume} target="_blank" rel="noopener noreferrer" aria-label={tpl(X('driveAria'), { label: C.links.resume })}>{C.links.resume}</a> · <a href="#evidence" data-evidence="">{C.links.evidence}</a> · <a href="#sixty" data-sixty>{X('menuSixty')}</a>
       </p>
       <div className="cl-fade" style={{ '--at': '6.6s' }}>
         <p>{rich(C.recap)}</p><p>{rich(C.closing)}</p>

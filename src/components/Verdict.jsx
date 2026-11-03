@@ -23,7 +23,7 @@ export default function Verdict() {
           <svg viewBox="0 0 300 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M2 7C60 2 120 11 180 5S270 8 298 4" /></svg>
         </p>
         <p className="signed" aria-label={V.signed}><span>{V.signed}</span></p>
-        <p className="afterword">{rich(V.ask)}</p>
+        <p className="afterword"><button className="btn btn-ghost" data-evidence="c6">{rich(V.rolesLink)}</button></p>
       </div>
       <p className="verdict-btns">
         <a className="btn" href={copy.site.links.resume} target="_blank" rel="noopener noreferrer" aria-label={tpl(X('driveAria'), { label: V.resume.label })}>{V.resume.label}</a>

@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { emit } from '../../lib/events.js';
 import copy, { X } from '../../lib/copy.js';
 import { rich } from '../../lib/rich.jsx';
 import { hiOf } from '../../lib/tpl.js';
@@ -7,11 +8,12 @@ import { useStore } from '../../lib/useStore.js';
 // A paper price tag that sways, then settles when flipped. The number that sparkled was the one withdrawn;
 // the true one is still. The advertised-advantage bar deflates from 3.1× to 1.02×. CSS transforms only.
 export default function StoryPriceTag() {
-  const calm = useStore((s) => s.calm), quality = useStore((s) => s.quality);
+  const st = copy.lamps[2].stop, calm = useStore((s) => s.calm), quality = useStore((s) => s.quality);
   const [flipped, setFlipped] = useState(false), [num, setNum] = useState('3.1');
   const tag = useRef(null);
   const flip = () => {
     const to = !flipped; setFlipped(to);
+    if (to && !calm && tag.current) { const r = tag.current.getBoundingClientRect(); emit('fx:burst', { kind: 'spark', x: r.left + r.width / 2, y: r.top + r.height * 0.3, count: 12, essential: true }); }
     if (to) {
       if (calm) { setNum('1.02'); return; }
       const t0 = performance.now();
@@ -28,7 +30,8 @@ export default function StoryPriceTag() {
             <div className="tag-face front"><i className="hole" /><b>{X('priceTagFront')}</b><span>{X('priceTagLine')}</span></div>
             <div className="tag-face back"><i className="hole" /><b>{X('priceTagBack')}</b><span>{X('priceTagChip')}</span></div>
           </div>
-          <button className="btn" onClick={flip} aria-pressed={flipped}>{X('flipTag')}</button>
+          <button className="btn" onClick={flip} aria-pressed={flipped}>{st.tapLabel}</button>
+          <p className="tap-line">{rich(st.tap)}</p>
         </div>
         <div className="adv">
           <p className="lbl">{X('advertisedAdvantage')}</p>
@@ -36,7 +39,8 @@ export default function StoryPriceTag() {
           <p className="val" aria-hidden="true">{num}×</p>
         </div>
       </div>
-      <p className="caption">{rich(hiOf(copy.lamps[2].next.paras[0]))}</p>
+      <p className="counter">{st.counter}</p>
+      <p className="caption">{rich(st.caption)}</p>
     </div>
   );
 }

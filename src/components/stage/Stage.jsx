@@ -14,10 +14,10 @@ export default function Stage() {
     startPointerParallax(); startDirector();
     const a = on('diya:lit', ({ x, y }) => { if (x || y) { const r = document.documentElement; r.style.setProperty('--lx', x + 'px'); r.style.setProperty('--ly', y + 'px'); } });
     // Reading veil: dim the scene by 25% while a section after #lamps is on screen.
-    const ids = ['row-breathes', 'lamp-6', 'person', 'voice', 'verdict', 'wish', 'closure'], seen = new Set();
+    const ids = ['baithak', 'voice', 'lamp-6', 'verdict', 'wish', 'closure'], seen = new Set();
     const io = new IntersectionObserver((es) => {
       es.forEach((e) => (e.isIntersecting ? seen.add(e.target.id) : seen.delete(e.target.id)));
-      document.documentElement.dataset.veil = seen.size ? '1' : '0';
+      document.documentElement.dataset.veil = seen.size ? '1' : '0'; document.documentElement.dataset.act = seen.has('baithak') ? 'baithak' : seen.has('lamp-6') ? 'last' : seen.has('voice') ? 'voice' : '';
     }, { rootMargin: '-35% 0px -35% 0px' });
     ids.forEach((id) => { const el = document.getElementById(id); el && io.observe(el); });
     return () => { a(); io.disconnect(); };
