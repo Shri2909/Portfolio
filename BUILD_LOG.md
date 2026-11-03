@@ -116,3 +116,40 @@ All live in `src/data/copy.json` under `ui.extra` (private notes `_` are strippe
 - **String lights:** "String lights: {mode}", "Change the string light pattern", steady / chase / twinkle / fade.
 - **Names not in the copy:** the verdict's typed signature "Shriniwas" (your name, from the sign-off).
 - **Unused labels still in the file** (safe to delete): "All five lamps are lit." (light-all announcement), "Time left in the 60-second file", "Card text", "Status", "Tilt on", "Evidence drawer, folder {name}", "{n} of 400".
+
+## Pack 8: QA, evidence, polish and submission
+Full report with every audit's raw findings: **`docs/PACK8_AUDIT.md`**, produced by `node scripts/audit.mjs` (a real headless Chromium against the production build; it changes nothing). Last run: P8.3, 4, 7, 10, 11, 13, 14, 15, 24 pass; P8.5, 6, 8, 9, 12 are "REVIEW" (items for you to read, explained below). Nothing failed.
+
+### Audits run (P8.3 to P8.15, P8.18, P8.24)
+| Audit | Result |
+|---|---|
+| P8.3 network | Page loads 3 own-origin files (document, one script, one stylesheet). Zero third-party requests through load, 15 s settle, and the full interaction pass including every share button. No audio element and no Audio/AudioContext/play() in the bundle. |
+| P8.4 console | Phone 390 and laptop 1366: console completely clean through a full playthrough, including no missing icon. |
+| P8.5 strings | Zero hits for held-out numbers, festival dates, the tum family, crackers, analytics hosts. The raw scan lists words like "sample", "review", "segment", "undefined" and `{n}`; they are ordinary words in your own copy and the evidence data, minified library code, or copy keys. I read them all: no leftover placeholder reaches a visitor. |
+| P8.6 claims | "Spoken with Wispr Flow" exactly twice and not in the share preview. Six "Fair warning" blocks (five lamps plus lamp six). Lamp six has no sample size, threshold or expected result. Verdict denies channel ownership and customers. Lamp 5 keeps "Phir kya hua" and the not-yet-reflected line. **For you to read:** the evidence drawer (copied word for word from content.json) contains numbers beyond the list you expected, for example 5,364, 2.78, 3.52, 14.2, 711, 3,059, 110,000, 597, 346. None is on the held-out list, but 5,364 is a number the card brief said not to show on the lamp card (it does not appear on the card, only in the drawer). Decide whether each belongs in public. |
+| P8.7 reduced motion and Calm | Reduced motion: 0 running animations, Calm starts on, hold/tap/Enter/Light all work, "Motion off hai?" shows. Calm toggle: 49 animations stop at once, no text lost, has a name and pressed state, keyboard reachable, not remembered after reload. |
+| P8.8 widths | No horizontal scroll at 360, 390, 1366, or either landscape. Overlays fit and have a 44 px close. After my fix the only controls under 44 px are an inline link inside a footer sentence and the visitor lamp (drawn 20 px, real hit area larger). Not measured: fixed bars hiding content and rounded corners (needs a real phone). |
+| P8.9 CPU slowdown (4x) | Headless, software rendering, so indicative only. Normal run: 58 fps settled, 31 to 38 fps average while scrolling and during effects, long tasks up to 313 ms, quality tier fell to low by itself. Reduced motion run: 50 to 60 fps. **A real phone is the real test.** |
+| P8.10 keyboard | First Tab stop is the skip link and it works; all five lamps light with Enter alone; each overlay opens, keeps focus inside, closes with Escape and returns focus (the lamp card returns to its lamp, by design); voice slider and wish step work by keyboard; every stop has a visible ring. |
+| P8.11 screen reader names | 40 named controls, none unnamed, no two names with different targets, one h1, no skipped heading levels (fixed), landmarks present, `lang="en-IN"`, 61 Hinglish spans marked `hi-Latn`, no Hinglish in any aria-label, effects layer hidden. Not done: listening with TalkBack. |
+| P8.12 contrast | Measured from rendered pixels (398 text boxes, tone 0 and the dusk-gold room, 390 and 1366 wide). Real failures found and fixed: text over the bright rangoli lines (chips, "SEE THE GROWTH TEST", the 60-second link, status and hold lines) now sit on a dark backing. The 11 boxes still flagged are my method counting each element's own 1.5 px border as background (their median contrast is 9 to 18:1). Not measured: text during a firework flash. |
+| P8.13 fuzz | 24 inputs (negative, letters, 50 digits, 10,000-character name, script and image tags, emoji, Hindi, Arabic, invisible characters, bad percent codes, 1 MB fragment, several hashes, `__proto__`, newline). No code ever ran, nothing injected, 6 lamps always worked, no console errors, 1 MB fragment loads in about 1.2 s. One note: a name with a newline or `__proto__` is reduced to its letters (for example "Ashaevil", "proto"), which is the intended letters-only rule. |
+| P8.14 storage | Cookies, localStorage, sessionStorage, IndexedDB, Cache Storage, service workers, window.name and history state: all empty after a full run; reload starts fresh. Platform cookies cannot be seen on a plain static server. |
+| P8.15 sign-off | 20 Oct, 3 Nov, 8 Nov, 9 Nov: Shubh Deepavali. 10 Nov and 10 Dec: Shukriya. Local device clock only; no date printed. |
+| P8.24 stranger read | No double spaces, stray punctuation, leftover tokens or cut-off lamp row in either state; every new-tab link says where it opens. Not done: reading it by eye. |
+
+### Fixes and polish made (from the audit reports)
+- Contrast: dark backings behind text that crosses the rangoli (P8.12).
+- Voice section headings now h3 under h2 (P8.11).
+- Standalone text links get a 44 px target (P8.8).
+- P8.19: dark first frame set inline in the page head, so there is no white flash. (A lit flame before the scripts load is not built.)
+- P8.20: a night-style `404.html` is generated at build from copy.json (existing bad-link and Phir se shuru kijiye lines, no new words, `noindex`). Whether your host serves it for unknown addresses is for you to test on the deployed address.
+- P8.21: the tab title follows the copy's progress line plus the short page name, replacing my earlier "(n/5)" prefix. States: none lit = the page title; one to four lit = "{n} diye jal chuke, {rest} baaki. · Ek Diya Se Doosra"; five = "Paanchon jal uthe. · Ek Diya Se Doosra". Never a name or wish.
+- P8.22: favicon, theme colour and dark colour scheme were already in place; the console shows no missing icon. The share image URL needs `SITE_URL` at build time.
+- P8.23: only selection colour and tap highlight were added. Not built: the auto-scroll to the next lamp.
+
+### Not done (cannot be done by me, or needs something only you have)
+- **P8.1 footer line 5 and P8.2 voice before/after images:** these need your choice of wording (Variant A, B or C) and your own recordings and screenshots, and no recording exists. I did not write line 5 or enable the recorded-build line. Until you have the receipts, no sentence may say the page was built by voice.
+- **P8.16 triage:** done as above for what the audits found. **P8.17 your own spoken correction:** needs a flaw you saw yourself; I will not invent one.
+- **P8.25 deployed-URL audit:** the site is not deployed. Run `node scripts/audit.mjs` after pointing it at the public address, and do the manual list (private phone window on mobile data, network panel, cookies, WhatsApp preview, open every outbound link).
+- **Parts A, B, C, F and G:** run sheet, how to speak, evidence protocol, the 3-minute video, the form, the post and the last truth gate are yours. I did not touch them.
