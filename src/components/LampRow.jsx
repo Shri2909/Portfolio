@@ -206,7 +206,7 @@ export default function LampRow() {
     const a = lampRegistry.wick(source), b = lampRegistry.wick(6);
     const T = (ms, f) => setTimeout(() => mounted.current && f(), ms);
     if (s.calm) { // steady ember about a second, then off; the line appears with it
-      setSix({ phase: 'try', scale: 0.3, line: copy.lamp6.tryLight, ember: false }); T(1000, () => setSix((x) => ({ ...x, phase: 'idle', scale: 0 })));
+      setSix({ phase: 'try', scale: 0.3, line: copy.growth.tryLight, ember: false }); T(1000, () => setSix((x) => ({ ...x, phase: 'idle', scale: 0 })));
       return;
     }
     if (a && b) { const d = Math.hypot(b.x - a.x, b.y - a.y), c = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 - Math.max(40, 0.35 * d) }; const t0 = performance.now(); const st = (now) => { const k = Math.min(1, (now - t0) / 450), pos = quad(a, c, b, ease(k)); place(pos, k * 0.5); sparkAt(pos, now); if (k < 1) requestAnimationFrame(st); else place(null, 0); }; requestAnimationFrame(st); }
@@ -214,7 +214,7 @@ export default function LampRow() {
     const steps = [0.33, 0.22, 0.3, 0.18, 0.26, 0.12];
     steps.forEach((sc, i) => T(450 + (i * 800) / 5, () => setSix((x) => ({ ...x, scale: sc }))));
     const die = () => {
-      setSix((x) => ({ ...x, scale: 0, ember: true, line: copy.lamp6.tryLight }));
+      setSix((x) => ({ ...x, scale: 0, ember: true, line: copy.growth.tryLight }));
       const p = lampRegistry.wick(6); if (p) emit('fx:burst', { kind: 'fizzle', x: p.x, y: p.y });
       T(2000, () => setSix((x) => ({ ...x, phase: 'idle', ember: false })));
     };

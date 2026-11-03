@@ -52,3 +52,9 @@ Browser test: `scripts/e2e/v3-phase4.mjs` (production build plus a dev-server ch
 | Wording rules | done | G9: the TipIndex rule is "written after attempt one but before the reruns"; "predeclared" appears nowhere. "Hydra" never appears. The essay is not linked to Berggruen. |
 | Full text | done | The full-text view lists the sitting-room cards in order (with the loop and the five items as lists). |
 Not done: the sitting room does not yet pan the skyline sideways by scroll position beyond the 4 percent shift in phase 3; the pane windows are not themselves the buttons (the four tabs sit under the window picture and light the matching pane).
+
+## Phase 5: Growth act (done)
+- `Growth.jsx` (id `lamp-6`): PROPOSED, NOT RUN badge, sketch lamp that never lights, three taps (language chips, two 0..6 sliders with the fixed rule, simulated 2,000-word counter), experiment card, limits, six source links (new tab, noopener noreferrer, unique names), invite line, "Poora protocol" opens evidence folder 8.
+- Old Lamp6, RowBreathes, Lamps removed; stale keys and the lamp-six language flag removed.
+- Verified by `scripts/e2e/v3-phase5.mjs` on the production build (34 checks pass, including the dist grep and "Spoken with Wispr Flow" exactly twice). check-copy: 0 unmatched strings, 155 interface labels awaiting approval.
+- Not verified: real phones, the official Wispr pages (not re-checked, per G14).

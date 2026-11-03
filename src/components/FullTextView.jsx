@@ -49,7 +49,7 @@ export default function FullTextView({ onClose }) {
   const n = row.count;
   const caption = n === 0 ? copy.closure.rowCaption.zero : n === 1 ? copy.closure.rowCaption.one : copy.closure.rowCaption.many;
   const so = signoffLines();
-  const g = copy.guess, lr = copy.lateReply, l6 = copy.lamp6, v = copy.voice, vd = copy.verdict, w = copy.wish, cl = copy.closure, sx = copy.sixty;
+  const g = copy.guess, lr = copy.lateReply, v = copy.voice, vd = copy.verdict, w = copy.wish, cl = copy.closure, sx = copy.sixty;
   return (
     <div id="fulltext" className="fulltext" lang="en-IN">
       <a className="skip-link" href="#fulltext-close">{X('closeText')}</a>
@@ -102,14 +102,17 @@ export default function FullTextView({ onClose }) {
           <P t={copy.terrace.autoBeat[1]} />
         </section>
         <section aria-labelledby="ft-l6">
-          <h2 id="ft-l6">{l6.kicker}: {rich(l6.title)}</h2>
-          <h3>{l6.idea.heading}</h3>
-          {l6.idea.paras.map((p, i) => <P key={i} t={p} />)}
-          <ul>{l6.idea.variants.map((x) => <li key={x.id}>{x.label}: {x.text}</li>)}</ul>
-          {flags.lamp6LanguageLine && <p>{l6.optionalNote.text}</p>}
-          <Part part={l6.warning} />
-          <p>{rich(l6.tryLight)}</p>
-          <p><a href="#evidence" data-evidence={l6.cta.folder}>{l6.cta.label}</a></p>
+          <h2 id="ft-l6">{copy.growth.kicker}: {rich(copy.growth.title)}</h2>
+          <p><strong>{copy.growth.badge}</strong></p>
+          <P t={copy.growth.hook} /><P t={copy.growth.body} /><p>{rich(copy.growth.tryLight)}</p>
+          <h3>{copy.growth.taps.head}</h3>
+          <p>{copy.growth.taps.t1.hindi} · {copy.growth.taps.t1.hinglish}. {copy.growth.taps.t1.caption} {copy.growth.taps.t1.note}</p>
+          <ul>{['scale', 'change', 'kill'].map((k) => <li key={k}>{copy.growth.taps.t2[k]}</li>)}</ul><p>{copy.growth.taps.t2.note}</p>
+          <p>{copy.growth.taps.t3.rule} {copy.growth.taps.t3.note}</p>
+          <h3>{copy.growth.cardHead}</h3><P t={copy.growth.card} /><P t={copy.growth.why} /><p><strong>{copy.growth.limits}</strong></p>
+          <h3>{copy.growth.sourcesHead}</h3>
+          <ul>{copy.growth.sources.map((s) => <li key={s.url}><a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a>{s.what ? ': ' + s.what : ''} [{s.tag}]</li>)}</ul>
+          <p><a href="#evidence" data-evidence="c8">{rich(copy.growth.protocol)}</a></p>
         </section>
         <section aria-labelledby="ft-baithak">
           <p className="kicker">{copy.baithak.kicker}</p>

@@ -1,20 +1,20 @@
 {
  "version": 1,
  "_review": [
-  "Person block (section 9): the exam sequence, \"unsuccessful entrance attempts\", the debate result and the four research contributors are on the truth ledger open list. Its first sentence is OFF (flags.ledgerGate_personFirstSentence).",
   "Footer line 4 (no analytics, cookies or third-party script) is OFF (flags.noAnalyticsLine) until Shriniwas confirms. check-build passes today, but the decision is his.",
   "Footer line 5 (how this page was made) is empty and OFF (flags.footerHowMade). Shriniwas must write it.",
   "The line \"I spoke some of the directions for this page through Wispr Flow into Emergent...\" is not on the page (voice.buildLine is null). No recording exists.",
-  "Lamp 6 optional line \"Other languages deserve their own test...\" is OFF (flags.lamp6LanguageLine).",
   "Lamp 5 label stays \"Phir kya hua\" until Shriniwas confirms which approvals were his.",
-  "The Hinglish lines were drafted by an AI agent. Shriniwas should read each aloud and rewrite in his own words."
+  "The Hinglish lines were drafted by an AI agent. Shriniwas should read each aloud and rewrite in his own words.",
+  "Meet Shriniwas: every slot (debate, research, essay idea, roots, loop, outside) is empty and every flag is OFF; nothing renders until Shriniwas answers the open questions.",
+  "The Hinglish lines are AI drafts. Read each aloud and rewrite in your own words.",
+  "Open each official Wispr link before publishing and confirm the quoted behaviour still holds (brief G14)."
  ],
  "flags": {
   "_note": "Gates for lines not yet confirmed by Shriniwas. Change a value, nothing else.",
   "ledgerGate_personFirstSentence": false,
   "flowIntoEmergentRecorded": false,
   "noAnalyticsLine": false,
-  "lamp6LanguageLine": false,
   "footerHowMade": false,
   "meet.roots.father": false,
   "meet.roots.examOrder": false,
@@ -245,7 +245,16 @@
    "moreLabel": "Aur dekhiye",
    "proofLabel": "Proof",
    "plainLabel": "Plain text",
-   "fastLane": "Take the whole walk"
+   "fastLane": "Take the whole walk",
+   "wordsCounter": "{n} of 2,000 words (simulated)",
+   "wordsMore": "Bolo",
+   "handoverRuleAria": "The pre-registered rule, scale, change or kill",
+   "firesLabel": "These numbers would trigger:",
+   "firesNone": "No rule fires on these numbers.",
+   "hindiChip": "Hindi",
+   "hinglishChip": "Hinglish",
+   "sliderA": "Speed demo",
+   "sliderB": "Handover script"
   },
   "idleHint": "<hi>Agla diya →</hi>"
  },
@@ -550,62 +559,6 @@
    "afterCorrected": "Reply at {t} s, after the 3-second deadline. Corrected logic: not counted as proof of current health."
   },
   "plain": "A reply that arrives before the 3-second deadline counts as proof the connection is alive. In the original logic, a reply that arrived after the deadline could still count as proof of health. In the corrected logic it is not counted as proof of current health."
- },
- "rowBreathes": {
-  "lines": [
-   "<hi>Paanch diye jal uthe.</hi>",
-   "<hi>Dekhiye: ek diya doosre se jala, aur pehle wale ki roshni kam nahi hui.</hi>"
-  ],
-  "after": "<hi>Kamra ab thoda sunehra ho gaya.</hi>"
- },
- "lamp6": {
-  "kicker": "LAMP 6 · PROPOSED, NOT RUN",
-  "badge": "PROPOSED, NOT RUN",
-  "title": "<hi>Yeh diya abhi bujha hai</hi>",
-  "idea": {
-   "heading": "The idea",
-   "paras": [
-    "For India growth, I'd test whether a **Hinglish-first demo for students and early-career users** beats a speed-focused pitch on **first usable dictations** and **a second dictation within a day**. **Proposed, not run.**",
-    "<hi>Shuruaat ek chhote group se: jo log sach mein Hindi-English mein messages likhte hain.</hi> I would not assume every Indian student uses Hinglish."
-   ],
-   "variants": [
-    {
-     "id": "A",
-     "label": "Variant A, speed",
-     "text": "\"Say the message. Skip typing it.\""
-    },
-    {
-     "id": "B",
-     "label": "Variant B, expression",
-     "text": "\"Don't stop the thought halfway through. Say it naturally.\""
-    }
-   ]
-  },
-  "optionalNote": {
-   "text": "Other languages deserve their own test; this one speaks only for Hindi-English."
-  },
-  "warning": {
-   "heading": "Fair warning",
-   "paras": [
-    "This test has not been run, and no result is claimed. <hi>Koi sample, koi lift, koi number nahi.</hi>"
-   ]
-  },
-  "cta": {
-   "label": "SEE THE GROWTH TEST",
-   "folder": "c8"
-  },
-  "tryLight": "<hi>Yeh diya abhi nahi jalega. Test chala nahi. Bujha hua, par imaandaar.</hi>"
- },
- "person": {
-  "enabled": true,
-  "kicker": "THE PERSON BEHIND THE FILE",
-  "heading": "<hi>Is file ke peeche ka insaan</hi>",
-  "firstSentence": "My father's accident brought serious financial pressure during my Class 12 exams.",
-  "paras": [
-   "A gap year, unsuccessful entrance attempts, YouTube study and a ₹3,999 course formed my route to VIT Pune.",
-   "I coordinated four research contributors, placed second in a college debate, and enjoy business case studies, essays and Advaita Vedanta. I care about people as much as code."
-  ],
-  "pull": "I didn't learn that every plan works. I learned to decide what to do when it doesn't."
  },
  "voice": {
   "kicker": "MY VOICE, FLOW'S TEXT",
@@ -1158,10 +1111,6 @@
     "text": "© Shriniwas Kholkute"
    }
   ]
- },
- "alternates": {
-  "headlineShare": "324 tests passed. 19 problems found. Ship karte?",
-  "closureFull": "<hi>Sab diye jal uthe. Ab mujhse poochhiye.</hi>"
  },
  "terrace": {
   "kicker": "THE FIVE LAMPS",

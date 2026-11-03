@@ -52,7 +52,7 @@ const jsAll = bundles.filter((f) => f.endsWith('.js')).map((f) => fs.readFileSyn
 const sp = (jsAll.match(/Spoken with Wispr Flow/g) || []).length;
 if (sp !== 2) fail.push(`"Spoken with Wispr Flow" appears ${sp} times in dist JS, expected 2`);
 // gated lines must be OFF
-for (const f of ['ledgerGate_personFirstSentence', 'flowIntoEmergentRecorded', 'noAnalyticsLine', 'lamp6LanguageLine', 'footerHowMade']) if (copyData.flags[f] !== false) fail.push(`flag ${f} is not false`);
+for (const f of ['ledgerGate_personFirstSentence', 'flowIntoEmergentRecorded', 'noAnalyticsLine', 'footerHowMade']) if (copyData.flags[f] !== false) fail.push(`flag ${f} is not false`);
 // 5. dev panel and private notes stripped
 for (const f of bundles) {
   const s = fs.readFileSync(f, 'utf8');

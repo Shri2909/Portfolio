@@ -12,7 +12,7 @@ const contentStrings = new Set();
 (function walk(v) { if (typeof v === 'string') contentStrings.add(v); else if (v && typeof v === 'object') Object.values(v).forEach(walk); })(JSON.parse(contentRaw));
 
 const SCHEMA_KEYS_OPEN = new Set(); // keys are free-form in this project; unknown-key check is against the allowed top level
-const TOP = ['baithak', 'growth', 'terrace', 'transitions', 'slots', 'version', '_review', 'flags', 'site', 'ui', 'opening', 'lamps', 'guess', 'lateReply', 'rowBreathes', 'lamp6', 'person', 'voice', 'verdict', 'wish', 'closure', 'evidence', 'sixty', 'footer', 'alternates'];
+const TOP = ['baithak', 'growth', 'terrace', 'transitions', 'slots', 'version', '_review', 'flags', 'site', 'ui', 'opening', 'lamps', 'guess', 'lateReply', 'voice', 'verdict', 'wish', 'closure', 'evidence', 'sixty', 'footer'];
 const problems = [], unmatched = [], approval = [];
 for (const k of Object.keys(copy)) if (!TOP.includes(k)) problems.push('unknown top-level key: ' + k);
 
@@ -43,7 +43,7 @@ if (copy.voice.takes.length !== 2) problems.push('takes must be 2');
 if (copy.evidence.folders.length !== 8) problems.push('evidence folders must be 8');
 const SPOKEN = (JSON.stringify(copy).match(/Spoken with Wispr Flow/g) || []).length;
 if (SPOKEN !== 2) problems.push('"Spoken with Wispr Flow" appears ' + SPOKEN + ' times, expected 2');
-for (const f of ['ledgerGate_personFirstSentence', 'flowIntoEmergentRecorded', 'noAnalyticsLine', 'lamp6LanguageLine', 'footerHowMade'])
+for (const f of ['ledgerGate_personFirstSentence', 'flowIntoEmergentRecorded', 'noAnalyticsLine', 'footerHowMade'])
   if (copy.flags[f] !== false) problems.push('gated flag is ON: ' + f + ' (needs Shriniwas)');
 for (const f of Object.keys(copy.flags)) if ((f.startsWith('meet.') && f !== 'meet.mergeThin') || f.startsWith('bring.')) if (copy.flags[f] !== false) problems.push('gated flag is ON: ' + f);
 if (copy.flags['meet.mergeThin'] !== true) problems.push('meet.mergeThin should default ON');

@@ -21,7 +21,7 @@ import Night from './components/Night.jsx';
 import LampRow from './components/LampRow.jsx';
 import LampStop from './components/LampStop.jsx';
 import Baithak from './components/Baithak.jsx';
-import Lamp6 from './components/Lamp6.jsx';
+import Growth from './components/Growth.jsx';
 import Voice from './components/Voice.jsx';
 import Verdict from './components/Verdict.jsx';
 import Wish from './components/Wish.jsx';
@@ -64,7 +64,7 @@ export default function App() {
         <Baithak />
         {[2, 3, 4, 5].map((n) => <LampStop key={n} n={n} />)}
         <Voice />
-        <Lamp6 />
+        <Growth />
         <Verdict />
         <Wish />
         <Closure />

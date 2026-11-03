@@ -164,3 +164,9 @@ html[data-fg="1"] .cat-wrap, html[data-fg="1"] .lantern { opacity: .35; } html[d
 .farwin rect { fill: var(--flame-core); opacity: 0; transition: opacity .6s ease; } .seen .farwin rect { opacity: .7; }
 html[data-calm="1"] .window-scene .panes rect, html[data-calm="1"] .farwin rect, .q-low .farwin rect { transition: none; }
 .sill-diya { --ls: 46px; position: absolute; left: 50%; bottom: 36px; width: var(--ls); transform: translateX(-50%); cursor: pointer; }
+/* V3 phase 5: growth act */
+.growth .tap { margin: 14px 0; padding-top: 10px; border-top: 1px solid var(--ground-5); } .growth .illus { font: 600 1.6rem var(--font-display); margin: 6px 0; } .growth .twin { font-size: 14px; color: var(--text-dim); }
+.growth label { display: grid; gap: 4px; margin: 8px 0; } .growth label .val { font: 700 1.1rem var(--font-mono); } .growth input[type=range] { width: 100%; min-height: 44px; accent-color: var(--flame-a); }
+.growth .rule { padding-left: 1.1em; } .growth .rule li { color: var(--text-dim); } .growth .rule li.hit { color: var(--cream); font-weight: 700; } .growth .fires { font-weight: 700; color: var(--flame-core); }
+.growth .counter.done { color: var(--flame-core); } .sources { padding-left: 1.1em; } .sources li { margin-bottom: 8px; } .sources .tag { font-size: 12px; color: var(--text-dim); }
+.growth-invite { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 16px 0 8px; } #lamp-6 .badge { margin-top: 0; }

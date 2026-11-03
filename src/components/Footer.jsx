@@ -19,7 +19,7 @@ export default function Footer() {
     const hidden = copy.footer.lines.filter((l) => l.flag && !flags[l.flag]).map((l) => `hidden: footer line ${l.id.slice(1)} (${l.flag} false)`);
     if (!how) hidden.push('hidden: footer line 5 (how this page was made: empty)');
     if (!flags.ledgerGate_personFirstSentence) hidden.push('hidden: person first sentence (ledgerGate_personFirstSentence false)');
-    if (!flags.lamp6LanguageLine) hidden.push('hidden: lamp six language line (lamp6LanguageLine false)');
+    for (const f of Object.keys(flags)) if ((f.startsWith('meet.') && f !== 'meet.mergeThin') || f.startsWith('bring.')) if (!flags[f]) hidden.push(`hidden: ${f} (false)`);
     if (!(flags.flowIntoEmergentRecorded && copy.voice.recordingLink)) hidden.push('hidden: recorded-build line (flowIntoEmergentRecorded false or no recording link)');
     console.info(hidden.join('\n'));
   }, []);

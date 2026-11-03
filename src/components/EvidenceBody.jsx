@@ -11,6 +11,7 @@ export default function EvidenceBody({ folder }) {
   const ins = b.inspect;
   return (
     <div className="ev-body">
+      {b.fields && b.fields.map(([lab, txt]) => <div className="ev-field" key={lab}><h4>{lab}</h4><p>{txt}</p></div>)}
       <Field k="purpose">{b.purpose && <p>{b.purpose}</p>}</Field>
       <Field k="finding">{b.finding && <p>{b.finding}</p>}</Field>
       <Field k="mine">{b.mine && <p>{b.mine}</p>}</Field>
