@@ -41,8 +41,8 @@ function Take({ take, calm, quality, plainOn, hintId }) {
           </>
         )}
         <div className={plainOn || diff.plainOnly ? 'plain-vis' : 'sr-only'}>
-          <h4>{C.asIsaid}</h4>{plain.rawParas.map((p, i) => <p key={i}>{p}</p>)}
-          <h4>{C.asFlow}</h4><p>{plain.flowText}</p>
+          <h3>{C.asIsaid}</h3>{plain.rawParas.map((p, i) => <p key={i}>{p}</p>)}
+          <h3>{C.asFlow}</h3><p>{plain.flowText}</p>
           <p className="counts mono">{tpl(x.countsLine, { a: diff.trimmedWords, b: diff.smoothedWords + diff.addedWords })}</p>
         </div>
       </div>

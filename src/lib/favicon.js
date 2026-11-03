@@ -1,4 +1,6 @@
 import { subscribe, getState } from './store.js';
+import copy from './copy.js';
+import { tpl, plain } from './tpl.js';
 // Favicon as a data: URL (no request). A lit dot per lamp; theme-color follows tone.
 const GROUND = ['#0A0705', '#110B07', '#19100A', '#251609', '#35200C', '#4A2F10', '#5C3A14'];
 const svg = (n) => {
@@ -10,11 +12,11 @@ let lastN = -1, lastTone = -1, lastV = false;
 export function startFavicon() {
   const link = document.querySelector('link[rel="icon"]');
   const meta = document.querySelector('meta[name="theme-color"]');
-  const baseTitle = document.title;
+  const baseTitle = document.title, shortName = copy.site.title.split(' (')[0];
   const run = () => {
     const { litCount, tone } = getState();
     const v = getState().visitorLit;
-    if (link && (litCount !== lastN || v !== lastV)) { lastN = litCount; lastV = v; link.type = 'image/svg+xml'; link.href = faviconUrl(v ? 6 : litCount); document.title = (litCount >= 1 ? `(${litCount}/5) ` : '') + baseTitle; }
+    if (link && (litCount !== lastN || v !== lastV)) { lastN = litCount; lastV = v; link.type = 'image/svg+xml'; link.href = faviconUrl(v ? 6 : litCount); document.title = litCount === 0 ? baseTitle : plain(litCount === 5 ? copy.ui.progress.all : tpl(copy.ui.progress.some, { n: litCount, rest: 5 - litCount })) + ' · ' + shortName; }
     if (meta && tone !== lastTone) { lastTone = tone; meta.content = GROUND[tone] || GROUND[0]; }
   };
   subscribe(run); run();
