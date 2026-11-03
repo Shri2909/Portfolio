@@ -342,6 +342,7 @@ const videos = {
   },
 };
 
+videos.final = videos.M4;
 await sets[name]?.();
 await browser.close();
 if (videos[name]) {
