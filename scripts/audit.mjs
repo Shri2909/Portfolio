@@ -72,7 +72,7 @@ for (const [w, h, label] of [[390, 844, 'phone 390'], [1366, 768, 'laptop 1366']
 
 // ---------------- P8.5 strings ----------------
 { const s = sec('P8.5', 'Forbidden strings and leftover tokens'); const ctx = await ctxOf(390, 844); const p = await open(ctx);
-  await p.evaluate(() => document.getElementById('night')); await p.getByRole('button', { name: /Menu/ }).click(); await p.getByRole('button', { name: /Poora text/ }).click(); await p.waitForTimeout(500);
+  await p.evaluate(() => document.getElementById('night')); await p.getByRole('button', { name: /Menu/ }).click(); await p.getByRole("button", { name: /Read the full text/ }).click(); await p.waitForTimeout(500);
   const visible = await p.evaluate(() => document.getElementById('fulltext').innerText + '\n' + document.title + '\n' + [...document.querySelectorAll('meta')].map((m) => m.content).join('\n') + '\n' + [...document.querySelectorAll('[aria-label],[alt],[title],[placeholder]')].map((e) => ['aria-label', 'alt', 'title', 'placeholder'].map((a) => e.getAttribute(a) || '').join(' ')).join('\n'));
   const files = ['dist/index.html', ...fs.readdirSync(path.join(root, 'dist/assets')).map((f) => 'dist/assets/' + f)]; const shipped = files.map((f) => ({ f, t: fs.readFileSync(path.join(root, f), 'utf8') })); shipped.push({ f: '(rendered full text, titles, meta, aria/alt)', t: visible });
   const groups = {
@@ -93,7 +93,7 @@ for (const [w, h, label] of [[390, 844, 'phone 390'], [1366, 768, 'laptop 1366']
 
 // ---------------- P8.6 claims ----------------
 { const s = sec('P8.6', 'Claims, numbers and attribution'); const ctx = await ctxOf(390, 844); const p = await open(ctx);
-  await p.getByRole('button', { name: /Menu/ }).click(); await p.getByRole('button', { name: /Poora text/ }).click(); await p.waitForTimeout(400);
+  await p.getByRole('button', { name: /Menu/ }).click(); await p.getByRole("button", { name: /Read the full text/ }).click(); await p.waitForTimeout(400);
   const t = await p.evaluate(() => document.getElementById('fulltext').innerText); const nums = [...t.matchAll(/\d[\d,]*(?:\.\d+)?[×x]?/g)].map((m) => m[0]);
   const expected = new Set(['324', '19', '26', '192', '479', '232', '105', '1,205', '1,850', '3.1×', '1.02×', '820', '06', '15', '00', '3', '0', '6', '2', '1', '2026', '7', '27', '30', '45', '5', '4', '8', '12', '3,999', '9', '60', '400', '16', '20', '100', '99', '10', '14', '11', '999', '75', '1,000']);
   const odd = [...new Set(nums.filter((n) => !expected.has(n)))]; s.note(`Distinct numbers in the full text: ${[...new Set(nums)].length}. Not on the expected list: ${odd.length ? odd.join(', ') : 'none'}.`); if (odd.length) s.warn('numbers to read: ' + odd.join(', '));
