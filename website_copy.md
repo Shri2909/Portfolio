@@ -11,8 +11,8 @@ How to read this file: it is the page, top to bottom, in the order a visitor mee
 - **Page title (tab):** Ek Diya Se Doosra (one lamp lights another) · Shriniwas Kholkute
 - **Meta description:** 324 tests passed. Then an audit found 19 problems. Shriniwas Kholkute's night page for Wispr Flow's India growth internship: one lamp lights another. Ek diya jalaiye, aage badhaiye.
 - **og:title / twitter:title:** 324 tests passed. 19 problems found. Ship karte?
-- **og:description / twitter:description:** Ek diya pehle se jal raha hai. Baaki aapke haath se jalenge. A night page about five projects, by Shriniwas Kholkute.
-- **og:image alt:** A dark page with one small lit lamp and five unlit lamps beside it, under the words "324 tests passed. 19 problems found."
+- **og:description / twitter:description:** Ek diya pehle se jal raha hai. Baaki aapke haath se jalenge. A night page about three projects, by Shriniwas Kholkute.
+- **og:image alt:** A dark page with one small lit lamp and three unlit lamps beside it, under the words "324 tests passed. 19 problems found."
 - **WhatsApp share line for the site itself:** 324 tests passed. Phir ek audit ne 19 problems dhoondhe. Ship karte? {site link}
 
 ---
@@ -31,7 +31,7 @@ How to read this file: it is the page, top to bottom, in the order a visitor mee
 **Ship karte? Imaandari se bataiye.**
 
 Ek diya pehle se jal raha hai. Woh mera hai.
-Baaki paanch aapke haath se jalenge.
+Baaki teen aapke haath se jalenge.
 
 [HOLD TO LIGHT THE FIRST LAMP]
 Dabaye rakhiye. Tap ya Enter bhi chalega.
@@ -40,181 +40,182 @@ Jaldi mein hain? Ek minute mein poori kahani. → [THE 60-SECOND FILE]
 
 *(Below the first screen:)*
 
-Five projects. Five inconvenient discoveries. Aur ek sawaal: phir maine kya kiya?
+Three projects. Three inconvenient discoveries. Aur ek sawaal: phir maine kya kiya?
 
 I'm Shriniwas, a final-year VIT Pune engineering student applying for Wispr Flow's India growth internship. Strengths ki list nahi. Main aapko mushkil faisle dikhaunga.
 
-**Alt text (night scene):** A dark page with one small flame lit on the left and a row of five unlit lamps leading away to the right.
+**Alt text (night scene):** A dark page with one small flame lit on the left and a row of three unlit lamps leading away to the right.
 
 ---
 
-## 2. LAMP 1: CERTGEN
+## 2. LAMP 01: CERTGEN
 
-[KICKER] LAMP 1 · CERTGEN · THE GREEN WALL
-### Sab green tha
+[KICKER] LAMP 01 — CERTGEN
+### The Green Wall · Sab Green Tha. Par Kya Sab Theek Tha?
+**324 Tests Passed. I Still Wasn't Convinced.**
 
-*(While holding:)* Lau aage badh rahi hai… *(When lit:)* Lamp 1 jal utha. Ab iska kissa.
+A hiring assignment asked me to build a bulk certificate generator. Simple enough to make it work. But I wanted to build something that could survive when things went wrong.
 
-**What happened**
+Mera sawaal simple tha: agar hazaar students ke certificates ban rahe hain, toh ek galat entry ki wajah se baaki sab kyun rukenge?
 
-Imagine a college generating thousands of certificates. One wrong entry shouldn't ruin the batch or crash the service. Bas itna hi kaam tha.
+So I mapped the entire workflow, designed the architecture, and chose background processing with fault isolation. AI agents helped with much of the implementation, while I directed the design and key product decisions.
 
-I mapped the workflow and architecture, made or approved product decisions, and used AI coding tools to implement the prototype. The prototype passed **324 tests**.
+Then came the interesting part.
 
-A separate audit found **19 problems**: one input consumed excessive processing time; another ballooned into an enormous response. Tests ne woh sawaal poochhe hi nahi the.
+324 tests passed. Everything was green.
 
-[GUESS THE AUDIT RESULT → REVEAL 19]
-How many problems did the separate audit find?
-[0] [3] [8] [19]
-*Aapka andaza?*
+Ab normally kya hota? Project complete. Screenshot lo. Aage badho.
 
-- **Reveal text:** The audit found 19 problems, two of them high. One crafted value caused disproportionate CPU work. A request of roughly 26 MB expanded into roughly 192 MB of response material. The tests hadn't asked those questions, and I directed more remediation.
-- **After the reveal, if the guess was below 19:** Kam socha? Aap akele nahi hain. 324 tests ne bhi wahi socha.
-- **After the reveal, if the guess was 19:** Bilkul sahi. Tests ko yeh nahi dikha tha.
-- **Always-visible plain text:** 324 of 324 tests passed. A separate audit then found 19 problems, two of them high.
-- **Status chip:** 324 / 324 tests pass
+But I wasn't convinced.
 
-**Maine phir kya kiya** *(what I did next)*
+A separate audit uncovered 19 problems. I directed further remediation, made decisions about safeguards, resource limits, and authentication, and pushed for more corrections when the first fixes weren't sufficient.
 
-Green screen pe ruk jaana aasaan tha. **I didn't defend the green screen.** Records show me approving safeguards, changing scope and directing more remediation when problems remained. Agents audited and fixed the code. The final report recorded zero open findings in its scope; later checks passed **479 main and 232 audit tests**.
+I even dropped a QR-verification feature when it violated an existing requirement.
 
-**Fair warning**
+Feature impressive tha. Lekin requirement tod raha tha. Toh feature gaya, requirement nahi.
 
-It's still a prototype, not a security guarantee. Isse zyaada ka daava main nahi karta.
+The remediation report eventually recorded zero open findings within its scope. Later local checks passed 479 main-suite and 232 audit-suite tests.
 
-[OPEN THE CERTGEN RECEIPT]
+What I learned: Ownership doesn't mean defending everything you've built. It means having the courage to question it.
 
----
+Apna banaya hua system khud challenge karna bhi ownership hai.
 
-## 3. LAMP 2: VIGIL
+**Three things this reveals about me**
 
-[KICKER] LAMP 2 · VIGIL · THE WATCHDOG THAT TRUSTED A LATE REPLY
-### Der se aaya jawab
+* Systems Thinking: I design complete workflows around real-world constraints, not just happy-path demonstrations.
+* Product Judgment: I make difficult trade-offs and prioritize requirements over attractive extras.
+* Extreme Ownership: When initial fixes aren't enough, I continue directing improvements instead of declaring premature success.
 
-*(While holding:)* Lau aage badh rahi hai… *(When lit:)* Lamp 2 jal utha. Ek diya jala. Ab agla.
+My growth connection: A dashboard full of green numbers doesn't automatically mean users are happy.
+Numbers achhe dikh rahe hain, par kya user ko sach mein value mil rahi hai? That's the question I want to ask.
 
-**What happened**
-
-Vigil checked whether a data connection was alive, jaise phone par poochhna: "Hello? Aap wahin hain?"
-
-Despite green tests, a reply arriving **after the deadline** could count as proof of health. Der se aaya jawab bhi "haan, zinda hoon" maan liya ja sakta tha.
-
-[TEST THE LATE REPLY]
-Khiskaiye aur dekhiye.
-- [MODEL OF DOCUMENTED BEHAVIOR] A simulated connection, not real monitoring.
-- **Which logic?** [Original logic] [Corrected logic]
-- **When the reply arrives** *(slider, 0 to 6 seconds, starts at 2)* · **3-second deadline**
-- **Readout, before the deadline:** Reply at {t} s, before the 3-second deadline. Counted as proof the connection is alive. Dono logic mein yahi hota hai.
-- **Readout, after the deadline, original logic:** Reply at {t} s, after the 3-second deadline. Original logic: still counted as proof of health. Yahi dikkat thi.
-- **Readout, after the deadline, corrected logic:** Reply at {t} s, after the 3-second deadline. Corrected logic: not counted as proof of current health.
-- **Always-visible plain text:** A reply that arrives before the 3-second deadline counts as proof the connection is alive. In the original logic, a reply that arrived after the deadline could still count as proof of health. In the corrected logic it is not counted as proof of current health.
-
-**Maine phir kya kiya** *(what I did next)*
-
-Maine ek sawaal uthaya: kya yeh tests system ka asli vaada sach mein check karte hain?
-
-I questioned whether the tests proved the system's real promise. An AI-assisted review found the defect and implemented an approval-gated correction.
-
-When a verifier removed the correction, **two targeted tests failed**. Restored, the suite passed **105 tests**.
-
-The question became: **does it deliver what someone depends on?**
-
-**Fair warning**
-
-Yeh sab simulated connections par hua tha. The 105 tests were verified locally in an agent session, not in CI, and there was no production deployment.
-
-[OPEN THE VIGIL RECEIPT]
+Evidence note: AI agents performed much of the coding, audits, and fixes. The results describe a tested prototype, not a production security guarantee.
 
 ---
 
-## 4. LAMP 3: BLITZ
+## 3. LAMP 02: BLITZ
 
-[KICKER] LAMP 3 · BLITZ · THE NUMBER I WITHDREW
-### Jo number maine waapas liya
+[KICKER] LAMP 02 — BLITZ
+### The Number I Withdrew · Number Bada Tha. Par Sach?
+**I Chose to Withdraw My Most Impressive Number.**
 
-*(When lit:)* Lamp 3 jal utha. Lau aage badh rahi hai.
+I wanted to build a high-performance stock-order matching engine. The challenge wasn't just making it fast. It was proving that the improvements were real.
 
-**What happened**
+Fast bolna aasaan hai. Lekin kitna fast? Aur uska proof kya hai?
 
-A speed claim looked remarkable: **1,205 nanoseconds**. Woh number bahut achha lag raha tha. It had come from an uncommitted working tree.
+I designed the workflow and architecture, and established an approach for comparing optimizations with simpler alternatives. AI agents handled much of the coding and benchmarking. I directed the evaluation and decisions about which claims were defensible.
 
-Better-controlled measurement showed **1,850**. The advertised **3.1× advantage** shrank to **1.02×**.
+Then came a number I could have proudly displayed.
 
-**Maine phir kya kiya** *(what I did next)*
+1,205 nanoseconds.
 
-The headline was replaced. Later changes made even the replacement historical. **I chose the defensible story over the flattering one.** Chamak nahi, sach.
+Dekhne mein impressive tha. Resume par bhi achha lagta.
 
-**Fair warning**
+But an audit revealed that this headline came from an uncommitted version of the code. A more controlled historical run gave 1,850 nanoseconds.
 
-1,850 ns is a historical run, not today's number. Current latency has not been remeasured.
+And another claimed 3.1× advantage? It shrank to approximately 1.02×.
 
-[OPEN THE BLITZ RECEIPT]
+Ab do options the: impressive number bachao, ya sach accept karo.
 
----
+I chose to withdraw or downgrade claims the evidence couldn't support. Later changes also made the replacement latency outdated.
 
-## 5. LAMP 4: TIPINDEX
+What I learned: A smaller truth is worth more than a bigger claim you cannot defend.
 
-[KICKER] LAMP 4 · TIPINDEX · THE AGENT STOPPED, THE WORK CONTINUED
-### Agent ruka. Kaam nahi.
+Har achha dikhne wala number achha result nahi hota.
 
-*(When lit:)* Lamp 4 jal utha. Ek diya jala. Ab agla.
+**Three things this reveals about me**
 
-**What happened**
+* Analytical Thinking: I approach improvements as hypotheses requiring fair comparisons.
+* Independent Judgment: I'm willing to change a conclusion when better evidence contradicts it.
+* Evidence-Driven Problem-Solving: I question measurement methods and investigate unexpected results before deciding what to change.
 
-Codex hit its limit during a long experiment and left an incomplete output. Beech raaste mein agent ruk gaya. File adhoori.
+My growth connection: Imagine a campaign reporting thousands of sign-ups.
+Sunne mein amazing hai. Lekin kitne log actually product use kar rahe hain? Kitne wapas aaye?
+That's the difference between celebrating a number and understanding what it means.
 
-**Maine phir kya kiya** *(what I did next)*
-
-I directed a handoff to Claude Code, approved a verified disk cleanup, and resumed from recorded checkpoints. The campaign record reports **820 completed measurement rounds**.
-
-**A process shouldn't depend on one operator remembering everything.**
-
-**Fair warning**
-
-Agents wrote most of the code and ran most of the benchmarks in this project. These are one-laptop, limited-workload results, not product speedups. Product ka daava nahi.
-
-[OPEN THE TIPINDEX RECEIPT]
+Evidence note: AI agents performed much of the implementation, benchmarking, and investigation. The 1,850 ns result is historical; current latency has not been remeasured.
 
 ---
 
-## 6. LAMP 5: PITDB
+## 4. LAMP 03: VIGIL
 
-[KICKER] LAMP 5 · PITDB · THE FUTURE APPEARED EARLY
-### Future, waqt se pehle
+[KICKER] LAMP 03 — VIGIL
+### The Late Witness · System Bola Healthy. Maine Poochha, Pakka?
+**The System Said Everything Was Fine. I Questioned Whether It Was.**
 
-*(When lit:)* Lamp 5 jal utha.
+Imagine a trading system receiving live market prices. Suddenly, a connection stops responding—but the system still believes everything is fine.
 
-**What happened**
+Screen par sab normal dikh raha hai. Lekin data hi purana hai. Ab bharosa kis par karein?
 
-A database meant to answer "What was known then?" could, in one specific time-zone edge case, show a **06:15** event at **06:00**. Yaani 06:15 ki baat 06:00 par hi dikh jaati.
+That's the problem I wanted Vigil to address.
 
-**Phir kya hua** *(what happened next)*
-*[CONFIRM: switch this label to "Maine phir kya kiya" only if you confirm which approvals were yours.]*
+I defined the requirements, designed the monitoring and reconnection workflows, and made key decisions about failure handling. AI agents helped implement and investigate the system.
 
-Agents found and addressed the defect in a local remediation version; the claim was narrowed.
+Then I asked a question that changed the direction of the testing:
 
-**Fair warning**
+Were our tests actually proving what the system promised?
 
-**That correction is not yet reflected in the public default branch.** Aur main yeh nahi keh raha ki har audit finding fix ho chuki hai.
+Tests pass ho rahe the. Lekin kya woh sahi sawaal pooch rahe the?
 
-[OPEN THE PITDB RECEIPT]
+An AI-assisted investigation exposed a serious flaw: a reply arriving after its deadline could still make a failed connection appear healthy.
+
+Matlab jawab late aaya, aur system ne maan liya—sab theek hai!
+
+I directed corrective work, approved changes to the connection rules, and sought evidence that the correction would detect the original problem.
+
+When the fix was deliberately removed, two targeted tests failed. Restored, all 105 local tests passed.
+
+I also challenged performance measurements that weren't measuring what they claimed.
+
+What I learned: Before celebrating a successful result, make sure you're testing the right definition of success.
+
+Galat sawaal ka correct answer bhi kaam ka nahi.
+
+**Three things this reveals about me**
+
+* Systems Thinking: I translate complex problems into defined behaviors, workflows, and failure-handling decisions.
+* Critical Thinking: I question whether passing tests actually prove what matters.
+* Evidence-Driven Ownership: I direct corrective action and seek tests that can expose the original failure again.
+
+My growth connection: A new Wispr Flow installation might look like success.
+Lekin agar user agle din Flow use hi na kare, toh kya woh real adoption hai?
+I want to understand what happens after the first interaction—not just count how many people started.
+
+Evidence note: AI agents carried out much of the technical investigation and implementation. Verification was local and simulation-based, not a production deployment. Some individual decision attributions remain subject to verification...
 
 ---
 
-## 7. THE ROW BREATHES (after lamp 5, the room turns dusk-gold)
+## 5. THE TRANSITION AFTER ALL THREE LAMPS
 
-Paanch diye jal uthe.
-Dekhiye: ek diya doosre se jala, aur pehle wale ki roshni kam nahi hui.
+### Three Lamps. One Pattern.
 
-*Kamra ab thoda sunehra ho gaya.*
+One project taught me not to trust green tests blindly.
+
+Another taught me not to fall in love with impressive numbers.
+
+The third taught me to question whether I was measuring the right thing in the first place.
+
+*Teen alag projects. Teen alag challenges. Lekin ek aadat common thi.*
+
+**I don't want to be right. I want to find out what's right.**
+
+And that is exactly the mindset I want to bring to growth.
+
+Because getting someone to install a product is one thing.
+
+Getting them to genuinely love it, use it again, and make it part of their daily life?
+
+*Woh asli challenge hai.*
+
+**Which brings me to my next question: What happens after someone installs Wispr Flow?**
 
 ---
 
-## 8. LAMP 6: PROPOSED, NOT RUN
+## 6. LAMP 04: PROPOSED, NOT RUN
 
 *(Set apart from the row, dashed outline, no flame. It never fully lights.)*
 
-[KICKER] LAMP 6 · PROPOSED, NOT RUN
+[KICKER] LAMP 04 · PROPOSED, NOT RUN
 ### Yeh diya abhi bujha hai
 
 **The idea**
@@ -238,7 +239,7 @@ This test has not been run, and no result is claimed. Koi sample, koi lift, koi 
 
 ---
 
-## 9. IS FILE KE PEECHE KA INSAAN
+## 7. IS FILE KE PEECHE KA INSAAN
 
 [KICKER] THE PERSON BEHIND THE FILE
 ## Is file ke peeche ka insaan
@@ -253,7 +254,7 @@ I coordinated four research contributors, placed second in a college debate, and
 
 ---
 
-## 10. SOCH POORI HONE DO (the voice section)
+## 8. SOCH POORI HONE DO (the voice section)
 
 [KICKER] THE FIRST CLUE WAS MY VOICE
 ## Soch poori hone do
@@ -310,7 +311,7 @@ I think there's another way to look at this. We spend so much time learning how 
 
 ---
 
-## 11. SEEDHI BAAT (the verdict)
+## 9. SEEDHI BAAT (the verdict)
 
 [KICKER] YOUR VERDICT
 ## Seedhi baat
@@ -327,14 +328,14 @@ Koi ek claim chuniye. Uska evidence kholiye. Phir faisle ke baare mein mujhse po
 
 ---
 
-## 12. AB AAPKI BAARI (the wish step)
+## 10. AB AAPKI BAARI (the wish step)
 
 [KICKER] YOUR TURN
 ## Ab aapki baari
 
 Is baar soan papdi nahi, ek wish.
 
-Mere paanch diye ab roshan hain. Ab ek aur: aapka apna.
+Mere teen diye ab roshan hain. Ab ek aur: aapka apna.
 
 Ek real insaan sochiye. Do-teen line, jo sirf aap unse keh sakte hain. Generic forward nahi.
 
@@ -386,7 +387,7 @@ Ek baat saaf: yeh page aapki wish upload ya save nahi karta; woh sirf aapke tab 
 
 ---
 
-## 13. CLOSURE
+## 11. CLOSURE
 
 **Row caption** (N is the count written in the link, shown as "99+" if larger)
 {N} diye pehle se. Aakhir mein aapka. *(N=1: Ek diya pehle se. Aakhir mein aapka. · N=0: Yeh row aapse shuru hoti hai.)*
@@ -398,14 +399,14 @@ Ek baat saaf: yeh page aapki wish upload ya save nahi karta; woh sirf aapke tab 
 ## Aapka diya jal utha.
 ## Ab mujhse ek sawaal poochhiye.
 
-Paanch projects mein se koi ek chuniye. Kya hua, maine kya kiya, aur kya abhi adhura hai: teeno batata hoon.
+Teen projects mein se koi ek chuniye. Kya hua, maine kya kiya, aur kya abhi adhura hai: teeno batata hoon.
 
 [INVITE ME TO AN INTERVIEW] *(renders only if contact is set; opens an email)*
 Ek email. Ek lamp. Baaki baat wahin.
 
 View my résumé · Evidence drawer
 
-Mere paanch diye bhi ek-ek karke jale. Jahan jawab adhura tha, wahan maine adhura hi likha.
+Mere teen diye bhi ek-ek karke jale. Jahan jawab adhura tha, wahan maine adhura hi likha.
 
 Sawaal poochhne ke liye yeh page khula hai. The best interface gets out of the way. The best evidence doesn't.
 
@@ -418,25 +419,23 @@ Sawaal poochhne ke liye yeh page khula hai. The best interface gets out of the w
 
 ---
 
-## 14. EVIDENCE DRAWER (headings and intros; drawer bodies stay exactly as in content.json)
+## 12. EVIDENCE DRAWER (headings and intros; drawer bodies stay exactly as in content.json)
 
 **[DRAWER TITLE]** Evidence drawer
 **[DRAWER INTRO]** Every figure above has a source and a status. Statuses are plain text: PUBLIC, LOCAL-BRANCH, REPO-REPORTED, PERSONALLY CONFIRMED, UNRESOLVED, PROPOSED. Jahan jawab abhi adhura hai, wahan UNRESOLVED likha hai.
 
 1. **CERTGEN: The green wall.** 324 tests, phir 19 findings, aur mera hissa kitna tha.
-2. **VIGIL: The late witness.** Ek late reply, ek sawaal, aur do tests jo correction hatane par fail hue.
-3. **BLITZ: The number I withdrew.** 1,205 se 1,850 tak ka poora hisaab, aur jo abhi remeasure nahi hua.
-4. **TIPINDEX: The operator changed, the evidence stayed.** Handoff ka record, aur woh jawab jo abhi UNRESOLVED hain.
-5. **PITDB: The future appeared early.** 06:15, 06:00 par: kya local branch par hai, aur kya public par.
-6. **ROLES: Who designed, who executed, who verified?** Kisne kya kiya, seedhe shabdon mein.
-7. **THE PERSON AND THE VOICE: Sources.** Voice takes kahan se aaye, aur kya abhi baaki hai.
-8. **INDIA GROWTH TEST: The proposed protocol.** Poora protocol. Proposed, not run.
+2. **BLITZ: The number I withdrew.** 1,205 se 1,850 tak ka poora hisaab, aur jo abhi remeasure nahi hua.
+3. **VIGIL: The late witness.** Ek late reply, ek sawaal, aur do tests jo correction hatane par fail hue.
+4. **ROLES: Who designed, who executed, who verified?** Kisne kya kiya, seedhe shabdon mein.
+5. **THE PERSON AND THE VOICE: Sources.** Voice takes kahan se aaye, aur kya abhi baaki hai.
+6. **INDIA GROWTH TEST: The proposed protocol.** Poora protocol. Proposed, not run.
 
 *Field labels inside each folder (unchanged):* Plain-English purpose · The central finding · My part · Recorded results · Where to inspect · Status · Other findings
 
 ---
 
-## 15. THE 60-SECOND FILE (a dialog, also #sixty)
+## 13. THE 60-SECOND FILE (a dialog, also #sixty)
 
 [LABEL] THE 60-SECOND FILE · *Jaldi mein hain? Yeh padhiye.*
 
@@ -456,14 +455,14 @@ I have no growth wins to borrow. But I've used Flow, and I want to test whether 
 
 ---
 
-## 16. MICROCOPY
+## 14. MICROCOPY
 
 - **Skip link:** Skip to main content
 - **Nav:** The lamps · Evidence · 60-second file
 - **Dialog close:** Close
 - **Hold hint:** Dabaye rakhiye. Tap ya Enter bhi chalega.
 - **While holding (shown only during a hold; releasing early still lights the lamp):** Baati abhi garam ho rahi hai.
-- **Progress:** {n} diye jal chuke, {5-n} baaki. *(at n=5: Paanchon jal uthe.)*
+- **Progress:** {n} diye jal chuke, {3-n} baaki. *(at n=3: Teenon jal uthe.)*
 - **Lamp opens:** Kissa kholiye
 - **Lamp card closes:** Row par waapas
 - **Light all (for readers who skip the ritual):** Sab diye ek saath jalaiye
@@ -481,7 +480,7 @@ I have no growth wins to borrow. But I've used Flow, and I want to test whether 
 
 ---
 
-## 17. FOOTER
+## 15. FOOTER
 
 - **Line 1:** Wispr Flow ke India growth internship challenge ke liye banaya hai. Prototypes, not products. Har number ka source aur status Evidence drawer mein hai.
 - **Line 2:** AI agents wrote a substantial share of the code in these projects. I directed, approved and questioned. Kisne kya kiya, woh drawer mein hai, jitna main saabit kar sakta hoon.
@@ -504,16 +503,14 @@ I have no growth wins to borrow. But I've used Flow, and I want to test whether 
 
 1. **Make the Hinglish yours.** An AI agent drafted every Hinglish line. Read each one aloud. Where it doesn't sound like you, rewrite it in your own words, ideally by dictating it with Flow. Keep every number and fact exactly as written. Only the two 2 Nov takes may carry "Spoken with Wispr Flow".
 2. **Line 5 of the footer is required.** Name the tool you really used to build the page. If you did not build the live page by voice into Emergent, delete the gated line in section 10 and do not claim it anywhere (including the video). The challenge wants a voice-built page, and a recorded Flow-into-Emergent iteration does not exist yet in your materials.
-3. **PitDB label.** Keep "Phir kya hua" until you confirm which approvals were yours; then switch to "Maine phir kya kiya" and say only what you approved.
-4. **No-tracking line.** Keep footer line 4 only after checking the production build for analytics, cookies and third-party requests. The privacy line "save nahi karta" is true only if the page uses no localStorage or sessionStorage for lamp progress.
-5. **The lamp count.** Put the count and the first name in the URL fragment (after #), not the query string. Show the count capped (for example "99+"), allow letters only and about 20 characters for the name, and render it as plain text. Keep the small English line saying it is not a visitor count. If you don't want that fine print, drop the count and keep only the lamp row.
-6. **Section 9 (the person).** Confirm the exam sequence, the debate result and the four research contributors from the truth ledger's open items, and decide whether you want the first sentence public. Keep or cut it exactly as written.
-7. **Diwali date.** Print none. Sources I found say Sunday 8 November 2026, and one said 9. Swap the sign-off to "Shukriya. — Shriniwas" after 9 November (a client-side date check is enough).
-8. **Held-out numbers.** TipIndex 40.62× and 0.585, and PitDB 629.70×, 2.7×, 26.5× and 1.08×, appear nowhere. Keep it that way.
-9. **TipIndex.** The closure promises "teeno batata hoon" (I'll tell you all three). Be ready to answer any TipIndex question live. The ledger still lists your full working knowledge as unconfirmed.
-10. **Lamp 6** never fully lights and carries no thresholds, sample size or expected result.
-11. **Receipt buttons** use one verb ("OPEN THE … RECEIPT") with the project name, so the links are unique for screen readers. The résumé link says it opens Google Drive; the interview button says it opens an email.
-12. **Accessibility:** decorative lamp art gets empty alt text; the controls carry the names ("Light lamp 1, Certgen"). Real alt text stays on the share image and the card. Keep Hinglish out of aria labels and error strings; wrap visible Hinglish in `lang="hi-Latn"`; set the page to `lang="en-IN"`. Every interaction keeps its always-visible plain-text version.
-13. **Receipt links:** verify each opens in a private mobile window. Per the evidence package, some audit reports are local or ignored in the repo, and PitDB's public main is the older version, so link to what really opens or write "evidence available on request".
-14. **Single festival spelling:** "Deepavali" everywhere in the copy.
-15. **Language mix:** a rough word-list count puts the visible page copy at about 70 to 75% English and 25 to 30% Hinglish (details in my reply). If you want more Hinglish, add it to the wish step, the hand-off lines between lamps and the closure. Do not add it to fact paragraphs.
+3. **No-tracking line.** Keep footer line 4 only after checking the production build for analytics, cookies and third-party requests. The privacy line "save nahi karta" is true only if the page uses no localStorage or sessionStorage for lamp progress.
+4. **The lamp count.** Put the count and the first name in the URL fragment (after #), not the query string. Show the count capped (for example "99+"), allow letters only and about 20 characters for the name, and render it as plain text. Keep the small English line saying it is not a visitor count. If you don't want that fine print, drop the count and keep only the lamp row.
+5. **Section 9 (the person).** Confirm the exam sequence, the debate result and the four research contributors from the truth ledger's open items, and decide whether you want the first sentence public. Keep or cut it exactly as written.
+6. **Diwali date.** Print none. Sources I found say Sunday 8 November 2026, and one said 9. Swap the sign-off to "Shukriya. — Shriniwas" after 9 November (a client-side date check is enough).
+7. **Held-out numbers.** TipIndex 40.62× and 0.585, and PitDB 629.70×, 2.7×, 26.5× and 1.08×, appear nowhere. Keep it that way.
+8. **Lamp 04** never fully lights and carries no thresholds, sample size or expected result.
+9. **Receipt buttons** use one verb ("OPEN THE … RECEIPT") with the project name, so the links are unique for screen readers. The résumé link says it opens Google Drive; the interview button says it opens an email.
+10. **Accessibility:** decorative lamp art gets empty alt text; the controls carry the names ("Light lamp 1, Certgen"). Real alt text stays on the share image and the card. Keep Hinglish out of aria labels and error strings; wrap visible Hinglish in `lang="hi-Latn"`; set the page to `lang="en-IN"`. Every interaction keeps its always-visible plain-text version.
+11. **Receipt links:** verify each opens in a private mobile window. Per the evidence package, some audit reports are local or ignored in the repo, and PitDB's public main is the older version, so link to what really opens or write "evidence available on request".
+12. **Single festival spelling:** "Deepavali" everywhere in the copy.
+13. **Language mix:** a rough word-list count puts the visible page copy at about 70 to 75% English and 25 to 30% Hinglish (details in my reply). If you want more Hinglish, add it to the wish step, the hand-off lines between lamps and the closure. Do not add it to fact paragraphs.
