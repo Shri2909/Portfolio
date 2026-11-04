@@ -236,3 +236,8 @@ Sources, in the order they rank: Final Website Copy (all primary public text, us
 
 
 At Shriniwas's instruction the site now carries exactly three stories, in his words and order: LAMP 01 CERTGEN (`exhibitA`, keeps the guess-the-audit-result widget), LAMP 02 BLITZ (`exhibitB`), LAMP 03 VIGIL (`exhibitC`, keeps the late-reply widget), then the "Three Lamps. One Pattern." transition. The `more` section, the two other projects' evidence folders and every other mention of them were removed; the evidence drawer has six folders in story order. Also changed: hero lede says "Three projects. Three inconvenient discoveries."; the 60-second file no longer mentions the interrupted experiment or the database claim. The Focused Website Copy was updated to match (`*italic*` is now supported by `CF.rich`). Tests: 94 passed, 0 failed.
+
+
+## 4 Nov 2026: recruiter journey and three levels per lamp
+
+Page now follows six steps: 01 Meet the person, 02 Three lamps (CERTGEN, BLITZ, VIGIL), 03 Why Wispr Flow (voice compare), 04 The Handover Test (the growth hypothesis paragraph and its protocol button, split out of the voice section), 05 Continue the conversation, 06 Go deeper (self-paced). Each lamp shows Level 1 (his title and tagline, a 2-3 sentence summary and one capability), Level 2 (his full script, closed by default, holds the widget) and Level 3 (repository link, files, receipt button). Level 1 summaries and capabilities are built only from his own sentences (the capability is one of his three "reveals" lines). GitHub and LinkedIn buttons appear only when `site.contact` has them (both empty today). Tests: 98 passed, 0 failed.
