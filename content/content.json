@@ -1,16 +1,12 @@
 {
   "_meta": {
-    "purpose": "Public content for Case File 001. Visible text comes from the Final Website Copy (primary story), the Final Master Document (structure and interactions) and the Evidence Package (drawer). Nothing here is invented; fields marked UI are interface labels.",
-    "sources": [
-      "Case_File_001_Focused_Website_Copy.md",
-      "Operation_Case_File_001_Final_Master.md",
-      "Case_File_001_Evidence_And_Submission_Package.md"
-    ],
+    "purpose": "Public content for Ek Diya Se Doosra. Visible text comes from website_copy.md and the three lamp stories supplied by Shriniwas, used word for word. Fields marked UI are interface labels.",
     "rule": "Empty field = render nothing."
   },
   "site": {
-    "title": "Case File 001: The First Answer Is the Suspect",
-    "description": "324 tests passed. Then an audit found 19 problems. Would you have shipped it? Shriniwas Kholkute's case file for Wispr Flow's India growth internship.",
+    "title": "Ek Diya Se Doosra (one lamp lights another) · Shriniwas Kholkute",
+    "description": "324 tests passed. Then an audit found 19 problems. Shriniwas Kholkute's night page for Wispr Flow's India growth internship: one lamp lights another. Ek diya jalaiye, aage badhaiye.",
+    "ogTitle": "324 tests passed. 19 problems found. Ship karte?",
     "subject": "Shriniwas Kholkute",
     "contact": {
       "email": "shrniwaskholkute2282@gmail.com",
@@ -21,16 +17,40 @@
     "essay": "https://drive.google.com/file/d/1ccYZ-WZOZTLmZ4A23Ed9yNGy9jiCNi2k/view?usp=drive_link"
   },
   "ui": {
-    "brand": "CASE FILE No. 001",
-    "brandShort": "No. 001",
-    "navCase": "The case",
+    "brand": "EK DIYA SE DOOSRA",
+    "brandShort": "Ek Diya",
+    "navLamps": "The lamps",
     "navEvidence": "Evidence",
     "navSixty": "60-second file",
-    "skip": "Skip to the file",
+    "navInvite": "INVITE ME",
+    "skip": "Skip to main content",
     "close": "Close",
     "plainly": "In plain words",
+    "holdWarm": "Baati abhi garam ho rahi hai.",
+    "lightAll": "Sab diye ek saath jalaiye",
+    "progress": "{n} diye jal chuke, {r} baaki.",
+    "progressDone": "Teenon jal uthe.",
+    "unlit": "Light lamp {n}, {name}.",
+    "unlitDesc": "Lamp {n}, unlit. Press and hold, tap or press Enter to light it from {from}.",
+    "fromHome": "the home flame",
+    "fromLamp": "lamp {n}",
+    "lit": "Lamp {n}, {name}, lit. Open its story.",
+    "litDesc": "Lamp {n}, lit.",
+    "lamp4": "Lamp 4, proposed, not run.",
+    "lamp4Desc": "Lamp 4 is proposed, not run. It stays unlit.",
+    "lamp4Chip": "PROPOSED, NOT RUN",
+    "lamp4Try": "Yeh diya abhi nahi jalega. Test chala nahi. Bujha hua, par imaandaar.",
+    "openStory": "Kissa kholiye",
+    "reduced": "Motion off hai? Diye seedhe jal jaate hain, koi animation nahi.",
+    "level1": "LEVEL 1 — Instantly visible",
+    "level2": "LEVEL 2 — Poora kissa",
+    "level2Hint": "The complete story",
+    "level3": "LEVEL 3 — Inspect the evidence",
+    "level3Sub": "For curious reviewers",
+    "capLabel": "The one capability this project best demonstrates",
+    "repoLabel": "Repository",
     "evidenceTitle": "Evidence drawer",
-    "evidenceIntro": "Every figure above has a source and a status. Statuses are plain text: PUBLIC, LOCAL-BRANCH, REPO-REPORTED, PERSONALLY CONFIRMED, UNRESOLVED, PROPOSED.",
+    "evidenceIntro": "Every figure above has a source and a status. Statuses are plain text: PUBLIC, LOCAL-BRANCH, REPO-REPORTED, PERSONALLY CONFIRMED, UNRESOLVED, PROPOSED. Jahan jawab abhi adhura hai, wahan UNRESOLVED likha hai.",
     "inspect": "Where to inspect",
     "purpose": "Plain-English purpose",
     "finding": "The central finding",
@@ -40,13 +60,12 @@
     "more": "Other findings",
     "raw": "As I said it",
     "flow": "As Flow wrote it",
-    "hint": "Drag the red string from my words to Flow's words.",
+    "hint": "Flame ko meri awaaz se Flow ke text tak khiskaiye.",
+    "hintKeys": "(Arrow keys work too, or use “Read it plainly”.)",
     "legend": "Blue pencil: words Flow trimmed. Highlighted: words Flow smoothed or added.",
     "chip": "A real take, straight from my Flow history",
     "custody": "Where this came from",
     "readBoth": "Read it plainly",
-    "take1": "Take 1",
-    "take2": "Take 2",
     "takes": "Takes",
     "modelBadge": "MODEL OF DOCUMENTED BEHAVIOR",
     "modelNote": "A simulated connection, not real monitoring.",
@@ -56,40 +75,46 @@
     "arrivalLabel": "When the reply arrives",
     "deadlineLabel": "3-second deadline",
     "guessAsk": "How many problems did the separate audit find?",
-    "level1": "LEVEL 1 — Instantly visible",
-    "level2": "LEVEL 2 — Poora kissa",
-    "level2Hint": "The complete story",
-    "level3": "LEVEL 3 — Inspect the evidence",
-    "level3Sub": "For curious reviewers",
-    "capLabel": "The one capability this project best demonstrates",
-    "repoLabel": "Repository",
-    "navJourney": "Journey"
+    "guessHint": "Aapka andaza?",
+    "lateHint": "Khiskaiye aur dekhiye."
   },
-  "hero": {
-    "title": "CASE FILE 001 — THE FIRST ANSWER IS THE SUSPECT",
-    "byline": "India Growth Internship · Shriniwas Kholkute · 3 November 2026",
+  "opening": {
+    "label": "EK DIYA SE DOOSRA · Shriniwas Kholkute",
     "headline": "324 tests passed. Then an audit found 19 problems.",
-    "question": "Would you have shipped it?",
-    "lede": "Three projects. Three inconvenient discoveries. One investigation into what I did next.",
-    "intro": "I'm Shriniwas, a final-year VIT Pune engineering student applying for Wispr Flow's India growth internship. I build software, debate, write and study business strategy. Instead of listing strengths, I'll show you difficult decisions.",
-    "ctaOpen": "OPEN THE CASE",
-    "ctaSixty": "THE 60-SECOND FILE"
+    "ship": "Ship karte? Imaandari se bataiye.",
+    "lines": [
+      "Ek diya pehle se jal raha hai. Woh mera hai.",
+      "Baaki teen aapke haath se jalenge."
+    ],
+    "hold": "HOLD TO LIGHT THE FIRST LAMP",
+    "holdHint": "Dabaye rakhiye. Tap ya Enter bhi chalega.",
+    "sixtyLine": "Jaldi mein hain? Ek minute mein poori kahani. →",
+    "sixtyBtn": "THE 60-SECOND FILE",
+    "below": "Three projects. Three inconvenient discoveries. Aur ek sawaal: phir maine kya kiya?",
+    "intro": "I'm Shriniwas, a final-year VIT Pune engineering student applying for Wispr Flow's India growth internship. Strengths ki list nahi. Main aapko mushkil faisle dikhaunga.",
+    "alt": "A dark page with one small flame lit on the left and a row of three unlit lamps leading away to the right."
+  },
+  "row": {
+    "lit": "Teen diye jal uthe.",
+    "body": "Dekhiye: ek diya doosre se jala, aur pehle wale ki roshni kam nahi hui.",
+    "dusk": "Kamra ab thoda sunehra ho gaya."
   },
   "person": {
-    "heading": "THE PERSON BEHIND THE FILE",
+    "step": "01 · Meet the person",
+    "sub": "Who I am, what drives me, what makes me different",
+    "kicker": "THE PERSON BEHIND THE FILE",
+    "heading": "Is file ke peeche ka insaan",
     "body": [
       "My father's accident brought serious financial pressure during my Class 12 exams. A gap year, unsuccessful entrance attempts, YouTube study and a ₹3,999 course formed my route to VIT Pune.",
       "I coordinated four research contributors, placed second in a college debate, and enjoy business case studies, essays and Advaita Vedanta. I care about people as much as code.",
       "**I didn't learn that every plan works. I learned to decide what to do when it doesn't.**"
-    ],
-    "step": "01 · Meet the person",
-    "sub": "Who I am, what drives me, what makes me different"
+    ]
   },
   "lamps": {
     "step": "02 · Three lamps, three decisions",
     "sub": "CERTGEN → BLITZ → VIGIL"
   },
-  "exhibitA": {
+  "lamp1": {
     "heading": "LAMP 01 — CERTGEN",
     "title": "The Green Wall · Sab Green Tha. Par Kya Sab Theek Tha?",
     "tagline": "324 Tests Passed. I Still Wasn't Convinced.",
@@ -128,18 +153,23 @@
       "high": 2,
       "reveal": "The audit found 19 problems, two of them high. One crafted value caused disproportionate CPU work. A request of roughly 26 MB expanded into roughly 192 MB of response material. The tests hadn't asked those questions, and I directed more remediation.",
       "plain": "324 of 324 tests passed. A separate audit then found 19 problems, two of them high.",
-      "status": "324 / 324 tests pass"
+      "status": "324 / 324 tests pass",
+      "lowAfter": "Kam socha? Aap akele nahi hain. 324 tests ne bhi wahi socha.",
+      "rightAfter": "Bilkul sahi. Tests ko yeh nahi dikha tha."
     },
     "level1": {
       "summary": "A hiring assignment asked me to build a bulk certificate generator. 324 tests passed. A separate audit uncovered 19 problems.",
       "capability": "Extreme Ownership: When initial fixes aren't enough, I continue directing improvements instead of declaring premature success."
     },
     "level3": {
-      "case": "c1",
+      "folder": "c1",
       "label": "CHECK THE RECEIPT"
-    }
+    },
+    "n": 1,
+    "name": "Certgen",
+    "litMsg": "Lamp 1 jal utha. Ab iska kissa."
   },
-  "exhibitB": {
+  "lamp2": {
     "heading": "LAMP 02 — BLITZ",
     "title": "The Number I Withdrew · Number Bada Tha. Par Sach?",
     "tagline": "I Chose to Withdraw My Most Impressive Number.",
@@ -170,11 +200,14 @@
       "capability": "Evidence-Driven Problem-Solving: I question measurement methods and investigate unexpected results before deciding what to change."
     },
     "level3": {
-      "case": "c3",
+      "folder": "c3",
       "label": "CHECK THE RECEIPT"
-    }
+    },
+    "n": 2,
+    "name": "Blitz",
+    "litMsg": "Lamp 2 jal utha. Ek diya jala. Ab agla."
   },
-  "exhibitC": {
+  "lamp3": {
     "heading": "LAMP 03 — VIGIL",
     "title": "The Late Witness · System Bola Healthy. Maine Poochha, Pakka?",
     "tagline": "The System Said Everything Was Fine. I Questioned Whether It Was.",
@@ -207,16 +240,21 @@
       "deadline": 3,
       "max": 6,
       "start": 2,
-      "plain": "A reply that arrives before the 3-second deadline counts as proof the connection is alive. In the original logic, a reply that arrived after the deadline could still count as proof of health. In the corrected logic it is not counted as proof of current health."
+      "plain": "A reply that arrives before the 3-second deadline counts as proof the connection is alive. In the original logic, a reply that arrived after the deadline could still count as proof of health. In the corrected logic it is not counted as proof of current health.",
+      "before": "Dono logic mein yahi hota hai.",
+      "oldLate": "Yahi dikkat thi."
     },
     "level1": {
       "summary": "Imagine a trading system receiving live market prices. Suddenly, a connection stops responding—but the system still believes everything is fine. That's the problem I wanted Vigil to address.",
       "capability": "Critical Thinking: I question whether passing tests actually prove what matters."
     },
     "level3": {
-      "case": "c2",
+      "folder": "c2",
       "label": "SEE THE RECEIPT"
-    }
+    },
+    "n": 3,
+    "name": "Vigil",
+    "litMsg": "Lamp 3 jal utha. Lau aage badh rahi hai."
   },
   "transition": {
     "heading": "Three Lamps. One Pattern.",
@@ -234,13 +272,17 @@
     ]
   },
   "voice": {
-    "heading": "THE FIRST CLUE WAS MY VOICE",
+    "step": "03 · Why Wispr Flow?",
+    "sub": "My voice, Flow's text · Soch poori hone do. My genuine voice experience and what it revealed.",
+    "kicker": "THE FIRST CLUE WAS MY VOICE",
+    "heading": "Soch poori hone do",
+    "tagline": "Let people finish thinking.",
     "body": [
       "Here's a real thought I spoke on **2 November 2026**: “Shouldn't the technology adapt to how we naturally think and communicate?”",
-      "Compare my hand-transcribed voice memo with Flow's actual text. It preserved the thought while cleaning the expression.",
-      "That matters more to me than “type faster”: **let people finish thinking.** A voice-to-builder exhibit will appear only with genuine build evidence."
+      "Dono ko saath rakh ke padhiye: meri hand-transcribed voice memo, aur Flow ka actual text. Thought wahi raha; bas expression saaf ho gaya.",
+      "That matters more to me than “type faster”: **let people finish thinking.**"
     ],
-    "compareAfter": 2,
+    "compareAfter": 3,
     "compareLabel": "COMPARE THE TWO REAL TAKES",
     "takes": [
       {
@@ -264,40 +306,112 @@
       "date": "2 Nov 2026",
       "status": "Output matches Flow history word for word",
       "note": "“As I said it” is my own hand transcription of what I said, typed from my voice memo."
-    },
-    "step": "03 · Why Wispr Flow?",
-    "sub": "My voice, Flow's text · Soch poori hone do. My genuine voice experience and what it revealed."
+    }
   },
   "growth": {
     "step": "04 · My India growth hypothesis",
+    "sub": "The Handover Test — proposed, not run",
+    "kicker": "LAMP 04 · PROPOSED, NOT RUN",
     "heading": "The Handover Test — proposed, not run",
+    "title": "Yeh diya abhi bujha hai",
+    "ideaLabel": "The idea",
     "body": [
-      "For India growth, I'd test whether a **Hinglish-first demo for students and early-career users** beats a speed-focused pitch on **first usable dictations** and **a second dictation within a day**. **Proposed, not run.**"
+      "For India growth, I'd test whether a **Hinglish-first demo for students and early-career users** beats a speed-focused pitch on **first usable dictations** and **a second dictation within a day**. **Proposed, not run.**",
+      "Shuruaat ek chhote group se: jo log sach mein Hindi-English mein messages likhte hain. I would not assume every Indian student uses Hinglish."
     ],
+    "variants": [
+      "Variant A, speed: “Say the message. Skip typing it.”",
+      "Variant B, expression: “Don't stop the thought halfway through. Say it naturally.”"
+    ],
+    "warnLabel": "Fair warning",
+    "warn": "This test has not been run, and no result is claimed. Koi sample, koi lift, koi number nahi.",
     "cta": {
       "label": "SEE THE GROWTH TEST",
-      "case": "c8"
+      "folder": "c8"
     }
   },
   "verdict": {
-    "heading": "YOUR VERDICT",
-    "body": [
-      "AI helped implement and investigate. I mapped workflows, shaped architecture, made or approved decisions, identified bottlenecks, directed attempts to break the prototypes, and pursued fixes. I didn't personally write every line or discover every bug.",
-      "I haven't owned a growth channel or shipped these prototypes to customers. I want to earn that responsibility.",
-      "**I can't promise I'll always be right. I can show you what I do when I'm wrong.**",
-      "Choose one claim. Follow the evidence. Then ask me about the decision behind it."
-    ],
-    "ctaInterview": "INVITE ME TO AN INTERVIEW",
-    "ctaResume": "VIEW MY RÉSUMÉ",
-    "ctaEvidence": "EVIDENCE DRAWER",
-    "closing": "Case file open for questions. The best interface gets out of the way. The best evidence doesn't.",
     "step": "05 · Continue the conversation",
     "sub": "Interview, résumé, GitHub, LinkedIn",
+    "kicker": "YOUR VERDICT",
+    "heading": "Seedhi baat",
+    "body": [
+      "AI helped implement and investigate. I mapped workflows, shaped architecture, made or approved decisions, identified bottlenecks, directed attempts to break the prototypes, and pursued fixes. I didn't personally write every line or discover every bug.",
+      "I haven't owned a growth channel or shipped these prototypes to customers. Yeh zimmedari main kamaana chahta hoon.",
+      "**I can't promise I'll always be right. I can show you what I do when I'm wrong.**",
+      "Koi ek claim chuniye. Uska evidence kholiye. Phir faisle ke baare mein mujhse poochhiye."
+    ],
+    "closeHeading": "Ab mujhse ek sawaal poochhiye.",
+    "closeBody": [
+      "Teen projects mein se koi ek chuniye. Kya hua, maine kya kiya, aur kya abhi adhura hai: teeno batata hoon."
+    ],
+    "ctaInterview": "INVITE ME TO AN INTERVIEW",
+    "interviewNote": "Ek email. Ek lamp. Baaki baat wahin.",
+    "ctaResume": "VIEW MY RÉSUMÉ",
+    "ctaEvidence": "EVIDENCE DRAWER",
     "ctaGithub": "VIEW MY GITHUB",
-    "ctaLinkedin": "FIND ME ON LINKEDIN"
+    "ctaLinkedin": "FIND ME ON LINKEDIN",
+    "after": [
+      "Mere teen diye bhi ek-ek karke jale. Jahan jawab adhura tha, wahan maine adhura hi likha.",
+      "Sawaal poochhne ke liye yeh page khula hai. The best interface gets out of the way. The best evidence doesn't."
+    ],
+    "sign": "Shubh Deepavali.",
+    "signLater": "Shukriya.",
+    "name": "— Shriniwas"
+  },
+  "deeper": {
+    "step": "06 · Go deeper",
+    "sub": "Evidence receipts, longer stories, personal details, visitor lamp, the essay link · Self-paced",
+    "heading": "Go deeper",
+    "stories": "Longer stories",
+    "personal": "Personal details",
+    "essay": "Read my long-form essay",
+    "evidence": "Evidence receipts"
+  },
+  "wish": {
+    "kicker": "YOUR TURN",
+    "heading": "Ab aapki baari",
+    "visitor": "Visitor lamp",
+    "intro": [
+      "Is baar soan papdi nahi, ek wish.",
+      "Mere teen diye ab roshan hain. Ab ek aur: aapka apna.",
+      "Ek real insaan sochiye. Do-teen line, jo sirf aap unse keh sakte hain. Generic forward nahi.",
+      "Bolkar likhiye, jaise unse baat kar rahe hon. Flow ya koi voice typing ho toh bol dijiye; nahi ho toh type bhi chalega.",
+      "Deepavali ho ya na ho: koi achhi khabar, koi purani yaad, ya bas “yaad aaye”. Sab chalega."
+    ],
+    "english": "Write one short wish for one real person, in any language you like.",
+    "ideasLabel": "Kuch idea chahiye? Chuniye (optional):",
+    "ideas": [
+      "Kisi ko, jinse aap is baar mil nahi paayenge.",
+      "Kisi ko, jinhone aapko kabhi kuch sikhaya.",
+      "Kisi ko, jise aapne kabhi theek se thank you nahi kaha.",
+      "Kisi ko, jinse baat kiye bahut din ho gaye."
+    ],
+    "forLabel": "Kiske liye? (pehla naam, optional)",
+    "wishLabel": "Aapki wish",
+    "wishPlaceholder": "Jaise unse baat kar rahe hon, waise likhiye…",
+    "fromLabel": "Aapka pehla naam (optional)",
+    "make": "Card banaiye",
+    "empty": "Ek line toh likhiye, phir card ban jaayega.",
+    "privacy": "Ek baat saaf: yeh page aapki wish upload ya save nahi karta; woh sirf aapke tab mein banti hai. Jab aap card bhejte hain (WhatsApp ya copy), tab wish aur naam wahin tak jaate hain jahan aap bhejte hain. Bolkar likhte hain toh aapka voice tool apne niyam se chalega.",
+    "privacyEn": "In short: this page doesn't upload or save your wish. If you send the card, it goes only where you send it.",
+    "cardTitle": "EK DIYA SE DOOSRA",
+    "cardFor": "{name} ke liye:",
+    "cardTail": "Ek diya doosre diye se. Yahan se jalaiye: {link}",
+    "cardEn": "One lamp lights another.",
+    "ready": "Card taiyar hai. Jisko bhejna ho, bhej dijiye.",
+    "litHeading": "Aapka diya jal utha.",
+    "whatsapp": "WhatsApp par bhejiye",
+    "copyText": "Card ka text copy kijiye",
+    "copyLink": "Link copy kijiye",
+    "change": "Badlein",
+    "copied": "Copy ho gaya.",
+    "copyFail": "Copy nahi ho paya. Link select karke copy kar lijiye.",
+    "under": "Yeh wish sirf is tab mein hai. Bhejna ho toh abhi bhej dijiye.",
+    "again": "Phir se shuru kijiye"
   },
   "sixty": {
-    "label": "THE 60-SECOND FILE",
+    "label": "THE 60-SECOND FILE · Jaldi mein hain? Yeh padhiye.",
     "headline": "324 tests passed. A separate audit found 19 problems. Would you have shipped it?",
     "body": [
       "I'm Shriniwas, an engineering student applying to Wispr Flow's India growth internship. I mapped workflows and architectures, made or approved key design decisions, and used AI agents for implementation and investigation.",
@@ -308,12 +422,12 @@
     "line": "I can't promise I'll always be right. I can show you what I do when I'm wrong.",
     "ctaReceipt": {
       "label": "OPEN ONE RECEIPT",
-      "case": "c1"
+      "folder": "c1"
     },
     "ctaInterview": "INVITE ME TO AN INTERVIEW"
   },
   "evidence": {
-    "cases": [
+    "folders": [
       {
         "id": "c1",
         "name": "CERTGEN — The green wall",
@@ -353,7 +467,8 @@
         "more": [
           "“The Feature I Killed”: a QR enhancement was rejected because it regressed required PDF behavior. This is a scope and quality judgment, not a statement about the feature's inherent worth.",
           "Commit trailers credit autonomous AI work. I did not personally write every endpoint."
-        ]
+        ],
+        "blurb": "324 tests, phir 19 findings, aur mera hissa kitna tha."
       },
       {
         "id": "c3",
@@ -396,7 +511,8 @@
           "An AF_XDP latency spike was traced to competing processes pinned to the same cores and touchpad interrupts; that subsystem has since been removed from uncommitted work.",
           "A chart displayed passing tests despite missing executables and an unverified sanitizer claim.",
           "An Avellaneda–Stoikov strategy lost to a naive benchmark on five tickers; the reason for reverting it is not documented."
-        ]
+        ],
+        "blurb": "1,205 se 1,850 tak ka poora hisaab, aur jo abhi remeasure nahi hua."
       },
       {
         "id": "c2",
@@ -435,7 +551,8 @@
           "A benchmark comparing reactor architectures inherited a one-CPU affinity mask, invalidating the original naive-baseline comparison. Committed documents still disagree on absolute CPU numbers.",
           "An 18-gap specification exercise led to a first-class feed simulator and protocol decisions.",
           "One deeper fuzzing harness hung in the sandbox and remains incompletely validated. None of this is production or CI evidence."
-        ]
+        ],
+        "blurb": "Ek late reply, ek sawaal, aur do tests jo correction hatane par fail hue."
       },
       {
         "id": "c6",
@@ -451,13 +568,14 @@
         "labels": {
           "finding": "The AI agents' role",
           "mine": "My role, as I describe it"
-        }
+        },
+        "blurb": "Kisne kya kiya, seedhe shabdon mein."
       },
       {
         "id": "c7",
         "name": "THE PERSON AND THE VOICE — Sources",
-        "purpose": "Where to read more, and what is and is not claimed about the voice exhibit.",
-        "results": "The two takes on this page are from 2 November 2026, at 7:27 pm and 7:30 pm. The “As I said it” text is my own hand transcription of a separate voice memo; it is not an automatically produced transcript. No audio is published on this page. A recorded build in which Flow dictation drives a builder, followed by a spoken correction, has not been supplied, so that exhibit is pending. The original engineering repositories were not built with Flow.",
+        "purpose": "Where to read more, and what is and is not claimed about the voice receipt.",
+        "results": "The two takes on this page are from 2 November 2026, at 7:27 pm and 7:30 pm. The “As I said it” text is my own hand transcription of a separate voice memo; it is not an automatically produced transcript. No audio is published on this page. A recorded build in which Flow dictation drives a builder, followed by a spoken correction, has not been supplied, so that build receipt is pending. The original engineering repositories were not built with Flow.",
         "links": [
           {
             "label": "Read my long-form essay",
@@ -476,7 +594,8 @@
         ],
         "labels": {
           "results": "Provenance"
-        }
+        },
+        "blurb": "Voice takes kahan se aaye, aur kya abhi baaki hai."
       },
       {
         "id": "c8",
@@ -499,20 +618,18 @@
           "mine": "Design",
           "results": "Actions, failure condition and next step",
           "more": "A separate self-only experiment"
-        }
+        },
+        "blurb": "Poora protocol. Proposed, not run."
       }
-    ],
-    "step": "06 · Go deeper",
-    "sub": "Evidence receipts, longer stories, personal details, the essay link · Self-paced",
-    "deeper": {
-      "stories": "Longer stories",
-      "storyLabels": {
-        "exhibitA": "Certgen",
-        "exhibitB": "Blitz",
-        "exhibitC": "Vigil"
-      },
-      "personal": "Personal details",
-      "essay": "Read my long-form essay"
-    }
-  }
+    ]
+  },
+  "footer": [
+    "Wispr Flow ke India growth internship challenge ke liye banaya hai. Prototypes, not products. Har number ka source aur status Evidence drawer mein hai.",
+    "AI agents wrote a substantial share of the code in these projects. I directed, approved and questioned. Kisne kya kiya, woh drawer mein hai, jitna main saabit kar sakta hoon.",
+    "Yeh page aapki wish upload ya save nahi karta.",
+    "Is page mein koi analytics, cookies ya third-party script nahi hai.",
+    "Only the two takes above were spoken with Wispr Flow.",
+    "This is an independent application page. Wispr Flow and Emergent have not reviewed or endorsed it.",
+    "© Shriniwas Kholkute"
+  ]
 }

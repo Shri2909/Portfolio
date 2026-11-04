@@ -1,4 +1,4 @@
-/* Beats 2 to 5 and 7: the three lamp stories (Certgen with the audit prediction, Blitz, Vigil with the late-reply model), the transition, the person, the verdict. */
+/* The three lamp stories, each in three levels, plus the sections around them. Two interactions live here: guess the audit result (Lamp 1) and the late reply (Lamp 3). */
 
 /* ---------- Interaction 1: guess the audit result ---------- */
 function guessWidget(g, ui) {
@@ -12,13 +12,14 @@ function guessWidget(g, ui) {
     has(g.status) ? h('p', { class: 'w-state', text: g.status }) : null,
     wall, finds,
     has(ui.guessAsk) ? h('p', { class: 'w-ask', id: 'guess-q', text: ui.guessAsk }) : null,
+    has(ui.guessHint) ? h('p', { class: 'w-hint', text: ui.guessHint }) : null,
     h('div', { class: 'opts', role: 'group', 'aria-labelledby': 'guess-q' }, btns),
     reveal,
     has(g.plain) ? h('p', { class: 'plainly' }, h('strong', { text: (ui.plainly || '') + ': ' }), g.plain) : null);
   function pick(n) {
     btns.forEach((b) => b.setAttribute('aria-pressed', String(b.textContent === String(n))));
     root.classList.add('revealed');
-    reveal.textContent = 'You said ' + n + '. ' + g.reveal;
+    reveal.textContent = 'You said ' + n + '. ' + g.reveal + ' ' + (n < g.answer ? (g.lowAfter || '') : (g.rightAfter || ''));
   }
   return root;
 }
@@ -54,8 +55,8 @@ function lateWidget(m, ui) {
     range.setAttribute('aria-valuetext', t.toFixed(1) + ' seconds');
     arrival.textContent = 'Reply arrives at ' + t.toFixed(1) + ' s, ' + (late ? 'after' : 'within') + ' the ' + D + '-second deadline.';
     let state, b, txt;
-    if (!late) { state = 'ok'; b = 'COUNTED'; txt = 'Counted as proof the connection is alive.'; }
-    else if (mode === 'old') { state = 'bad'; b = 'COUNTED'; txt = 'Counted as proof the connection is healthy, even though it arrived late.'; }
+    if (!late) { state = 'ok'; b = 'COUNTED'; txt = 'Counted as proof the connection is alive.' + (m.before ? ' ' + m.before : ''); }
+    else if (mode === 'old') { state = 'bad'; b = 'COUNTED'; txt = 'Counted as proof the connection is healthy, even though it arrived late.' + (m.oldLate ? ' ' + m.oldLate : ''); }
     else { state = 'good'; b = 'NOT COUNTED'; txt = 'Not counted as proof of current health, because it arrived after the deadline.'; }
     verdict.setAttribute('data-state', state);
     badge.textContent = b; vtext.textContent = txt;
@@ -66,6 +67,7 @@ function lateWidget(m, ui) {
     h('div', { class: 'late-ctl' },
       h('span', { class: 'lbl', id: 'late-logic', text: ui.logicLabel || '' }),
       h('div', { class: 'seg', role: 'group', 'aria-labelledby': 'late-logic' }, bOld, bNew)),
+    has(ui.lateHint) ? h('p', { class: 'w-hint', text: ui.lateHint }) : null,
     h('label', { class: 'lbl', for: 'late-t', text: ui.arrivalLabel || '' }),
     range, svg, arrival, verdict,
     has(m.plain) ? h('p', { class: 'plainly' }, h('strong', { text: (ui.plainly || '') + ': ' }), m.plain) : null);
@@ -74,77 +76,97 @@ function lateWidget(m, ui) {
 }
 
 /* ---------- sections ---------- */
-/* A lamp story in three levels. Level 1 is always visible (headline, short summary, the one capability). Level 2 is the complete story (opens on tap).
+/* A lamp story in three levels. Level 1 is always visible (title, tagline, short summary, the one capability). Level 2 is the complete story (opens on tap).
    Level 3 is for curious reviewers: repository link, files and the full receipt. */
 function levelSummary(label, hint) {
-  return h('summary', null, h('span', { class: 'lv-t' }, h('span', { class: 'lv-l', text: label }), has(hint) ? h('span', { class: 'lv-h', text: hint }) : null), CF.icon('chevron'));
+  return h('summary', null, h('span', { class: 'lv-t' }, h('span', { class: 'lv-l', text: label }), has(hint) ? h('span', { class: 'lv-h', text: hint }) : null), EK.icon('chevron'));
 }
-function storySheet(id, tab, x, widget, d) {
+function storySheet(key, x, widget, d) {
   if (!x) return null;
   const ui = d.ui || {}, l1 = x.level1 || {};
-  const ev = ((d.evidence && d.evidence.cases) || []).find((c) => c.id === (x.level3 && x.level3.case));
+  const ev = ((d.evidence && d.evidence.folders) || []).find((c) => c.id === (x.level3 && x.level3.folder));
   const insp = ev && ev.inspect;
   const files = insp && (insp.files || []).length ? h('ul', { class: 'files' }, insp.files.map((f) => h('li', null, h('code', { text: f })))) : null;
-  return CF.sheet(id, tab, id + '-h',
-    CF.heading(id, x.heading),
+  const flame = h('span', { class: 'story-flame', 'aria-hidden': 'true' }, EK.diya(x.n));
+  const sec = EK.sheet(key, key + '-h',
+    h('div', { class: 'story-head' }, flame, EK.kicker(x.heading)),
+    EK.heading(key, x.title),
+    has(x.tagline) ? h('p', { class: 'tagline', text: x.tagline }) : null,
     h('div', { class: 'level l1' },
-      has(ui.level1) ? h('p', { class: 'label-brass', text: ui.level1 }) : null,
-      has(x.title) ? h('p', { class: 'story-title', text: x.title }) : null,
-      has(x.tagline) ? h('p', { class: 'story-tag', text: x.tagline }) : null,
+      has(ui.level1) ? h('p', { class: 'label-gold', text: ui.level1 }) : null,
       has(l1.summary) ? h('p', { class: 'l1-sum', text: l1.summary }) : null,
-      has(l1.capability) ? h('div', { class: 'l1-cap' }, has(ui.capLabel) ? h('p', { class: 'label-brass', text: ui.capLabel }) : null, h('p', { class: 'l1-capt' }, CF.rich(l1.capability.replace(/^([^:]+:)/, '**$1**')))) : null),
-    h('details', { class: 'level l2', id: id + '-l2' },
+      has(l1.capability) ? h('div', { class: 'l1-cap' }, has(ui.capLabel) ? h('p', { class: 'label-gold', text: ui.capLabel }) : null, h('p', { class: 'l1-capt' }, EK.rich(l1.capability.replace(/^([^:]+:)/, '**$1**')))) : null),
+    h('details', { class: 'level l2', id: key + '-l2' },
       levelSummary(ui.level2, ui.level2Hint),
       h('div', { class: 'lv-body' },
-        CF.prose(x.body), widget,
-        (x.reveals || []).length ? h('div', { class: 'reveals' }, has(x.revealsLabel) ? h('h3', { text: x.revealsLabel }) : null, h('ul', null, x.reveals.map((t) => h('li', null, CF.rich(t))))) : null,
-        CF.prose([x.growth, x.note].filter(has), 'story-end'))),
-    ev ? h('details', { class: 'level l3', id: id + '-l3' },
+        EK.prose(x.body), widget,
+        (x.reveals || []).length ? h('div', { class: 'reveals' }, has(x.revealsLabel) ? h('h3', { text: x.revealsLabel }) : null, h('ul', null, x.reveals.map((t) => h('li', null, EK.rich(t))))) : null,
+        EK.prose([x.growth, x.note].filter(has), 'story-end'))),
+    ev ? h('details', { class: 'level l3', id: key + '-l3' },
       levelSummary(ui.level3, ui.level3Sub),
       h('div', { class: 'lv-body' },
-        insp ? h('div', { class: 'field' }, h('h3', { text: ui.repoLabel }), CF.ext(insp.label, insp.url, 'repo-link'), files, has(insp.note) ? h('p', { class: 'note', text: insp.note }) : null) : null,
-        h('div', { class: 'cta-row' }, h('button', { class: 'btn', type: 'button', text: (x.level3 && x.level3.label) || ui.level3, onclick: () => CF.openEvidence(ev.id) })))) : null);
+        insp ? h('div', { class: 'field' }, h('h3', { text: ui.repoLabel }), EK.ext(insp.label, insp.url, 'repo-link'), files, has(insp.note) ? h('p', { class: 'note', text: insp.note }) : null) : null,
+        h('div', { class: 'cta-row' }, h('button', { class: 'btn', type: 'button', text: (x.level3 && x.level3.label) || ui.level3, onclick: () => EK.openEvidence(ev.id) })))) : null);
+  sec.classList.add('story');
+  EK.lamps.onChange(() => sec.classList.toggle('lit', EK.lamps.isLit(x.n)));
+  return sec;
 }
-CF.defineSection('lamps', (d) => {
+
+EK.defineSection('lamps', (d) => {
   const x = d.lamps;
   if (!x) return null;
-  return h('section', { class: 'sheet intro-sheet', id: 'lamps', 'aria-labelledby': 'lamps-h' },
-    h('h2', { class: 'sheet-title', id: 'lamps-h', text: x.step }), has(x.sub) ? h('p', { class: 'step-sub', text: x.sub }) : null);
+  return h('section', { class: 'panel intro-panel', id: 'lamps', 'aria-labelledby': 'lamps-h' },
+    h('h2', { class: 'panel-title', id: 'lamps-h', text: x.step }), has(x.sub) ? h('p', { class: 'step-sub', text: x.sub }) : null);
 });
-CF.defineSection('exhibitA', (d) => d.exhibitA && storySheet('exhibitA', '2.1', d.exhibitA, guessWidget(d.exhibitA.guess, d.ui || {}), d));
-CF.defineSection('exhibitB', (d) => d.exhibitB && storySheet('exhibitB', '2.2', d.exhibitB, null, d));
-CF.defineSection('exhibitC', (d) => d.exhibitC && storySheet('exhibitC', '2.3', d.exhibitC, lateWidget(d.exhibitC.late, d.ui || {}), d));
+EK.defineSection('lamp1', (d) => d.lamp1 && storySheet('lamp1', d.lamp1, guessWidget(d.lamp1.guess, d.ui || {}), d));
+EK.defineSection('lamp2', (d) => d.lamp2 && storySheet('lamp2', d.lamp2, null, d));
+EK.defineSection('lamp3', (d) => d.lamp3 && storySheet('lamp3', d.lamp3, lateWidget(d.lamp3.late, d.ui || {}), d));
 
-CF.defineSection('transition', (d) => {
+EK.defineSection('transition', (d) => {
   const x = d.transition;
   if (!x) return null;
-  return CF.sheet('transition', '', 'transition-h', CF.heading('transition', x.heading), CF.prose(x.body));
+  return EK.sheet('transition', 'transition-h', EK.heading('transition', x.heading), EK.prose(x.body));
 });
 
-CF.defineSection('person', (d) => {
+EK.defineSection('person', (d) => {
   const x = d.person;
   if (!x) return null;
-  return CF.sheet('person', '01', 'person-h', CF.step(x), CF.heading('person', x.heading), CF.prose(x.body));
+  return EK.sheet('person', 'person-h', EK.step(x), EK.kicker(x.kicker), EK.heading('person', x.heading), EK.prose(x.body));
 });
 
-CF.defineSection('growth', (d) => {
-  const x = d.growth;
+/* Lamp 4: proposed, not run. A dashed lamp that never lights. */
+EK.defineSection('growth', (d) => {
+  const x = d.growth, ui = d.ui || {};
   if (!x) return null;
-  return CF.sheet('growth', '04', 'growth-h', CF.step(x), CF.heading('growth', x.heading), CF.prose(x.body),
-    x.cta ? h('div', { class: 'cta-row' }, CF.receiptBtn(x.cta)) : null);
+  const note = h('p', { class: 'try', role: 'status' });
+  return EK.sheet('growth', 'growth-h', EK.step(x), EK.kicker(x.kicker),
+    h('div', { class: 'story-head' }, h('span', { class: 'story-flame', 'aria-hidden': 'true' }, EK.diya(4, { dashed: true }))),
+    EK.heading('growth', x.title),
+    has(x.ideaLabel) ? h('h3', { class: 'mini', text: x.ideaLabel }) : null,
+    EK.prose(x.body),
+    (x.variants || []).length ? h('ul', { class: 'variants' }, x.variants.map((t) => h('li', null, t))) : null,
+    has(x.warn) ? h('div', { class: 'warn' }, h('h3', { class: 'mini', text: x.warnLabel }), h('p', { text: x.warn })) : null,
+    h('div', { class: 'cta-row' }, EK.receiptBtn(x.cta),
+      h('button', { class: 'btn', type: 'button', text: ui.lamp4Chip, onclick: () => { note.textContent = ui.lamp4Try || ''; } })),
+    note);
 });
 
-CF.defineSection('verdict', (d) => {
+EK.defineSection('verdict', (d) => {
   const x = d.verdict;
   if (!x) return null;
-  const site = d.site || {};
-  const c = site.contact || {};
-  return CF.sheet('verdict', '05', 'verdict-h', CF.step(x), CF.heading('verdict', x.heading), CF.prose(x.body),
+  const site = d.site || {}, c = site.contact || {};
+  const interview = EK.interview(x.ctaInterview);
+  const later = new Date() >= new Date('2026-11-10T00:00:00+05:30');
+  return EK.sheet('verdict', 'verdict-h', EK.step(x), EK.kicker(x.kicker), EK.heading('verdict', x.heading), EK.prose(x.body),
+    has(x.closeHeading) ? h('h3', { class: 'mini big', text: x.closeHeading }) : null,
+    EK.prose(x.closeBody),
     h('div', { class: 'cta-row' },
-      CF.interview(x.ctaInterview),
-      CF.ext(x.ctaResume, site.resume),
-      CF.ext(x.ctaGithub, c.github),
-      CF.ext(x.ctaLinkedin, c.linkedin),
-      has(x.ctaEvidence) && d.evidence ? h('button', { class: 'btn', type: 'button', text: x.ctaEvidence, onclick: () => CF.openEvidence() }) : null),
-    has(x.closing) ? h('p', { class: 'closing', text: x.closing }) : null);
+      interview,
+      EK.ext(x.ctaResume, site.resume),
+      EK.ext(x.ctaGithub, c.github),
+      EK.ext(x.ctaLinkedin, c.linkedin),
+      has(x.ctaEvidence) && d.evidence ? h('button', { class: 'btn', type: 'button', text: x.ctaEvidence, onclick: () => EK.openEvidence() }) : null),
+    interview && has(x.interviewNote) ? h('p', { class: 'note-line', text: x.interviewNote }) : null,
+    EK.prose(x.after),
+    h('p', { class: 'signoff' }, (later && has(x.signLater) ? x.signLater : x.sign), h('br'), x.name));
 });

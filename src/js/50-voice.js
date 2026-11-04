@@ -1,11 +1,11 @@
-/* Beat 6: the voice clue. Interaction 3 compares my hand transcription with Flow's real text, word by word (the engine computes every mark). */
+/* Why Wispr Flow: the voice. Interaction 3 compares my hand transcription with Flow's real text, word by word (the engine computes every mark). */
 function compareWidget(x, ui) {
   const takes = (x.takes || []).filter((t) => has(t.raw) && has(t.output));
   if (!takes.length) return null;
   let ti = 0, stream = [], N = 0, k = 0;
 
   const text = h('div', { class: 'cmp-text', 'aria-hidden': 'true' });
-  const range = h('input', { type: 'range', class: 'string', id: 'cmp-r', min: 0, max: 1, step: 1, value: 0, 'aria-label': ui.hint || '', oninput: () => { k = parseInt(range.value, 10); render(); } });
+  const range = h('input', { type: 'range', class: 'string', id: 'cmp-r', min: 0, max: 1, step: 1, value: 0, 'aria-label': (ui.hint || '') + ' ' + (ui.hintKeys || ''), oninput: () => { k = parseInt(range.value, 10); render(); } });
   const plainBox = h('div', { class: 'plain-box' });
   const takeBtns = takes.map((t, i) => h('button', { type: 'button', class: 'btn', 'aria-pressed': i === 0 ? 'true' : 'false', text: t.label || ui['take' + (i + 1)] || '', onclick: () => setTake(i) }));
 
@@ -40,7 +40,7 @@ function compareWidget(x, ui) {
   function setTake(i) {
     ti = i; k = 0;
     const t = takes[i];
-    stream = CF.engine.buildStream(t.raw, t.output);
+    stream = EK.engine.buildStream(t.raw, t.output);
     N = stream.length;
     range.max = N;
     takeBtns.forEach((b, j) => b.setAttribute('aria-pressed', String(j === i)));
@@ -57,7 +57,7 @@ function compareWidget(x, ui) {
   const c = x.custody || {};
   const rows = [['Source', c.source], ['Tool', c.tool], ['Date', c.date], ['Recorded', null], ['Status', c.status], ['Note', c.note]];
   const custody = h('details', { class: 'chipd' },
-    h('summary', { class: 'chip' }, CF.icon('magnifier'), h('span', { text: ui.chip || ui.custody || '' })),
+    h('summary', { class: 'chip' }, h('span', { text: ui.chip || ui.custody || '' })),
     h('div', { class: 'custody' }, h('p', { class: 'cs-h', text: ui.custody }),
       h('dl', null, rows.map(([k2, v]) => {
         const val = k2 === 'Recorded' ? recorded() : v;
@@ -68,23 +68,24 @@ function compareWidget(x, ui) {
     takes.length > 1 ? h('div', { class: 'seg', role: 'group', 'aria-label': ui.takes || '' }, takeBtns) : null,
     h('div', { class: 'cmp-ends', 'aria-hidden': 'true' }, h('span', { text: ui.raw }), h('span', { text: ui.flow })),
     text, range,
-    has(ui.hint) ? h('p', { class: 'hint', text: ui.hint }) : null,
+    has(ui.hint) ? h('p', { class: 'hint', text: ui.hint + ' ' + (ui.hintKeys || '') }) : null,
     has(ui.legend) ? h('p', { class: 'legend', text: ui.legend }) : null,
     custody,
     h('details', { class: 'readplain' }, h('summary', { class: 'linkbtn', text: ui.readBoth || '' }), plainBox));
   setTake(0);
-  CF.onReady.push(reserve);
+  EK.onReady.push(reserve);
   let rz = 0;
   window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(reserve, 120); });
   return root;
 }
 
-CF.defineSection('voice', (d) => {
+EK.defineSection('voice', (d) => {
   const x = d.voice;
   if (!x) return null;
   const body = (x.body || []).filter(has);
   const at = Math.min(body.length, Math.max(0, x.compareAfter == null ? body.length : x.compareAfter));
   const widget = compareWidget(x, d.ui || {});
-  return CF.sheet('voice', '03', 'voice-h', CF.step(x), CF.heading('voice', x.heading),
-    CF.prose(body.slice(0, at)), widget, CF.prose(body.slice(at)));
+  return EK.sheet('voice', 'voice-h', EK.step(x), EK.kicker(x.kicker), EK.heading('voice', x.heading),
+    has(x.tagline) ? h('p', { class: 'tagline', text: x.tagline }) : null,
+    EK.prose(body.slice(0, at)), widget, EK.prose(body.slice(at)));
 });

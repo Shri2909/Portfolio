@@ -49,7 +49,7 @@ Growth wins; channel ownership; measured activation lift; Flow use before 1 Nov 
 3. Take 3 cleaned-text source (decides if Take 3 can be shown).
 5. Exam sequence: two JEE attempts without coaching, then Physics Wallah batch (Rs 3,999), then VIT Pune through his JEE score.
 6. Debate second place and Berggruen essay wording; papers; scholarships; certificates (PDF or "self-reported").
-8. Which tool built the page (for Exhibit Z `builtOn`).
+8. Which tool built the page (for the footer line about how the page was made).
 
 ## Addendum (from the Profile archive, repo-reported, added for ledger cases)
 

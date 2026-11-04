@@ -2267,7 +2267,7 @@ href: https://drive.google.com/file/d/19DXFxUoCiynAvErP6KQVq-ArzV69Mgf2/view?usp
 (If copy.json already has the résumé link, use that one.)
 BUTTON 2: EVIDENCE DRAWER   (opens the drawer; data-evidence with no case id opens the first folder closed list)
 
-Do not add the interview button, the closing line "Case file open for questions", or any caption.
+Do not add the interview button or any caption.
 Store: read tone (0 to 6) for the glow only.
 ```
 
@@ -2910,7 +2910,7 @@ Pack order is 1 Foundation, 2 Night world, 3 Lamps and flame, 4 Cards and story 
 - Checkpoint C2: five lamps; hold, tap or Enter lights the first; the lamp count updates; "Sab diye ek saath jalaiye" lights all; lamp 6 is dashed and never lights; reduced motion shows lit lamps with no animation.
 
 **Hour 3:00 to 4:30. Pack 4 Cards and story interactions. THE VOICE ITERATION HAPPENS HERE.**
-- The certgen guess exhibit and the late-reply slider are the natural first thing to speak (it is the one the evidence package suggests). Record this pack with extra care: this is where you capture the one verifiable iteration (Part C.2). Do not stage a flaw. If the first result really has one, say it out loud and correct it. If it really does not, use a real improvement such as a keyboard alternative.
+- The certgen guess widget and the late-reply slider are the natural first thing to speak . Record this pack with extra care: this is where you capture the one verifiable iteration (Part C.2). Do not stage a flaw. If the first result really has one, say it out loud and correct it. If it really does not, use a real improvement such as a keyboard alternative.
 - Checkpoint C3: guess tiles 0, 3, 8, 19 work with keyboard; reveal text and the always-visible plain text both present; slider moves, readouts change at the 3-second deadline for both logics, and says "MODEL OF DOCUMENTED BEHAVIOR".
 - Save the receipts now (Part C.4), before Pack 7 can overwrite the thing you corrected.
 
@@ -3042,7 +3042,7 @@ Also keep the ledger limit: no claim of Flow use before 1 November 2026. Say not
 
 Record continuously during the build sessions (raw screen recordings, in segments). Then pull out the one verifiable iteration. It has five beats, in this order, with no cuts inside it:
 
-1. **A spoken instruction.** Flow indicator visible. You speak a real instruction into Emergent's prompt box. The text appears in the box. Do not edit it before sending. Suggested first instruction (the package's own suggestion): build one simple exhibit for a nontechnical recruiter, starting with 324 passing tests on a certificate generator, ask them to guess what a later audit found, reveal nineteen findings. Put it in your words.
+1. **A spoken instruction.** Flow indicator visible. You speak a real instruction into Emergent's prompt box. The text appears in the box. Do not edit it before sending. Suggested first instruction (the package's own suggestion): build one simple receipt for a nontechnical recruiter, starting with 324 passing tests on a certificate generator, ask them to guess what a later audit found, reveal nineteen findings. Put it in your words.
 2. **The first real result.** Emergent builds it. Capture the screen as it loads, then a still of the result at phone width.
 3. **A flaw you actually notice.** Look at the result for as long as you need. Say aloud what you see. Examples are only examples: a confusing label, a motion that distracts, a button too small, a keyboard gap. Only a flaw that is really there.
 4. **The spoken correction.** Same box, Flow visible. Say what you saw and what you want. Send it unedited.

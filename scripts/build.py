@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
-"""Build Case File No. 001.
+"""Build Ek Diya Se Doosra.
 
 Two builds, one source:
   dist/index.html   production: only content/content.json, no review code or data.
   dist/review.html  review: EMPTY fields filled from content/draft.json, amber outlines, watermark.
 
-Everything (CSS, JS, fonts as base64 woff2, JSON) is inlined into one HTML file. No external requests.
+Everything (CSS, JS, JSON) is inlined into one HTML file. System fonts only. No external requests.
 Usage: python3 scripts/build.py [--out DIR]
 """
-import base64
 import copy
 import html
 import json
@@ -21,16 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
 
-FONTS = [
-    # family, file, weight, style
-    ("Fraunces", "fraunces-wght.woff2", "100 900", "normal"),
-    ("Source Serif 4", "source-serif-4-wght.woff2", "200 900", "normal"),
-    ("Source Serif 4", "source-serif-4-wght-italic.woff2", "200 900", "italic"),
-    ("Courier Prime", "courier-prime-400.woff2", "400", "normal"),
-    ("Courier Prime", "courier-prime-700.woff2", "700", "normal"),
-]
-
-# Build guard: production must never contain these (checked on the whole file, fonts excluded).
+# Build guard: production must never contain these.
 FORBIDDEN = [
     ("lorem", re.compile(r"lorem", re.I)),
     ("TODO", re.compile(r"TODO")),
@@ -120,17 +110,6 @@ def review_content(content, draft):
 
 # ---------------------------------------------------------------- assets
 
-def fonts_css():
-    out = []
-    for family, fname, weight, style in FONTS:
-        b64 = base64.b64encode((SRC / "fonts" / fname).read_bytes()).decode("ascii")
-        out.append(
-            "@font-face{font-family:'%s';font-style:%s;font-weight:%s;font-display:swap;"
-            "src:url(data:font/woff2;base64,%s) format('woff2');}" % (family, style, weight, b64)
-        )
-    return "\n".join(out)
-
-
 def bundle_js():
     parts = []
     for p in sorted((SRC / "js").glob("*.js")):
@@ -147,10 +126,10 @@ def json_for_html(obj):
 
 FAVICON = (
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E"
-    "%3Crect width='64' height='64' rx='14' fill='%2315211B'/%3E"
-    "%3Ccircle cx='28' cy='28' r='14' fill='none' stroke='%23B8872B' stroke-width='6'/%3E"
-    "%3Cpath d='M39 39 L52 52' stroke='%23B8872B' stroke-width='7' stroke-linecap='round'/%3E"
-    "%3Ccircle cx='28' cy='28' r='6' fill='%23D2452E'/%3E%3C/svg%3E"
+    "%3Crect width='64' height='64' rx='14' fill='%230A0B14'/%3E"
+    "%3Cpath d='M12 40 C12 54 22 58 32 58 C42 58 52 54 52 40 Z' fill='%23C2410C'/%3E"
+    "%3Cpath d='M32 10 C38 20 40 28 32 36 C24 28 26 20 32 10 Z' fill='%23FFB347'/%3E"
+    "%3Cpath d='M32 20 C35 25 36 29 32 33 C28 29 29 25 32 20 Z' fill='%23FFD27A'/%3E%3C/svg%3E"
 )
 
 
@@ -159,7 +138,7 @@ SITE_URL = os.environ.get("SITE_URL", "").rstrip("/")
 
 def share_meta(site):
     """Open Graph, Twitter and canonical tags. Absolute URLs only when SITE_URL is known (it is set at publish time)."""
-    title = html.escape(site.get("title", "Case File No. 001"), quote=True)
+    title = html.escape(site.get("ogTitle") or site.get("title", "Ek Diya Se Doosra"), quote=True)
     desc = html.escape(site.get("description", ""), quote=True)
     img = (SITE_URL + "/og.png") if SITE_URL else "og.png"
     out = [
@@ -187,16 +166,13 @@ def write_static(out, site):
     (out / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">%s</urlset>\n' % loc, encoding="utf-8")
     svg = urllib.parse.unquote(FAVICON.split(",", 1)[1])
     (out / "favicon.svg").write_text(svg, encoding="utf-8")
-    fraunces = base64.b64encode((SRC / "fonts" / "fraunces-wght.woff2").read_bytes()).decode("ascii")
-    page404 = (SRC / "404.html").read_text(encoding="utf-8").replace("@@FRAUNCES@@", fraunces).replace("@@TITLE@@", html.escape(site.get("title", ""), quote=True))
+    page404 = (SRC / "404.html").read_text(encoding="utf-8").replace("@@TITLE@@", html.escape(site.get("title", ""), quote=True))
     (out / "404.html").write_text(page404, encoding="utf-8")
 
 
 def render(template, data, mode, filled=None):
     site = data.get("site") or {}
     css = (SRC / "styles.css").read_text(encoding="utf-8")
-    for extra in sorted((SRC / "css").glob("*.css")):
-        css += "\n" + extra.read_text(encoding="utf-8")
     head_extra, body_extra = share_meta(site), ""
     js = bundle_js()
     if mode == "review":
@@ -204,15 +180,14 @@ def render(template, data, mode, filled=None):
         js += "\n(function () {\n" + (SRC / "review" / "review.js").read_text(encoding="utf-8") + "\n})();"
         body_extra = (
             '<div class="review-mark" aria-hidden="true"><span>REVIEW DRAFT - NOT YET SPOKEN BY SHRINIWAS</span></div>\n'
-            '<script type="application/json" id="cf-filled">%s</script>' % json_for_html(filled or [])
+            '<script type="application/json" id="ek-filled">%s</script>' % json_for_html(filled or [])
         )
     page = (
-        template.replace("@@TITLE@@", html.escape(site.get("title", "Case File No. 001"), quote=True))
+        template.replace("@@TITLE@@", html.escape(site.get("title", "Ek Diya Se Doosra"), quote=True))
         .replace("@@DESCRIPTION@@", html.escape(site.get("description", ""), quote=True))
         .replace("@@FAVICON@@", FAVICON)
         .replace("@@HEAD_EXTRA@@", head_extra)
         .replace("@@BODY_EXTRA@@", body_extra)
-        .replace("@@FONTS@@", fonts_css())
         .replace("@@CSS@@", css)
         .replace("@@DATA@@", json_for_html(data))
         .replace("@@JS@@", js.replace("</script", "<\\/script"))
@@ -221,8 +196,8 @@ def render(template, data, mode, filled=None):
 
 
 def guard(page_html):
-    """Fail the production build on forbidden strings. Base64 font payloads are excluded from the scan."""
-    scan = re.sub(r"data:font/woff2;base64,[A-Za-z0-9+/=]+", "data:font", page_html)
+    """Fail the production build on forbidden strings. """
+    scan = page_html
     problems = []
     for name, rx in FORBIDDEN:
         for m in rx.finditer(scan):

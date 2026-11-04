@@ -1,6 +1,6 @@
 /* The opening engine: computed, never hand-marked.
    normalize -> word-level LCS -> ONE merged token stream (MATCHED, RAW-ONLY, ADDED, BREAK). */
-CF.engine = (function () {
+EK.engine = (function () {
   const norm = (w) => w.toLowerCase().replace(/[‘’]/g, "'").replace(/[^\p{L}\p{N}']/gu, '');
 
   function words(text) { return text.split(/\s+/).filter(Boolean); }

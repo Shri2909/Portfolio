@@ -1,10 +1,10 @@
-/* Case File No. 001: shared helpers. All files in src/js are concatenated in order by scripts/build.py. */
+/* Ek Diya Se Doosra: shared helpers. All files in src/js are concatenated in order by scripts/build.py. */
 'use strict';
-const CF = window.CF = window.CF || {};
+const EK = window.EK = window.EK || {};
 const SVGNS = 'http://www.w3.org/2000/svg';
 
-CF.reduced = false;
-try { CF.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { CF.reduced = false; }
+EK.reduced = false;
+try { EK.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { EK.reduced = false; }
 
 /* Tiny element builder. attrs: class, text, path (data-path for the review build), on* handlers, anything else is an attribute. */
 function h(tag, attrs, ...kids) {
@@ -41,18 +41,10 @@ const clamp01 = (x) => x < 0 ? 0 : x > 1 ? 1 : x;
 const easeOut = (x) => 1 - Math.pow(1 - clamp01(x), 3);
 const easeInOut = (x) => { x = clamp01(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
 
-/* localStorage that never throws. Everything must work without it. */
-const store = {
-  get(key, fallback) { try { const v = window.localStorage.getItem('cf1:' + key); return v === null ? fallback : JSON.parse(v); } catch (e) { return fallback; } },
-  set(key, value) { try { window.localStorage.setItem('cf1:' + key, JSON.stringify(value)); return true; } catch (e) { return false; } },
-};
-CF.store = store;
-
 /* Small inline icons (decorative: aria-hidden). */
-CF.icon = function (name) {
+EK.icon = function (name) {
   const a = { viewBox: '0 0 24 24', 'aria-hidden': 'true', focusable: 'false', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
   const paths = {
-    magnifier: [s('circle', { cx: 10, cy: 10, r: 6 }), s('path', { d: 'M15 15 L21 21' })],
     chevron: [s('path', { d: 'M6 9 L12 15 L18 9' })],
     down: [s('path', { d: 'M12 5 L12 19 M6 13 L12 19 L18 13' })],
     menu: [s('path', { d: 'M4 7 H20 M4 12 H20 M4 17 H20' })],
@@ -61,7 +53,7 @@ CF.icon = function (name) {
 };
 
 /* Keep Tab inside a modal dialog (native dialogs already make the rest of the page inert; this stops focus escaping to browser chrome). */
-CF.trapFocus = function (dlg) {
+EK.trapFocus = function (dlg) {
   dlg.addEventListener('keydown', (e) => {
     if (e.key !== 'Tab') return;
     const f = [...dlg.querySelectorAll('button, a[href], input, [tabindex]:not([tabindex="-1"])')].filter((x) => !x.disabled && x.offsetParent !== null);
@@ -72,13 +64,12 @@ CF.trapFocus = function (dlg) {
   });
 };
 
-/* Scroll to a sheet and keep aiming: sheets that open as you pass them (the envelope) change the page height under a smooth scroll,
-   so check again once it settles and correct if the target drifted. */
-CF.goTo = function (el, focus) {
+/* Scroll to a sheet and keep aiming: the page height can change under a smooth scroll (a story opens), so check again once it settles and correct if the target drifted. */
+EK.goTo = function (el, focus) {
   if (!el) return;
   if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
-  const aim = () => el.scrollIntoView({ behavior: CF.reduced ? 'auto' : 'smooth', block: 'start' });
+  const aim = () => el.scrollIntoView({ behavior: EK.reduced ? 'auto' : 'smooth', block: 'start' });
   aim();
-  if (!CF.reduced) [900, 1900].forEach((ms) => setTimeout(() => { const top = el.getBoundingClientRect().top; if (Math.abs(top - parseFloat(getComputedStyle(el).scrollMarginTop || 0)) > 80) aim(); }, ms));
+  if (!EK.reduced) [900, 1900].forEach((ms) => setTimeout(() => { const top = el.getBoundingClientRect().top; if (Math.abs(top - parseFloat(getComputedStyle(el).scrollMarginTop || 0)) > 80) aim(); }, ms));
   if (focus !== false) el.focus({ preventScroll: true });
 };

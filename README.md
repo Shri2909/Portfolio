@@ -1,15 +1,17 @@
-# Case File No. 001
+# Ek Diya Se Doosra
 
-A friendly detective-study portfolio for Shriniwas Kholkute (Wispr Flow India growth internship challenge).
+A night Deepavali portfolio for Shriniwas Kholkute (Wispr Flow India growth internship challenge). One lamp lights another: three lamp stories (Certgen, Blitz, Vigil), each in three levels, then the voice, the proposed growth test, the conversation and a self-paced deeper dive.
 
-Start here:
+- `content/content.json`: all public text (production).
+- `website_copy.md`: the copy the page is built from, including the three lamp stories word for word.
+- `docs/`: truth ledger and truth check (what may be said, what is unconfirmed).
+- `src/`: `template.html`, `styles.css`, `js/` (numbered modules), `review/`.
+- `scripts/`: `build.py` (builds `dist/`), `test.mjs` (Playwright), `assets.mjs` (share image).
+- `dist/`: build output (`index.html` production, `review.html` review). Committed.
 
-1. Open this folder in Claude Code. It reads `CLAUDE.md` automatically.
-2. Paste Stage 0 from `docs/CLAUDE_CODE_PROMPTS.md`, then one stage at a time.
-3. In parallel, record the scripts in `docs/FLOW_SCRIPTS.md` with Wispr Flow (core five first: S02, S03, S04, S06, S14). Save each as a text file in `content/recordings/`.
-4. Confirm the items in `docs/TRUTH_CHECK.md` before speaking them.
-5. When recordings exist, paste Stage 15 (load recordings), then Stage 16 to publish.
+Build and test:
 
-Folders: `docs/` specs, ledger, prompts, scripts to speak. `content/content.json` production content. `content/draft.json` drafted scripts (review build only). `scripts/` build, tests, script renderer. `src/` the site. `dist/` build output.
-
-Regenerate the speaking scripts: `python3 scripts/render_flow_scripts.py`.
+```bash
+python3 scripts/build.py
+node scripts/test.mjs
+```

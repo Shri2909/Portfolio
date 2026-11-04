@@ -1,11 +1,41 @@
-/* The shell: section registry, top bar with its two persistent links and the 60-second file, the red string progress rail.
+/* The shell: section registry, the top bar, the lamp state (which lamps are lit) and the tone of the night.
    A section renders nothing when its content is empty. */
-CF.order = ['hero', 'person', 'lamps', 'exhibitA', 'exhibitB', 'exhibitC', 'transition', 'voice', 'growth', 'verdict', 'evidence'];
-CF.defs = {};
-CF.defineSection = (id, mount) => { CF.defs[id] = mount; };
-CF.onReady = [];
+EK.order = ['opening', 'person', 'lamps', 'lamp1', 'lamp2', 'lamp3', 'transition', 'voice', 'growth', 'verdict', 'deeper', 'evidence', 'wish'];
+EK.defs = {};
+EK.defineSection = (id, mount) => { EK.defs[id] = mount; };
+EK.onReady = [];
 
-CF.shell = (function () {
+/* Lamp state. Lamps light in order from the home flame. Nothing is stored anywhere: reload and the row starts again. */
+EK.lamps = (function () {
+  const lit = [false, false, false];
+  let visitor = false;
+  const subs = [];
+  const count = () => lit.filter(Boolean).length;
+  const api = {
+    lit, count,
+    isLit: (n) => !!lit[n - 1],
+    visitor: () => visitor,
+    onChange: (fn) => { subs.push(fn); },
+    light(n) {
+      if (n < 1 || n > lit.length || lit[n - 1]) return false;
+      lit[n - 1] = true;
+      api.notify(n);
+      return true;
+    },
+    lightAll() { lit.forEach((_, i) => { if (!lit[i]) { lit[i] = true; } }); api.notify(0); },
+    lightVisitor() { if (visitor) return; visitor = true; api.notify(-1); },
+    notify(n) {
+      const c = count();
+      document.documentElement.setAttribute('data-tone', String(c));
+      document.documentElement.classList.toggle('dusk', c === lit.length);
+      document.documentElement.classList.toggle('visitor-lit', visitor);
+      subs.forEach((fn) => { try { fn(n); } catch (e) { /* decorative */ } });
+    },
+  };
+  return api;
+})();
+
+EK.shell = (function () {
   let data;
 
   function buildBar() {
@@ -19,58 +49,43 @@ CF.shell = (function () {
     const right = document.getElementById('topbar-right');
     right.setAttribute('role', 'navigation');
     right.setAttribute('aria-label', 'Page');
-    if (has(ui.navCase)) right.appendChild(h('a', { class: 'nav-link', href: '#case', text: ui.navCase }));
-    if (has(ui.navEvidence) && CF.visibleSections.includes('evidence')) right.appendChild(h('a', { class: 'nav-link', href: '#evidence', text: ui.navEvidence }));
-    if (has(ui.navSixty) && data.sixty) right.appendChild(h('button', { class: 'nav-link sixty', type: 'button', text: ui.navSixty, onclick: (e) => CF.openSixty(e.currentTarget) }));
+    if (has(ui.navLamps)) right.appendChild(h('a', { class: 'nav-link', href: '#lamps', text: ui.navLamps }));
+    if (has(ui.navEvidence) && EK.visibleSections.includes('evidence')) right.appendChild(h('a', { class: 'nav-link', href: '#evidence', text: ui.navEvidence }));
+    if (has(ui.navSixty) && data.sixty) right.appendChild(h('button', { class: 'nav-link sixty', type: 'button', text: ui.navSixty, onclick: (e) => EK.openSixty(e.currentTarget) }));
+    const invite = EK.interview(ui.navInvite, 'nav-link invite');
+    if (invite) right.appendChild(invite);
     const skip = document.querySelector('.skip-link');
     if (skip && has(ui.skip)) skip.textContent = ui.skip;
   }
 
-  /* The red string: a decorative progress line that grows as you read. No pins, no taps. */
-  function buildRail() {
-    const rail = document.getElementById('rail');
-    let ticking = false;
-    const update = () => {
-      ticking = false;
-      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      rail.style.setProperty('--prog', clamp01(window.scrollY / max).toFixed(4));
-    };
-    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-    window.addEventListener('resize', update);
-    update();
+  function buildFooter() {
+    const foot = document.getElementById('foot');
+    const lines = (data.footer || []).filter(has);
+    if (!lines.length) { foot.hidden = true; return; }
+    lines.forEach((t) => foot.appendChild(h('p', null, t)));
   }
 
   function mountAll() {
     const main = document.getElementById('main');
-    CF.visibleSections = [];
-    CF.order.forEach((id) => {
-      const fn = CF.defs[id];
+    EK.visibleSections = [];
+    EK.order.forEach((id) => {
+      const fn = EK.defs[id];
       if (!fn) return;
       const el = fn(data);
       if (!el) return;
       main.appendChild(el);
-      CF.visibleSections.push(id);
+      EK.visibleSections.push(id);
     });
     buildBar();
-    buildRail();
-    const foot = document.getElementById('foot');
-    if (data.ui && has(data.ui.footer)) foot.textContent = data.ui.footer; else foot.hidden = true;
-    CF.onReady.forEach((fn) => { try { fn(); } catch (e) { /* a decorative step must never stop the page */ } });
+    buildFooter();
+    document.documentElement.setAttribute('data-tone', '0');
+    EK.onReady.forEach((fn) => { try { fn(); } catch (e) { /* a decorative step must never stop the page */ } });
     document.documentElement.classList.add('ready');
   }
 
-  /* The fonts are embedded, so they are ready in a few milliseconds. Measuring after they load means the first measurement is right. */
   function boot() {
-    data = CF.data = JSON.parse(document.getElementById('cf-data').textContent);
-    let ready = Promise.resolve();
-    if (document.fonts && document.fonts.load) {
-      const loads = Promise.all([
-        document.fonts.load('15px "Courier Prime"'), document.fonts.load('700 15px "Courier Prime"'), document.fonts.load('800 20px Fraunces'),
-        document.fonts.load('16px "Source Serif 4"'), document.fonts.load('italic 16px "Source Serif 4"'),
-      ]).catch(() => { /* system fonts are fine */ });
-      ready = Promise.race([loads, new Promise((r) => setTimeout(r, 400))]);
-    }
-    ready.then(mountAll);
+    data = EK.data = JSON.parse(document.getElementById('ek-data').textContent);
+    mountAll();
   }
   return { boot };
 })();
