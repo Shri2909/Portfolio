@@ -7,16 +7,20 @@ ms is the EWMA per measured use where an effect calls measure(); otherwise the r
 | 390@4x high | sp-wall | canvas | 6 | 2.2 FLAG | 0 | 1 |  |
 | 390@4x high | ambient-particles | canvas | 2 | 1.2 | 0 | 1 |  |
 | 390@4x high | sp-price | dom | 6 | 1.2 | 1 | 0 |  |
+| 390@4x high | lantern-sky | canvas | 6 | 1.2 | 1 | 0 |  |
 | 390@4x high | canvas-dpr | canvas | 8 | 1 | 1 | 0 |  |
 | 390@4x high | sp-late | dom | 6 | 1 | 1 | 0 |  |
 | 390@4x high | particle-cap | canvas | 9 | 0.8 | 1 | 0 |  |
 | 390@4x high | sp-baithak | dom | 6 | 0.8 | 1 | 0 |  |
+| 390@4x high | card-live | canvas | 6 | 0.8 | 1 | 0 |  |
 | 390@4x high | sp-relay | dom | 6 | 0.6 | 1 | 0 |  |
 | 390@4x high | sp-clock | dom | 6 | 0.4 | 1 | 0 |  |
 | 390@4x high | lightmap-breath | canvas | 7 | 0.3 | 0 | 1 |  |
 | 390@4x high | sp-proof | dom | 6 | 0.3 | 0 | 1 |  |
+| 390@4x high | homely | dom | 4 | 0.3 | 1 | 0 |  |
 | 390@4x high | sp-voice | dom | 6 | 0.3 | 1 | 0 |  |
 | 390@4x high | wake | dom | 8 | 0.2 | 1 | 0 |  |
+| 390@4x high | secrets | dom | 4 | 0.2 | 0 | 1 |  |
 | 390@4x high | pointer-parallax | dom | 3 | 0.2 | 0 | 1 |  |
 | 390@4x high | flames | dom | 2 | 0.1 | 0 | 1 |  |
 | 390@4x high | hold-heat | dom | 2 | 0.1 | 0 | 1 |  |
@@ -27,21 +31,25 @@ ms is the EWMA per measured use where an effect calls measure(); otherwise the r
 | 390@4x high | focusflame | dom | 8 | 0.1 | 1 | 0 |  |
 | 390@4x high | hop | dom | 5 | 0.1 | 0 | 1 |  |
 | 390@4x high | invite | dom | 5 | 0.1 | 0 | 1 |  |
-| 390@4x high | light-surfaces | dom | 6 | 0.015 | 0 | 1 |  |
-| 390@4x high | lightmap-pool | canvas | 4 | 0.002 | 0 | 1 |  |
+| 390@4x high | light-surfaces | dom | 6 | 0.026 | 0 | 1 |  |
+| 390@4x high | lightmap-pool | canvas | 4 | 0.016 | 0 | 1 |  |
 | 390@4x mid | sp-wall | canvas | 6 | 2.2 FLAG | 0 | 1 |  |
 | 390@4x mid | ambient-particles | canvas | 2 | 1.2 | 0 | 1 |  |
 | 390@4x mid | sp-price | dom | 6 | 1.2 | 1 | 0 |  |
+| 390@4x mid | lantern-sky | canvas | 6 | 1.2 | 1 | 0 |  |
 | 390@4x mid | canvas-dpr | canvas | 8 | 1 | 1 | 0 |  |
 | 390@4x mid | sp-late | dom | 6 | 1 | 1 | 0 |  |
 | 390@4x mid | particle-cap | canvas | 9 | 0.8 | 1 | 0 |  |
 | 390@4x mid | sp-baithak | dom | 6 | 0.8 | 1 | 0 |  |
+| 390@4x mid | card-live | canvas | 6 | 0.8 | 1 | 0 |  |
 | 390@4x mid | sp-relay | dom | 6 | 0.6 | 1 | 0 |  |
 | 390@4x mid | sp-clock | dom | 6 | 0.4 | 1 | 0 |  |
 | 390@4x mid | lightmap-breath | canvas | 7 | 0.3 | 0 | 1 |  |
 | 390@4x mid | sp-proof | dom | 6 | 0.3 | 0 | 1 |  |
+| 390@4x mid | homely | dom | 4 | 0.3 | 1 | 0 |  |
 | 390@4x mid | sp-voice | dom | 6 | 0.3 | 1 | 0 |  |
 | 390@4x mid | wake | dom | 8 | 0.2 | 1 | 0 |  |
+| 390@4x mid | secrets | dom | 4 | 0.2 | 0 | 1 |  |
 | 390@4x mid | pointer-parallax | dom | 3 | 0.2 | 0 | 1 |  |
 | 390@4x mid | flames | dom | 2 | 0.1 | 0 | 1 |  |
 | 390@4x mid | hold-heat | dom | 2 | 0.1 | 0 | 1 |  |
@@ -52,5 +60,5 @@ ms is the EWMA per measured use where an effect calls measure(); otherwise the r
 | 390@4x mid | focusflame | dom | 8 | 0.1 | 1 | 0 |  |
 | 390@4x mid | hop | dom | 5 | 0.1 | 0 | 1 |  |
 | 390@4x mid | invite | dom | 5 | 0.1 | 0 | 1 |  |
-| 390@4x mid | light-surfaces | dom | 6 | 0.009 | 0 | 1 |  |
-| 390@4x mid | lightmap-pool | canvas | 4 | 0 | 0 | 1 |  |
+| 390@4x mid | light-surfaces | dom | 6 | 0.016 | 0 | 1 |  |
+| 390@4x mid | lightmap-pool | canvas | 4 | 0.004 | 0 | 1 |  |

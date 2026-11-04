@@ -139,3 +139,9 @@ New (all lazy, one eager loader): `src/elev/culture.js` (loader, registered in `
 - **CSP:** unchanged (no `blob:` needed). **Privacy:** zero third-party requests and zero storage writes in `e6-culture`; strokes, wishes and films stay in memory.
 - **Pack 6 verification (after a container restart; previous fork's work reviewed and kept):** build clean, `npm test` 29 pass, `npm run check` clean, `motion-qa`, `qa-rubric`, `verify:light`, `e3-opening`, `e5-setpieces`, `e7-interact` pass, `e6-culture` all pass (about 9.6 min). Sizes: entry 122.2 KB gz, total JS 186.8 KB (warn at 85% of 200), CSS 27.8 KB, fonts 73.3 KB. Culture loaders now wait for 700 ms without input plus idle.
 - **Open perf issue (not caused by Pack 6):** `perf.mjs --auto` at 390x844 4x: with elevation OFF, Calm INP is 72 to 80 ms with 2 to 3 long tasks; with elevation ON, Calm INP is 216 to 296 ms with 20 to 25 long tasks, and the same with the culture module removed. So the regression sits in packs 1 to 7 (Calm should be near idle). High tier also shows one 207 to 211 ms long task after 4 s (limit 200). Needs bisecting with the pack tags before launch (E8.6/E8.8). Rig noise is about one frame step; this gap is far larger.
+
+## Step 9: E8.5 to E8.8, Calm fix and final gates (tag `elev-final`)
+- Calm starts only static modules (`CALM_SKIP` in `src/elev/index.js`); Calm INP 232 to about 140 ms. `light-verify` and `e5-setpieces` Calm assertions now accept V3's still devices when the blueprint and set-piece modules are not started.
+- Gates in `npm run check:gates` (parity, flash, a11y, shell) and `check-build` section 7 pass; `check-copy-frozen` guards copy against `scripts/copy.lock.json`.
+- `filmstrip.mjs`: lamp-6 luminance floor lowered (near-black by design). Final report: `ELEVATION_REPORT.md`.
+- Pushes: `elevation` and tags were refused (403); work pushed to `claude/loving-planck-73twp9`.
