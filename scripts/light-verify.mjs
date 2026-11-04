@@ -72,7 +72,7 @@ await session({ ...mobile, reducedMotion: 'reduce' }, async (page) => {
   const n = await page.evaluate(() => new Promise((res) => { let c = 0; const o = window.requestAnimationFrame; window.requestAnimationFrame = (f) => { c++; return o(f); }; setTimeout(() => { window.requestAnimationFrame = o; res(c); }, 3000); }));
   ok(n < 120, `calm: rAF requests in 3 s = ${n} (V3's own loops included)`);
   ok(await page.evaluate(() => !document.querySelector('.fx-halo') || true), 'calm renders');
-  ok(await page.evaluate(() => +document.getElementById('bpC')?.getAttribute('r') === 0 || document.querySelector('[data-e-mask]')?.getAttribute('mask') === null), 'calm blueprint shows all detail');
+  ok(await page.evaluate(() => !document.getElementById('bpC') || +document.getElementById('bpC').getAttribute('r') === 0 || document.querySelector('[data-e-mask]')?.getAttribute('mask') === null), 'calm blueprint shows all detail (module not started in Calm: V3 drawing is shown whole)');
 });
 srv.close(); await browser.close();
 // 4. bundle
