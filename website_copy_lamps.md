@@ -333,3 +333,21 @@ I have no growth wins to borrow. But I've used Flow, and I want to discover whet
 ## CHANGED LINES (wish)
 
 Type mat kijiye, bol dijiye. Likhna Flow ka kaam hai.
+
+## CLOSURE (last page) and FOOTER, redrafted 4 Nov 2026
+
+THE LAST LAMP IS YOURS
+
+Aapka diya jal utha.
+
+Ab ek sawaal ki baari hai.
+
+Teen kahaniyan padhi, ek awaaz suni, ek bujha hua diya dekha. Ab jo bhi aapke mann mein atka ho, woh poochhiye. Jahan jawab pakka hai, wahan saboot dunga; jahan adhura hai, wahan adhura hi kahunga.
+
+Ek email. Ek sawaal. Baaki baat wahin.
+
+Ek diya doosre diye se jalta hai, aur pehle wale ki roshni kam nahi hoti. Aise hi aapka ek sawaal meri agli kahani ban sakta hai.
+
+Darwaza khula hai, diya jal raha hai. The best interface gets out of the way. The best evidence doesn't.
+
+Wispr Flow ke India growth internship challenge ke liye banaya hai. Prototypes, not products.

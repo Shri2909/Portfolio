@@ -5,11 +5,7 @@ import { rich } from '../lib/rich.jsx';
 import { useStore } from '../lib/useStore.js';
 import { shownCount, plusBeyondTwelve } from '../lib/rowhash.js';
 
-// Tiny row of lamps: up to 12 lit, then a "+" pill, then the visitor's own dark socket. Aria-hidden: the banner or caption is its twin.
-export function captionFor(n) {
-  const c = copy.closure.rowCaption;
-  return n === 0 ? c.zero : n === 1 ? c.one : tpl(c.many, { count: shownCount(n) });
-}
+// Tiny row of lamps: up to 12 lit, then a "+" pill, then the visitor's own dark socket. Aria-hidden: the share banner is its twin.
 export function RowLamps({ count, lit, variant = 'wish' }) {
   const calm = useStore((s) => s.calm), quality = useStore((s) => s.quality);
   const shown = Math.min(count, 12), [on_, setOn] = useState(calm ? shown : 0);
@@ -48,8 +44,6 @@ export function WishRow() {
   return (
     <div className="wish-row">
       <RowLamps count={row.base} lit={vl} variant="wish" />
-      <p className="cap">{rich(captionFor(row.base))}</p>
-      <p className="fine">{copy.ui.rowFine}</p>
     </div>
   );
 }

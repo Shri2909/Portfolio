@@ -48,7 +48,6 @@ export default function FullTextView({ onClose }) {
   const row = useStore((s) => s.row);
   const made = useWishVersionState().made;
   const n = row.count;
-  const caption = n === 0 ? copy.closure.rowCaption.zero : n === 1 ? copy.closure.rowCaption.one : copy.closure.rowCaption.many;
   const so = signoffLines();
   const g = copy.guess, lr = copy.lateReply, v = copy.voice, vd = copy.verdict, w = copy.wish, cl = copy.closure, sx = copy.sixty;
   return (
@@ -165,7 +164,6 @@ export default function FullTextView({ onClose }) {
         </section>
         <section aria-labelledby="ft-closure">
           <h2 id="ft-closure">{cl.headings.map((h, i) => <span key={i}>{rich(h)} </span>)}</h2>
-          <p>{rich(tpl(caption, { count: shownCount(n) }))}</p><p>{copy.ui.rowFine}</p>
           <P t={cl.para} />
           {inviteVisible() && (() => { const u = inviteUrls(); return (<div><p><strong>{cl.invite.label}</strong> {rich(cl.invite.sub)}</p><p className="mono">{u.email}</p><p><a href={u.gmail} target="_blank" rel="noopener noreferrer">{X('inviteGmail')}</a> · <a href={u.mailto}>{X('inviteMailApp')}</a></p><pre>{u.subject + '\n\n' + u.body}</pre></div>); })()}
           <P t={cl.recap} /><P t={cl.closing} />

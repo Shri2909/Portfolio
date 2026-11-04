@@ -10,7 +10,6 @@ import { haptic } from '../lib/haptic.js';
 import { emailOf, inviteVisible } from '../lib/mail.js';
 import InviteButton from './InviteButton.jsx';
 import { signoffLines } from '../lib/signoff.js';
-import { captionFor } from './RowFragment.jsx';
 import { LAMPS, LAMP_IDS } from '../lib/lamps.js';
 
 // The emotional end. When all three lamps are lit and this section is half in view, one calm sequence plays:
@@ -69,13 +68,11 @@ export default function Closure() {
 
   const [flick, setFlick] = useState(false);
   const tapLamp = () => { if (!vl) return; haptic(10); if (calm) return; setFlick(true); setTimeout(() => setFlick(false), 600); };
-  const caption = captionFor(base), so = signoffLines();
+  const so = signoffLines();
   const ended = phase === 'done', playing = phase === 'playing';
   const email = emailOf();
   return (
     <section id="closure" ref={sec} className={`sec ${ended ? 'ended' : ''} ${playing ? 'playing' : ''}`} aria-labelledby="closure-h">
-      <p className="cl-cap">{rich(caption)}</p>
-      <p className="fine">{copy.ui.rowFine}</p>
       <div ref={rowEl} className="cl-row" role="img" aria-label={C.altText} data-row-mount>
         <div aria-hidden="true" className="cl-lamps">
           {base > 7 && <i className="cl-dots" />}

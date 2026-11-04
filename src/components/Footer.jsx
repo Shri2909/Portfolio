@@ -3,7 +3,7 @@ import copy, { flags } from '../lib/copy.js';
 import { rich } from '../lib/rich.jsx';
 import { useStore } from '../lib/useStore.js';
 
-// Seven lines. Lines gated by a flag stay out until Shriniwas turns the flag on. Line 5 (how this page was made) is empty and hidden.
+// Footer lines (three now: the build line, the gated no-analytics line and the copyright). Lines gated by a flag stay out until Shriniwas turns the flag on. Line 5 (how this page was made) is empty and hidden.
 const EV = 'Evidence drawer';
 function Line({ text }) {
   const i = text.indexOf(EV);

@@ -684,27 +684,22 @@
   "ideasOpen": "<hi>Kuch idea chahiye?</hi>"
  },
  "closure": {
-  "rowCaption": {
-   "many": "<hi>{count} diye pehle se. Aakhir mein aapka.</hi>",
-   "one": "<hi>Ek diya pehle se. Aakhir mein aapka.</hi>",
-   "zero": "<hi>Yeh row aapse shuru hoti hai.</hi>"
-  },
-  "kicker": "YOUR LAMP IS LIT",
+  "kicker": "THE LAST LAMP IS YOURS",
   "headings": [
    "<hi>Aapka diya jal utha.</hi>",
-   "<hi>Ab mujhse ek sawaal poochhiye.</hi>"
+   "<hi>Ab ek sawaal ki baari hai.</hi>"
   ],
-  "para": "<hi>Teen projects mein se koi ek chuniye. Kya hua, maine kya kiya, aur kya abhi adhura hai: teeno batata hoon.</hi>",
+  "para": "<hi>Teen kahaniyan padhi, ek awaaz suni, ek bujha hua diya dekha. Ab jo bhi aapke mann mein atka ho, woh poochhiye. Jahan jawab pakka hai, wahan saboot dunga; jahan adhura hai, wahan adhura hi kahunga.</hi>",
   "invite": {
    "label": "INVITE ME TO AN INTERVIEW",
-   "sub": "<hi>Ek email. Ek lamp. Baaki baat wahin.</hi>"
+   "sub": "<hi>Ek email. Ek sawaal. Baaki baat wahin.</hi>"
   },
   "links": {
    "resume": "View my résumé",
    "evidence": "Evidence drawer"
   },
-  "recap": "<hi>Mere teen diye bhi ek-ek karke jale. Jahan jawab adhura tha, wahan maine adhura hi likha.</hi>",
-  "closing": "<hi>Sawaal poochhne ke liye yeh page khula hai.</hi> The best interface gets out of the way. The best evidence doesn't.",
+  "recap": "<hi>Ek diya doosre diye se jalta hai, aur pehle wale ki roshni kam nahi hoti. Aise hi aapka ek sawaal meri agli kahani ban sakta hai.</hi>",
+  "closing": "<hi>Darwaza khula hai, diya jal raha hai.</hi> The best interface gets out of the way. The best evidence doesn't.",
   "signoff": {
    "before": [
     "<hi>Shubh Deepavali.</hi>",
@@ -932,24 +927,12 @@
   "lines": [
    {
     "id": "l1",
-    "text": "<hi>Wispr Flow ke India growth internship challenge ke liye banaya hai.</hi> Prototypes, not products. <hi>Har number ka source aur status Evidence drawer mein hai.</hi>"
-   },
-   {
-    "id": "l2",
-    "text": "AI agents wrote a substantial share of the code in these projects. I directed, approved and questioned. <hi>Kisne kya kiya, woh drawer mein hai, jitna main saabit kar sakta hoon.</hi>"
-   },
-   {
-    "id": "l3",
-    "text": "<hi>Yeh page aapki wish upload ya save nahi karta. Link mein sirf diyon ki ginti aur, agar aap likhein, aapka pehla naam hota hai.</hi>"
+    "text": "<hi>Wispr Flow ke India growth internship challenge ke liye banaya hai.</hi> Prototypes, not products."
    },
    {
     "id": "l4",
     "text": "<hi>Is page mein koi analytics, cookies ya third-party script nahi hai.</hi>",
     "flag": "noAnalyticsLine"
-   },
-   {
-    "id": "l6",
-    "text": "This is an independent application page. Wispr Flow and Emergent have not reviewed or endorsed it."
    },
    {
     "id": "l7",
