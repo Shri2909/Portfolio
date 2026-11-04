@@ -355,3 +355,11 @@ Wispr Flow ke India growth internship challenge ke liye banaya hai. Prototypes, 
 ## FIRST SCREEN PATH
 
 Ek minute hai? 60-second file. Zyada waqt hai? Diya jalaiye.
+
+## WHAT I BRING (growth skills, 4 Nov 2026)
+
+Six things the projects show
+
+Retention thinking.
+
+Community and user insight.

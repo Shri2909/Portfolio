@@ -280,8 +280,7 @@
    "nextToInvite": "<hi>Aage →</hi> {step}",
    "readTime": "about {n} min read"
   },
-  "idleHint": "<hi>Agla diya →</hi>",
-  "fairWarning": "Fair warning"
+  "idleHint": "<hi>Agla diya →</hi>"
  },
  "opening": {
   "label": "EK DIYA SE DOOSRA · Shriniwas Kholkute",
@@ -997,14 +996,7 @@
   "pull": "I didn't learn that every plan works. I learned to decide what to do when it doesn't.",
   "c1": {
    "title": "<hi>Pehle, main kaun?</hi>",
-   "face": "I'm a final-year VIT Pune student in Instrumentation and Control, graduating May 2027. <hi>Main software banata hoon, debate karta hoon, likhta hoon aur business strategy padhta hoon. Code jitna hi zaroori mere liye log hain.</hi>",
-   "chips": [
-    "Builds",
-    "Debates",
-    "Writes",
-    "Studies"
-   ],
-   "proof": "View my résumé"
+   "face": "I'm a final-year VIT Pune student in Instrumentation and Control, graduating May 2027. <hi>Main software banata hoon, debate karta hoon, likhta hoon aur business strategy padhta hoon. Code jitna hi zaroori mere liye log hain.</hi>"
   },
   "c2": {
    "title": "<hi>Meri raah</hi>",
@@ -1073,50 +1065,49 @@
      "t": "Blitz: 3.1× to about 1.02×."
     }
    ],
-   "warning": "",
    "own": "My loop, in my own words: {LOOP_OWN_WORDS}.",
    "outside": "Outside the three projects: {OUTSIDE_TEST_LINE}."
   },
   "c7": {
-   "title": "Five things the projects show",
-   "hook": "<hi>Har cheez ke saath saboot aur uski seema.</hi> I have no growth wins to borrow.",
+   "title": "Six things the projects show",
+   "hook": "<hi>Har cheez ke saath saboot aur uski seema.</hi>",
    "items": [
     {
      "h": "Experiment design.",
      "proof": "If it doesn't work, I'd investigate why—and stop or change the campaign.",
-     "warn": "I have not run a growth experiment; the India test is proposed, not run.",
      "view": "My view: decide success before the dashboard.",
-     "lamp": 6
+     "lamp": 0
     },
     {
      "h": "Honest measurement.",
      "proof": "Blitz 1,205 ns to 1,850 ns, 3.1× to about 1.02×.",
-     "warn": "1,850 ns is historical, not today's number.",
      "view": "My view: a flattering number is the easiest thing to ship.",
      "lamp": 2
     },
     {
      "h": "Writing that holds an argument.",
      "proof": "the essay \"Who Audits the Auditor?\".",
-     "warn": "I haven't claimed published or product-marketing writing here.",
      "view": "",
      "lamp": 0
     },
     {
      "h": "Coordination.",
      "proof": "four research contributors.",
-     "warn": "",
      "view": "",
      "lamp": 0,
      "filled": "What I coordinated: {RESEARCH_MY_PART}."
     },
     {
-     "h": "A student's view from India.",
-     "proof": "final-year at VIT Pune; YouTube study and a ₹3,999 course.",
-     "warn": "one student's view, not a market study; I began using Flow on 1 November 2026.",
+     "h": "Retention thinking.",
+     "proof": "I want to understand what happens after the first interaction—not just count how many people started.",
      "view": "",
-     "lamp": 6,
-     "share": "TechCrunch, citing Sensor Tower (9 May 2026), put India at about 14% of installs and about 2% of in-app revenue."
+     "lamp": 3
+    },
+    {
+     "h": "Community and user insight.",
+     "proof": "I'd find the people who keep Indian communities running through messages and introduce them to Wispr Flow through a problem they already face.",
+     "view": "",
+     "lamp": 0
     }
    ]
   }

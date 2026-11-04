@@ -125,9 +125,8 @@ export default function FullTextView({ onClose }) {
               {c.hook && <P t={c.hook} />}
               {(c.body || []).filter(Boolean).map((t, i) => <P key={i} t={t} />)}
               {c.steps && <ol>{c.steps.map((st, i) => <li key={i}>{rich(st.h)} ({st.g}). {st.t}</li>)}</ol>}
-              {c.warning && <p><strong>Fair warning.</strong> {c.warning}</p>}
               {(c.extra || []).map((t, i) => <p key={i}>{t}</p>)}
-              {c.items && <ol>{c.items.map((it, i) => <li key={i}><strong>{it.h}</strong> {it.proof} {it.filledLine} Fair warning: {it.warn} {it.view} {it.share}</li>)}</ol>}
+              {c.items && <ol>{c.items.map((it, i) => <li key={i}><strong>{it.h}</strong> {it.proof} {it.filledLine} {it.view}</li>)}</ol>}
             </div>)); })()}
           <p><strong>{copy.baithak.pull}</strong></p>
         </section>

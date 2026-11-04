@@ -173,3 +173,7 @@ Replaced the whole Handover Test tab (draft, three taps, sources, the poora prot
 ## 4 Nov 2026: smoother first ten seconds
 
 First-screen path (60-second file or light the first lamp), next-lamp nudges (Certgen to Blitz to Vigil to Lamp 4 to 05 Continue the conversation), Level 2 reading time (words / 200), and quick links in the top bar: résumé, LinkedIn, GitHub (short CV / in / GH below 720 px). LinkedIn and GitHub are also set in `site.contact`, so the invite sheet and step 05 show them.
+
+## 4 Nov 2026: Meet the person trims
+
+Who I am: removed the Builds, Debates, Writes, Studies chips and the résumé button. What I bring: removed "I have no growth wins to borrow.", every Fair warning, the "A student's view from India." item and its Lamp 6 proof chip; added two growth skills (Retention thinking, Community and user insight) using sentences from the lamp stories and the Group Admin Tax text; the title now says "Six things the projects show".

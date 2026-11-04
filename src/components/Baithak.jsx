@@ -18,7 +18,7 @@ const highlight = (id) => { const el = document.getElementById(id); if (!el) ret
 
 function Proof({ lamp }) {
   if (!lamp) return null;
-  return <button type="button" className="btn btn-ghost proof-chip" onClick={() => highlight(lamp === 6 ? 'lamp-6' : `lamp-${lamp}`)}>{X('proofLabel')} · Lamp {lamp}</button>;
+  return <button type="button" className="btn btn-ghost proof-chip" onClick={() => highlight(lamp === 6 ? 'lamp-6' : `lamp-${lamp}`)}>{X('proofLabel')} · Lamp {lamp === 6 ? 4 : lamp}</button>;
 }
 // Every line of a card is real text in the page; a pane's lines ink in one by one when its window is tapped, then stop (class "ml", delays set in Baithak).
 function Card({ c, children, proof }) {
@@ -59,7 +59,6 @@ function Loop({ L }) {
   return (
     <div className="loop">
       <ol className="loop-list">{L.steps.map((st, k) => <li key={k} className="ml"><strong>{rich(st.h)}</strong> <em>({st.g})</em> {st.t}</li>)}</ol>
-      {L.warning ? <p className="warn ml"><strong>{copy.ui.fairWarning}:</strong> {L.warning}</p> : null}
       {L.extra.map((t, k) => <p key={k} className="ml">{t}</p>)}
     </div>
   );
@@ -71,9 +70,7 @@ function Bring({ b }) {
         <div key={k} className="bring-item ml">
           <p><strong>{it.h}</strong> {it.proof}</p>
           {it.filledLine && <p>{it.filledLine}</p>}
-          {it.warn ? <p><strong>{copy.ui.fairWarning}:</strong> {it.warn}</p> : null}
           {it.view && <p><em>{it.view}</em></p>}
-          {it.share && <p>{it.share}</p>}
           <Proof lamp={it.lamp} />
         </div>
       ))}
@@ -109,7 +106,7 @@ export default function Baithak() {
         </div>
         {[0, 1, 2, 3].map((i) => (
           <div key={i} role="tabpanel" id={`pp-${i}`} aria-labelledby={`pt-${i}`} hidden={pane !== i} className="pane-body">
-            {i === 0 && <><Card c={cards.who}><div className="chips ml">{cards.who.chips.map((c) => <button key={c} type="button" className="btn btn-ghost" onClick={() => { setPane({ Builds: 2, Debates: 1, Writes: 1, Studies: 0 }[c]); }}>{c}</button>)}</div><a className="btn ml" href={copy.site.links.resume} target="_blank" rel="noopener noreferrer" aria-label={tpl(X('driveAria'), { label: cards.who.proof })}>{cards.who.proof}</a></Card><Card c={cards.roots} /></>}
+            {i === 0 && <><Card c={cards.who} /><Card c={cards.roots} /></>}
             {i === 1 && <><Card c={cards.debate}>{cards.debate.flip && <DebateFlip d={cards.debate.flip} />}</Card><Card c={cards.essay}><EssayRing e={cards.essay.essay} /><a className="btn ml" href={copy.site.links.essay} target="_blank" rel="noopener noreferrer" aria-label={tpl(X('driveAria'), { label: cards.essay.essay.link })}>{cards.essay.essay.link}</a></Card></>}
             {i === 2 && <>{cards.research && <Card c={cards.research} />}<article className="meet-card" aria-labelledby="mc-loop"><h3 id="mc-loop" className="ml">{rich(cards.loop.title)}</h3><Loop L={cards.loop} /></article></>}
             {i === 3 && <article className="meet-card" aria-labelledby="mc-bring"><h3 id="mc-bring" className="ml">{cards.bring.title}</h3><p className="hook ml">{rich(cards.bring.hook)}</p><Bring b={cards.bring} /></article>}
