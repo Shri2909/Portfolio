@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import copy from '../lib/copy.js';
+import FlowTab from './FlowTab.jsx';
 import { rich } from '../lib/rich.jsx';
 import { actions, getState } from '../lib/store.js';
 import { useStore } from '../lib/useStore.js';
@@ -32,7 +33,10 @@ export default function Wish() {
         <h2 id="wish-h" tabIndex={-1}>{rich(W.heading)}</h2>
         {W.lines.map((l, i) => <p key={i}>{rich(l)}</p>)}
         <p className="en">{W.english}</p>
-        <p>{rich(W.voiceLine)}</p>
+        <div className="flow-pitch">
+          <p className="flow-punch">{rich(W.voiceLine)}</p>
+          <FlowTab />
+        </div>
         <WishForm onMake={make} />
       </div>
       {st.made && <CardStage onEdit={edit} onAgain={again} />}

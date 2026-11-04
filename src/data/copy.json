@@ -44,7 +44,8 @@
   },
   "links": {
    "resume": "https://drive.google.com/file/d/19DXFxUoCiynAvErP6KQVq-ArzV69Mgf2/view?usp=drive_link",
-   "essay": "https://drive.google.com/file/d/1ccYZ-WZOZTLmZ4A23Ed9yNGy9jiCNi2k/view?usp=drive_link"
+   "essay": "https://drive.google.com/file/d/1ccYZ-WZOZTLmZ4A23Ed9yNGy9jiCNi2k/view?usp=drive_link",
+   "flow": "https://wisprflow.ai"
   },
   "signoffSwitchAfter": "2026-11-09"
  },
@@ -263,7 +264,9 @@
    "goDeeperEssay": "Read my long-form essay",
    "ctaGithub": "VIEW MY GITHUB",
    "ctaLinkedin": "FIND ME ON LINKEDIN",
-   "growthArchitecture": "Architecture"
+   "growthArchitecture": "Architecture",
+   "flowTab": "Wispr Flow",
+   "flowTabHint": "<hi>Bolkar likhiye</hi>"
   },
   "idleHint": "<hi>Agla diya →</hi>",
   "fairWarning": "Fair warning"
@@ -674,7 +677,7 @@
    "copyFailed": "<hi>Copy nahi ho paya. Link select karke copy kar lijiye.</hi>",
    "underCard": "<hi>Yeh wish sirf is tab mein hai. Bhejna ho toh abhi bhej dijiye.</hi>"
   },
-  "voiceLine": "<hi>Bolkar likhna ho toh Flow ya koi voice typing chalegi; type bhi theek hai.</hi>",
+  "voiceLine": "<hi>Type mat kijiye, bol dijiye. Likhna Flow ka kaam hai.</hi>",
   "walk": "<hi>Lau chal rahi hai, diye se diye tak.</hi>",
   "privacyShort": "<hi>Wish upload ya save nahi hoti.</hi>",
   "privacyOpen": "<hi>Poori privacy baat</hi>",

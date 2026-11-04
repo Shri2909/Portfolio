@@ -329,3 +329,7 @@ If it doesn't work, I'd investigate why—and stop or change the campaign.
 final-year at VIT Pune; YouTube study and a ₹3,999 course.
 
 I have no growth wins to borrow. But I've used Flow, and I want to discover whether helping one trusted communicator can naturally introduce Flow to others. Proposed, not run.
+
+## CHANGED LINES (wish)
+
+Type mat kijiye, bol dijiye. Likhna Flow ka kaam hai.

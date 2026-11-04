@@ -1,3 +1,4 @@
+import FlowTab from './FlowTab.jsx';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import copy, { X } from '../lib/copy.js';
 import { tpl } from '../lib/tpl.js';
@@ -49,7 +50,7 @@ export default function WishForm({ plain = false, onMake }) {
       )}
       <label htmlFor={id + 'wish-to'}>{rich(W.form.toLabel)}</label>
       <input id={id + 'wish-to'} type="text" value={w.to || ''} onChange={onTo} onCompositionStart={() => { composing.current = true; }} onCompositionEnd={(e) => { composing.current = false; actions.setWish({ to: cutGraphemes(e.target.value, TO_MAX) }); }} autoComplete="off" spellCheck="false" dir="auto" onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()} />
-      <label htmlFor={id + 'wish-text'}>{rich(W.form.wishLabel)}</label>
+      <div className="label-row"><label htmlFor={id + 'wish-text'}>{rich(W.form.wishLabel)}</label><FlowTab compact /></div>
       {!plain && chip !== null && <p className="reminder" aria-live="polite">{rich(W.ideas.chips[chip])}</p>}
       <div className="wish-box">
         <textarea id={id + 'wish-text'} ref={ta} rows={5} value={w.text || ''} onChange={onText} onKeyDown={onKey} onCompositionStart={() => { composing.current = true; }} onCompositionEnd={(e) => { composing.current = false; onText(e); }}
