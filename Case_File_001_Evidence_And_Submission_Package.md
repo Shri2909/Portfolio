@@ -11,7 +11,7 @@ Prepared 3 November 2026. This companion is **not** part of the primary website 
 | 1. 324/324 → 19 | Would you ship after everything turns green? | Immediate curiosity and a decision, not a list of talents |
 | 2. The green wall — certgen | Who follows through after the apparent finish line? | Documented approvals, changed scope, agent-supervised remediation |
 | 3. The late reply — Vigil | Did the system deliver the one thing its user depended on? | User-value judgment and proof that an anti-bug test can fail |
-| 4. The three reversals | Is this a repeatable decision pattern? | Honest measurement (Blitz), execution continuity (TipIndex), precision of promise (PitDB) |
+| 4. The three reversals | Is this a repeatable decision pattern? | Honest measurement (Blitz) |
 | 5. The person | Why does he keep engaging with uncertain problems? | Human context, communication, teamwork, curiosity without a résumé dump |
 | 6. The voice clue and India bet | Why Wispr? What would he test in growth? | Authentic product use and a concrete, falsifiable activation hypothesis |
 | 7. The verdict | What can be trusted, and what is still unproven? | Transparent AI collaboration, clear next interview action |
@@ -77,28 +77,6 @@ This route links directly to the main exhibits and source drawer, not to an alte
 **Other substantial findings:** An AF_XDP latency spike was traced to competing processes pinned to the same cores and touchpad interrupts; that subsystem has since been removed from uncommitted work. A chart incorrectly displayed passing tests despite missing executables and an unverified sanitizer claim. An Avellaneda–Stoikov strategy lost to a naive benchmark on five tickers; the reason for reverting it is not documented and must not be invented.
 
 **Where to inspect:** [Blitz](https://github.com/Shri2909/Blitz-Limit-Order-Book): `f46a9cb`, historical README, `METHODOLOGY.md`, `results/98a597b/`, branch-only `audit/` reports. Public `main` at last review did not include the stale-results warning; do not describe the 1,850 ns run as current.
-
-### C4 · TIPINDEX — The operator changed, the evidence stayed
-
-**Plain-English purpose:** Instead of searching every market message, an index can jump to relevant ones, but that shortcut has maintenance and workload costs.
-
-**Owner contribution:** The project records explicit phase gates, selection of a narrower Tier B plan, stop/start instructions, approval of controlled deletions, switching from Codex to Claude Code and permission to remediate audit findings. Most C++/Python development, benchmarking and audit execution was agent-written. The October interview-prep prompt explicitly stated zero working knowledge of the generated code at that moment; later complete mastery is not established without a genuine walkthrough.
-
-**Central interruption:** During a P6 measurement campaign Codex ran out of usage allowance, a process died, and one output file was truncated. Candidate instructions redirected to Claude Code, controlled progress and approved deleting checksum-verified redundant chunks to recover disk. Agents verified checkpoint integrity; reports state 820 measured rounds and 5,364 original P6 files remained byte-identical.
-
-**Other substantial findings:** In a *separate P7* runtime study, CPU contamination invalidated 9/10 rounds in attempt one; a new quiescence rule rejected attempt two at 3.52 seconds against a 3.0-second limit; attempt three passed. The rule was written **after attempt one but before reruns**; failed timing values were deleted at user instruction, despite a general “preserve failures” policy. Two audits found 26 and then 14 numbered findings; the mutation audit showed three no-op invariant checkers could pass existing tests. A polling-budget feature shortened individual turns but increased cumulative work and retained unresolved overhead. Best-case single-symbol indexing reported 40.62× CPU ratio; at 1,000 symbols the scan/index ratio was 0.585, so indexing lost. These are one-laptop, limited-workload results, not generalized product speedups.
-
-**Where to inspect:** [TipIndex](https://github.com/Shri2909/TipIndex-Indexed-Market-Data-Message-Bus): `docs/plan/PROGRESS.md`, `results/p6/pause-20261025.json`, `results/p6/resume-after-pause.md`, `results/p7/runtime-quiescence-rule.json`, `docs/report/REMEDIATION.md`, `results/p6/` and `results/f01/`. Link to accessible exact artifacts only.
-
-### C5 · PITDB — The future appeared early
-
-**Plain-English purpose:** A historical database should answer “What was actually known by this point in time?” without quietly using later facts.
-
-**Core defect:** One specific direct-ingestion daylight-saving-time fold could make a 06:15 UTC record visible at a 06:00 UTC cutoff; the normalized UTC CSV route was not affected. Agent-executed remediation centralized timestamp validation and rejected problematic input. The exact user approvals of particular temporal-policy tradeoffs require confirmation. Current local tests passed 346; the last public `main` was an older pre-audit version.
-
-**Other substantial findings:** The README's 629.70× figure had no recoverable raw support; its “2.7× smaller” memory comparison used mismatched columns and became 1.0× for equal content. Controlled narrow-query audit measurements showed approximately 26.5× against a vectorized baseline, broad-query roughly 1.08×—one machine, not production results. A trimmed-mean estimator hid slow outliers: thirteen 1 ms trials plus two 100 ms trials yielded trimmed mean 1 ms but raw mean 14.2 ms. An AI-audit process used approval gates and independent-oracle instructions; 18 confirmed audit findings were reported and a later review found three more issues. Do not claim every finding fixed without a per-finding remediation ledger. GitHub images and packaging had separate first-minute usability failures.
-
-**Where to inspect:** [PitDB](https://github.com/Shri2909/PitDB): audit STORAGE-01, `src/store/validation.py`, `tests/test_temporal_regressions.py`, `tests/test_benchmark_integrity.py`, corrected README in local `fix/forensic-audit-20261029`. Last review said public `main` was uncorrected, `LICENSE` deletion unexplained and README linked a nonexistent `BENCHMARK_RESULTS.md`. Never link public `main` as proof of repaired behavior until updated.
 
 ### C6 · Who designed, who executed, who verified?
 
@@ -251,10 +229,6 @@ This is a proposed use of the grant, not a purchase already made. Obtain informe
 **Vigil:** Confirm who asked the correctness question and who approved the semantic change. Do not say the CI passed or benchmark performance was independently verified. Tests in the report were verified locally in that agent session.
 
 **Blitz:** Public README's historical-result caveat reportedly uncommitted; report-only audit files, deleted old audit and rewritten history need explanation. No current latency claim.
-
-**TipIndex:** Do not claim personal code authorship or complete technical mastery without a genuine walkthrough. Confirm who commissioned audits. P7 contamination and P6 agent-interruption campaigns are distinct.
-
-**PitDB:** Local working tree tests do not certify public `main`; publish corrected work or explicitly say fix is local. Restore `LICENSE` and fix missing results link. Do not label all audit findings fixed.
 
 **Voice:** Full authentic transcripts exist in the earlier draft; recorded Flow-to-Emergent build-and-correction evidence does **not** yet exist in supplied materials. Capture before claiming it. Do not invent a screenshot, audio, usage count, or activation result.
 

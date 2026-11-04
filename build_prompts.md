@@ -24,7 +24,6 @@ Eight agents drafted these prompts as eight "packs" (77 prompts in all). I merge
 | 1 | Pack 1: Foundation and data | Zero-external-request project, one copy file, store, events, quality tiers, Calm, page skeleton, full-text view, meta | 7 | about 90 min |
 | 2 | Pack 2: Night world | Sky, apartment skyline with windows that light up, terrace with self-drawing rangoli, marigold toran, string lights, star lanterns, dusk-gold | 7 | about 70 min |
 | 3 | Pack 3: Lamps and flame | Clay diyas, living flames, press-and-hold, flame travelling lamp to lamp, "the lamps answer", lamp six | 7 | about 70 to 90 min (my estimate) |
-| 4 | Pack 4: Cards and story interactions | The letter-card that rises from each lamp; 324 balcony lights; late-reply wire; swinging price tag; 820-dot rangoli; 06:15 clock | 8 | about 90 to 110 min (my estimate) |
 | 5 | Pack 6: Wish studio | Desk, six card themes, PNG card, WhatsApp share, row of lamps in the link | 7 | about 80 to 100 min (my estimate) |
 | 6 | Pack 7: Narrative and closure | Lamp six sketch, person block, word-level diff of your two takes, verdict note, closure, 60-second sheet, evidence drawer, footer | 8 | about 90 to 110 min (my estimate) |
 | 7 | Pack 5: Fireworks and atmosphere | One shared particle canvas, sparkler under the finger, anar, rockets, petals, floating things | 8 | about 70 to 90 min (my estimate) |
@@ -97,8 +96,6 @@ Calm / "Roshni kam karo" / "Roshni waapas laao"; Ink; Deepavali (a look name); T
 Every prompt has: **Say this** (speak it), optional **Paste block** (paste it), **Check after it builds**, and **If it is off** (a pattern for your own real correction). Each pack opens with an overview and ends with its risks and cut order.
 
 ---
-
-
 
 ---
 
@@ -238,7 +235,6 @@ Now the data layer. Every visible word on this site must live in one file, sourc
       "warning": { "heading": "", "gloss": null, "paras": [] },
       "receipt": { "label": "", "folder": "c1" },
       "interaction": "guess" }         // "guess" | "lateReply" | null
-    // lamps 2..5 same shape: vigil/c2/lateReply, blitz/c3/null, tipindex/c4/null, pitdb/c5/null
   ],
 
   "guess": { "label": "", "question": "", "options": [0, 3, 8, 19], "answer": 19,
@@ -381,7 +377,6 @@ PART 3 of 3: website_copy.md from "## 14. EVIDENCE DRAWER" through "## ALTERNATE
 
 Save as: reference/website_copy.md  and  reference/content_excerpt.json
 Mapping notes for the builder:
-- "Phir kya hua" (Lamp 5) stays as written. Do not switch it to "Maine phir kya kiya".
 - Section 9 (person) is enabled: true; add a _review note that its CONFIRM items are open.
 - Footer line 4 is enabled: true; add a _review note: verify with check-build before publishing.
 - The line gated by "[ONLY IF A REAL RECORDING EXISTS...]" goes to _review, voice.buildLine stays null.
@@ -393,7 +388,6 @@ Mapping notes for the builder:
 
 **Check after it builds:**
 1. Run check-copy: zero unknown keys, zero empty required fields, five lamps, two takes, eight folders, and a short list of non-matching strings (read each one yourself; the builder must not have rewritten any).
-2. Spot-check three lines against the source on your phone: the main headline "324 tests passed. Then an audit found 19 problems.", the PitDB warning, and the sign-off.
 3. The page contains no square-bracket note, no CONFIRM, no FILL IN, and none of the held-out numbers.
 4. Search the bundle: the phrase "Spoken with Wispr Flow" appears exactly twice, once per take.
 5. The private review list was read back to you in chat, and it is not in the production build.
@@ -584,7 +578,6 @@ This module exposes isShareFragment(hash) = /^#v/i and never edits such a fragme
 store.row starts as {count:0, name:"", status:"none"}; pack 6 fills it. Names are never put into the title, an attribute or HTML: textContent only.
 Opening or closing overlays never writes to the address bar, so the share fragment stays intact. Overlays use in-memory state plus the plain routes (#sixty, #evidence) only when opened directly.
 
-
 Close on a directly-opened overlay -> focus the h1. Back button closes an open overlay.
 
 TEST CASES (add as a small test file)
@@ -596,7 +589,6 @@ TEST CASES (add as a small test file)
 #evidence/c9          -> {route:"evidence"} (folder ignored)
 #hello                -> ignored
 #wish                 -> {route:"scroll", id:"wish"}; any share fragment already in the address bar is preserved
-
 
 HEAD (generated at build from copy.json, in a Vite HTML transform)
 <html lang="en-IN">, charset, viewport (width=device-width, initial-scale=1, viewport-fit=cover)
@@ -651,7 +643,6 @@ TITLE: when litCount >= 1 prefix the tab title with "(n/5) ". No other new words
 6. Tab-title prefix.
 
 **Never cut:** zero external requests and the content security policy, the single copy file, the Calm switch, the full-text view, the hash sanitiser, and the persistent skip link.
-
 
 ---
 
@@ -928,7 +919,6 @@ Risks: (1) Emergent may reach for images, a CDN or a font download; each prompt 
 
 Cut order if time or speed runs short, first to last: Tilt, cat, shooting star, birds, string-light modes (keep steady), clouds, lantern spin and tap-swing, toran gust, mid-layer rooftop details, floor light pools, Ink floor line. Never cut: windows lighting, rangoli drawing, the tone-driven sky, Calm, Ink, the 44px dock.
 
-
 ---
 
 # PACK 3: LAMPS AND FLAME
@@ -960,15 +950,12 @@ VARIETY SHEET (all lips point right, toward the next lamp)
 Lamp 1  CERTGEN   broad round belly, short pinched lip, kink up, tilt -2 deg, clay a touch lighter
 Lamp 2  VIGIL     taller belly, long lip, clear kink to the right, tilt +1.5 deg
 Lamp 3  BLITZ     wide and shallow, flat lip, small thumb dent on the left rim, tilt 0 deg
-Lamp 4  TIPINDEX  deeper belly, narrower rim, lip curls slightly upward, tilt -1 deg
-Lamp 5  PITDB     widest rim, kink to the left of the lip, one tiny glaze fleck, tilt +2 deg
 Lamp 6  (no name) dashed outline only, same silhouette family as lamp 5, chip: PROPOSED, NOT RUN (dashed border)
 
 ACCESSIBLE NAMES (English only, no Hinglish in aria)
 Unlit:  "Light lamp {n}, {Project}."  description: "Lamp {n}, unlit. Press and hold, tap or press Enter to light it from lamp {n-1}."  (lamp 1: "from the home flame")
 Lit:    "Lamp {n}, {Project}, lit. Open its story."  description: "Lamp {n}, lit."
 Lamp 6: "Lamp 6, proposed, not run." description: "Lamp 6 is proposed, not run. It stays unlit."
-Project names for aria: Certgen, Vigil, Blitz, TipIndex, PitDB
 
 STRUCTURE
 The five lamps live in an ordered list, one button per list item. Chip text is the only visible project text; keep it 13px or larger, cream on dark.
@@ -980,7 +967,6 @@ Decorative SVG parts get aria-hidden; the button carries the name.
 **Check after it builds:**
 - At 360px wide, all five lamps plus six fit with no horizontal page scroll, and each button measures at least 44 by 44.
 - The five silhouettes are visibly different (lip length, kink, tilt) yet clearly one family; reload and confirm they look identical.
-- Chips read clearly (CERTGEN, VIGIL, BLITZ, TIPINDEX, PITDB) and lamp six shows PROPOSED, NOT RUN on a dashed chip with no clay.
 - Tab key moves through the lamps in order with a visible ring; a screen reader announces "Light lamp 1, Certgen".
 - With Calm on, the lamps look identical (they are static art), no motion anywhere.
 
@@ -1267,7 +1253,6 @@ Targets: 60fps on a mid-range Android, one-thumb at 360px.
 
 **Never cut:** the tap and Enter path, Calm, the announcements, and lamp six's honest behaviour.
 
-
 ---
 
 # PACK 4: LAMP CARDS AND STORY INTERACTIONS
@@ -1279,7 +1264,6 @@ Project: EK DIYA SE DOOSRA (v2), Shriniwas Kholkute. Build tool: Emergent, drive
 ## Pack overview
 
 1. One LampCard (a native dialog styled as a floating letter) is used by all five lamps. It rises out of the lamp, is lit by that lamp's flame, tilts gently, reads in three parts, and ends with a receipt button, a quiet "Agla diya" corner and a swipe-down close.
-2. Each lamp gets one device that makes the reader feel the story, not read it: 324 balcony lights (Certgen), a flame message on a wire with a 3-second gate (Vigil), a swinging price tag that settles (Blitz), a baton between two lanterns plus an 820-dot rangoli (TipIndex), a dial where a 06:15 flame arrives early (PitDB).
 3. Every device has an always-visible plain-text twin already in the copy, a MODEL OF DOCUMENTED BEHAVIOR or "picture only" label where it models something, and one caption taken word for word from website_copy.md. No device invents a number, a result or a time. Facts sit in the DOM whether or not the reader touches anything.
 4. The five devices cover how he works (a decision line in his words), what failed (the first beat of each device), and what he did next (the second beat), using only copy lines. Lamp 6 is NOT a card in this pack: it is the visible #lamp-6 section; "Agla diya" on lamp 5 scrolls to it.
 5. Quality tiers, Calm, reduced motion, pause-when-hidden, 44px targets and Android-only haptics are specified in every prompt. Micro-delights: the folded-corner "Agla diya"; serial lights that chase before you guess; a price tag that stops swinging once it tells the truth; a card that folds back into its lamp with one small flare; a ghost flame that arrives before its time.
@@ -1298,7 +1282,6 @@ Open function: openLampCard(n), n = 1 to 5. Card element id: lamp-card.
 Store reads: lamps[n] must be "lit"; calm; quality; tone (0 to 6).
 Events listened to: fx:setQuality {tier}. Events sent: fx:burst {kind:"spark", x, y} on open and close.
 CSS tokens: --ground-0 to --ground-6, --flame-core, --flame-a, --flame-b, --cream, --kumkum, --marigold, --leaf, --ink, --font-display, --font-body, --font-mono.
-Evidence drawer folders: Certgen c1, Vigil c2, Blitz c3, TipIndex c4, PitDB c5.
 
 CARD COPY (src/data/copy.json, cards.1 to cards.5). **bold** means strong emphasis.
 
@@ -1340,27 +1323,6 @@ didNext: The headline was replaced. Later changes made even the replacement hist
 warning: 1,850 ns is a historical run, not today's number. Current latency has not been remeasured.
 receiptLabel: OPEN THE BLITZ RECEIPT
 
-cards.4  caseId c4
-kicker: LAMP 4 · TIPINDEX · THE AGENT STOPPED, THE WORK CONTINUED
-title: Agent ruka. Kaam nahi.
-happened:
- Codex hit its limit during a long experiment and left an incomplete output. Beech raaste mein agent ruk gaya. File adhoori.
-didNextLabel: Maine phir kya kiya   gloss: what I did next
-didNext:
- I directed a handoff to Claude Code, approved a verified disk cleanup, and resumed from recorded checkpoints. The campaign record reports **820 completed measurement rounds**.
- **A process shouldn't depend on one operator remembering everything.**
-warning: Agents wrote most of the code and ran most of the benchmarks in this project. These are one-laptop, limited-workload results, not product speedups. Product ka daava nahi.
-receiptLabel: OPEN THE TIPINDEX RECEIPT
-
-cards.5  caseId c5
-kicker: LAMP 5 · PITDB · THE FUTURE APPEARED EARLY
-title: Future, waqt se pehle
-happened:
- A database meant to answer "What was known then?" could, in one specific time-zone edge case, show a **06:15** event at **06:00**. Yaani 06:15 ki baat 06:00 par hi dikh jaati.
-didNextLabel: Phir kya hua   gloss: what happened next      (KEEP this label. Do not change it to "Maine phir kya kiya"; that waits for Shriniwas to confirm which approvals were his.)
-didNext: Agents found and addressed the defect in a local remediation version; the claim was narrowed.
-warning: **That correction is not yet reflected in the public default branch.** Aur main yeh nahi keh raha ki har audit finding fix ho chuki hai.
-receiptLabel: OPEN THE PITDB RECEIPT
 ```
 
 **Check after it builds:**
@@ -1512,77 +1474,12 @@ Do NOT show any other latency number, any later number, or any speedup.
 
 ---
 
-### P4.7: Lamp 4, the baton between two lanterns and the 820-dot rangoli (StoryHandoff)
-
-**Say this:**
-Lamp 4's device is a new component called StoryHandoff, at the top of the Maine phir kya kiya part of the TipIndex card. It has two halves, kept visibly separate. In the upper half are two lanterns, one labelled Codex on the left and one labelled Claude Code on the right, joined by a dashed path with three small stepping stones labelled handoff, verified disk cleanup, and recorded checkpoints. The Codex lantern starts dim, with a dashed half-drawn line trailing from it into nothing, the unfinished file. A tap, or Enter, sends a small baton of light along the path, lighting each stone in turn; it lands in the Claude Code lantern, which lights, and the dashed line becomes solid. In the lower half is a rangoli drawn in Canvas 2D from exactly eight hundred and twenty dots: twenty arms of forty one dots, filling ring by ring outward in marigold, kumkum, leaf green and cream. A button, Hold to count the rounds, fills it while held; a quick tap or Enter fills it over about two and a half seconds. The counter reads the number so far out of eight hundred and twenty completed measurement rounds and stops at eight hundred and twenty. Nothing larger is ever shown. Important: do not suggest that all eight hundred and twenty rounds happened after the handoff; the dots belong to the whole campaign record. Draw dots incrementally, never clear. On Android a single short vibration when it reaches eight hundred and twenty. In Calm, the baton and fill jump to their end states.
-
-**Paste block:**
-```
-Lantern labels: Codex | Claude Code
-Stones: Handoff | Verified disk cleanup | Recorded checkpoints
-Counter: {n} of 820 completed measurement rounds
-Chip: Campaign record: 820 completed measurement rounds
-Button (new interface label): Hold to count the rounds
-Captions (both from the copy): Beech raaste mein agent ruk gaya. File adhoori.   |   A process shouldn't depend on one operator remembering everything.
-Rule: one dot = one completed measurement round in the campaign record. Counter is capped at 820.
-Do NOT show 5,364, any speed-up, or any percentage.
-```
-
-**Check after it builds:**
-1. At first the Codex lantern is dim with a dashed trailing line; one tap sends the baton through the three stones into Claude Code, and the dashed line turns solid.
-2. Holding the button fills the rangoli outward ring by ring and the counter climbs; it stops exactly at "820 of 820 completed measurement rounds" and never goes above.
-3. Count: the finished rangoli is 20 arms of 41 dots; the lantern half and the dot half are clearly separate.
-4. Keyboard: Enter or Space triggers the 2.5-second fill, and the counter is read out at 820, not at every step.
-5. Calm on: baton and rangoli jump to their finished state; the 44px button still works.
-
-**If it is off:**
-"In the handoff device, [describe exactly what you see, for example: the counter goes past 820 / the dots look uneven], please [change it this way], and keep the cap at exactly 820."
-
----
-
-### P4.8: Lamp 5, the clock where a 06:15 flame arrives early (StoryCutoffClock)
-
-**Say this:**
-Lamp 5's device is a new component called StoryCutoffClock, in the what happened part of the PitDB card. Draw in inline SVG a round dial that works like a minute dial around six o'clock: the top is 06:00, three o'clock is 06:15, nine o'clock is 05:45, and the small word UTC in the middle. A flame glimmers at the 06:15 mark, but only when it is visible. A long cutoff hand starts at 06:00. The reader drags the hand, which snaps on release to one of three stops, 05:45, 06:00 and 06:15. The true control is a real range input with three stops directly under the dial, which the hand mirrors; keyboard, screen reader and pointer all use it. Above the dial show the label MODEL OF DOCUMENTED BEHAVIOR with its sentence. A two-button choice sets the route: Direct ingestion, the daylight-saving fold case, and Normalized UTC CSV route. In the direct case, at 06:00 the 06:15 flame is visible: a ghost flame drifts in slightly early, with a soft halo. At 05:45 it is not visible, and at 06:15 it is visible as it normally would be. In the CSV route it only appears at 06:15. Show the readouts from the paste block. Under the dial, set a calm but unmissable note: a wide marigold-edged band with a small branch icon saying the correction is not yet in the public default branch. It never animates. In Calm, the ghost flame appears steady with no drift. On Android, a tiny vibration when the hand lands on a stop.
-
-**Paste block:**
-```
-Label chip: MODEL OF DOCUMENTED BEHAVIOR
-Sentence (new interface label, drawn from the evidence file): A simulated cutoff, not a live database. The 06:15 UTC record, the 06:00 UTC cutoff, one direct-ingestion daylight-saving fold.
-Route buttons: Direct ingestion (the fold case) | Normalized UTC CSV route
-Note under routes (from the evidence file): The normalized UTC CSV route was not affected.
-Readouts (new interface labels, built only from the copy sentence):
- Direct, 05:45: Cutoff 05:45. The 06:15 event is not visible yet.
- Direct, 06:00: Cutoff 06:00. The 06:15 event is already visible. It should not be yet.
- Direct, 06:15: Cutoff 06:15. The 06:15 event is visible.
- CSV route, 05:45 and 06:00: Cutoff {time}. The 06:15 event is not visible yet.
- CSV route, 06:15: Cutoff 06:15. The 06:15 event is visible.
-Range input label: Cutoff time, in UTC     Spoken value: "{time} UTC"
-Caption: Yaani 06:15 ki baat 06:00 par hi dikh jaati.
-Unmissable note band (exact, bold): That correction is not yet reflected in the public default branch.
-Keep, in the card's Fair warning, the full copy line unchanged. The Fair warning part on this card gets the same marigold-edged band treatment, steady and never animated.
-```
-
-**Check after it builds:**
-1. The dial shows 06:00 at the top, 06:15 at three o'clock, and the hand at 06:00 on the direct route; the 06:15 flame is already visible as a ghost flame, with the readout "The 06:15 event is already visible."
-2. Drag the hand to 05:45: the flame disappears. Release near 06:15: it snaps to 06:15 and the flame is solid. Switch to the CSV route at 06:00: the flame is not visible.
-3. The range input below works with arrow keys and speaks "06:00 UTC"; the label MODEL OF DOCUMENTED BEHAVIOR is always visible.
-4. The "not yet reflected in the public default branch" band is visible without scrolling past the dial, calm, and not animated, and the label above the did-next part still says Phir kya hua.
-5. Calm on: ghost flame is steady, no drift.
-
-**If it is off:**
-"On the cutoff clock, [describe exactly what you see], please [change it this way], and keep the readout wording from the paste block and the label Phir kya hua."
-
----
-
 ## Risks and cut order
 
 Risks (the real ones):
 - Native dialog plus the evidence drawer: if the drawer is not a top-layer element it will render beneath the card. P4.3 hides the card first and restores it after, but Pack 7 must confirm openEvidence(caseId) or the evidence:open and evidence:closed events.
 - 324 bulbs and 820 dots are cheap on Canvas 2D only if sprites are cached and only changing elements redraw; a single full redraw per frame on low-end Android would break 60fps. Low tier must be static.
 - Tilt and 3D flip can blur text: use small angles, remove will-change at rest.
-- Truth: the 820-dot fill must not imply all 820 rounds followed the handoff; the 19 flickering bulbs must not be read as 19 failed tests; Lamp 5 must not suggest a mechanism beyond the single documented DST-fold case. The interface labels marked "new" (picture-only label, exactly-3-second line, Flip the tag, Hold to count the rounds, the Lamp 5 sentence and readouts) are not in website_copy.md and need Shriniwas's read-aloud approval before publishing.
 
 Cut order (cut from the top first, never cut the plain text, the labels or the receipt):
 1. Device-tilt on Android and sheen.
@@ -1592,7 +1489,6 @@ Cut order (cut from the top first, never cut the plain text, the labels or the r
 5. Ghost-flame drift and the rangoli ring-by-ring order (fill all at once).
 6. Rise-from-lamp motion (fade in place).
 7. Last resort: replace each device with its static end state plus the text twin; the card, three parts and receipt remain.
-
 
 ---
 
@@ -2088,7 +1984,6 @@ Cut order, first to cut first.
 6. The cascade on the visual row (keep the row itself).
 Never cut: the plain-text twin, the privacy lines, the Ink theme, the empty and ready states, the fragment parser and sanitiser, the share chain, the Calm mode behaviour.
 
-
 ---
 
 # PACK 7: NARRATIVE SECTIONS AND CLOSURE
@@ -2484,7 +2379,6 @@ Two overlays now, and they share the same behaviour. Both are native modal dialo
 OPENING (no URL fragment changes; the fragment belongs to the lamp count and first name)
 - Delegated click on any element with data-sixty opens #sixty. Delegated click on any element with data-evidence opens #evidence at the folder id in that attribute (c1 to c8); an empty value opens the drawer with all folders closed.
 - Also listen for the custom events sixty:open and evidence:open (detail: {caseId}).
-- Attach these to every receipt button already built: OPEN THE CERTGEN RECEIPT (c1), OPEN THE VIGIL RECEIPT (c2), OPEN THE BLITZ RECEIPT (c3), OPEN THE TIPINDEX RECEIPT (c4), OPEN THE PITDB RECEIPT (c5), SEE THE GROWTH TEST (c8), the résumé-adjacent EVIDENCE DRAWER links, and the opening line "THE 60-SECOND FILE" link and nav item for the sheet.
 - Opened from a lamp card sheet: the drawer stacks on top; closing it returns focus to the receipt button that opened it.
 - Ids: sixty and evidence. Dialog heading ids used for aria-labelledby.
 
@@ -2510,8 +2404,6 @@ TAB NAMES AND ONE-LINE SUMMARIES (summary shows on the collapsed tab)
 1. CERTGEN: The green wall. 324 tests, phir 19 findings, aur mera hissa kitna tha.
 2. VIGIL: The late witness. Ek late reply, ek sawaal, aur do tests jo correction hatane par fail hue.
 3. BLITZ: The number I withdrew. 1,205 se 1,850 tak ka poora hisaab, aur jo abhi remeasure nahi hua.
-4. TIPINDEX: The operator changed, the evidence stayed. Handoff ka record, aur woh jawab jo abhi UNRESOLVED hain.
-5. PITDB: The future appeared early. 06:15, 06:00 par: kya local branch par hai, aur kya public par.
 6. ROLES: Who designed, who executed, who verified? Kisne kya kiya, seedhe shabdon mein.
 7. THE PERSON AND THE VOICE: Sources. Voice takes kahan se aaye, aur kya abhi baaki hai.
 8. INDIA GROWTH TEST: The proposed protocol. Poora protocol. Proposed, not run.
@@ -2530,8 +2422,6 @@ If any repository link is missing from copy.json, the fallback table (only if mi
 c1 https://github.com/Shri2909/Bulk-Certificate-Generator
 c2 https://github.com/Shri2909/Vigil-Low-latency-TCP-heartbeat-monitor
 c3 https://github.com/Shri2909/Blitz-Limit-Order-Book
-c4 https://github.com/Shri2909/TipIndex-Indexed-Market-Data-Message-Bus
-c5 https://github.com/Shri2909/PitDB
 
 ACCORDION BEHAVIOUR
 - Tab = button with aria-expanded and aria-controls; panel = region labelled by its tab. One open at a time.
@@ -2610,7 +2500,6 @@ Cut order, last built to first cut
 4. Spark travel in the closure (keep the instant lighting and the caption), then the settle ring.
 5. Lamp six line-drawing animation (keep the static sketch).
 6. Never cut: the plain twins, the custody note, the gated lines, the lamp six badge, focus trap and Escape, the date swap.
-
 
 ---
 
@@ -2971,7 +2860,6 @@ Cut order (cut first, protect last):
 10. Row lanterns and floating card ascent
 Never cut: the governor, Calm ("Roshni kam karo"), the visibility pause, the caps, the Ink rules.
 
-
 ---
 
 # PACK 8: QA, EVIDENCE, POLISH AND SUBMISSION
@@ -3011,7 +2899,6 @@ Pack order is 1 Foundation, 2 Night world, 3 Lamps and flame, 4 Cards and story 
 - Flow installed, logged in, working in Emergent's prompt box. Test one sentence.
 - Screen recorder ready, set to record the whole screen, not one window. Notifications off. Fresh browser profile with no personal bookmarks or tabs.
 - Create the receipts folder on your computer (Part C.4).
-- Open website_copy.md. Resolve the items that change the words before you build them: PitDB label ("Phir kya hua" stays unless you confirm which approvals were yours), the person section (keep exactly as written or cut), contact email and LinkedIn for the interview button, résumé link set to "anyone with the link", the five GitHub links that really open.
 - Start the recorder and leave it running for the build sessions. Save in segments of 20 to 30 minutes so a crash does not lose everything.
 - Checkpoint C0: everything above ticked. If a link or a fact is unresolved, mark it "cut or evidence on request" now.
 
@@ -3320,7 +3207,6 @@ Please check the page against the copy file, section by section, and report ever
 - A number table with no number outside the expected list.
 - "Spoken with Wispr Flow" count is exactly two.
 - Five Fair warning blocks present, lamp 6 compliant.
-- Lamp 5 still says the correction is not yet reflected in the public default branch, and the label is still "Phir kya hua" unless you confirmed your approvals.
 - No sentence that reads like a win or a launch.
 - The word "Spoken" is not used anywhere else, including the share preview or the footer.
 
@@ -3634,7 +3520,6 @@ Hard stops:
 - Do not say "I built this entire page by voice" unless every prompt was spoken. Say what is true (Part C.5, variant A or B).
 - Do not say you have used Flow for any period of time, or before 1 November.
 - Do not say Take 3 exists.
-- Do not read the held-out numbers aloud (TipIndex 40.62 and 0.585; PitDB 629.70, 2.7, 26.5, 1.08), or any festival date.
 - Say "AI agents wrote a substantial share of the code". Do not say you wrote it yourself.
 - Do not describe the fireworks as crackers; they are silent and visual.
 - Total length is under 3:00 by the player's own timer.
@@ -3662,7 +3547,6 @@ Hard stops:
 
 - [ ] Résumé opens in a private window (Drive shared as "anyone with the link"), and the button says it opens Google Drive.
 - [ ] Each of the five GitHub repositories opens in a private window.
-- [ ] Each receipt link opens in a private window; where it does not (ignored or local reports, PitDB's public default branch is the older version), the page says "evidence available on request" or the link is removed.
 - [ ] The essay link, if there is one, opens.
 - [ ] LinkedIn and email: confirmed. The INVITE ME TO AN INTERVIEW button appears only because the contact field is filled in, and opens an email addressed to you.
 - [ ] No "see test" link is broken.
@@ -3708,9 +3592,7 @@ Note: the bracketed sentence is a model. Say it your way. Do not name the flaw u
 - [ ] No claim of growth wins, channel ownership, measured lift, customers, production deployment or hiring outcome.
 - [ ] No claim of Flow use before 1 November 2026 and no claim of how long you have used it.
 - [ ] The person section: you decided, by yourself, to keep each sentence exactly or to cut it (the father's accident sentence is personal, the exam sequence and "unsuccessful entrance attempts", the debate result and the four research contributors are on the ledger's open list).
-- [ ] The PitDB label is "Phir kya hua" unless you confirmed which approvals were yours.
 - [ ] Footer line 4 is true on the deployed page. Footer line 5 is the variant that is true.
-- [ ] TipIndex: be ready to answer any question about it in an interview. The ledger still lists your working knowledge as unconfirmed.
 - [ ] Hinglish: you read every Hinglish line aloud and it sounds like you. Any line that does not, rewrite or cut.
 - [ ] The video says nothing the page does not support.
 

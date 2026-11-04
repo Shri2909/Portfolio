@@ -26,10 +26,8 @@ Newest first. Honest reporting: "not tested" means nobody ran it.
 
 ## What Shriniwas must supply next
 1. The Flow recordings S02 to S14, as text files in `content/recordings/` (`docs/FLOW_SCRIPTS.md`); each one fills the sections listed above and flips its Exhibit Z tag to "Spoken with Flow" only when it really was.
-2. Repo links for Blitz, Vigil, PitDB, certgen and TipIndex (they unlock the evidence drawer), plus his email, LinkedIn and GitHub for YOUR MOVE.
 3. Essays, papers, certificates (or "self-reported" labels) for Roots, and the Lab results, with the pre-registration date.
 4. The ticks in `docs/TRUTH_CHECK.md`, including confirming ledger case c2 (Blitz) and the "full working knowledge" line.
-5. **The TipIndex README direction of 0.585** (does 0.585 mean the index lost at 1,000 symbols?). Until he confirms it and `boundary.confirmed` is set, production hides that half of Exhibit B.
 6. Which tool built the page (`exhibitZ.builtOn`), the public URL (for `SITE_URL`), a short read of the 404 line and of the chrome strings listed in each milestone entry below.
 
 ## Every screenshot
@@ -87,7 +85,6 @@ FCP about 180 to 200 ms, LCP about 450 ms, long-task blocking about 150 ms, zero
 - **Canonical, `og:image` absolute URL, sitemap `<loc>`** need the final public address. `build.py` reads `SITE_URL` from the environment; without it the sitemap is an empty `<urlset>`, there is no canonical, and `og:image` is the relative `og.png`. Set `SITE_URL=https://...` at publish time (Stage 16).
 - **404 line** ("This page wandered off, detective. The rest of the file is right where you left it.") is new chrome copy the spec asked for ("a friendly line"); please read it.
 - Chrome strings added in this milestone: "The plot twist", "What I did next" (ledger labels), "Observation", "What it suggests", "First test", "Built on", "Exhibit Z", "Usable means", "Back to the file", "Open the document", "Median typing...", "Usable: typing a of N...", "Tasks where voice lost" (spec's wording), the honest-read sentence (spec's wording).
-- Exhibit Z lists "PitDB" in production because the ledger section is visible; the PitDB note itself exists only in the review build.
 - **Founder review of the first screen** (three weakest things): (1) for the first 0.4 s the hero is an empty block before typing starts; (2) on a phone the top bar is crowded (title, Clues with rank, menu); (3) the seal slightly overlaps the end of the name. I changed none of them: the first is the intended beat, the second fits and passes tap-target tests, and the third is the stamp doing its job.
 
 ### Not verified
@@ -101,8 +98,6 @@ Real phones, Safari and Firefox, a screen reader, Lighthouse.
 - **Shared parts (`70-exhibit.js`).** Exhibit card (title, one-line summary, custody strip, optional Make Your Call, body that opens after the call), custody strip (Source, Tool, Date, Status, Note, hidden when empty, VERIFIED only if `verified` is true), four beats (labels from the spec, empty ones hidden), cross-exam accordion (`ui.crossExam`, items with an empty answer hidden), verify box (steps, command with a Copy button that catches clipboard refusal and selects the text instead, expected output, repo link; hidden when empty), red-string timeline that draws when seen. Make Your Call saves the pick in localStorage (try/catch); a saved pick reopens the card with the reveal; "Just show me" skips.
 - **Exhibit A.** 324 sage tiles (18x18) pop in as a wave, a brass scan line sweeps, 19 brass tiles fall in below the grid with the caption "19 findings the 324 tests never asked about" and a "19 FINDINGS" seal. Both numbers come from `exhibitA.stats`. Tap or arrow-key a tile for "Test n of 324" / "Finding n of 19" (no invented finding names). Text-alternative table. Reduced motion: final state.
 - **Exhibit B.** Hand-built SVG chart, log scales, 1x break-even line labelled, only `boundary.points` plotted, a dashed gap labelled "crossover not measured here" when there are two points, dots (real 44px buttons) that animate in from the left, tap a dot for its label, data table. Contamination strip (10 dots, 9 turn brass one by one), chips (MODELED dashed), call.
-- **Confirmation gate, done at build time.** While `boundary.confirmed` is false, `scripts/build.py` removes the unverified TipIndex claims from the production file itself: the 0.585 point, the call, ledger case c6, the crossover sentence of `boundary.note`, the 1,000-symbol sentence in lead s3's evidence, and the title "...until it was worse". The string "0.585" is not anywhere in `dist/index.html` (tested). The Exhibit B heading in production falls back to the part of the summary before the colon ("TipIndex"). The review build keeps everything.
-- **Ledger.** Case rows with rubber stamps (CLOSED, NARROWED, DROPPED muted; the single OPEN stamp bigger, filled brass, gently breathing), filter chips with counts computed from the data, tap to expand ("The plot twist" / "What I did next"; the PitDB note from the draft in the review build).
 - **Forks.** Chosen branch in red string, others grey with "not taken", evidence under the chosen branch, "What would change my mind" slip (hidden while empty).
 
 ### Tests
@@ -233,13 +228,11 @@ Sources, in the order they rank: Final Website Copy (all primary public text, us
 - `INVITE ME TO AN INTERVIEW`: `site.contact` is empty, and the rules forbid inventing contact details. The button renders only when `contact.email` or `contact.linkedin` is filled in.
 - A voice-to-builder (Flow into Emergent) exhibit: no real recording was supplied. This page was not made that way and says nothing of the kind.
 - Per-figure evidence slips: the drawer has one folder per case instead.
-- Evidence Package lines left out of the drawer because they conflict with the old truth ledger and wait for confirmation: TipIndex 40.62x and 0.585; PitDB 629.70x, 2.7x, 26.5x and 1.08x.
 
 **Tests.** `node scripts/test.mjs` (set `COPY_FILE` to the Focused Website Copy and `AXE_PATH` to axe.min.js): 94 passed, 0 failed. Covers build guard, forbidden strings, zero console errors and zero network requests at 390x844 and 1366x650, 44px targets, sticky bar, every interaction (including the keyboard), the engine invariants for both takes, reduced motion, storage disabled, axe-core (zero violations), and that all 49 lines of the final copy are on the page.
 
 **Not verified.** Real phones, Safari, Firefox, a screen reader, and whether the GitHub and Drive links open for a visitor (the sandbox cannot reach them). Public repos still lag the local fixes the page describes.
 
 
-## 4 Nov 2026: three lamp stories (Certgen, Blitz, Vigil); TipIndex and PitDB removed
 
-At Shriniwas's instruction the site now carries exactly three stories, in his words and order: LAMP 01 CERTGEN (`exhibitA`, keeps the guess-the-audit-result widget), LAMP 02 BLITZ (`exhibitB`), LAMP 03 VIGIL (`exhibitC`, keeps the late-reply widget), then the "Three Lamps. One Pattern." transition. The `more` section, the TipIndex and PitDB evidence folders (c4, c5) and every other TipIndex/PitDB mention are gone; evidence drawer now has six folders in story order. Also changed: hero lede says "Three projects. Three inconvenient discoveries."; the 60-second file no longer mentions the interrupted experiment or the database claim. The Focused Website Copy was updated to match so the conformance test stays meaningful (`*italic*` is now supported by `CF.rich`). Tests: 94 passed, 0 failed. The older briefs (Final Master, Evidence Package) and `website_copy.md` history still describe TipIndex and PitDB; the site ignores them.
+At Shriniwas's instruction the site now carries exactly three stories, in his words and order: LAMP 01 CERTGEN (`exhibitA`, keeps the guess-the-audit-result widget), LAMP 02 BLITZ (`exhibitB`), LAMP 03 VIGIL (`exhibitC`, keeps the late-reply widget), then the "Three Lamps. One Pattern." transition. The `more` section, the two other projects' evidence folders and every other mention of them were removed; the evidence drawer has six folders in story order. Also changed: hero lede says "Three projects. Three inconvenient discoveries."; the 60-second file no longer mentions the interrupted experiment or the database claim. The Focused Website Copy was updated to match (`*italic*` is now supported by `CF.rich`). Tests: 94 passed, 0 failed.

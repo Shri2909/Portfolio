@@ -16,7 +16,7 @@ Gates: G1 opening plays on phone; G2 all Flow scripts recorded (Tue 15:00); G3 p
 
 ## The person
 
-Shriniwas Kholkute. B.Tech Instrumentation and Control, VIT Pune, Sep 2023 to May 2027, CGPA 8.43. Skills: C, C++, Python, SQL, R. Projects (resume-validated): Blitz (limit order book), Vigil (TCP heartbeat monitor), PitDB (point-in-time query engine), plus certgen (take-home) and TipIndex (market-data replay). QuantStorm 2026 national rank 65 in Round 1.
+Shriniwas Kholkute. B.Tech Instrumentation and Control, VIT Pune, Sep 2023 to May 2027, CGPA 8.43. Skills: C, C++, Python, SQL, R. Projects (resume-validated): Blitz (limit order book), Vigil (TCP heartbeat monitor) and certgen (take-home). QuantStorm 2026 national rank 65 in Round 1.
 
 Personal story (13 points he supplied): loves philosophy; Advaita Vedanta through his father; essays and debates (debate second place; Berggruen essay); his father fractured his L1 in an accident in Nashik during his Class 12 boards, savings were depleted and tuition was unaffordable; drop year with YouTube prep; two unsuccessful JEE attempts without coaching; a Rs 3,999 Physics Wallah batch; got into VIT Pune through his JEE score. Loves challenging tasks (brainstorming, critical thinking, analysis, experimentation, team handling, conflict resolution, people management, growth ideas). Use only the "accident, L1 fracture, savings depleted" version of the father story.
 
@@ -24,7 +24,7 @@ Wispr facts he has read: Series B post (17 Aug 2026), product-taste post (14 Sep
 
 ## The concept (final)
 
-"The Case File: Cross-examine Shriniwas", softened to a friendly study vibe. Page order: Exhibit 0 (opening), The brief, Fair warning (reasons he might not be hired), Exhibit A (certgen), Exhibit B (TipIndex), Plot twists (ledger), Forks in the road (decision log), The Voice Lab, Field notes on Wispr, Beyond the code, Evidence drawer, Closing notes, Exhibit Z (provenance). Eight devices: the opening replay, "where this came from" strips, case against first and case for last, Make your call, plot-twist ledger, evidence drawer with five-minute verify notes, Exhibit Z, case log. See `DESIGN_SPEC.md` and `SECTIONS_SPEC.md`.
+"The Case File: Cross-examine Shriniwas", softened to a friendly study vibe. Page order: Exhibit 0 (opening), The brief, Fair warning (reasons he might not be hired), Exhibit A (certgen), Exhibit B (Vigil), Plot twists (ledger), Forks in the road (decision log), The Voice Lab, Field notes on Wispr, Beyond the code, Evidence drawer, Closing notes, Exhibit Z (provenance). Eight devices: the opening replay, "where this came from" strips, case against first and case for last, Make your call, plot-twist ledger, evidence drawer with five-minute verify notes, Exhibit Z, case log. See `DESIGN_SPEC.md` and `SECTIONS_SPEC.md`.
 
 ## Exhibit 0 facts (verified against his Flow history screenshots)
 

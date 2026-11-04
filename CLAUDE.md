@@ -12,7 +12,7 @@ Three interactions only: (1) guess the audit result (324 green tiles, 19 finding
 
 Deliberate departures from the rules below (the Final Website Copy is authoritative): the title contains "SUSPECT" and the Exhibit B copy contains "failed", words rule 9 bans; there are no Chapter Seals (rule 10), because they would be new copy. Interface labels you write must still avoid the banned words.
 
-`INVITE ME TO AN INTERVIEW` renders only when `site.contact.email` or `site.contact.linkedin` is filled in. TipIndex and PitDB were removed from the site on 4 Nov 2026 at Shriniwas's instruction (only Certgen, Blitz and Vigil remain); do not reintroduce them. No voice-to-builder exhibit exists (no recording); never imply one.
+`INVITE ME TO AN INTERVIEW` renders only when `site.contact.email` or `site.contact.linkedin` is filled in. The site carries exactly three project stories (Certgen, Blitz, Vigil) at Shriniwas's instruction of 4 Nov 2026; do not add other projects. No voice-to-builder exhibit exists (no recording); never imply one.
 
 ## What this is
 

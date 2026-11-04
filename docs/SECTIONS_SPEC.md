@@ -29,10 +29,6 @@ Heading `ui.warningTitle`, subline `ui.warningSub`. `against.reasons[]` (max 3) 
 
 ExhibitCard plus: MAKE YOUR CALL (question, options, reveal from content). THE GRID after the answer: 324 small sage tiles in an 18x18 grid popping in with a quick wave; a thin brass scan line sweeps across; then 19 brass tiles fall in BELOW the grid, outside it, with the caption "19 findings the 324 tests never asked about" and a small seal "19 FINDINGS". Data `exhibitA.stats {tests:324, findings:19}`. Reduced motion: final state. TIMELINE: vertical red-string timeline from `timeline[]` (sequence only, no dates). Cross-exam and verify from content.
 
-## exhibitB (TipIndex, "The index was 40.6x better, until it was worse")
-
-ExhibitCard plus: THE BOUNDARY CHART (hand-built SVG): x = symbols subscribed, log scale 1 to 1,000; y = index speedup over full scan, log scale; a horizontal line at 1x labelled "break-even: above it the index wins"; plot exactly `boundary.points`; between the two points a dashed line labelled "crossover not measured here"; dots animate in from the left on scroll; tapping a dot opens its detail; `boundary.note` in a CustodyStrip; hidden data table. CONTAMINATION STRIP: `contamination.rounds` dots, the first `contaminated` turn brass one by one; caption from `contamination.note`. CHIPS from `chips[]` (a chip with tag "MODELED" has a dashed outline). MAKE YOUR CALL from `call`.
-
 ## ledger ("Plot twists, and what I did next")
 
 `ledger.cases[] = {id, project, title, what, status: closed|narrowed|dropped|open, resolution}`. Case-file rows with a rubber-stamp status (CLOSED, NARROWED, DROPPED in muted ink; OPEN visually loudest), filter chips by status, counts computed from data, tap to expand what/resolution; rows stack as cards on phone.
