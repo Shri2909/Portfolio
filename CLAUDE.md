@@ -4,11 +4,12 @@ This file replaces the old detective-site instructions. The detective site ("Cas
 
 ## What this is
 
-A one-page night site, "Ek Diya Se Doosra" (one lamp lights another), for Shriniwas Kholkute's application to Wispr Flow's India growth internship. A visitor lights five lamps (five projects), reads what happened and what he did next, can write one wish for one real person, and ends with a lamp of their own.
+A one-page night site, "Ek Diya Se Doosra" (one lamp lights another), for Shriniwas Kholkute's application to Wispr Flow's India growth internship. A visitor lights three lamps (Certgen, Blitz, Vigil), reads each story in three levels (instantly visible, poora kissa, inspect the evidence), meets the person, hears the voice, reads the proposed Handover Test (a fourth lamp that never lights), can write one wish for one real person, and ends with a lamp of their own. The journey is numbered 01 to 06 (see `copy.journey`).
 
 ## Sources of truth
 
-1. `website_copy.md`: every visible word. Copied into `src/data/copy.json`. Never rewrite, shorten, translate or "improve" it.
+0. `website_copy_lamps.md`: the three lamp stories and the transition, word for word as Shriniwas wrote them (4 Nov 2026), plus the Level 1 summaries and the changed lines. They replace the five lamp stories of `website_copy.md`; TipIndex and PitDB are removed from the page.
+1. `website_copy.md`: every other visible word. Copied into `src/data/copy.json`. Never rewrite, shorten, translate or "improve" it.
 2. `build_prompts.md`: the build briefs (packs 1 to 7; pack 8 is deliberately not built). Reconciliations R1 to R10 at its top beat the individual prompts.
 3. `reference/content.json`: read-only. The voice takes and the evidence-drawer bodies come from it.
 4. `docs/TRUTH_LEDGER.md` and `docs/TRUTH_CHECK.md`: what is verified. UNVERIFIED items stay off the page.
@@ -23,7 +24,7 @@ If anything conflicts with the truth rules below, the truth rules win.
 3. "Spoken with Wispr Flow" appears only on the two 2 Nov 2026 takes (Take 1 and Take 2). Nowhere else, including footer and meta.
 4. AI agents wrote a substantial share of the code in these projects. Never claim otherwise.
 5. Gated lines stay OFF (flags `false`) until Shriniwas decides: the recorded Flow-into-Emergent line, the no-analytics footer line, the first sentence of the person block, the lamp-six language line, and footer line 5 (how this page was made, left empty).
-6. Held-out numbers appear nowhere: TipIndex 40.62x and 0.585; PitDB 629.70x, 2.7x, 26.5x, 1.08x.
+6. TipIndex and PitDB are not on the page at all (removed 4 Nov 2026); do not add them back.
 7. Print no festival date. Spell it "Deepavali".
 8. No `[CONFIRM]`, `[FILL IN]`, `TODO`, lorem or placeholder text on the published page.
 
@@ -44,3 +45,8 @@ If anything conflicts with the truth rules below, the truth rules win.
 - Commit after every pack and push the branch. Keep `BUILD_LOG.md` current.
 - Never say something was verified if it was not seen. Mark visual and phone-only items "not verified".
 - Do not touch `main`. Never force-push.
+
+
+## Lamps are three; internal slot 6 is the honest lamp
+
+`src/lib/lamps.js` holds `LAMPS = 3`, the tone steps (0, 2, 4, 5; 6 = the visitor's lamp) and which rangoli layers each lamp draws. The proposed, never-lit lamp keeps the internal slot 6 (DOM id `#lamp-6`, flame personality 6) so the stage, light and flame modules are unchanged; the page calls it Lamp 4. `scripts/copy.lock.json` was re-baselined on 4 Nov 2026 for the new stories.

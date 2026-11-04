@@ -41,7 +41,7 @@ export default function LateReplySlider() {
           aria-valuetext={tpl(after ? sl.spokenAfter : sl.spokenBefore, { t: tt })} onChange={(e) => setI(+e.target.value)} />
         {after && <span className={`reply-mark ${counted ? 'counted' : 'not-counted'}`} aria-hidden="true" />}
       </div>
-      {after && <p className="caption">{rich(copy.lamps[1].stop[logic === 'original' ? 'flameOriginal' : 'flameCorrected'])}</p>}
+      {after && <p className="caption">{rich(copy.lamps[2].stop[logic === 'original' ? 'flameOriginal' : 'flameCorrected'])}</p>}
       <p className="readout" role="status" aria-live="polite">{rich(tpl(readout, { t: tts }))}</p>
     </div>
   );

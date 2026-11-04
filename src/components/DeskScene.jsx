@@ -22,7 +22,7 @@ export default function DeskScene() {
       <i className="pool" aria-hidden="true" />
       <div className="desk-lamp" id="desk-lamp" aria-hidden="true"><Lamp n={0} state="lit"><Flame id={20} pers={0} /></Lamp></div>
       <ol className="shelf" aria-hidden="true">
-        {[1, 2, 3, 4, 5].map((n) => <li key={n}><Lamp n={n} state={lamps[n]}>{lamps[n] === 'lit' && <Flame id={20 + n} pers={n} />}</Lamp></li>)}
+        {[1, 2, 3].map((n) => <li key={n}><Lamp n={n} state={lamps[n]}>{lamps[n] === 'lit' && <Flame id={20 + n} pers={n} />}</Lamp></li>)}
         <li id="visitor-lamp" role="img" aria-label={X('visitorLampAria')} style={{ outline: 'none' }}>
           <Lamp n={0} state={vl ? 'lit' : 'unlit'}>{(vl || half) && <Flame id={30} pers={1} scale={vl ? 1 : 0.6} />}</Lamp>
         </li>

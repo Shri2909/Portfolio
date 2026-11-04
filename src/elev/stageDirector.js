@@ -7,7 +7,7 @@ import { CAMERA } from '../elevation.js';
 
 export const glide = { on: false }; // set by scrollFeel during a programmatic glide: intersections are ignored (R12)
 export const ACTS = ['doorstep', 'baithak', 'chhat', 'awaaz', 'aakhri', 'vidaai'];
-const BY_ID = { night: 'doorstep', 'lamp-1': 'doorstep', baithak: 'baithak', 'lamp-2': 'chhat', 'lamp-3': 'chhat', 'lamp-4': 'chhat', 'lamp-5': 'chhat', 'row-breathes': 'chhat', voice: 'awaaz', 'lamp-6': 'aakhri', verdict: 'vidaai', wish: 'vidaai', closure: 'vidaai', footer: 'vidaai' };
+const BY_ID = { night: 'doorstep', 'lamp-1': 'chhat', baithak: 'baithak', 'lamp-2': 'chhat', 'lamp-3': 'chhat', pattern: 'chhat', 'row-breathes': 'chhat', voice: 'awaaz', 'lamp-6': 'aakhri', verdict: 'vidaai', wish: 'vidaai', deeper: 'vidaai', closure: 'vidaai', footer: 'vidaai' };
 const root = document.documentElement;
 let gate = false, geo = [], y = 0, lastY = 0, dir = 1, v = 0, dirty = false, act = '', cand = '', candSince = 0, lastCommit = -1e9, calmSince = 0, offTick = null;
 let progQ = -1, io = null, ro = null, cleanups = [], quiet = 0;
@@ -93,7 +93,7 @@ function watchCues() {
 export function start() {
   y = lastY = scrollY;
   // lamp stops are cued as they arrive (E2.5)
-  document.querySelectorAll('#lamp-1,#lamp-2,#lamp-3,#lamp-4,#lamp-5,#lamp-6').forEach((el) => { if (!el.dataset.cue) el.dataset.cue = 'lamp-arrive'; });
+  document.querySelectorAll('#lamp-1,#lamp-2,#lamp-3,#lamp-6').forEach((el) => { if (!el.dataset.cue) el.dataset.cue = 'lamp-arrive'; });
   window.addEventListener('scroll', onScroll, { passive: true });
   ro = new ResizeObserver(measure); const m = document.querySelector('main'); m && ro.observe(m);
   document.fonts && document.fonts.ready.then(measure);

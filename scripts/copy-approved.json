@@ -1,32 +1,4 @@
 {
- "_note": "New micro-labels from the elevation packs. Each needs Shriniwas's approval before launch (consolidated list in ELEVATION_REPORT.md). Paths only.",
- "paths": [
-  "/ui/extra/hapticsLabel",
-  "/ui/extra/keyAct",
-  "/ui/extra/keysHint",
-  "/ui/extra/keysOn",
-  "/ui/extra/keysTitle",
-  "/ui/extra/kolamName",
-  "/ui/extra/menuKeys",
-  "/ui/extra/movieAria",
-  "/ui/extra/movieDownloadWebm",
-  "/ui/extra/movieFailed",
-  "/ui/extra/movieLabel",
-  "/ui/extra/movieNoteMp4",
-  "/ui/extra/movieNoteWebm",
-  "/ui/extra/movieShare",
-  "/ui/extra/movieSlow",
-  "/ui/extra/padClear",
-  "/ui/extra/padFolds",
-  "/ui/extra/padMirror",
-  "/ui/extra/padOpen",
-  "/ui/extra/padOpenEn",
-  "/ui/extra/padPreset",
-  "/ui/extra/padPresets",
-  "/ui/extra/padStroke",
-  "/ui/extra/padUndo",
-  "/ui/extra/proofBack",
-  "/ui/extra/scriptMaybe",
-  "/ui/extra/wayNav"
- ]
+ "_note": "Re-baselined on 4 Nov 2026 for the three-lamp stories (Certgen, Blitz, Vigil): the lock now holds the current copy; new strings need an entry here.",
+ "paths": []
 }

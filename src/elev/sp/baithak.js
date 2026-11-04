@@ -21,16 +21,16 @@ export function mount(sec) {
   let stop = null, ang = 0, ember = null, visible = false;
   const ring = sec.querySelector('.loop-ring');
   if (ring) {
-    const stops = [...ring.querySelectorAll('.loop-stop')]; ring.setAttribute('data-sp-ring', '1'); stops.forEach((b, i) => b.style.setProperty('--i', i));
+    const stops = [...ring.querySelectorAll('.loop-stop')]; ring.setAttribute('data-sp-ring', '1'); stops.forEach((b, i) => { b.style.setProperty('--i', i); b.style.setProperty('--step', (360 / stops.length) + 'deg'); });
     const NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg'); svg.setAttribute('viewBox', '-125 -125 250 250'); svg.setAttribute('class', 'wire-e'); svg.setAttribute('data-e', '1'); svg.setAttribute('aria-hidden', 'true');
     svg.innerHTML = '<circle r="100" fill="none" stroke="#F5A623" stroke-opacity=".45" stroke-width="1.6" stroke-dasharray="5 5"/><path d="M-6 -106 l10 6 l-10 6" fill="none" stroke="#F5A623" stroke-opacity=".7" stroke-width="1.6"/>';
     ring.insertBefore(svg, ring.firstChild); ember = el('i', 'walker-e'); ring.appendChild(ember);
     const place = (a) => { ember.style.transform = `translate(${(100 * Math.cos(a)).toFixed(1)}px,${(100 * Math.sin(a)).toFixed(1)}px)`; };
     const loop = (dt) => { if (!visible || !alive('baithak') || still() || tier() !== 'high' || ring.querySelector('.loop-stop:focus-visible')) return; ang += dt / 14000 * Math.PI * 2; place(ang - Math.PI / 2); };
-    const sel = () => { const on = ring.querySelector('.loop-stop.on'); if (on && ember) { ang = (+on.style.getPropertyValue('--i')) * Math.PI / 3 + Math.PI / 2 - Math.PI / 2; place(ang - Math.PI / 2); } stops.forEach((b, i) => b.classList.toggle('visited-e', i < +(on && on.style.getPropertyValue('--i')))); };
+    const sel = () => { const on = ring.querySelector('.loop-stop.on'); if (on && ember) { ang = (+on.style.getPropertyValue('--i')) * (Math.PI * 2 / stops.length) + Math.PI / 2 - Math.PI / 2; place(ang - Math.PI / 2); } stops.forEach((b, i) => b.classList.toggle('visited-e', i < +(on && on.style.getPropertyValue('--i')))); };
     ring.addEventListener('click', () => setTimeout(sel, 0)); un.push(useInView(ring, (v) => { visible = v; }, 0.2));
     place(-Math.PI / 2); stop = ticker.add(loop); sel();
-    un.push(() => { stop && stop(); svg.remove(); ember.remove(); ring.removeAttribute('data-sp-ring'); stops.forEach((b) => { b.style.removeProperty('--i'); b.classList.remove('visited-e'); }); });
+    un.push(() => { stop && stop(); svg.remove(); ember.remove(); ring.removeAttribute('data-sp-ring'); stops.forEach((b) => { b.style.removeProperty('--i'); b.style.removeProperty('--step'); b.classList.remove('visited-e'); }); });
   }
   const shelf = sec.querySelector('.bring-lamps'); if (shelf) { shelf.setAttribute('data-sp-shelf', '1'); un.push(() => shelf.removeAttribute('data-sp-shelf')); }
   const unreg = effect('baithak', { priority: 6, ms: 0.8, shed: () => {}, restore: () => {} });

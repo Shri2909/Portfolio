@@ -1,3 +1,4 @@
+import { LAMP_IDS, RANGOLI_LAYERS } from '../../lib/lamps.js';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { mulberry32 } from '../../lib/rand.js';
 import { useStore } from '../../lib/useStore.js';
@@ -35,9 +36,10 @@ function Rangoli() {
   const refs = useRef([]);
   useEffect(() => {
     const set = (i, p, anim) => { const g = refs.current[i]; if (!g) return; g.style.transition = anim ? 'none' : ''; g.style.setProperty('--p', String(p)); };
-    getState().litCount && [1, 2, 3, 4, 5].forEach((n) => getState().lamps[n] === 'lit' && set(n - 1, 1, true));
-    const a = on('diya:lighting', ({ n, progress }) => { if (n <= 5) set(n - 1, progress, true); });
-    const b = on('diya:lit', ({ n }) => { const g = refs.current[n - 1]; if (g) { g.style.transition = ''; g.style.setProperty('--p', '1'); } });
+    // each lamp draws its own share of the five rangoli layers (lamp 1: layers 1-2, lamp 2: layers 3-4, lamp 3: layer 5)
+    getState().litCount && LAMP_IDS.forEach((n) => getState().lamps[n] === 'lit' && RANGOLI_LAYERS[n].forEach((i) => set(i, 1, true)));
+    const a = on('diya:lighting', ({ n, progress }) => { const ls = RANGOLI_LAYERS[n]; if (ls) ls.forEach((i, k) => set(i, Math.max(0, Math.min(1, progress * ls.length - k)), true)); });
+    const b = on('diya:lit', ({ n }) => { (RANGOLI_LAYERS[n] || []).forEach((i) => { const g = refs.current[i]; if (g) { g.style.transition = ''; g.style.setProperty('--p', '1'); } }); });
     return () => { a(); b(); };
   }, []);
   const [gx, gy] = pt(129, 45);
@@ -134,7 +136,7 @@ export default function Terrace() {
   const { w } = useWindowSize();
   const lit = useStore((s) => s.litCount), tone = useStore((s) => s.tone);
   const mode = 0;
-    const lampX = [0.1, 0.3, 0.5, 0.7, 0.9];
+    const lampX = [0.2, 0.5, 0.8];
   return (
     <>
       <div id="terrace" aria-hidden="true">
@@ -144,15 +146,15 @@ export default function Terrace() {
         </defs></svg>
         <div className="toran-wrap"><Toran w={w} /></div>
         <div className="lights-wrap"><StringLights w={w} mode={MODES[mode]} /></div>
-        <Lantern idx={0} size={48} color="#FFD9A0" len={28} left={14} lit={lit >= 2 || tone >= 5} />
-        <Lantern idx={1} size={36} color="#C2410C" len={20} left={86} lit={lit >= 3 || tone >= 5} />
-        <Lantern idx={2} size={30} color="#2F6B4F" len={36} left={70} lit={lit >= 4 || tone >= 5} hide="lantern-3" />
+        <Lantern idx={0} size={48} color="#FFD9A0" len={28} left={14} lit={lit >= 1 || tone >= 5} />
+        <Lantern idx={1} size={36} color="#C2410C" len={20} left={86} lit={lit >= 2 || tone >= 5} />
+        <Lantern idx={2} size={30} color="#2F6B4F" len={36} left={70} lit={lit >= 3 || tone >= 5} hide="lantern-3" />
         <div className="floor" />
         <div className="parapet"><i className="cap" style={{ left: '8%' }} /><i className="cap" style={{ left: '48%' }} /><i className="cap" style={{ left: '88%' }} /></div>
         <div className="cat-wrap"><Cat lamp3={lit >= 3} /></div>
         <div className="rangoli-wrap"><Rangoli /></div>
         <div className="pools">{lampX.map((x, i) => <i key={i} className={i < lit ? 'on' : ''} style={{ left: x * 100 + '%' }} />)}</div>
-        <svg className="inkline" viewBox="0 0 100 2" preserveAspectRatio="none"><path pathLength="1" d="M10 1H90" style={{ strokeDashoffset: 1 - Math.max(0, lit - 1) / 4 }} /></svg>
+        <svg className="inkline" viewBox="0 0 100 2" preserveAspectRatio="none"><path pathLength="1" d="M10 1H90" style={{ strokeDashoffset: 1 - Math.max(0, lit - 1) / 2 }} /></svg>
       </div>
     </>
   );

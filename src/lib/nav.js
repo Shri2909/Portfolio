@@ -32,7 +32,7 @@ import { emit as _emit, on as _on } from './events.js';
 let cardOpener = null;
 export const openLampCard = (n, source = 'direct', force = false) => {
   const s = getState();
-  if (!(n >= 1 && n <= 5) || (!force && s.lamps[n] !== 'lit')) return false;
+  if (!(n >= 1 && n <= 3) || (!force && s.lamps[n] !== 'lit')) return false;
   cardOpener = force ? document.activeElement : (document.querySelectorAll('.lamp-btn')[n - 1] || document.activeElement);
   actions.setLampCard(n);
   return true;

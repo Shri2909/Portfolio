@@ -6,6 +6,7 @@ import { useStore } from '../lib/useStore.js';
 import { announce } from '../lib/announce.js';
 import { shape } from './Lamp.jsx';
 import InviteButton from './InviteButton.jsx';
+import Step from './Step.jsx';
 
 // The last lamp: a proposed test, never run. It draws as a sketch and never lights (it never touches the store).
 // The Handover Test: three small taps (all labelled as illustrations, documented behaviour or simulated), the experiment in short,
@@ -76,6 +77,7 @@ export default function Growth() {
         <p className="live" role="status" aria-live="polite">{line ? rich(line) : ''}</p>
       </div>
       <div className="panel growth-copy">
+        <Step k="s4" />
         <p className="kicker">{g.kicker}</p>
         <h2 id="lamp-6-h" tabIndex={-1}>{rich(g.title)}</h2>
         <p className="hook"><strong>{g.hook}</strong></p>

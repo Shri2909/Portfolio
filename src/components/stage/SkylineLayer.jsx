@@ -1,11 +1,11 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { mulberry32, shuffle } from '../../lib/rand.js';
 import { useStore } from '../../lib/useStore.js';
 
 // Indian apartment-block skyline in three SVG layers. 64 windows (+1 for the visitor), each a home.
-// Lit count by tone: 5, 14, 23, 32, 41, 56, 64. The first 5 are fixed ("already home").
+// Lit count by tone (LIT below); three lamps step the tone 0, 2, 4, 5, then the visitor's lamp is 6. The first 14 are fixed ("already home").
 const W = 1200, H = 500, LIT = [14, 20, 28, 36, 44, 56, 64];
-const LAMP_X = [250, 450, 600, 750, 950]; // viewBox x of the lamp row (approximate), used only to order windows
+const LAMP_X = [250, 600, 950]; // viewBox x of the lamp row (approximate), used only to order windows
 
 function layer(r, name, nBlocks, hMin, hMax, nWin, ww, wh) {
   const bw = (W + 20) / nBlocks, blocks = [];
@@ -31,8 +31,8 @@ function build() {
   for (const f of all) if (!fixed.includes(f) && fixed.length < 14 && f.x > 250 && f.x < 950 && f.color !== 'tv') fixed.push(f);
   const rank = new Map(); fixed.forEach((w, i) => rank.set(w.id, i));
   let pool = all.filter((w) => !rank.has(w.id)), k = 14;
-  [6, 8, 8, 8].forEach((cnt, lamp) => { pool.sort((a, b) => Math.abs(a.x - LAMP_X[lamp]) - Math.abs(b.x - LAMP_X[lamp])); pool.splice(0, cnt).forEach((w) => rank.set(w.id, k++)); });
-  pool.sort((a, b) => Math.abs(a.x - LAMP_X[4]) - Math.abs(b.x - LAMP_X[4])); pool.splice(0, 12).forEach((w) => rank.set(w.id, k++));
+  [14, 16, 12].forEach((cnt, lamp) => { pool.sort((a, b) => Math.abs(a.x - LAMP_X[lamp]) - Math.abs(b.x - LAMP_X[lamp])); pool.splice(0, cnt).forEach((w) => rank.set(w.id, k++)); });
+  pool.sort((a, b) => Math.abs(a.x - LAMP_X[1]) - Math.abs(b.x - LAMP_X[1])); pool.splice(0, 8).forEach((w) => rank.set(w.id, k++));
   pool.forEach((w) => rank.set(w.id, k++));
   all.forEach((w) => { w.rank = rank.get(w.id); });
   far.wins = all.filter((w) => w.layer === 'far'); mid.wins = all.filter((w) => w.layer === 'mid'); near.wins = all.filter((w) => w.layer === 'near');
@@ -78,7 +78,8 @@ export default function SkylineLayer() {
   if (!SCENE) SCENE = build();
   const S = SCENE;
   const tone = useStore((s) => s.tone), calm = useStore((s) => s.calm), visitor = useStore((s) => s.visitorLit);
-  const lit = LIT[tone], prev = tone > 0 ? LIT[tone - 1] : 0;
+  const pt = useRef(0), lit = LIT[tone], prev = LIT[pt.current] || 0;
+  useEffect(() => { pt.current = tone; }, [tone]);
   const win = (w) => <WinRects key={w.id} w={w} on={w.rank < lit} delay={Math.max(0, w.rank - prev) * 90 + (tone === 5 ? 800 : 0)} calm={calm} />;
   const tilt = S.near.blocks[0];
   return (

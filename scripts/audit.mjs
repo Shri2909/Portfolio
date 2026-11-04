@@ -95,7 +95,7 @@ for (const [w, h, label] of [[390, 844, 'phone 390'], [1366, 768, 'laptop 1366']
 { const s = sec('P8.6', 'Claims, numbers and attribution'); const ctx = await ctxOf(390, 844); const p = await open(ctx);
   await p.getByRole('button', { name: /Menu/ }).click(); await p.getByRole("button", { name: /Read the full text/ }).click(); await p.waitForTimeout(400);
   const t = await p.evaluate(() => document.getElementById('fulltext').innerText); const nums = [...t.matchAll(/\d[\d,]*(?:\.\d+)?[×x]?/g)].map((m) => m[0]);
-  const expected = new Set(['324', '19', '26', '192', '479', '232', '105', '1,205', '1,850', '3.1×', '1.02×', '820', '06', '15', '00', '3', '0', '6', '2', '1', '2026', '7', '27', '30', '45', '5', '4', '8', '12', '3,999', '9', '60', '400', '16', '20', '100', '99', '10', '14', '11', '999', '75', '1,000']);
+  const expected = new Set(['324', '19', '26', '192', '479', '232', '105', '1,205', '1,850', '3.1×', '1.02×', '00', '3', '0', '6', '2', '1', '2026', '7', '27', '30', '45', '5', '4', '8', '12', '3,999', '9', '60', '400', '16', '20', '100', '99', '10', '14', '11', '999', '75', '1,000']);
   const odd = [...new Set(nums.filter((n) => !expected.has(n)))]; s.note(`Distinct numbers in the full text: ${[...new Set(nums)].length}. Not on the expected list: ${odd.length ? odd.join(', ') : 'none'}.`); if (odd.length) s.warn('numbers to read: ' + odd.join(', '));
   const sp = (t.match(/Spoken with Wispr Flow/g) || []).length; s.note(`"Spoken with Wispr Flow" in full text: ${sp}.`); if (sp !== 2) s.fail('expected 2');
   const html = fs.readFileSync(path.join(root, 'dist/index.html'), 'utf8'); if (/Spoken/.test(html)) s.fail('"Spoken" in index.html / share preview'); else s.note('"Spoken" is not in the share preview or index.html.');

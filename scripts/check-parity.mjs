@@ -10,7 +10,7 @@ for (const f of walk(path.join(root, 'src')).filter((f) => /\.jsx?$/.test(f))) {
   const s = fs.readFileSync(f, 'utf8'); for (const m of s.matchAll(/registerEffect\(\{([^}]*)\}/g)) if (!/still\s*[:=]/.test(m[1]) && !/export function/.test(s.slice(Math.max(0, m.index - 20), m.index))) fail(`registerEffect without still in ${path.relative(root, f)}`);
 }
 const { srv, base } = serve(); const b = await chromium.launch({ args: ['--no-sandbox'] });
-const IDS = ['night', 'baithak', 'lamp-1', 'lamp-2', 'lamp-3', 'lamp-4', 'lamp-5', 'voice', 'lamp-6', 'verdict', 'wish', 'closure'];
+const IDS = ['night', 'baithak', 'lamp-1', 'lamp-2', 'lamp-3', 'pattern', 'voice', 'lamp-6', 'verdict', 'deeper', 'wish', 'closure'];
 for (const [name, vp, mob] of [['390', { width: 390, height: 844 }, true], ['1366', { width: 1366, height: 768 }, false]]) {
   const ctx = await b.newContext({ viewport: vp, isMobile: mob, hasTouch: mob, reducedMotion: 'reduce' }); const p = await ctx.newPage();
   await p.goto(base); await p.waitForTimeout(2500);

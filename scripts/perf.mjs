@@ -23,7 +23,7 @@ const INIT = () => {
   window.addEventListener('error', (e) => __p.errs.push(String(e.message)));
 };
 const stats = (a) => { if (!a.length) return { frames: 0, median: 0, p95: 0, p99: 0, max: 0, dropped: 0, jank: 0 }; const s = [...a].sort((x, y) => x - y), q = (p) => s[Math.min(s.length - 1, Math.floor(s.length * p))]; const dur = a.reduce((x, y) => x + y, 0); return { frames: a.length, median: +q(0.5).toFixed(1), p95: +q(0.95).toFixed(1), p99: +q(0.99).toFixed(1), max: +s[s.length - 1].toFixed(1), dropped: +(100 * a.filter((v) => v > 25).length / a.length).toFixed(1), jank: +(a.reduce((x, v) => x + Math.max(0, v - 16.7), 0) / dur).toFixed(3) }; };
-const IDS = ['night', 'baithak', 'lamp-1', 'lamp-2', 'lamp-3', 'lamp-4', 'lamp-5', 'voice', 'lamp-6', 'verdict', 'wish', 'closure'];
+const IDS = ['night', 'baithak', 'lamp-1', 'lamp-2', 'lamp-3', 'pattern', 'voice', 'lamp-6', 'verdict', 'deeper', 'wish', 'closure'];
 
 const quick = !!arg('quick'); // one config: 390x844, 4x, tier high, normal
 const cfgs = quick ? [{ v: '390', cpu: 4, q: 'high', calm: false }] : full

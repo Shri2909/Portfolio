@@ -48,18 +48,6 @@ const lum = (page, sel) => page.evaluate((s) => { const c0 = document.querySelec
   ok('E5.3 numeral counting at 1 s', mid > 1.2 && mid < 2.7, String(mid));
   await page.waitForTimeout(2800);
   ok('E5.3 ends at 1.02x, diya lit', await page.evaluate(() => document.querySelector('.val-e').textContent) === '1.02×' && await page.evaluate(() => document.querySelector('.phul-e').dataset.state) === 'done');
-  // E5.4
-  await bring(page, '.device.handoff');
-  await page.evaluate(() => document.querySelector('.handoff .baton-btn').click()); await page.waitForTimeout(3200);
-  ok('E5.4 Claude Code lantern lit at 3 s', await page.evaluate(() => !!document.querySelector('.handoff .lantern-l.right.lit')));
-  await page.evaluate(() => document.querySelector('.handoff .half.lower .btn').click()); await page.waitForTimeout(3200);
-  const dots = +(await page.evaluate(() => document.querySelector('canvas.dots').dataset.dots));
-  ok('E5.4 dots never above 820 and reach it', dots === 820, String(dots));
-  // E5.5
-  await bring(page, '.device.clock');
-  ok('E5.5 ghost group on at 06:00 direct', await page.evaluate(() => document.querySelector('.clock .ghost-e').dataset.on) === '1');
-  await page.evaluate(() => { const i = document.querySelector('.clock input[type=range]'); Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(i, '2'); i.dispatchEvent(new Event('change', { bubbles: true })); i.dispatchEvent(new Event('input', { bubbles: true })); }); await page.waitForTimeout(500);
-  ok('E5.5 ghost off at 06:15', await page.evaluate(() => document.querySelector('.clock .ghost-e').dataset.on) === '0');
   // E5.6 / 5.7
   await bring(page, '#baithak');
   ok('E5.6 baithak mounted', await page.evaluate(() => document.getElementById('baithak').dataset.spBaithak) === '1');

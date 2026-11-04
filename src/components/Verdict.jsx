@@ -3,6 +3,8 @@ import copy, { X } from '../lib/copy.js';
 import { tpl } from '../lib/tpl.js';
 import { rich } from '../lib/rich.jsx';
 import { useStore } from '../lib/useStore.js';
+import InviteButton from './InviteButton.jsx';
+import Step from './Step.jsx';
 
 // Seedhi baat: a signed note on warm paper under the lit row. The third paragraph is the signature line, set large.
 export default function Verdict() {
@@ -16,6 +18,7 @@ export default function Verdict() {
     <section id="verdict" className={`sec ${seen ? 'seen' : ''}`} aria-labelledby="verdict-h" ref={ref}>
       <div className="note-paper">
         <i className="tape l" aria-hidden="true" /><i className="tape r" aria-hidden="true" /><i className="crease" aria-hidden="true" />
+        <Step k="s5" />
         <p className="kicker">{V.kicker}</p>
         <h2 id="verdict-h" tabIndex={-1}>{rich(V.heading)}</h2>
         {V.paras.map((p, i) => <p key={i}>{rich(p)}</p>)}
@@ -28,6 +31,9 @@ export default function Verdict() {
       <p className="verdict-btns">
         <a className="btn" href={copy.site.links.resume} target="_blank" rel="noopener noreferrer" aria-label={tpl(X('driveAria'), { label: V.resume.label })}>{V.resume.label}</a>
         <button className="btn" data-evidence="">{V.evidenceLabel}</button>
+        <InviteButton short />
+        {copy.site.contact && copy.site.contact.github && <a className="btn" href={copy.site.contact.github} target="_blank" rel="noopener noreferrer">{X('ctaGithub')}</a>}
+        {copy.site.contact && copy.site.contact.linkedin && <a className="btn" href={copy.site.contact.linkedin} target="_blank" rel="noopener noreferrer">{X('ctaLinkedin')}</a>}
       </p>
     </section>
   );

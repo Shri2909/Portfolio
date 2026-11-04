@@ -9,6 +9,7 @@ import { announce } from '../lib/announce.js';
 import { scrollToId } from '../lib/nav.js';
 import { haptic } from '../lib/haptic.js';
 import { lampRegistry } from '../lib/lampRegistry.js';
+import { LAMPS, HONEST, LAMP_IDS } from '../lib/lamps.js';
 import { engine } from '../lib/flame.js';
 import Lamp from './Lamp.jsx';
 import Flame from './Flame.jsx';
@@ -18,7 +19,7 @@ import Flame from './Flame.jsx';
 const HOLD = 900, TAP_MS = 350, TAP_MOVE = 10, SHORT = 450;
 const ease = (p) => p * p * (3 - 2 * p);
 const quad = (a, c, b, t) => ({ x: (1 - t) * (1 - t) * a.x + 2 * (1 - t) * t * c.x + t * t * b.x, y: (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * c.y + t * t * b.y });
-const names = copy.lamps.map((l) => l.kicker.split(' · ')[1]);
+const names = copy.ui.extra.projectNames.map((p) => p.toUpperCase());
 
 export default function LampRow() {
   const lamps = useStore((s) => s.lamps), litCount = useStore((s) => s.litCount), calm = useStore((s) => s.calm);
@@ -42,7 +43,7 @@ export default function LampRow() {
   const lean = (n, on_) => { // the previous lamp never dims: glow up a little and leans toward the traveller; the lamp ahead leans in, curious
     const src = n === 1 ? 0 : n - 1;
     engine.set(src, { leanExtra: on_ ? 6 : 0, glowBoost: on_ ? 1.1 : 1 });
-    if (n < 5) engine.set(n + 1, { leanExtra: on_ ? -4 : 0 });
+    if (n < LAMPS) engine.set(n + 1, { leanExtra: on_ ? -4 : 0 });
   };
   const sparkAt = (pos, now) => { if (now - lastSpark.current > 40) { lastSpark.current = now; emit('fx:burst', { kind: 'spark', x: pos.x, y: pos.y }); } };
 
@@ -95,7 +96,7 @@ export default function LampRow() {
   };
 
   const press = useCallback((n, e) => {
-    if (n === 6) return;
+    if (n === HONEST) return;
     const s = getState();
     if (s.lamps[n] === 'lit') { scrollToId('lamp-' + n); return; }
     if (n > 1 && s.lamps[n - 1] !== 'lit') return notReady(n);
@@ -126,7 +127,7 @@ export default function LampRow() {
   const onPointerDown = (n) => (e) => {
     if (e.button !== undefined && e.button > 0) return;
     handled.current = true; setTimeout(() => { handled.current = false; }, 700);
-    if (n === 6) return trySix(true);
+    if (n === HONEST) return trySix(true);
     if (getState().calm) {
       const up = () => { window.removeEventListener('pointerup', up); if (getState().lamps[n] === 'lit') scrollToId('lamp-' + n); else instant(n, false); };
       window.addEventListener('pointerup', up, { once: true });
@@ -136,7 +137,7 @@ export default function LampRow() {
   };
   const onClick = (n) => () => {
     if (handled.current) { handled.current = false; return; }       // a pointer sequence already handled it
-    if (n === 6) return trySix(false);
+    if (n === HONEST) return trySix(false);
     const s = getState();
     if (s.lamps[n] === 'lit') return scrollToId('lamp-' + n);
     if (n > 1 && s.lamps[n - 1] !== 'lit') return notReady(n);
@@ -149,7 +150,7 @@ export default function LampRow() {
     if (allBusy.current) return;
     allBusy.current = true;
     const s = getState();
-    for (let n = 1; n <= 5; n++) {
+    for (let n = 1; n <= LAMPS; n++) {
       if (getState().lamps[n] === 'lit') continue;
       if (getState().calm) { actions.startLighting(n); ignite(n, true); continue; }
       const path = begin(n);
@@ -180,7 +181,7 @@ export default function LampRow() {
         go(n);
       }, 1000 + Math.random() * 1200);
     };
-    [1, 2, 3, 4, 5].forEach(go);
+    LAMP_IDS.forEach(go);
     return () => { alive = false; Object.values(timers).forEach(clearTimeout); };
   }, []);
 
@@ -203,7 +204,7 @@ export default function LampRow() {
     const s = getState(), source = s.litCount > 0 ? s.litCount : 0;
     sixHeld.current = held;
     if (held) { const up = () => { sixHeld.current = false; window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', up); }; window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up); }
-    const a = lampRegistry.wick(source), b = lampRegistry.wick(6);
+    const a = lampRegistry.wick(source), b = lampRegistry.wick(HONEST);
     const T = (ms, f) => setTimeout(() => mounted.current && f(), ms);
     if (s.calm) { // steady ember about a second, then off; the line appears with it
       setSix({ phase: 'try', scale: 0.3, line: copy.growth.tryLight, ember: false }); T(1000, () => setSix((x) => ({ ...x, phase: 'idle', scale: 0 })));
@@ -215,7 +216,7 @@ export default function LampRow() {
     steps.forEach((sc, i) => T(450 + (i * 800) / 5, () => setSix((x) => ({ ...x, scale: sc }))));
     const die = () => {
       setSix((x) => ({ ...x, scale: 0, ember: true, line: copy.growth.tryLight }));
-      const p = lampRegistry.wick(6); if (p) emit('fx:burst', { kind: 'fizzle', x: p.x, y: p.y });
+      const p = lampRegistry.wick(HONEST); if (p) emit('fx:burst', { kind: 'fizzle', x: p.x, y: p.y });
       T(2000, () => setSix((x) => ({ ...x, phase: 'idle', ember: false })));
     };
     T(1250, () => { const wait = () => (sixHeld.current ? setTimeout(wait, 120) : die()); wait(); });
@@ -224,8 +225,7 @@ export default function LampRow() {
   const api = useRef({}); api.current = { lightAll, request: (n) => { handled.current = false; onClick(n)(); } };
   useEffect(() => { const a = on('lamp:lightAll', () => api.current.lightAll()), b = on('lamp:request', ({ n }) => api.current.request(n)); return () => { a(); b(); }; }, []);
   const ringR = 'var(--ring-r)';
-  const lit5 = litCount === 5;
-  const doneLine = litCount === 5 ? copy.ui.progress.all : tpl(copy.ui.progress.some, { n: litCount, rest: 5 - litCount });
+  const doneLine = litCount === LAMPS ? copy.ui.progress.all : tpl(copy.ui.progress.some, { n: litCount, rest: LAMPS - litCount });
   const shown = six.line && line === null ? six.line : line || '';
 
   return (
@@ -257,9 +257,9 @@ export default function LampRow() {
           );
         })}
         <li>
-          <button className="lamp-btn six" aria-label={X('lamp6Aria')} aria-describedby="ld6" onPointerDown={onPointerDown(6)} onClick={onClick(6)} onContextMenu={(e) => e.preventDefault()}>
-            <Lamp n={6} fill6={fill6}>
-              {six.phase !== 'idle' && six.scale > 0 && <span className="six-flame" style={{ transform: `scale(${six.scale})` }}><Flame id={6} scale={1} /></span>}
+          <button className="lamp-btn six" aria-label={X('lamp6Aria')} aria-describedby="ld6" onPointerDown={onPointerDown(HONEST)} onClick={onClick(HONEST)} onContextMenu={(e) => e.preventDefault()}>
+            <Lamp n={HONEST} fill6={fill6}>
+              {six.phase !== 'idle' && six.scale > 0 && <span className="six-flame" style={{ transform: `scale(${six.scale})` }}><Flame id={HONEST} scale={1} /></span>}
               {six.ember && <i className="six-ember" />}
               {six.phase !== 'idle' && !six.ember && <svg className="smoke" viewBox="0 0 20 30" aria-hidden="true"><path d="M10 28c-5-6 5-10 0-16s4-8 0-12" /></svg>}
             </Lamp>

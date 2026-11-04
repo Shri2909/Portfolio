@@ -6,13 +6,13 @@ import path from 'node:path';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const copy = JSON.parse(fs.readFileSync(path.join(root, 'src/data/copy.json'), 'utf8'));
 const norm = (s) => s.replace(/\*\*/g, '').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
-const md = norm(['website_copy_v3.md', 'website_copy.md'].map((f) => fs.readFileSync(path.join(root, f), 'utf8')).join('\n'));   // v3 copy, plus v2 as history for the [SAME] strings
+const md = norm(['website_copy_lamps.md', 'website_copy_v3.md', 'website_copy.md'].map((f) => fs.readFileSync(path.join(root, f), 'utf8')).join('\n'));   // v3 copy, plus v2 as history for the [SAME] strings
 const contentRaw = fs.readFileSync(path.join(root, 'reference/content.json'), 'utf8');
 const contentStrings = new Set();
 (function walk(v) { if (typeof v === 'string') contentStrings.add(v); else if (v && typeof v === 'object') Object.values(v).forEach(walk); })(JSON.parse(contentRaw));
 
 const SCHEMA_KEYS_OPEN = new Set(); // keys are free-form in this project; unknown-key check is against the allowed top level
-const TOP = ['baithak', 'growth', 'terrace', 'transitions', 'slots', 'version', '_review', 'flags', 'site', 'ui', 'opening', 'lamps', 'guess', 'lateReply', 'voice', 'verdict', 'wish', 'closure', 'evidence', 'sixty', 'footer'];
+const TOP = ['baithak', 'growth', 'terrace', 'transitions', 'slots', 'version', '_review', 'flags', 'site', 'ui', 'opening', 'lamps', 'guess', 'lateReply', 'voice', 'verdict', 'wish', 'closure', 'evidence', 'sixty', 'footer', 'journey', 'transition'];
 const problems = [], unmatched = [], approval = [];
 for (const k of Object.keys(copy)) if (!TOP.includes(k)) problems.push('unknown top-level key: ' + k);
 
@@ -38,9 +38,9 @@ function walk(v, p, inExtra, inEvidence) {
 walk(copy, '', false, false);
 
 // shape checks
-if (copy.lamps.length !== 5) problems.push('lamps must be 5');
+if (copy.lamps.length !== 3) problems.push('lamps must be 3 (Certgen, Blitz, Vigil)');
 if (copy.voice.takes.length !== 2) problems.push('takes must be 2');
-if (copy.evidence.folders.length !== 8) problems.push('evidence folders must be 8');
+if (copy.evidence.folders.length !== 6) problems.push('evidence folders must be 6');
 const SPOKEN = (JSON.stringify(copy).match(/Spoken with Wispr Flow/g) || []).length;
 if (SPOKEN !== 2) problems.push('"Spoken with Wispr Flow" appears ' + SPOKEN + ' times, expected 2');
 for (const f of ['ledgerGate_personFirstSentence', 'flowIntoEmergentRecorded', 'noAnalyticsLine', 'footerHowMade'])

@@ -22,6 +22,8 @@ import LampRow from './components/LampRow.jsx';
 import LampStop from './components/LampStop.jsx';
 import Baithak from './components/Baithak.jsx';
 import Growth from './components/Growth.jsx';
+import Pattern from './components/Pattern.jsx';
+import GoDeeper from './components/GoDeeper.jsx';
 import Voice from './components/Voice.jsx';
 import Verdict from './components/Verdict.jsx';
 import Wish from './components/Wish.jsx';
@@ -60,12 +62,13 @@ export default function App() {
       <Stage />
       <main id="main" tabIndex={-1}>
         <Night banner={<ShareBanner />}><LampRow /></Night>
-        <LampStop n={1} />
         <Baithak />
-        {[2, 3, 4, 5].map((n) => <LampStop key={n} n={n} />)}
+        {[1, 2, 3].map((n) => <LampStop key={n} n={n} />)}
+        <Pattern />
         <Voice />
         <Growth />
         <Verdict />
+        <GoDeeper />
         <Wish />
         <Closure />
       </main>

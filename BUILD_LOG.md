@@ -160,3 +160,8 @@ Full report with every audit's raw findings: **`docs/PACK8_AUDIT.md`**, produced
 - **Voice compare slider:** the sticky flame slider now stops above the dock (measured at three scroll positions, 22 px or more of clearance).
 - **Opening screen smaller issues:** the skyline was nearly invisible, so the night horizon is lifted slightly (a deliberate departure from the pack 2 gradient values) and the buildings are dark silhouettes against it. More space between the progress pill and the hold hint.
 - Not verified: real phone rendering with a browser toolbar; the dock fade on a real phone.
+
+
+## 4 Nov 2026: three lamp stories, three levels, six-step journey (on the elevation build)
+
+Replaced the five lamp stories with Shriniwas's three (Certgen, Blitz, Vigil) word for word and added "Three Lamps. One Pattern." after them. TipIndex and PitDB are removed (lamps, devices StoryHandoff and StoryCutoffClock, set-pieces relay and clock, evidence folders c4 and c5, copy, CSS). Every lamp has three levels: Level 1 on the page (title, tagline, summary, one capability, its interaction), Level 2 the lamp card with the full script, Level 3 the repository link, files and receipt. Order: opening and lamp row, 01 Meet the person (baithak), 02 Three lamps, the pattern, 03 Why Wispr Flow (voice), 04 The Handover Test (lamp 4), 05 Continue the conversation (seedhi baat, invite, résumé, GitHub and LinkedIn when set), 06 Go deeper, the wish and visitor lamp, closure. Visuals and effects are unchanged; the tone, rangoli and window groups were remapped to three lamps. New copy lives in `website_copy_lamps.md`.

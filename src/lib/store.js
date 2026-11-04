@@ -1,4 +1,5 @@
 import { emit } from './events.js';
+import { LAMPS, LAMP_IDS, TONE_OF } from './lamps.js';
 
 // One small global store. Only actions change state. Nothing is ever persisted.
 // The wish lives in a separate slot that is excluded from every snapshot, log and URL.
@@ -17,7 +18,7 @@ const startQuality = () => {
 
 let state = {
   litCount: 0,
-  lamps: { 1: 'unlit', 2: 'unlit', 3: 'unlit', 4: 'unlit', 5: 'unlit' },
+  lamps: { 1: 'unlit', 2: 'unlit', 3: 'unlit' },
   tone: 0,
   calm: !!(mq && mq.matches),
   quality: startQuality(),
@@ -44,8 +45,8 @@ function syncRoot() {
 }
 function set(patch) {
   const next = { ...state, ...patch };
-  next.litCount = [1, 2, 3, 4, 5].filter((n) => next.lamps[n] === 'lit').length;
-  next.tone = next.visitorLit ? 6 : next.litCount;
+  next.litCount = LAMP_IDS.filter((n) => next.lamps[n] === 'lit').length;
+  next.tone = next.visitorLit ? 6 : TONE_OF[next.litCount];
   next.calm = next.reducedMotion || next.calmManual;
   state = next;
   if (typeof document !== 'undefined') syncRoot();
@@ -57,7 +58,7 @@ export const actions = {
   startLighting(n) {
     if (state.lamps[n] === 'lit' || state.lamps[n] === 'lighting') return false;
     if (n > 1 && state.lamps[n - 1] !== 'lit') return false;
-    if ([1, 2, 3, 4, 5].some((k) => state.lamps[k] === 'lighting')) return false;
+    if (LAMP_IDS.some((k) => state.lamps[k] === 'lighting')) return false;
     set({ lamps: { ...state.lamps, [n]: 'lighting' }, lighting: n, progress: 0 });
     emit('diya:lighting', { n, progress: 0 });
     return true;
@@ -76,19 +77,19 @@ export const actions = {
     if (state.lamps[n] === 'lit') return;
     set({ lamps: { ...state.lamps, [n]: 'lit' }, lighting: 0, progress: 0 });
     emit('diya:lit', { n, x, y });
-    if (state.litCount === 5) {
+    if (state.litCount === LAMPS) {
       clearTimeout(allLitTimer);
       allLitTimer = setTimeout(() => emit('diya:allLit', {}), state.calm ? 0 : 500);
     }
   },
   lightAll() {
-    for (let n = 1; n <= 5; n++) {
+    for (let n = 1; n <= LAMPS; n++) {
       if (state.lamps[n] === 'lighting') actions.cancelLighting(n);
       if (state.lamps[n] !== 'lit') { set({ lamps: { ...state.lamps, [n]: 'lighting' } }); actions.finishLighting(n, 0, 0); }
     }
   },
   lightVisitor(x = 0, y = 0) {
-    if (state.visitorLit || state.litCount < 5) return false;
+    if (state.visitorLit || state.litCount < LAMPS) return false;
     set({ visitorLit: true });
     emit('diya:visitorLit', { x, y });
     return true;

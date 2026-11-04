@@ -20,7 +20,7 @@ function build() {
   wrap.innerHTML = '<div class="way-track" aria-hidden="true"><i class="way-fill"></i><svg class="way-head" viewBox="0 0 12 18" width="12" height="18"><path d="M6 1c3 4 5 7 5 10a5 5 0 0 1-10 0c0-3 2-5 3-7 1 2 2 2 2-3z" fill="#FFB347"/><path d="M6 8c1.5 2 2.5 3.5 2.5 5a2.5 2.5 0 0 1-5 0C3.5 11.5 5 10 6 8z" fill="#FFF3DC"/></svg></div><nav class="way-rail" aria-label="' + X('wayNav') + '"><ol></ol></nav>';
   document.body.appendChild(wrap);
   fill = wrap.querySelector('.way-fill'); head = wrap.querySelector('.way-head'); rail = wrap.querySelector('ol');
-  for (let n = 1; n <= 6; n++) {
+  for (const n of [1, 2, 3, 6]) {
     const li = document.createElement('li'), a = document.createElement('a');
     a.href = '#lamp-' + n; a.className = 'way-dot' + (n === 6 ? ' six' : ''); a.dataset.n = n; a.innerHTML = '<i></i>';
     a.addEventListener('click', (e) => { e.preventDefault(); scrollToId('lamp-' + n); });
@@ -30,8 +30,8 @@ function build() {
 }
 function paint() {
   const s = getState();
-  dots.forEach((a, i) => { const n = i + 1, lit = n < 6 && s.lamps[n] === 'lit'; a.classList.toggle('lit', lit); a.setAttribute('aria-label', label(n, lit)); });
-  const last = [1, 2, 3, 4, 5].filter((n) => s.lamps[n] === 'lit').length; wrap.style.setProperty('--wl', last / 5);
+  dots.forEach((a) => { const n = +a.dataset.n, lit = n < 6 && s.lamps[n] === 'lit'; a.classList.toggle('lit', lit); a.setAttribute('aria-label', label(n, lit)); });
+  const last = [1, 2, 3].filter((n) => s.lamps[n] === 'lit').length; wrap.style.setProperty('--wl', last / 3);
   vis();
 }
 function vis() {
@@ -68,7 +68,7 @@ export function start() {
   window.addEventListener('scroll', kick, { passive: true }); window.addEventListener('resize', kick, { passive: true });
   offs.push(() => window.removeEventListener('scroll', kick), () => window.removeEventListener('resize', kick));
   io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { const n = +e.target.id.slice(5); dots.forEach((d, i) => { if (i + 1 === n) d.setAttribute('aria-current', 'location'); else d.removeAttribute('aria-current'); }); } }), { rootMargin: '-45% 0px -45% 0px' });
-  for (let n = 1; n <= 6; n++) { const s = document.getElementById('lamp-' + n); s && io.observe(s); }
+  for (const n of [1, 2, 3, 6]) { const s = document.getElementById('lamp-' + n); s && io.observe(s); }
   kick();
 }
 export function stop() {

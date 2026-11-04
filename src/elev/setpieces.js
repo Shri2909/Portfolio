@@ -1,4 +1,4 @@
-// Pack 5 loader (E5): the eight set-pieces and the proof flight are lazy chunks, one per act, mounted when their device
+// Pack 5 loader (E5): the six set-pieces and the proof flight are lazy chunks, one per act, mounted when their device
 // is within 800 px of the viewport. Each piece is an overlay on the V3 device (React keeps owning the real controls and
 // the plain-text twin); it hides the V3 picture only while mounted. stop() unmounts every piece.
 import { on } from '../lib/events.js';
@@ -7,8 +7,6 @@ const PIECES = {
   wall: ['.device.audit', () => import('./sp/wall.js')],
   late: ['.device.late', () => import('./sp/late.js')],
   price: ['.device.pricetag', () => import('./sp/price.js')],
-  relay: ['.device.handoff', () => import('./sp/relay.js')],
-  clock: ['.device.clock', () => import('./sp/clock.js')],
   baithak: ['#baithak', () => import('./sp/baithak.js')],
   voice: ['#voice', () => import('./sp/voice.js')],
   card: ['#lamp-card', () => import('./sp/card.js')],

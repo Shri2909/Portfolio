@@ -3,7 +3,7 @@ import fs from 'node:fs'; import { serve } from './e2e/serve.mjs';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url); const { chromium } = require('playwright'); const axeSrc = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 const { srv, base } = serve(); const b = await chromium.launch({ args: ['--no-sandbox'] }); let bad = 0; const fail = (m) => { console.log('  FAIL ' + m); bad++; };
-const IDS = ['night', 'baithak', 'lamp-1', 'lamp-3', 'voice', 'lamp-6', 'verdict', 'wish', 'closure'];
+const IDS = ['night', 'baithak', 'lamp-1', 'lamp-3', 'pattern', 'voice', 'lamp-6', 'verdict', 'deeper', 'wish', 'closure'];
 for (const calm of [false, true]) {
   const ctx = await b.newContext({ bypassCSP: true, viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: calm ? 'reduce' : 'no-preference' }); const p = await ctx.newPage();
   await p.goto(base); await p.waitForTimeout(6000); await p.addScriptTag({ content: axeSrc });

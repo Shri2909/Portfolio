@@ -1,13 +1,14 @@
 import { useEffect, useRef } from 'react';
 import { on } from '../../lib/events.js';
 import { getState } from '../../lib/store.js';
+import { LAMPS } from '../../lib/lamps.js';
 
-// Dusk-gold moments (P2.5): one ring of warm light from lamp 5, then one flock of birds, once, never replayed.
+// Dusk-gold moments (P2.5): one ring of warm light from the last lamp, then one flock of birds, once, never replayed.
 // Mid quality: no ring, no birds. Calm: nothing (the state itself is applied by tone). Particle fireworks are Pack 5.
 export default function Dusk() {
   const ring = useRef(null), birds = useRef(null), last = useRef(null), played = useRef(false);
   useEffect(() => {
-    const a = on('diya:lit', ({ n, x, y }) => { if (n === 5) last.current = { x, y }; });
+    const a = on('diya:lit', ({ n, x, y }) => { if (n === LAMPS) last.current = { x, y }; });
     const b = on('diya:allLit', () => {
       const s = getState();
       if (played.current || s.calm || s.quality !== 'high') return;

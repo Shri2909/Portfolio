@@ -7,17 +7,19 @@ import { useStore } from '../lib/useStore.js';
 import { closeLampCard, scrollToId, wireLampCard } from '../lib/nav.js';
 import { emit, on, hooks } from '../lib/events.js';
 import Flame from './Flame.jsx';
+import { LAMPS } from '../lib/lamps.js';
 
 // A letter that rises out of the lamp it belongs to. Native dialog (top layer, Escape, focus trap), styled as a floating card.
 // Three parts that ink in as you read, a receipt, a quiet "Agla diya" corner, swipe down to close.
 
 function Part({ part, idx, on_, className = '', children, device }) {
   return (
-    <section className={`part ${on_ ? 'on' : ''} ${className}`} data-part={idx} aria-labelledby={`part-h-${idx}`}>
-      <h3 id={`part-h-${idx}`}>{rich(part.heading)}{part.gloss ? <small> ({part.gloss})</small> : null}</h3>
+    <section className={`part ${on_ ? 'on' : ''} ${className}`} data-part={idx} {...(part.heading ? { 'aria-labelledby': `part-h-${idx}` } : { 'aria-label': copy.ui.extra.levelLabels.level2Hint })}>
+      {part.heading ? <h3 id={`part-h-${idx}`}>{rich(part.heading)}{part.gloss ? <small> ({part.gloss})</small> : null}</h3> : null}
       <div className="lines">
         {device === 'before' && children}
         {part.paras.map((p, i) => <p key={i} style={{ '--i': Math.min(i, 5) }}>{rich(p)}</p>)}
+        {(part.list || []).length ? <ul className="reveals">{part.list.map((t, i) => <li key={i} style={{ '--i': Math.min(i, 5) }}>{rich(t)}</li>)}</ul> : null}
         {device === 'after' && children}
       </div>
     </section>
@@ -116,10 +118,10 @@ export default function LampCard() {
   }, [n, requestClose]);
 
   const next = () => {
-    if (n < 5 && getState().lamps[n + 1] === 'lit') { actions.setLampCard(n + 1); return; }
-    requestClose(() => { if (n < 5) { const e = document.querySelectorAll('.lamp-btn')[n]; e && e.focus(); } else scrollToId('lamp-6'); });
+    if (n < LAMPS && getState().lamps[n + 1] === 'lit') { actions.setLampCard(n + 1); return; }
+    requestClose(() => { if (n < LAMPS) { const e = document.querySelectorAll('.lamp-btn')[n]; e && e.focus(); } else scrollToId('lamp-6'); });
   };
-  const nextLabel = n === 5 ? X('aglaLamp6') : X('aglaNext');
+  const nextLabel = n === LAMPS ? X('aglaLamp6') : X('aglaNext');
   return (
     <dialog ref={dlg} id="lamp-card" className="lamp-card" aria-labelledby="card-title" onCancel={(e) => { e.preventDefault(); requestClose(); }} onClick={(e) => { if (e.target === dlg.current) requestClose(); }}>
       {n && lamp && (
@@ -133,7 +135,7 @@ export default function LampCard() {
             <div className="parts">
               <Part part={lamp.what} idx={0} on_={k >= 1} />
               <Part part={lamp.next} idx={1} on_={k >= 2} />
-              <Part part={lamp.warning} idx={2} on_={k >= 3} className={n === 5 ? 'band' : ''} />
+              <Part part={lamp.warning} idx={2} on_={k >= 3} />
             </div>
             <div className="card-foot">
               <button className="btn btn-primary receipt" data-receipt data-evidence={lamp.receipt.folder}>{lamp.receipt.label}</button>

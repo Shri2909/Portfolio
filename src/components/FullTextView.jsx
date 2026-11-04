@@ -36,8 +36,9 @@ function CardTwin() {
 const P = ({ t }) => (t ? <p>{rich(t)}</p> : null);
 const Part = ({ part }) => part && (
   <>
-    <h3>{rich(part.heading)}{part.gloss ? <> <em>({part.gloss})</em></> : null}</h3>
+    {part.heading ? <h3>{rich(part.heading)}{part.gloss ? <> <em>({part.gloss})</em></> : null}</h3> : null}
     {part.paras.map((p, i) => <P key={i} t={p} />)}
+    {(part.list || []).length ? <ul>{part.list.map((t, i) => <li key={i}>{rich(t)}</li>)}</ul> : null}
   </>
 );
 
@@ -68,6 +69,8 @@ export default function FullTextView({ onClose }) {
         {copy.lamps.map((l) => (
           <section key={l.id} aria-labelledby={`ft-${l.id}`}>
             <h2 id={`ft-${l.id}`}>{l.kicker}: {rich(l.title)}</h2>
+            <p><em>{rich(l.tagline)}</em></p>
+            <p>{l.level1.summary}</p><p>{l.level1.capability}</p>
             <Part part={l.what} />
             {l.interaction === 'guess' && (
               <>
@@ -97,6 +100,7 @@ export default function FullTextView({ onClose }) {
             <p><a href="#evidence" data-evidence={l.receipt.folder}>{l.receipt.label}</a></p>
           </section>
         ))}
+        {copy.transition && <section aria-labelledby="ft-pattern"><h2 id="ft-pattern">{copy.transition.heading}</h2>{copy.transition.body.map((t, i) => <P key={i} t={t.replace(/^\*(?!\*)(.+)\*$/, '$1')} />)}</section>}
         <section aria-labelledby="ft-row">
           <h2 id="ft-row">{rich(copy.terrace.autoBeat[0])}</h2>
           <P t={copy.terrace.autoBeat[1]} />

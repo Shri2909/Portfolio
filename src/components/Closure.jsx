@@ -11,8 +11,9 @@ import { emailOf, inviteVisible } from '../lib/mail.js';
 import InviteButton from './InviteButton.jsx';
 import { signoffLines } from '../lib/signoff.js';
 import { captionFor } from './RowFragment.jsx';
+import { LAMPS, LAMP_IDS } from '../lib/lamps.js';
 
-// The emotional end. When all five lamps are lit and this section is half in view, one calm sequence plays:
+// The emotional end. When all three lamps are lit and this section is half in view, one calm sequence plays:
 // caption, a row of small lit lamps, a quiet beat, a flame leaves the last lamp and lights the empty slot (the visitor's lamp),
 // one soft settle, then the lines fade in. All text is in the page from the start; only opacity changes.
 // This component is the only place that fires diya:visitorLit (through the store), once.
@@ -21,7 +22,7 @@ export default function Closure() {
   const C = copy.closure, row = useStore((s) => s.row), lamps = useStore((s) => s.lamps), litCount = useStore((s) => s.litCount), vl = useStore((s) => s.visitorLit), calm = useStore((s) => s.calm);
   const [phase, setPhase] = useState(calm && vl ? 'done' : 'idle'); // idle | playing | done
   const sec = useRef(null), rowEl = useRef(null), slot = useRef(null), spark = useRef(null), timers = useRef([]), scrollY0 = useRef(0), fired = useRef(false);
-  const base = row.base, show = Math.min(base, 7), lit5 = litCount === 5;
+  const base = row.base, show = Math.min(base, 7), lit5 = litCount === LAMPS;
 
   const fire = useCallback(() => {
     if (fired.current) return; fired.current = true;
@@ -78,9 +79,9 @@ export default function Closure() {
       <div ref={rowEl} className="cl-row" role="img" aria-label={C.altText} data-row-mount>
         <div aria-hidden="true" className="cl-lamps">
           {base > 7 && <i className="cl-dots" />}
-          {[1, 2, 3, 4, 5].map((n) => <i key={n} className={`cl-lamp mine ${lamps[n] === 'lit' || ended || playing ? 'lit' : ''}`} style={{ '--i': n }} />)}
+          {LAMP_IDS.map((n) => <i key={n} className={`cl-lamp mine ${lamps[n] === 'lit' || ended || playing ? 'lit' : ''}`} style={{ '--i': n }} />)}
           <i className="cl-gap" />
-          {Array.from({ length: show }, (_, i) => <i key={i} className="cl-lamp theirs lit" style={{ '--i': 6 + i }} />)}
+          {Array.from({ length: show }, (_, i) => <i key={i} className="cl-lamp theirs lit" style={{ '--i': LAMPS + 1 + i }} />)}
           <button className="cl-slot-btn" aria-label={X('yourLampAria')} data-visitor-lamp onClick={tapLamp} tabIndex={vl ? 0 : -1}><i ref={slot} className={`cl-lamp slot ${vl ? 'lit newest' : ''} ${flick ? 'flicker' : ''}`} /></button>
           <i ref={spark} className="cl-spark" />
         </div>

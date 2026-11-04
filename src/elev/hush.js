@@ -1,6 +1,6 @@
 // E3.5 / R2: the one hush mechanism. hush(level, key) is reference counted, sets html[data-hush] to the highest active
 // level and returns a release function. `fx:foreground {on, id}` is a thin wrapper. Foreground interactions (guess,
-// late reply, handoff, price tag, clock) hold hush(1) while the reader is inside one and for 600 ms after.
+// late reply, price tag) hold hush(1) while the reader is inside one and for 600 ms after.
 import { on, emit } from '../lib/events.js';
 
 const held = new Map(); // key -> level

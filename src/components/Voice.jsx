@@ -5,6 +5,7 @@ import { rich } from '../lib/rich.jsx';
 import { useStore } from '../lib/useStore.js';
 import { haptic } from '../lib/haptic.js';
 import { takesDiff, viewAt, plainText } from '../lib/takesDiff.js';
+import Step from './Step.jsx';
 
 // Two real takes, compared. Drag a flame from my voice to Flow's text: the words change one change at a time.
 // Always-present plain version below each morph (visually hidden until "Read it plainly" is on).
@@ -57,6 +58,7 @@ export default function Voice() {
   return (
     <section id="voice" className="sec" aria-labelledby="voice-h">
       <div className="panel">
+        <Step k="s3" />
         <p className="kicker">{V.kicker}</p>
         <h2 id="voice-h" tabIndex={-1}>{rich(V.heading)}</h2>
         <p className="sub"><em>{V.sub}</em></p>

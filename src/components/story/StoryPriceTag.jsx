@@ -8,7 +8,7 @@ import { useStore } from '../../lib/useStore.js';
 // A paper price tag that sways, then settles when flipped. The number that sparkled was the one withdrawn;
 // the true one is still. The advertised-advantage bar deflates from 3.1× to 1.02×. CSS transforms only.
 export default function StoryPriceTag() {
-  const st = copy.lamps[2].stop, calm = useStore((s) => s.calm), quality = useStore((s) => s.quality);
+  const st = copy.lamps[1].stop, calm = useStore((s) => s.calm), quality = useStore((s) => s.quality);
   const [flipped, setFlipped] = useState(false), [num, setNum] = useState('3.1');
   const tag = useRef(null);
   const flip = () => {

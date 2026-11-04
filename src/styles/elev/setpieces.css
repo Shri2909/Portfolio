@@ -31,24 +31,11 @@ html[data-elev="1"] .phul-e .diya .fl { opacity: 0; transform-origin: 30px 12px;
 html[data-elev="1"] .phul-e.lit .diya .fl, html[data-elev="1"] .phul-e[data-state="done"] .diya .fl { opacity: 1; transform: scale(1); }
 html[data-elev="1"] .phul-e[data-state="done"] .stick { transform: scaleY(.1); }
 html[data-elev="1"][data-calm="1"] .phul-e .diya .fl { transition: none; }
-/* E5.4 relay */
-html[data-elev="1"] .handoff .ember-e { position: absolute; left: 0; top: 0; width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(circle, #FFF3DC, #FFB347 60%, transparent 72%); box-shadow: 0 0 14px 4px rgba(255, 179, 71, .7); opacity: 0; transition: transform .52s var(--ease-in-out-quint, ease-in-out), opacity .3s; pointer-events: none; }
-html[data-elev="1"] .handoff .stone.flare-e i { box-shadow: 0 0 18px 6px rgba(255, 179, 71, .8); }
-html[data-elev="1"] .handoff .land-e .lantern-l.right i { box-shadow: 0 0 34px 12px rgba(255, 179, 71, .85); transition: box-shadow .5s; }
-html[data-elev="1"] .handoff .half.lower { position: relative; }
-html[data-elev="1"] .handoff .pulse-e { position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; border: 2px solid rgba(255, 210, 122, .8); opacity: 0; pointer-events: none; }
-html[data-elev="1"] .handoff .pulse-e.go { animation: sp-pulse .32s ease-out; }
 @keyframes sp-pulse { from { opacity: .8; transform: scale(.7); } to { opacity: 0; transform: scale(1.5); } }
-html[data-elev="1"] .handoff .bloom-e .dots { box-shadow: 0 0 40px 6px rgba(255, 179, 71, .35); transition: box-shadow 1s; }
-/* E5.5 clock */
-html[data-elev="1"] .clock .ghost-e { opacity: 0; transition: opacity .7s; }
-html[data-elev="1"] .clock .ghost-e[data-on="1"] { opacity: 1; }
-html[data-elev="1"] .clock .ghost-e .sl.a { transform: translate(calc(var(--sh, 0) * 1.4px), 0); }
-html[data-elev="1"][data-calm="1"] .clock .ghost-e { transition: none; }
 /* E5.6 / E5.7 baithak */
 html[data-elev="1"] #baithak[data-sp-baithak="1"] .window-scene .panes rect:not(.act) { opacity: .3 !important; }
 html[data-elev="1"] #baithak .loop-ring[data-sp-ring] { position: relative; display: block; width: 250px; height: 250px; max-width: 100%; margin: 12px auto; }
-html[data-elev="1"] #baithak .loop-ring[data-sp-ring] .loop-stop { position: absolute; left: calc(50% - 22px); top: calc(50% - 22px); width: 44px; height: 44px; transform: rotate(calc(var(--i) * 60deg - 90deg)) translate(100px) rotate(calc(var(--i) * -60deg + 90deg)); border-radius: 50%; z-index: 1; }
+html[data-elev="1"] #baithak .loop-ring[data-sp-ring] .loop-stop { position: absolute; left: calc(50% - 22px); top: calc(50% - 22px); width: 44px; height: 44px; transform: rotate(calc(var(--i) * var(--step, 60deg) - 90deg)) translate(100px) rotate(calc(var(--i) * -60deg + 90deg)); border-radius: 50%; z-index: 1; }
 html[data-elev="1"] #baithak .loop-ring .loop-stop.visited-e:not(.on) { border-color: #F5A623; box-shadow: 0 0 10px rgba(245, 166, 35, .45); }
 html[data-elev="1"] #baithak .loop-ring .wire-e { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 html[data-elev="1"] #baithak .loop-ring .walker-e { position: absolute; left: calc(50% - 5px); top: calc(50% - 5px); width: 10px; height: 10px; border-radius: 50%; background: #FFB347; box-shadow: 0 0 10px 3px rgba(255, 179, 71, .8); pointer-events: none; z-index: 2; }

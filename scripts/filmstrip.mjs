@@ -13,7 +13,7 @@ const MODES = A('modes', 'normal,calm,ink').split(',');
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.woff2': 'font/woff2' };
 const srv = http.createServer((q, r) => { const u = decodeURIComponent(q.url.split('?')[0]); let f = path.join(dir, u === '/' ? 'index.html' : u); if (!f.startsWith(dir) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'content-type': MIME[path.extname(f)] || 'application/octet-stream' }); r.end(fs.readFileSync(f)); }).listen(0);
 const base = 'http://127.0.0.1:' + srv.address().port + '/';
-const ACTS = ['night', 'baithak', 'lamp-1', 'lamp-2', 'lamp-3', 'lamp-4', 'lamp-5', 'voice', 'lamp-6', 'verdict', 'wish', 'closure'];
+const ACTS = ['night', 'baithak', 'lamp-1', 'lamp-2', 'lamp-3', 'pattern', 'voice', 'lamp-6', 'verdict', 'deeper', 'wish', 'closure'];
 const SEED = () => { let s = 0xE1D1A; Math.random = () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); };
 fs.mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({ args: ['--no-sandbox'] });

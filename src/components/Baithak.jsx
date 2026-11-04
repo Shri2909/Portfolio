@@ -9,6 +9,7 @@ import { scrollToId } from '../lib/nav.js';
 import { meetCards } from '../lib/meet.js';
 import Lamp from './Lamp.jsx';
 import Flame from './Flame.jsx';
+import Step from './Step.jsx';
 
 // Act 2: the sitting room. A window with four panes; tap a pane and one card opens beneath it (one hook line, "Aur dekhiye" for the rest).
 // Every card keeps a Plain text disclosure in the page. With every flag OFF only verified sentences render.
@@ -66,9 +67,9 @@ function Loop({ L }) {
     <div className="loop">
       <div className="loop-ring" role="group" aria-label={L.title.replace(/<\/?hi>/g, '')}>{L.steps.map((s, k) => <button key={k} type="button" className={`btn loop-stop ${i === k ? 'on' : ''}`} aria-pressed={i === k} aria-label={`${k + 1}. ${s.g}`} onClick={() => setI(k)}>{k + 1}</button>)}</div>
       <p className="loop-step"><strong>{rich(L.steps[i].h)}</strong> <em>({L.steps[i].g})</em> {L.steps[i].t}</p>
-      {i === L.steps.length - 1 && <p className="warn"><strong>{copy.lamps[0].warning.heading}:</strong> {L.warning}</p>}
+      {i === L.steps.length - 1 && L.warning && <p className="warn"><strong>{copy.ui.fairWarning}:</strong> {L.warning}</p>}
       {L.extra.map((t, k) => <p key={k}>{t}</p>)}
-      <details className="plain"><summary>{X('plainLabel')}</summary><ol>{L.steps.map((s, k) => <li key={k}><strong>{rich(s.h)}</strong> ({s.g}). {s.t}</li>)}</ol><p><strong>{copy.lamps[0].warning.heading}.</strong> {L.warning}</p></details>
+      <details className="plain"><summary>{X('plainLabel')}</summary><ol>{L.steps.map((s, k) => <li key={k}><strong>{rich(s.h)}</strong> ({s.g}). {s.t}</li>)}</ol>{L.warning ? <p><strong>{copy.ui.fairWarning}.</strong> {L.warning}</p> : null}</details>
     </div>
   );
 }
@@ -80,11 +81,11 @@ function Bring({ b }) {
       <p><strong>{it.h}</strong></p>
       <p>{it.proof}</p>
       {it.filledLine && <p>{it.filledLine}</p>}
-      <p><strong>{copy.lamps[0].warning.heading}:</strong> {it.warn}</p>
+      {it.warn ? <p><strong>{copy.ui.fairWarning}:</strong> {it.warn}</p> : null}
       {it.view && <p><em>{it.view}</em></p>}
       {it.share && <p>{it.share}</p>}
       <Proof lamp={it.lamp} />
-      <details className="plain"><summary>{X('plainLabel')}</summary><table><tbody>{b.items.map((x, k) => <tr key={k}><th scope="row">{x.h}</th><td>{x.proof} {x.filledLine} {copy.lamps[0].warning.heading}: {x.warn} {x.view} {x.share}</td></tr>)}</tbody></table></details>
+      <details className="plain"><summary>{X('plainLabel')}</summary><table><tbody>{b.items.map((x, k) => <tr key={k}><th scope="row">{x.h}</th><td>{x.proof} {x.filledLine} {copy.ui.fairWarning}: {x.warn} {x.view} {x.share}</td></tr>)}</tbody></table></details>
     </div>
   );
 }
@@ -105,6 +106,7 @@ export default function Baithak() {
         <div className="sill-diya" onClick={lean}><Lamp n={0} state="lit"><Flame id={40} pers={0} /></Lamp></div>
       </div>
       <div className="panel">
+        <Step k="s1" />
         <p className="kicker">{B.kicker}</p>
         <h2 id="baithak-h" tabIndex={-1}>{rich(B.heading)}</h2>
         <p>{rich(B.intro)}</p>
@@ -121,7 +123,7 @@ export default function Baithak() {
           </div>
         ))}
         <p className="pull"><strong>{B.pull}</strong></p>
-        <p className="next-hint">{rich(copy.transitions.toTerrace)}</p>
+        <p className="next-hint">{rich(copy.transitions.toTerrace)} <button className="btn btn-ghost" onClick={() => scrollToId('lamp-1')}>{rich(copy.ui.idleHint)}</button></p>
       </div>
     </section>
   );

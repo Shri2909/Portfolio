@@ -6,19 +6,15 @@ Every item is Claude's reading of Shriniwas's record, not something he told us d
 - [ ] **S03, S04, S14** "approved the plan" and "approved the phases" for certgen. If he did not approve certgen's plan, cut those words.
 - [ ] **S04** "I'll give you a file-by-file account live." Only if he can. If he personally wrote specific modules, add one true sentence naming only those.
 - [ ] **S04** "I'd threat-model first and write abuse cases before the happy path" is Claude's suggestion for his lesson. Keep only if he agrees.
-- [ ] **S06** "I studied it until I could explain it" and "full working knowledge". Only if he can answer any question about TipIndex's code live. The "zero working knowledge" prompt file stays in the repo; the answer points to it on purpose.
-- [ ] **S06** Open the TipIndex README and confirm what 0.585 means. The page says the index lost at 1,000 symbols; if the README says the opposite direction, fix the wording and the chart before recording. (Sets `exhibitB.boundary.confirmed`.)
 - [ ] **S08** Order: two unsuccessful JEE attempts without coaching, then the 3,999-rupee Physics Wallah batch, then VIT Pune through his JEE score. Fix order or exam name if wrong.
 - [ ] **S09** The three "what would change my mind" lines and the reason for Tier B are Claude's drafts. Replace any that are not what he actually thinks.
 - [ ] **S10, S11** "My father introduced me to Advaita Vedanta", "placed second in a debate", "an essay for Berggruen". Adjust to what the documents say.
 - [ ] **S12** The prediction is a draft. Change it to what he truly expects before running the Lab.
 - [ ] **S13** The "first test" lines are hypotheses drafted by Claude. Re-read the live Wispr pages for observations 3 and 5 before recording.
-- [ ] **S14** "I asked for two audits of TipIndex" and the closing line. The closing line is Claude's draft; replace with his own if it is not him.
 
 Additional facts added to content.json from the Profile archive that need a glance:
 
 - [ ] Blitz: headline benchmark 1,205 ns vs clean rerun 1,850 ns; cache-line-layout advantage fell from about 3.1x to about 1.02x (Profile story #2, commit f46a9cb). Confirm before the ledger case c2 goes live.
-- [ ] TipIndex finding F-01 (polling budget: better p99 per poll, higher total work, cause not fully resolved).
 - [ ] Vigil: late heartbeat could restore HEALTHY; CPU-0 pinning inheritance.
 - [ ] Every string in `content.json` listed under `_meta.authoredByClaude`.
 
