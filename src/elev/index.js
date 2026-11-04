@@ -41,6 +41,7 @@ const MODULES = [
   text, // before the director so its data-cue attributes are observed
   director, camera, scrollFeel, controls, materials, art, energy, light, lightmap, flames, choreo, blueprint, render, promoteMod, hushMod, opening, wake, hold, attract, shared, setpieces, touch, pointer, wayfinder, menu, keys, session, invite, culture, governor,
 ].map((m, i) => ({ name: m.name || ['motion', 'text', 'director', 'camera', 'scrollFeel', 'controls', 'materials', 'art', 'energy', 'light', 'lightmap', 'flames', 'choreo', 'blueprint', 'render', 'promote', 'hush', 'opening', 'wake', 'hold', 'attract', 'shared', 'setpieces', 'touch', 'pointer', 'wayfinder', 'menu', 'keys', 'session', 'invite', 'culture', 'governor'][i], start: m.start, stop: m.stop }));
+const CALM_SKIP = ['camera', 'scrollFeel', 'flames', 'choreo', 'blueprint', 'promote', 'wake', 'hold', 'attract', 'touch', 'pointer', 'wayfinder', 'setpieces', 'lightmap'];
 const started = [];
 let panicOn = false, panicTimer = 0;
 
@@ -68,8 +69,12 @@ export function startElevation() {
   window.addEventListener('unhandledrejection', onRej);
   panicTimer = setTimeout(() => { panicOn = false; window.removeEventListener('error', onErr); window.removeEventListener('unhandledrejection', onRej); }, 5000);
   const off = PERF ? (new URLSearchParams(location.search).get('off') || '').split(',') : []; // perf build only: bisect modules
+  // Calm (prefers-reduced-motion at load): nothing moves, so the interaction and motion-only modules are not started at all.
+  // The still frame is built by the static modules (materials, art, light, energy, controls, director, opening final frame).
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   for (const m of MODULES) {
     if (off.includes(m.name)) continue;
+    if (calm && CALM_SKIP.includes(m.name)) continue;
     try { m.start(); started.push(m); } catch { disableElevation('init:' + m.name); return; }
   }
 }
