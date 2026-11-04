@@ -1,0 +1,1 @@
+let r={strokes:[],folds:8,mirror:!0,preset:null};const s=new Set,o={get:()=>r,set(e){r={...r,...e},s.forEach(t=>t())},clear(){r={strokes:[],folds:r.folds,mirror:r.mirror,preset:null},s.forEach(e=>e())},subscribe:e=>(s.add(e),()=>s.delete(e)),count:()=>r.strokes.length+(r.preset?1:0)};export{o as d};

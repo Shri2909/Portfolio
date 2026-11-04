@@ -1,0 +1,1 @@
+const e=F=>F?{core:"#FFF3DC",glow:"rgba(255,255,255,1)",dot:"#E8E1D4",paper:"#FFFBF2",accent:"#8A8378",flame:"#FFF3DC",flameA:"#E8E1D4",flameB:"#FFF3DC",night:"#16110C"}:{core:"#FFF3DC",glow:"rgba(255,179,71,1)",dot:"#FFF3DC",paper:"#F2C97E",accent:"#C2410C",flame:"#FFF3DC",flameA:"#FFB347",flameB:"#FFD27A",night:"#0A0705"};export{e as p};

@@ -1,4 +1,5 @@
 import { mulberry32 } from './rand.js';
+import { hooks } from './events.js';
 
 // CardRenderer: one function draws the whole card in a fixed 1080 x 1350 space. Art layer (cached per theme and scale)
 // and text layer (redrawn when the words change). The preview (half size) and the export (full size) use the same code,
@@ -112,7 +113,7 @@ export const THEMES = [
 ];
 export const themeById = (id) => THEMES.find((t) => t.id === id) || THEMES[0];
 
-export function drawArt(ctx, theme, seed, lean = false) { theme.art(ctx, mulberry32(seed || 1), lean); }
+export function drawArt(ctx, theme, seed, lean = false) { theme.art(ctx, mulberry32(seed || 1), lean); if (hooks.card && hooks.card.art) hooks.card.art(ctx, theme, seed, lean); } // hooks.card is filled by the elevation card studio (null in V3)
 
 // ---------- text ----------
 const RTL_RANGES = [[0x590, 0x8ff], [0xfb1d, 0xfdff], [0xfe70, 0xfeff]];
@@ -136,7 +137,9 @@ function wrap(ctx, text, maxW) {
 }
 function fit(ctx, text, boxW, boxH, g, rtl) {
   let size = g <= 24 ? 112 : g <= 60 ? 88 : g <= 140 ? 68 : g <= 260 ? 54 : 46;
-  const lh = /[؀-ۿऀ-๿]/.test(text) ? 1.5 : 1.32;
+  let lh = /[؀-ۿऀ-๿]/.test(text) ? 1.5 : 1.32;
+  const sm = hooks.card && hooks.card.metrics ? hooks.card.metrics(text) : null; // per-script line rhythm (E6.8)
+  if (sm) { lh = sm.lh; size = Math.round(size * sm.scale); }
   for (;;) {
     ctx.font = `${size}px ${STACK_WISH}`;
     const lines = wrap(ctx, text, boxW);

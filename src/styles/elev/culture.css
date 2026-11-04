@@ -1,0 +1,33 @@
+/* Pack 6: culture, wish and delight. Scoped under html[data-elev="1"]. */
+html[data-elev="1"] .kpad { margin-top: 14px; border-top: 1px solid rgba(22,17,12,.18); padding-top: 10px; }
+html[data-elev="1"] .kpad > summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 600; }
+html[data-elev="1"] .kpad-in { display: grid; gap: 10px; justify-items: center; }
+html[data-elev="1"] .kpad-cv { border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,.4); touch-action: none; max-width: 100%; }
+html[data-elev="1"] .kpad-cv:focus-visible { outline: 3px solid #FFB347; outline-offset: 3px; }
+html[data-elev="1"] .kpad-bar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+html[data-elev="1"] .kpad-folds { display: inline-flex; gap: 6px; }
+html[data-elev="1"] .kpad-bar .btn, html[data-elev="1"] .kpad-pre { min-width: 44px; min-height: 44px; }
+html[data-elev="1"] .kpad-folds [aria-checked="true"], html[data-elev="1"] .kpad-bar [aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--marigold, #F5A623); }
+html[data-elev="1"] .kpad-presets { display: grid; grid-template-columns: repeat(6, minmax(44px, 1fr)); gap: 6px; width: 100%; max-width: 340px; }
+html[data-elev="1"] .kpad-pre { padding: 2px; background: #16110C; border-radius: 10px; display: grid; place-items: center; }
+html[data-elev="1"] .tofu-note { font-size: 13px; color: #4a3a2a; margin: 4px 0 0; }
+/* live flame over the card art */
+html[data-elev="1"] .card-body canvas.live { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+/* the moving card */
+html[data-elev="1"] .movie-row { display: grid; gap: 8px; justify-items: center; margin: 10px 0; }
+html[data-elev="1"] .movie-go { width: 100%; min-height: 48px; }
+html[data-elev="1"] .movie-note { margin: 0; font-size: 13px; min-height: 1.2em; text-align: center; color: var(--text-dim, #c9b99f); }
+html[data-elev="1"] .movie-view { position: relative; width: min(100%, 320px); aspect-ratio: 4 / 5; }
+html[data-elev="1"] .movie-view[hidden] { display: none; }
+html[data-elev="1"] .movie-cv { width: 100%; height: 100%; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.5); }
+html[data-elev="1"] .movie-ring { position: absolute; right: 8px; top: 8px; width: 36px; height: 36px; transform: rotate(-90deg); }
+html[data-elev="1"] .movie-ring circle { fill: rgba(10,7,5,.45); stroke: rgba(255,243,220,.3); stroke-width: 3; }
+html[data-elev="1"] .movie-ring .v { fill: none; stroke: #FFB347; stroke-dasharray: 0 94.2; }
+/* the lantern sky lives in the closure's top padding */
+html[data-elev="1"] #closure[data-lsky] { position: relative; padding-top: min(36vh, 280px); }
+html[data-elev="1"] canvas.lsky { position: absolute; left: 0; top: 0; width: 100%; height: min(36vh, 280px); pointer-events: none; }
+html[data-elev="1"][data-ink="1"] .kpad-pre { background: #2a2420; }
+/* homely hour */
+html[data-elev="1"] .homely-steam { position: absolute; right: 6%; top: -24px; width: 20px; height: 40px; pointer-events: none; }
+html[data-elev="1"] .homely-steam i { position: absolute; left: 6px; bottom: 0; width: 6px; height: 18px; border-radius: 6px; background: rgba(255,243,220,.5); opacity: 0; }
+html[data-elev="1"][data-calm="1"] .homely-steam, html[data-elev="1"][data-calm="1"] .movie-view { display: none; }

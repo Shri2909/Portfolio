@@ -27,8 +27,8 @@ ms is the EWMA per measured use where an effect calls measure(); otherwise the r
 | 390@4x high | focusflame | dom | 8 | 0.1 | 1 | 0 |  |
 | 390@4x high | hop | dom | 5 | 0.1 | 0 | 1 |  |
 | 390@4x high | invite | dom | 5 | 0.1 | 0 | 1 |  |
-| 390@4x high | lightmap-pool | canvas | 4 | 0.022 | 0 | 1 |  |
-| 390@4x high | light-surfaces | dom | 6 | 0.01 | 0 | 1 |  |
+| 390@4x high | light-surfaces | dom | 6 | 0.015 | 0 | 1 |  |
+| 390@4x high | lightmap-pool | canvas | 4 | 0.002 | 0 | 1 |  |
 | 390@4x mid | sp-wall | canvas | 6 | 2.2 FLAG | 0 | 1 |  |
 | 390@4x mid | ambient-particles | canvas | 2 | 1.2 | 0 | 1 |  |
 | 390@4x mid | sp-price | dom | 6 | 1.2 | 1 | 0 |  |
@@ -52,5 +52,5 @@ ms is the EWMA per measured use where an effect calls measure(); otherwise the r
 | 390@4x mid | focusflame | dom | 8 | 0.1 | 1 | 0 |  |
 | 390@4x mid | hop | dom | 5 | 0.1 | 0 | 1 |  |
 | 390@4x mid | invite | dom | 5 | 0.1 | 0 | 1 |  |
-| 390@4x mid | light-surfaces | dom | 6 | 0.096 | 0 | 1 |  |
-| 390@4x mid | lightmap-pool | canvas | 4 | 0.051 | 0 | 1 |  |
+| 390@4x mid | light-surfaces | dom | 6 | 0.009 | 0 | 1 |  |
+| 390@4x mid | lightmap-pool | canvas | 4 | 0 | 0 | 1 |  |

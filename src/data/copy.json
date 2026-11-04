@@ -93,6 +93,7 @@
   "rowFine": "This number is written inside the link. It is not a visitor count and is not verified.",
   "extra": {
    "_needsApproval": true,
+   "movieLabel": "Chalta card", "movieAria": "Moving card (6 s, silent)", "movieShare": "Share moving card", "movieDownloadWebm": "Download WebM", "movieNoteMp4": "A 6 second silent clip. The picture card above is still the main way to share.", "movieNoteWebm": "This browser makes WebM only; WhatsApp may not open it, so share the picture card.", "movieSlow": "This may be slow on this phone. Tap again to go on.", "movieFailed": "The moving card could not be made here. The picture card still works.", "padOpen": "Rangoli banaiye", "padOpenEn": "Draw a rangoli for the card (optional)", "padFolds": "Folds", "padMirror": "Mirror", "padUndo": "Undo", "padClear": "Clear", "padPresets": "Rangoli patterns", "padPreset": "Rangoli {n}", "padStroke": "Stroke {n} added", "scriptMaybe": "This device may not show this script on the card; the text share will still be exact.", "kolamName": "Aapki rangoli",
    "proofBack": "Baithak par waapas", "wayNav": "Where you are", "keysTitle": "Keys", "keysOn": "Keys on", "keysHint": "Press ? for keys", "hapticsLabel": "Haptics", "keyAct": "Previous or next act", "menuKeys": "Keys",
    "calm": "Calm",
    "calmHi": "Roshni kam karo",
