@@ -177,3 +177,7 @@ First-screen path (60-second file or light the first lamp), next-lamp nudges (Ce
 ## 4 Nov 2026: Meet the person trims
 
 Who I am: removed the Builds, Debates, Writes, Studies chips and the résumé button. What I bring: removed "I have no growth wins to borrow.", every Fair warning, the "A student's view from India." item and its Lamp 6 proof chip; added two growth skills (Retention thinking, Community and user insight) using sentences from the lamp stories and the Group Admin Tax text; the title now says "Six things the projects show".
+
+## 4 Nov 2026: How I Work
+
+"How I work" now holds Shriniwas's new text (replacing the loop steps); "I didn't learn that every plan works…" appears once, at the end of "What I bring", not on every tab.

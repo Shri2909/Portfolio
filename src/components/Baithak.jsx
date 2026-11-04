@@ -55,13 +55,10 @@ function DebateFlip({ d }) {
     </div>
   );
 }
-function Loop({ L }) {
-  return (
-    <div className="loop">
-      <ol className="loop-list">{L.steps.map((st, k) => <li key={k} className="ml"><strong>{rich(st.h)}</strong> <em>({st.g})</em> {st.t}</li>)}</ol>
-      {L.extra.map((t, k) => <p key={k} className="ml">{t}</p>)}
-    </div>
-  );
+// "How I Work": Shriniwas's own text. Bold lines are pull lines, lines wrapped in * are italic.
+function HowLine({ t }) {
+  const em = /^\*(?!\*)(.+)\*$/.exec(t), pull = /^\*\*(.+)\*\*$/.test(t);
+  return <p className={`ml ${pull ? 'pull' : ''}`}>{em ? <em>{rich(em[1])}</em> : rich(t)}</p>;
 }
 function Bring({ b }) {
   return (
@@ -108,11 +105,10 @@ export default function Baithak() {
           <div key={i} role="tabpanel" id={`pp-${i}`} aria-labelledby={`pt-${i}`} hidden={pane !== i} className="pane-body">
             {i === 0 && <><Card c={cards.who} /><Card c={cards.roots} /></>}
             {i === 1 && <><Card c={cards.debate}>{cards.debate.flip && <DebateFlip d={cards.debate.flip} />}</Card><Card c={cards.essay}><EssayRing e={cards.essay.essay} /><a className="btn ml" href={copy.site.links.essay} target="_blank" rel="noopener noreferrer" aria-label={tpl(X('driveAria'), { label: cards.essay.essay.link })}>{cards.essay.essay.link}</a></Card></>}
-            {i === 2 && <>{cards.research && <Card c={cards.research} />}<article className="meet-card" aria-labelledby="mc-loop"><h3 id="mc-loop" className="ml">{rich(cards.loop.title)}</h3><Loop L={cards.loop} /></article></>}
-            {i === 3 && <article className="meet-card" aria-labelledby="mc-bring"><h3 id="mc-bring" className="ml">{cards.bring.title}</h3><p className="hook ml">{rich(cards.bring.hook)}</p><Bring b={cards.bring} /></article>}
+            {i === 2 && <>{cards.research && <Card c={cards.research} />}<article className="meet-card" aria-labelledby="mc-how"><h3 id="mc-how" className="ml">{cards.how.title}</h3>{cards.how.lines.map((t, k) => <HowLine key={k} t={t} />)}</article></>}
+            {i === 3 && <article className="meet-card" aria-labelledby="mc-bring"><h3 id="mc-bring" className="ml">{cards.bring.title}</h3><p className="hook ml">{rich(cards.bring.hook)}</p><Bring b={cards.bring} /><p className="pull ml"><strong>{B.pull}</strong></p></article>}
           </div>
         ))}
-        <p className="pull"><strong>{B.pull}</strong></p>
         <p className="next-hint">{rich(copy.transitions.toTerrace)} <button className="btn btn-ghost" onClick={() => scrollToId('lamp-1')}>{rich(copy.ui.idleHint)}</button></p>
       </div>
     </section>

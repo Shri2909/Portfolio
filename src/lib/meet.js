@@ -21,8 +21,8 @@ export function meetCards() {
       : { id: 'debate', pane: 1, title: B.c3.title, hook: B.c3.hook, body: [B.c3.face, ...gated('meet.debate.filled', B.c3.filled)], flip: B.c3 },
     essay: { id: 'essay', pane: 1, title: B.c4.title, hook: B.c4.hook, body: [B.c4.face, ...gated('meet.essay.idea', B.c4.idea), ...gated('meet.essay.berggruen', '{ESSAY_BERGGRUEN_LINE}')], essay: B.c4 },
     research: thin ? null : { id: 'research', pane: 2, title: B.c5.title, hook: firstSentence(B.c5.face)[0], body: [firstSentence(B.c5.face)[1], ...gated('meet.research.filled', B.c5.filled)].filter(Boolean) },
-    loop: { id: 'loop', pane: 2, title: B.c6.title, steps: B.c6.steps, extra: [...gated('meet.loop.ownWords', B.c6.own), ...gated('meet.outside', B.c6.outside)] },
+    how: { id: 'how', pane: 2, title: B.how.title, lines: B.how.body },
     bring: { id: 'bring', pane: 3, title: B.c7.title, hook: B.c7.hook, items: B.c7.items.map((it) => ({ ...it, filledLine: flags['meet.research.filled'] && it.filled && filled(it.filled) ? fillSlots(it.filled) : '', share: flags['bring.indiaShare'] ? it.share : '' })) },
   };
-  return { thin, cards, order: [cards.who, cards.roots, cards.debate, cards.essay, cards.research, cards.loop, cards.bring].filter(Boolean) };
+  return { thin, cards, order: [cards.who, cards.roots, cards.debate, cards.essay, cards.research, cards.how, cards.bring].filter(Boolean) };
 }

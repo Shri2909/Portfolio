@@ -363,3 +363,19 @@ Six things the projects show
 Retention thinking.
 
 Community and user insight.
+
+## HOW I WORK (user-supplied text, word for word)
+
+### How I Work
+
+I start by understanding the real problem, questioning assumptions, and turning ideas into clear, actionable plans. I make decisions, take ownership of execution, and measure what actually matters.
+
+When something doesn't work, I don't defend the original plan. I investigate, adapt, and iterate until the evidence points toward a better direction.
+
+**I don't get attached to ideas. I get committed to finding what works.**
+
+*Sochna, karna, parakhna, aur behtar banana. That's how I approach every challenge.*
+
+**But don't just take my word for it. The next three lamps tell the stories behind how I actually work.**
+
+*Teen diye. Teen kahaaniyan. Faisla aapka.*

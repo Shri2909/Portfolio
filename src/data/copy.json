@@ -23,8 +23,6 @@
   "meet.mergeThin": true,
   "meet.essay.idea": false,
   "meet.essay.berggruen": false,
-  "meet.loop.ownWords": false,
-  "meet.outside": false,
   "bring.indiaShare": false
  },
  "site": {
@@ -978,9 +976,7 @@
   "RESEARCH_SPLIT": "",
   "RESEARCH_MY_PART": "",
   "ESSAY_IDEA": "",
-  "ESSAY_BERGGRUEN_LINE": "",
-  "LOOP_OWN_WORDS": "",
-  "OUTSIDE_TEST_LINE": ""
+  "ESSAY_BERGGRUEN_LINE": ""
  },
  "baithak": {
   "kicker": "MEET SHRINIWAS",
@@ -1041,33 +1037,6 @@
    "face": "I coordinated four research contributors.",
    "filled": "The project: {RESEARCH_PROJECT}. What each of the four did: {RESEARCH_SPLIT}. What I coordinated: {RESEARCH_MY_PART}."
   },
-  "c6": {
-   "title": "<hi>Mera loop: pehle rule likhiye, phir number maniye</hi>",
-   "steps": [
-    {
-     "h": "<hi>Rule pehle</hi>",
-     "g": "set the rule early",
-     "t": "certgen: the QR branch was held to a pre-agreed requirement and not merged."
-    },
-    {
-     "h": "<hi>Number saaf nikaliye</hi>",
-     "g": "measure cleanly",
-     "t": "Blitz: 1,205 ns came from an uncommitted tree; the controlled run gave 1,850. Vigil: a benchmark inherited a one-CPU affinity mask, so its comparison was invalid."
-    },
-    {
-     "h": "<hi>Todne ki koshish</hi>",
-     "g": "try to break it",
-     "t": "certgen: 324 tests, then 19 audit findings. Vigil: swap the guard for `if (false)` and exactly two targeted tests fail. Blitz: 3,059 crossed-at-rest states in 110,000 replay events."
-    },
-    {
-     "h": "<hi>Claim chhota kijiye</hi>",
-     "g": "narrow the claim",
-     "t": "Blitz: 3.1× to about 1.02×."
-    }
-   ],
-   "own": "My loop, in my own words: {LOOP_OWN_WORDS}.",
-   "outside": "Outside the three projects: {OUTSIDE_TEST_LINE}."
-  },
   "c7": {
    "title": "Six things the projects show",
    "hook": "<hi>Har cheez ke saath saboot aur uski seema.</hi>",
@@ -1109,6 +1078,17 @@
      "view": "",
      "lamp": 0
     }
+   ]
+  },
+  "how": {
+   "title": "How I Work",
+   "body": [
+    "I start by understanding the real problem, questioning assumptions, and turning ideas into clear, actionable plans. I make decisions, take ownership of execution, and measure what actually matters.",
+    "When something doesn't work, I don't defend the original plan. I investigate, adapt, and iterate until the evidence points toward a better direction.",
+    "**I don't get attached to ideas. I get committed to finding what works.**",
+    "*<hi>Sochna, karna, parakhna, aur behtar banana.</hi> That's how I approach every challenge.*",
+    "**But don't just take my word for it. The next three lamps tell the stories behind how I actually work.**",
+    "*<hi>Teen diye. Teen kahaaniyan. Faisla aapka.</hi>*"
    ]
   }
  },

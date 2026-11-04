@@ -124,7 +124,7 @@ export default function FullTextView({ onClose }) {
               <h3>{rich(c.title)}</h3>
               {c.hook && <P t={c.hook} />}
               {(c.body || []).filter(Boolean).map((t, i) => <P key={i} t={t} />)}
-              {c.steps && <ol>{c.steps.map((st, i) => <li key={i}>{rich(st.h)} ({st.g}). {st.t}</li>)}</ol>}
+              {(c.lines || []).map((t, i) => <P key={i} t={t.replace(/^\*{1,2}(?!\*)(.+?)\*{1,2}$/, '$1')} />)}
               {(c.extra || []).map((t, i) => <p key={i}>{t}</p>)}
               {c.items && <ol>{c.items.map((it, i) => <li key={i}><strong>{it.h}</strong> {it.proof} {it.filledLine} {it.view}</li>)}</ol>}
             </div>)); })()}
