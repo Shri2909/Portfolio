@@ -4,7 +4,7 @@ This file replaces the old detective-site instructions. The detective site ("Cas
 
 ## What this is
 
-A one-page night site, "Ek Diya Se Doosra" (one lamp lights another), for Shriniwas Kholkute's application to Wispr Flow's India growth internship. A visitor lights three lamps (Certgen, Blitz, Vigil), reads each story in three levels (instantly visible, poora kissa, inspect the evidence), meets the person, hears the voice, reads the proposed Handover Test (a fourth lamp that never lights), can write one wish for one real person, and ends with a lamp of their own. The journey is numbered 01 to 06 (see `copy.journey`).
+A one-page night site, "Ek Diya Se Doosra" (one lamp lights another), for Shriniwas Kholkute's application to Wispr Flow's India growth internship. A visitor lights three lamps (Certgen, Blitz, Vigil), reads each story in three levels (instantly visible, poora kissa, inspect the evidence), meets the person, hears the voice, reads the proposed Group Admin Tax idea (a fourth lamp that never lights), can write one wish for one real person, and ends with a lamp of their own. The journey is numbered 01 to 06 (see `copy.journey`).
 
 ## Sources of truth
 

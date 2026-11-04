@@ -40,7 +40,7 @@ walk(copy, '', false, false);
 // shape checks
 if (copy.lamps.length !== 3) problems.push('lamps must be 3 (Certgen, Blitz, Vigil)');
 if (copy.voice.takes.length !== 2) problems.push('takes must be 2');
-if (copy.evidence.folders.length !== 6) problems.push('evidence folders must be 6');
+if (copy.evidence.folders.length !== 5) problems.push('evidence folders must be 5');
 const SPOKEN = (JSON.stringify(copy).match(/Spoken with Wispr Flow/g) || []).length;
 if (SPOKEN !== 2) problems.push('"Spoken with Wispr Flow" appears ' + SPOKEN + ' times, expected 2');
 for (const f of ['ledgerGate_personFirstSentence', 'flowIntoEmergentRecorded', 'noAnalyticsLine', 'footerHowMade'])

@@ -244,3 +244,88 @@ an India protocol that says in advance what counts as no improvement.
 Blitz 1,205 ns to 1,850 ns, 3.1× to about 1.02×.
 
 four research contributors.
+
+## LAMP 04 — THE UNLIT LAMP (user-supplied text, word for word)
+
+### LAMP 04 — THE UNLIT LAMP
+
+# Har Group Ka Ek Unpaid CEO Hota Hai.
+
+*The person typing for everyone might be the person nobody thinks to help.*
+
+Every college has one.
+
+The class representative who sends the reminders. The club coordinator who writes the announcements. The person everyone tags when something needs to get done.
+
+"Bro, ek message group mein daal de."
+
+Again. And again.
+
+**What if that person stopped typing?**
+
+Not stopped communicating. Just stopped fighting the keyboard.
+
+### My idea: The Group Admin Tax
+
+I'd find the people who keep Indian communities running through messages and introduce them to Wispr Flow through a problem they already face.
+
+No generic AI demo.
+
+One real announcement. One natural explanation. Spoken in their own words and written directly into the app they're already using.
+
+*Unki awaaz. Unka message. Bas typing ka extra kaam kam.*
+
+Then comes the interesting part.
+
+**Did they use it again the next day, without anyone reminding them?**
+
+I'd test this first with consenting college representatives and club coordinators, comparing a generic speed demonstration with a demonstration built around their actual communication workload.
+
+I'd measure repeat dictation, correction effort, and whether interested community members independently start using Flow.
+
+If the approach works, I'd turn it into a replicable playbook for college clubs, student communities and other high-communication groups.
+
+If it doesn't, I'd investigate why—and stop or change the campaign.
+
+**The ambition isn't to reach a thousand people through a thousand advertisements.**
+
+It's to discover whether helping one trusted communicator can naturally introduce Flow to others.
+
+*Ek insaan jo sabke liye likhta hai. Pehle uska kaam aasaan banate hain.*
+
+**Proposed, not executed. No growth results claimed.**
+
+Architecture
+
+1) Find one high-frequency communicator
+
+A class rep, club organizer, coordinator or admin
+
+2) Solve one recurring writing problem
+
+Dictate real announcements and replies using Flow
+
+3) Earn repeat use
+
+The admin uses Flow again without your assistance
+
+4) Offer a trusted demonstration
+
+Interested members can opt in to see how the message was written
+
+5) Acquire more habitual users
+
+Test whether new members independently activate and return
+
+
+## CHANGED LINES (growth)
+
+LAMP 04 — THE UNLIT LAMP
+
+The Group Admin Tax — proposed, not run
+
+If it doesn't work, I'd investigate why—and stop or change the campaign.
+
+final-year at VIT Pune; YouTube study and a ₹3,999 course.
+
+I have no growth wins to borrow. But I've used Flow, and I want to discover whether helping one trusted communicator can naturally introduce Flow to others. Proposed, not run.

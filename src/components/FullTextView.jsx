@@ -108,15 +108,13 @@ export default function FullTextView({ onClose }) {
         <section aria-labelledby="ft-l6">
           <h2 id="ft-l6">{copy.growth.kicker}: {rich(copy.growth.title)}</h2>
           <p><strong>{copy.growth.badge}</strong></p>
-          <P t={copy.growth.hook} /><P t={copy.growth.body} /><p>{rich(copy.growth.tryLight)}</p>
-          <h3>{copy.growth.taps.head}</h3>
-          <p>{copy.growth.taps.t1.hindi} · {copy.growth.taps.t1.hinglish}. {copy.growth.taps.t1.caption} {copy.growth.taps.t1.note}</p>
-          <ul>{['scale', 'change', 'kill'].map((k) => <li key={k}>{copy.growth.taps.t2[k]}</li>)}</ul><p>{copy.growth.taps.t2.note}</p>
-          <p>{copy.growth.taps.t3.rule} {copy.growth.taps.t3.note}</p>
-          <h3>{copy.growth.cardHead}</h3><P t={copy.growth.card} /><P t={copy.growth.why} /><p><strong>{copy.growth.limits}</strong></p>
-          <h3>{copy.growth.sourcesHead}</h3>
-          <ul>{copy.growth.sources.map((s) => <li key={s.url}><a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a>{s.what ? ': ' + s.what : ''} [{s.tag}]</li>)}</ul>
-          <p><a href="#evidence" data-evidence="c8">{rich(copy.growth.protocol)}</a></p>
+          <p><em>{copy.growth.sub.replace(/^\*|\*$/g, '')}</em></p>
+          {copy.growth.story.map((t, i) => <P key={i} t={t.replace(/^\*(?!\*)(.+)\*$/, '$1')} />)}
+          <p>{rich(copy.growth.tryLight)}</p>
+          <h3>{copy.growth.ideaHead}</h3>
+          {copy.growth.idea.map((t, i) => <P key={i} t={t.replace(/^\*(?!\*)(.+)\*$/, '$1')} />)}
+          <h3>{copy.growth.archHead}</h3>
+          <ol>{copy.growth.arch.map((a, i) => <li key={i}><strong>{a.h}</strong>: {a.t}</li>)}</ol>
         </section>
         <section aria-labelledby="ft-baithak">
           <p className="kicker">{copy.baithak.kicker}</p>

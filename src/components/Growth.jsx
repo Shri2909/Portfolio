@@ -1,56 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import copy, { X } from '../lib/copy.js';
-import { tpl } from '../lib/tpl.js';
 import { rich } from '../lib/rich.jsx';
 import { useStore } from '../lib/useStore.js';
 import { announce } from '../lib/announce.js';
 import { shape } from './Lamp.jsx';
-import InviteButton from './InviteButton.jsx';
 import Step from './Step.jsx';
 
 // The last lamp: a proposed test, never run. It draws as a sketch and never lights (it never touches the store).
-// The Handover Test: three small taps (all labelled as illustrations, documented behaviour or simulated), the experiment in short,
-// and links to Wispr's own pages. Nothing here is a result.
-const WORDS_STEP = 250;
-function TapOne({ g }) {
-  const [lang, setLang] = useState('hinglish'), t = g.taps.t1;
-  return (
-    <div className="tap">
-      <h3>{rich(t.label)}</h3>
-      <div className="chips" role="group" aria-label={t.label.replace(/<\/?hi>/g, '')}>
-        {['hindi', 'hinglish'].map((k) => <button key={k} type="button" className="btn" aria-pressed={lang === k} onClick={() => setLang(k)}>{X(k + 'Chip')}</button>)}
-      </div>
-      <p className="illus" lang={lang === 'hindi' ? 'hi' : 'hi-Latn'}>{lang === 'hindi' ? t.hindi : t.hinglish}</p>
-      <p>{t.caption}</p><p className="caption">{t.note}</p>
-      <p className="twin">{t.hindi} · {t.hinglish}. {t.caption}</p>
-    </div>
-  );
-}
-function TapTwo({ g }) {
-  const t = g.taps.t2, [a, setA] = useState(3), [b, setB] = useState(3);
-  const fires = b >= 4 && b - a >= 2 ? 'scale' : b - a === 1 ? 'change' : a >= b ? 'kill' : '';
-  return (
-    <div className="tap">
-      <h3>{rich(t.label)}</h3>
-      <label>{t.a}<span className="val">{a}</span><input type="range" min="0" max="6" step="1" value={a} aria-label={X('sliderA') + ': ' + t.a} onChange={(e) => setA(+e.target.value)} /></label>
-      <label>{t.b}<span className="val">{b}</span><input type="range" min="0" max="6" step="1" value={b} aria-label={X('sliderB') + ': ' + t.b} onChange={(e) => setB(+e.target.value)} /></label>
-      <p role="status" aria-live="polite" className="fires">{fires ? X('firesLabel') + ' ' + fires[0].toUpperCase() + fires.slice(1) + '.' : X('firesNone')}</p>
-      <ul className="rule" aria-label={X('handoverRuleAria')}>{['scale', 'change', 'kill'].map((k) => <li key={k} className={fires === k ? 'hit' : ''}>{t[k]}</li>)}</ul>
-      <p className="caption">{t.note}</p>
-    </div>
-  );
-}
-function TapThree({ g }) {
-  const t = g.taps.t3, [n, setN] = useState(0), done = n >= 2000;
-  return (
-    <div className="tap">
-      <h3>{rich(t.label)}</h3>
-      <button type="button" className="btn btn-primary" onClick={() => { const m = Math.min(2000, n + WORDS_STEP); setN(m); if (m >= 2000) announce(t.rule); }}>{X('wordsMore')}</button>
-      <p className={`counter mono ${done ? 'done' : ''}`} role="status" aria-live="polite">{tpl(X('wordsCounter'), { n: n.toLocaleString('en-IN') })}</p>
-      <p>{t.rule}</p><p className="caption">{t.note}</p>
-    </div>
-  );
-}
+// The Group Admin Tax: a proposed idea, in Shriniwas's own words, with a five-step architecture. Nothing here is a result.
+const Line = ({ t }) => { const em = /^\*(?!\*)(.+)\*$/.exec(t); const p = /^\*\*(.+)\*\*$/.test(t); return <p className={p ? 'pull' : undefined}>{em ? <em>{rich(em[1])}</em> : rich(t)}</p>; };
 export default function Growth() {
   const g = copy.growth, calm = useStore((s) => s.calm), sec = useRef(null), spark = useRef(null);
   const [seen, setSeen] = useState(calm), [line, setLine] = useState(''), S = shape(6), k = 2;
@@ -80,19 +38,12 @@ export default function Growth() {
         <Step k="s4" />
         <p className="kicker">{g.kicker}</p>
         <h2 id="lamp-6-h" tabIndex={-1}>{rich(g.title)}</h2>
-        <p className="hook"><strong>{g.hook}</strong></p>
-        <p>{rich(g.body)}</p>
-        <h3>{g.taps.head}</h3>
-        <TapOne g={g} /><TapTwo g={g} /><TapThree g={g} />
-        <h3>{g.cardHead}</h3>
-        <p>{g.card}</p>
-        <p>{g.why}</p>
-        <p><strong>{g.limits}</strong></p>
-        <p className="btn-row"><button className="btn" data-evidence="c8">{rich(g.protocol)}</button></p>
-        <h3>{g.sourcesHead}</h3>
-        <ul className="sources">{g.sources.map((s) => <li key={s.url}><a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={s.label + X('inviteTabAria')}>{s.label}</a>{s.what ? ': ' + s.what : ''} <span className="mono tag">[{s.tag}]</span></li>)}</ul>
-        <div className="growth-invite"><InviteButton /> <span>{rich(g.inviteLine)}</span></div>
-        <p className="next-hint">{rich(g.exit)}</p>
+        <p className="tagline">{rich(g.sub.replace(/^\*|\*$/g, ''))}</p>
+        {g.story.map((t, i) => <Line key={i} t={t} />)}
+        <h3>{g.ideaHead}</h3>
+        {g.idea.map((t, i) => <Line key={i} t={t} />)}
+        <h3>{g.archHead}</h3>
+        <ol className="arch">{g.arch.map((a, i) => <li key={i}><strong>{a.h}</strong><span>{a.t}</span></li>)}</ol>
       </div>
     </section>
   );

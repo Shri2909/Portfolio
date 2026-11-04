@@ -190,3 +190,10 @@ html[data-calm="1"] .window-scene .panes rect, html[data-calm="1"] .farwin rect,
 html[data-calm="1"] .pane-body .ml { opacity: 1; animation: none !important; transform: none; }
 .loop-list { margin: 8px 0; padding-left: 22px; } .loop-list li { margin: 0 0 10px; } .bring-item { margin: 0 0 14px; padding-bottom: 10px; border-bottom: 1px solid var(--ground-5); } .bring-item p { margin: 0 0 4px; }
 .stop .punch { font-family: var(--font-display); font-style: italic; font-size: 1.15rem; line-height: 1.4; color: var(--flame-core); border-left: 3px solid var(--marigold); padding-left: 12px; margin: 10px 0 4px; }
+
+/* The Group Admin Tax: five-step architecture */
+.growth .tagline { font-family: var(--font-display); font-style: italic; color: var(--flame-core); font-size: 1.2rem; margin: 0 0 14px; }
+.growth .pull { font-family: var(--font-display); font-weight: 600; font-size: 1.2rem; border-left: 4px solid var(--marigold); padding-left: 14px; margin: 16px 0; }
+.growth .arch { list-style: none; counter-reset: a; margin: 12px 0 8px; padding: 0 0 0 30px; position: relative; } .growth .arch::before { content: ""; position: absolute; left: 11px; top: 14px; bottom: 14px; width: 2px; background: linear-gradient(var(--marigold), rgba(245, 166, 35, .15)); }
+.growth .arch li { counter-increment: a; position: relative; margin: 0 0 14px; display: flex; flex-direction: column; gap: 2px; } .growth .arch li::before { content: counter(a); position: absolute; left: -30px; top: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--ground-2); border: 2px solid var(--marigold); color: var(--flame-core); font: 700 13px var(--font-mono); display: grid; place-items: center; }
+.growth .arch li span { color: var(--text-dim); }
