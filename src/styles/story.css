@@ -203,3 +203,5 @@ html[data-calm="1"] .pane-body .ml { opacity: 1; animation: none !important; tra
 @media (max-width: 719px) { #topbar .quick .qf { display: none; } #topbar .quick .qs { display: inline; font-family: var(--font-mono); font-size: 13px; } #topbar .wordmark { display: none; } #topbar .quick { margin-right: 2px; } }
 .start-path p { margin: 0 0 6px; } .start-path .start-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
 .next-lamp { margin: 16px 0 0; }
+
+.social-icon { width: 20px; height: 20px; fill: currentColor; flex: 0 0 auto; vertical-align: -4px; } #topbar .quick a .social-icon { width: 22px; height: 22px; } .verdict-btns .btn .social-icon { margin-right: 4px; }

@@ -4,6 +4,7 @@ import { openEvidence, openSixty, openText, scrollToId } from '../lib/nav.js';
 import { emit } from '../lib/events.js';
 import InviteButton from './InviteButton.jsx';
 import DockControls from './Dock.jsx';
+import SocialIcon from './SocialIcon.jsx';
 
 export default function TopBar() {
   const [open, setOpen] = useState(false), [after2, setAfter2] = useState(false);
@@ -23,8 +24,8 @@ export default function TopBar() {
       <div className="right">
         <span className="quick" role="group" aria-label={X('quickNav')}>
           <a href={copy.site.links.resume} target="_blank" rel="noopener noreferrer" aria-label={X('quickResume') + X('inviteTabAria')}><span className="qf">{X('quickResume')}</span><span className="qs" aria-hidden="true">{X('quickResumeShort')}</span></a>
-          {copy.site.contact.linkedin && <a href={copy.site.contact.linkedin} target="_blank" rel="noopener noreferrer" aria-label={X('quickLinkedin') + X('inviteTabAria')}><span className="qf">{X('quickLinkedin')}</span><span className="qs" aria-hidden="true">{X('quickLinkedinShort')}</span></a>}
-          {copy.site.contact.github && <a href={copy.site.contact.github} target="_blank" rel="noopener noreferrer" aria-label={X('quickGithub') + X('inviteTabAria')}><span className="qf">{X('quickGithub')}</span><span className="qs" aria-hidden="true">{X('quickGithubShort')}</span></a>}
+          {copy.site.contact.linkedin && <a href={copy.site.contact.linkedin} target="_blank" rel="noopener noreferrer" aria-label={X('quickLinkedin') + X('inviteTabAria')}><SocialIcon name="linkedin" /></a>}
+          {copy.site.contact.github && <a href={copy.site.contact.github} target="_blank" rel="noopener noreferrer" aria-label={X('quickGithub') + X('inviteTabAria')}><SocialIcon name="github" /></a>}
         </span>
         {after2 && <InviteButton short />}
         <button ref={btn} className="btn" aria-expanded={open} aria-controls="menu" aria-label={X('menu')} onClick={() => setOpen(!open)}>{X('menu')}</button>

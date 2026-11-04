@@ -5,6 +5,7 @@ import { rich } from '../lib/rich.jsx';
 import { useStore } from '../lib/useStore.js';
 import InviteButton from './InviteButton.jsx';
 import Step from './Step.jsx';
+import SocialIcon from './SocialIcon.jsx';
 
 // Seedhi baat: a signed note on warm paper under the lit row. The third paragraph is the signature line, set large.
 export default function Verdict() {
@@ -32,8 +33,8 @@ export default function Verdict() {
         <a className="btn" href={copy.site.links.resume} target="_blank" rel="noopener noreferrer" aria-label={tpl(X('driveAria'), { label: V.resume.label })}>{V.resume.label}</a>
         <button className="btn" data-evidence="">{V.evidenceLabel}</button>
         <InviteButton short />
-        {copy.site.contact && copy.site.contact.github && <a className="btn" href={copy.site.contact.github} target="_blank" rel="noopener noreferrer">{X('ctaGithub')}</a>}
-        {copy.site.contact && copy.site.contact.linkedin && <a className="btn" href={copy.site.contact.linkedin} target="_blank" rel="noopener noreferrer">{X('ctaLinkedin')}</a>}
+        {copy.site.contact && copy.site.contact.github && <a className="btn" href={copy.site.contact.github} target="_blank" rel="noopener noreferrer"><SocialIcon name="github" /> {X('ctaGithub')}</a>}
+        {copy.site.contact && copy.site.contact.linkedin && <a className="btn" href={copy.site.contact.linkedin} target="_blank" rel="noopener noreferrer"><SocialIcon name="linkedin" /> {X('ctaLinkedin')}</a>}
       </p>
     </section>
   );
