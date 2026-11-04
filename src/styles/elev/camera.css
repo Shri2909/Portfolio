@@ -2,12 +2,12 @@
    parallax.js (which owns `transform`) composes with it. Near layers lead, the sky lags: that lag is the depth.
    Poses: --cx (vw) --cy (svh) --cz (multiplier on the 1.08 overscan) --veil (opacity). */
 html[data-elev="1"] { --cx: 0; --cy: 0; --cz: 1; --veil: 0; --l6x: 50%; --l6y: 62%; }
-html[data-elev="1"][data-act="doorstep"] { --cx: 0; --cy: 0; --cz: 1; --veil: 0; }
-html[data-elev="1"][data-act="baithak"] { --cx: -6; --cy: -1; --cz: 1.06; --veil: .35; }
-html[data-elev="1"][data-act="chhat"] { --cx: 4; --cy: 0; --cz: 1; --veil: .15; }
-html[data-elev="1"][data-act="awaaz"] { --cx: 0; --cy: -2; --cz: 1.03; --veil: .4; }
-html[data-elev="1"][data-act="aakhri"] { --cx: 0; --cy: 0; --cz: 1.12; --veil: .82; }
-html[data-elev="1"][data-act="vidaai"] { --cx: 0; --cy: 8; --cz: 1; --veil: .3; }
+html[data-elev="1"][data-act="doorstep"] #stage { --cx: 0; --cy: 0; --cz: 1; --veil: 0; }
+html[data-elev="1"][data-act="baithak"] #stage { --cx: -6; --cy: -1; --cz: 1.06; --veil: .35; }
+html[data-elev="1"][data-act="chhat"] #stage { --cx: 4; --cy: 0; --cz: 1; --veil: .15; }
+html[data-elev="1"][data-act="awaaz"] #stage { --cx: 0; --cy: -2; --cz: 1.03; --veil: .4; }
+html[data-elev="1"][data-act="aakhri"] #stage { --cx: 0; --cy: 0; --cz: 1.12; --veil: .82; }
+html[data-elev="1"][data-act="vidaai"] #stage { --cx: 0; --cy: 8; --cz: 1; --veil: .3; }
 
 html[data-elev="1"] #sky { --d: .15; --lag: calc(var(--dur-xl) + 300ms); }
 html[data-elev="1"] #skyline { --d: .7; --lag: calc(var(--dur-xl) + 100ms); }
@@ -44,11 +44,11 @@ html[data-elev="1"][data-busy="1"] #stage { --cam: 0; }
    except one static blur(1px) on the far layer on the high tier once focus is above .8 (class toggle, never animated). */
 @property --focus { syntax: '<number>'; inherits: true; initial-value: 0; }
 html[data-elev="1"][data-camera="1"] { --focus: .15; transition: --focus var(--dur-xl) var(--ease-in-out-quint); }
-html[data-elev="1"][data-camera="1"][data-act="baithak"] { --focus: .45; }
-html[data-elev="1"][data-camera="1"][data-act="chhat"] { --focus: 1; }
-html[data-elev="1"][data-camera="1"][data-act="awaaz"] { --focus: .8; }
-html[data-elev="1"][data-camera="1"][data-act="aakhri"] { --focus: 1; }
-html[data-elev="1"][data-camera="1"][data-act="vidaai"] { --focus: .3; }
+html[data-elev="1"][data-camera="1"][data-act="baithak"] #stage { --focus: .45; }
+html[data-elev="1"][data-camera="1"][data-act="chhat"] #stage { --focus: 1; }
+html[data-elev="1"][data-camera="1"][data-act="awaaz"] #stage { --focus: .8; }
+html[data-elev="1"][data-camera="1"][data-act="aakhri"] #stage { --focus: 1; }
+html[data-elev="1"][data-camera="1"][data-act="vidaai"] #stage { --focus: .3; }
 html[data-elev="1"][data-camera="1"] #skyline .lay.far .pane, html[data-elev="1"][data-camera="1"] #skyline .lay.mid .pane { opacity: calc(1 - var(--focus) * .55); }
 html[data-elev="1"][data-camera="1"] #skyline .lay.far .halo { opacity: calc(.18 + var(--focus) * .5); }
 html[data-elev="1"][data-camera="1"] #bokeh { opacity: calc(.25 + (1 - var(--focus)) * .5); }

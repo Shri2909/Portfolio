@@ -32,6 +32,13 @@ for (const f of text.filter((f) => f.endsWith('.js'))) {
   for (const re of BAN) if (re.test(s)) warn.push(`${re} in dist/${path.relative(dist, f)} (library code, warn only)`);
 }
 
+// 2b. audio and vibration in src (E8.7): no audio anywhere; vibration only in src/lib/haptic.js
+for (const f of src) {
+  const t = fs.readFileSync(f, 'utf8').replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
+  if (/new Audio\b|<audio|AudioContext|createOscillator|speechSynthesis|\.(mp3|wav|ogg|m4a)\b/.test(t)) fail.push(`audio API or file in ${path.relative(root, f)}`);
+  if (/navigator\.vibrate/.test(t) && !f.endsWith('haptic.js')) fail.push(`navigator.vibrate outside haptic.js: ${path.relative(root, f)}`);
+}
+
 // 3. forbidden strings in copy.json and dist
 const copy = fs.readFileSync(path.join(root, 'src/data/copy.json'), 'utf8');
 const FORBID = [/lorem/i, /TODO/, /\[CONFIRM/, /\[FILL IN/, /\[__\]/, /SAMPLE/, /Diwali/, /(?<![\w.])40\.62(?![\d])/, /(?<![\w.])0\.585(?![\d])/, /(?<![\w.])629\.70(?![\d])/, /(?<![\w.])26\.5(?![\d])/, /(?<![\w.])1\.08(?![\d])/,
@@ -82,6 +89,39 @@ if (fonts > 90 * 1024) fail.push(`fonts ${(fonts / 1024).toFixed(1)} KB over 90 
 const og = path.join(dist, 'og.png');
 if (fs.existsSync(og) && fs.statSync(og).size > 300 * 1024) fail.push('og.png over 300 KB');
 if (!fs.existsSync(og)) warn.push('dist/og.png missing');
+
+
+// 7. elevation proofs (E8.7): the guard may only get stricter
+{
+  const elevJs = files.filter((f) => /assets\/(elev|sp-|culture)[^/]*\.js$/.test(f) || /assets\/workers\//.test(f));
+  const strip = (t) => t.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:\\])\/\/.*$/gm, '$1');
+  const NET = [/\bfetch\(/, /XMLHttpRequest/, /\bWebSocket\b/, /\bEventSource\b/, /sendBeacon/, /importScripts\(\s*["']https?:/];
+  const STORE = [/\blocalStorage\b/, /\bsessionStorage\b/, /\bindexedDB\b/, /document\.cookie/, /caches\.open/, /navigator\.storage/, /serviceWorker\.register/, /cookieStore/, /BroadcastChannel/];
+  const AUDIO = [/new Audio\b/, /<audio/, /AudioContext/, /createOscillator/, /speechSynthesis/, /\.(mp3|wav|ogg|m4a)\b/];
+  for (const f of elevJs) {
+    const t = strip(fs.readFileSync(f, 'utf8')), n = 'dist/' + path.relative(dist, f);
+    for (const re of [...NET, ...STORE, ...AUDIO]) if (re.test(t)) fail.push(`${re} in elevation chunk ${n}`);
+    if (/navigator\.vibrate/.test(t)) fail.push(`navigator.vibrate in elevation chunk ${n} (only src/lib/haptic.js may vibrate)`);
+  }
+  for (const f of bundles.filter((f) => /\.(js|css|html)$/.test(f))) {
+    const t = fs.readFileSync(f, 'utf8'), n = 'dist/' + path.relative(dist, f), tNoSwitch = t.replace(/signoffSwitchAfter:"2026-11-09"/g, ''); // the sign-off switch constant (never printed) is the one allowed date
+    if (/<link[^>]+rel=["']?(preload|prefetch|preconnect|dns-prefetch)[^>]+href=["']?https?:/i.test(t)) fail.push(`remote preload/preconnect in ${n}`);
+    if (/@import|url\(\s*["']?https?:/.test(t) && !f.endsWith('.js')) fail.push(`@import or remote url() in ${n}`);
+    if (/fonts\.googleapis|fonts\.gstatic/.test(t)) fail.push(`external font host in ${n}`);
+    if (/__perf|perfhud|VITE_PERF|devpanel|__ek\b|__fx\b|debugger;/.test(t)) fail.push(`debug code in ${n}`);
+    if (/sourceMappingURL/.test(t)) fail.push(`sourceMappingURL in ${n}`);
+    if (!f.endsWith('.js') && /Spoken with Wispr Flow/.test(t)) fail.push(`"Spoken with Wispr Flow" in non-JS ${n}`);
+    if (/\b(8|9|10|11)\s*(Nov|November)\b/i.test(t) || /\bNov(ember)?\s*(8|9)\b/i.test(t) || /\b2026-11-0[5-9]\b/.test(tNoSwitch)) fail.push(`festival-like date in ${n}`);
+  }
+  const copyText = fs.readFileSync(path.join(root, 'src/data/copy.json'), 'utf8');
+  const DEITY = /\b(Lakshmi|Laxmi|Ganesh|Ganesha|Krishna|Hanuman|Durga|Shiva|Vishnu|puja|pooja|aarti|mantra|shloka|bhajan|prasad|blessing|blessed|goddess|deity|ashirwad|aashirvaad|havan|yagna)\b/i;
+  const dm = DEITY.exec(copyText); if (dm) fail.push(`religious term in copy.json: ${dm[0]}`);
+  for (const f of bundles.filter((f) => f.endsWith('.js'))) { const m = /\b(Lakshmi|Laxmi|Ganesha?|Hanuman|Durga|puja|pooja|aarti|mantra|shloka|bhajan|prasad)\b/.exec(strip(fs.readFileSync(f, 'utf8'))); if (m) fail.push(`religious term in dist/${path.relative(dist, f)}: ${m[0]}`); }
+  for (const f of files) { const ext = path.extname(f).toLowerCase(); if (/\.(png|jpe?g|webp|avif|gif|mp4|webm|mp3)$/.test(ext) && path.basename(f) !== 'og.png') fail.push(`binary asset in dist: ${path.relative(dist, f)}`); }
+  if (fs.existsSync(og) && fs.statSync(og).size > 120 * 1024) warn.push('og.png over 120 KB (E8.5 target)');
+  if (!fs.existsSync(path.join(root, 'docs/FONTS.md')) || !/OFL/.test(fs.readFileSync(path.join(root, 'docs/FONTS.md'), 'utf8'))) warn.push('docs/FONTS.md with the OFL notice is missing');
+  console.log(`elevation proofs: ${elevJs.length} elevation chunk(s) scanned; Spoken-with-Flow count ${sp}; held-out numbers and festival dates absent`);
+}
 
 console.log('check-build  sizes (gzip): JS ' + (js / 1024).toFixed(1) + ' KB | CSS ' + (css / 1024).toFixed(1) + ' KB | fonts ' + (fonts / 1024).toFixed(1) + ' KB | og.png ' + (fs.existsSync(og) ? (fs.statSync(og).size / 1024).toFixed(0) + ' KB' : 'none'));
 for (const w of warn) console.log('  warn  ' + w);

@@ -119,7 +119,7 @@ function tick(dt) {
 }
 export function start() {
   hooks.card = cardHook;
-  fx = registerEffect({ id: 'card-live', kind: 'canvas', priority: 6, ms: 0.8 });
+  fx = registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'card-live', kind: 'canvas', priority: 6, ms: 0.8 });
   attach(); mo = new MutationObserver(() => { if (!liveEl) attach(); }); mo.observe(document.getElementById('wish') || document.body, { childList: true, subtree: true });
   offTick = ticker.add(tick);
 }

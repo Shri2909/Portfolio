@@ -24,7 +24,7 @@ function tofu() { // quiet line under the form when this device may lack a font 
 }
 export function start() {
   ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((t) => { addEventListener(t, stamp, { passive: true, capture: true }); offs.push(() => removeEventListener(t, stamp, { capture: true })); });
-  registerEffect({ id: 'secrets', kind: 'dom', priority: 4, ms: 0.2 });
+  registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'secrets', kind: 'dom', priority: 4, ms: 0.2 });
   tofu();
   const near = (sel, key, load) => { const el = document.querySelector(sel); if (!el) return; io.observe(el); el.__cu = [key, load]; };
   io = new IntersectionObserver((es) => es.forEach((e) => { if (!e.isIntersecting) return; io.unobserve(e.target); const [k, load] = e.target.__cu; once(k, () => idle(load)); }), { rootMargin: '1200px 0px' });

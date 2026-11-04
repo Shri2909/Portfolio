@@ -25,7 +25,7 @@ function copied(b) {
 }
 const click = (e) => { const b = e.target.closest && e.target.closest('#invite button'); if (b) last = b; };
 export function start() {
-  unreg = registerEffect({ id: 'invite', kind: 'dom', priority: 5, ms: 0.1 });
+  unreg = registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'invite', kind: 'dom', priority: 5, ms: 0.1 });
   mo = new MutationObserver(scan); mo.observe(document.getElementById('root'), { childList: true, subtree: true }); scan();
   document.addEventListener('click', click, true); offs.push(() => document.removeEventListener('click', click, true));
 }

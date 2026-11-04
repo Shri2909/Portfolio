@@ -42,7 +42,7 @@ function buzz(name) {
 }
 
 export function start() {
-  unreg = registerEffect({ id: 'touch', kind: 'dom', priority: 8, ms: 0.1 });
+  unreg = registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'touch', kind: 'dom', priority: 8, ms: 0.1 });
   // parallax: the spring solver replaces the 0.08 lerp (R5: parallax.js has one owner; this is the only change here)
   px = spring2(FEEL.parallax, { scale: 1 }); let first = true;
   hooks.parallaxStep = (cur, tgt) => {

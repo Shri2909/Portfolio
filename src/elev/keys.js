@@ -68,7 +68,7 @@ export function openKeys() {
   dlg.querySelector('input').checked = keysOn; dlg.showModal(); dlg.querySelector('[data-title]').focus();
 }
 export function start() {
-  unreg = registerEffect({ id: 'focusflame', kind: 'dom', priority: 8, ms: 0.1, onShed: focusout });
+  unreg = registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'focusflame', kind: 'dom', priority: 8, ms: 0.1, onShed: focusout });
   ff = document.createElement('i'); ff.id = 'focus-flame'; ff.setAttribute('aria-hidden', 'true'); document.body.appendChild(ff);
   sp = {}; for (const k of ['x', 'y', 'w', 'h']) { sp[k] = spring(FEEL.focusFlame, { scale: 100, decor: false }); sp[k].onUpdate(paint); }
   document.addEventListener('focusin', focusin); document.addEventListener('focusout', focusout);

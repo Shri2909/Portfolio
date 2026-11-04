@@ -14,7 +14,7 @@ export const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 let fgT = 0;
 export function foreground(on, id = 'sp') { clearTimeout(fgT); if (on) emit('fx:foreground', { on: true, id }); else fgT = setTimeout(() => emit('fx:foreground', { on: false, id }), 1200); }
 export function useInView(el, fn, threshold = 0.6) { const io = new IntersectionObserver(([e]) => fn(e.isIntersecting), { threshold }); io.observe(el); return () => io.disconnect(); }
-export function effect(id, o) { return registerEffect({ id: 'sp-' + id, kind: o.kind || 'dom', priority: o.priority || 6, ms: o.ms || 0.5, onShed: o.shed, onRestore: o.restore }); }
+export function effect(id, o) { return registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'sp-' + id, kind: o.kind || 'dom', priority: o.priority || 6, ms: o.ms || 0.5, onShed: o.shed, onRestore: o.restore }); }
 export const alive = (id) => isOn('sp-' + id);
 export const watch = (fn) => subscribe(fn);
 export function el(tag, cls, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html) e.innerHTML = html; e.setAttribute('data-e', '1'); e.setAttribute('aria-hidden', 'true'); return e; }

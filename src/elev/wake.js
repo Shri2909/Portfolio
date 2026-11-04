@@ -64,7 +64,7 @@ export function start() {
   const s = getState();
   if (s.litCount > 0 || s.calm || s.ink) { r.setAttribute('data-wake', 'done'); return; }
   pre();
-  unreg = registerEffect({ id: 'wake', kind: 'dom', priority: 8, ms: 0.2, });
+  unreg = registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'wake', kind: 'dom', priority: 8, ms: 0.2, });
   offs.push(on('diya:lit', ({ n, x, y }) => { if (r.getAttribute('data-wake') === 'pre') go(x || y ? { x, y } : null); }));
   offs.push(on('diya:allLit', () => { if (r.getAttribute('data-wake') === 'pre') { r.setAttribute('data-wake', 'done'); } }));
   if (/[?&]cue=seek/.test(location.search) || window.__open) window.__wake = { go };

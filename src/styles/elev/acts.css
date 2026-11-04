@@ -9,12 +9,12 @@
 @property --c-key { syntax: '<color>'; inherits: false; initial-value: #FFB347; }
 @property --c-haze { syntax: '<color>'; inherits: false; initial-value: #2A2650; }
 
-html[data-elev="1"] { --a-sky0: #04050C; --a-sky1: #0A0C1E; --a-sky2: #1A1636; --a-hz: #3A2347; --a-haze: #2A2650; --a-key: #FFB347; --a-fill: #6E86C8; --a-lift: #14102A; --a-vig: .55; --a-tonew: 1; --a-mist: .18; --a-rim: .22; }
-html[data-elev="1"][data-act="baithak"] { --a-sky0: #120C12; --a-sky1: #2A1810; --a-sky2: #4A2A14; --a-hz: #7A4A1E; --a-haze: #5A3A22; --a-key: #FFC067; --a-fill: #B86B3A; --a-lift: #241410; --a-vig: .42; --a-tonew: 0; --a-mist: .30; }
-html[data-elev="1"][data-act="chhat"] { --a-sky0: #0A0A1E; --a-sky1: #1B1430; --a-sky2: #3D1D2F; --a-hz: #5A2A2C; --a-haze: #3A2A5A; --a-key: #FFB347; --a-fill: #7F8FD6; --a-lift: #1A1226; --a-vig: .44; --a-tonew: 1; --a-mist: calc(.18 + var(--tone, 0) * .06); }
-html[data-elev="1"][data-act="awaaz"] { --a-sky0: #070A14; --a-sky1: #0C1424; --a-sky2: #14202E; --a-hz: #1E2E3A; --a-haze: #1E2A40; --a-key: #FFD27A; --a-fill: #4F7C8A; --a-lift: #0E1626; --a-vig: .50; --a-tonew: .35; --a-mist: .10; }
-html[data-elev="1"][data-act="aakhri"] { --a-sky0: #030308; --a-sky1: #06060C; --a-sky2: #0B0810; --a-hz: #1A0C0C; --a-haze: #120C18; --a-key: #FF7A1A; --a-fill: #3A2A3A; --a-lift: #0A0810; --a-vig: .70; --a-tonew: 0; --a-mist: .05; }
-html[data-elev="1"][data-act="vidaai"] { --a-sky0: #22152B; --a-sky1: #6B3440; --a-sky2: #C9703A; --a-hz: #F2A94E; --a-haze: #E9A56A; --a-key: #FFE2A0; --a-fill: #FFB347; --a-lift: #3A1E24; --a-vig: .22; --a-tonew: 1; --a-mist: .60; --a-rim: .35; }
+html[data-elev="1"] #stage { --a-sky0: #04050C; --a-sky1: #0A0C1E; --a-sky2: #1A1636; --a-hz: #3A2347; --a-haze: #2A2650; --a-key: #FFB347; --a-fill: #6E86C8; --a-lift: #14102A; --a-vig: .55; --a-tonew: 1; --a-mist: .18; --a-rim: .22; }
+html[data-elev="1"][data-act="baithak"] #stage { --a-sky0: #120C12; --a-sky1: #2A1810; --a-sky2: #4A2A14; --a-hz: #7A4A1E; --a-haze: #5A3A22; --a-key: #FFC067; --a-fill: #B86B3A; --a-lift: #241410; --a-vig: .42; --a-tonew: 0; --a-mist: .30; }
+html[data-elev="1"][data-act="chhat"] #stage { --a-sky0: #0A0A1E; --a-sky1: #1B1430; --a-sky2: #3D1D2F; --a-hz: #5A2A2C; --a-haze: #3A2A5A; --a-key: #FFB347; --a-fill: #7F8FD6; --a-lift: #1A1226; --a-vig: .44; --a-tonew: 1; --a-mist: calc(.18 + var(--tone, 0) * .06); }
+html[data-elev="1"][data-act="awaaz"] #stage { --a-sky0: #070A14; --a-sky1: #0C1424; --a-sky2: #14202E; --a-hz: #1E2E3A; --a-haze: #1E2A40; --a-key: #FFD27A; --a-fill: #4F7C8A; --a-lift: #0E1626; --a-vig: .50; --a-tonew: .35; --a-mist: .10; }
+html[data-elev="1"][data-act="aakhri"] #stage { --a-sky0: #030308; --a-sky1: #06060C; --a-sky2: #0B0810; --a-hz: #1A0C0C; --a-haze: #120C18; --a-key: #FF7A1A; --a-fill: #3A2A3A; --a-lift: #0A0810; --a-vig: .70; --a-tonew: 0; --a-mist: .05; }
+html[data-elev="1"][data-act="vidaai"] #stage { --a-sky0: #22152B; --a-sky1: #6B3440; --a-sky2: #C9703A; --a-hz: #F2A94E; --a-haze: #E9A56A; --a-key: #FFE2A0; --a-fill: #FFB347; --a-lift: #3A1E24; --a-vig: .22; --a-tonew: 1; --a-mist: .60; --a-rim: .35; }
 
 /* sky: the gradient is read from the act, the warm layers are weighted so acts 4 and 5 are not blanketed by dusk-gold */
 html[data-elev="1"]:not([data-ink="1"]) .sky-night {

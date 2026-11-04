@@ -33,7 +33,7 @@ function ring(x, y) {
   const a = d.animate([{ transform: 'scale(0)', opacity: 0.35 }, { transform: 'scale(2.4)', opacity: 0 }], { duration: 700, easing: 'cubic-bezier(.16,1,.3,1)' }); a.onfinish = () => d.remove();
 }
 export function start() {
-  unreg = registerEffect({ id: 'hold-heat', kind: 'dom', priority: 2, ms: 0.1, onShed: () => { heat && heat.remove(); heat = null; } });
+  unreg = registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'hold-heat', kind: 'dom', priority: 2, ms: 0.1, onShed: () => { heat && heat.remove(); heat = null; } });
   offs.push(on('diya:lighting', lighting));
   offs.push(on('diya:lit', ({ n, x, y }) => {
     heat && heat.remove(); heat = null; if (n !== 1) return;

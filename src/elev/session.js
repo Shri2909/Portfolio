@@ -65,7 +65,7 @@ const vis = () => {
 const show = (e) => { if (e.persisted && !getState().calm) { root.setAttribute('data-return', ''); setTimeout(() => root.removeAttribute('data-return'), 1300); } };
 
 export function start() {
-  unreg = registerEffect({ id: 'hop', kind: 'dom', priority: 5, ms: 0.1 });
+  unreg = registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'hop', kind: 'dom', priority: 5, ms: 0.1 });
   try { history.scrollRestoration = 'manual'; if (history.state && history.state.ek) history.replaceState(null, '', location.href); } catch { /* ignore */ }
   if (!location.hash && scrollY > 0) window.scrollTo(0, 0);
   dip = document.createElement('i'); dip.id = 'hop-dip'; dip.setAttribute('aria-hidden', 'true'); document.body.appendChild(dip);

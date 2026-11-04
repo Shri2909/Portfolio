@@ -140,7 +140,7 @@ export function start() {
   offs.push(on('diya:lighting', ({ n, progress }) => { if (progress || off() || getState().quality === 'low') return; const a = lampRegistry.wick(n === 1 ? 0 : n - 1), b = lampRegistry.wick(n); a && b && light.traveller({ from: a, to: b, dur: 900, r: 200, i: 0.9 }); }));
   // light wipe across the act heading on each act change
   offs.push(on('stage:act', ({ id, jump }) => { if (jump || off() || getState().quality === 'low') return; const sec = document.querySelector(`[data-act="${id}"]`), h = sec && sec.querySelector('h1, h2'); if (!h) return; const r = h.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return; light.traveller({ from: { x: r.left, y: r.top + r.height / 2 }, to: { x: r.right, y: r.top + r.height / 2 }, dur: 700, r: 120, i: 0.6 }); })); // lint:ok event-time read, not per frame
-  unregSurf = registerEffect({ id: 'light-surfaces', kind: 'dom', priority: 6, ms: 0.4, onRestore: () => mark() }); // CSS dims by --fxs-light-surfaces
+  unregSurf = registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'light-surfaces', kind: 'dom', priority: 6, ms: 0.4, onRestore: () => mark() }); // CSS dims by --fxs-light-surfaces
   mark(); setTimeout(readWindows, 800);
   if (import.meta.env.VITE_PERF === '1' && /[?&]qa=1/.test(location.search)) window.__light = { lights, trans, energy, att, light, sample: light.sample, flash: () => light.flashStats() };
 }

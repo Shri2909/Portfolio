@@ -30,6 +30,7 @@ const cfgs = quick ? [{ v: '390', cpu: 4, q: 'high', calm: false }] : full
   ? [['390', 1], ['390', 4], ['1366', 1], ['1366', 4]].flatMap(([v, c]) => ['high', 'mid', 'low'].flatMap((q) => [false, true].map((calm) => ({ v, cpu: c, q, calm }))))
   : ['high', 'mid'].flatMap((q) => [false, true].map((calm) => ({ v: '390', cpu: 4, q, calm })));
 
+if (arg('calm')) cfgs.splice(0, cfgs.length, { v: '390', cpu: 4, q: 'high', calm: true }); // calm only
 if (arg('quick')) cfgs.splice(1); // one config: 390@4x high
 const browser = await chromium.launch({ args: ['--no-sandbox', '--enable-gpu-rasterization'] });
 const results = [], hardFail = [];

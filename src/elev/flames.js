@@ -38,7 +38,7 @@ export function start() {
   augment();
   offs.push(on('diya:lit', () => setTimeout(augment, 60)));
   gustT = setTimeout(gust, rnd(6000, 10000)); wispT = setTimeout(wisp, rnd(3000, 6000));
-  unreg.push(registerEffect({ id: 'flames', kind: 'dom', priority: 2, ms: 0.1 })); // wisps stop while shed
+  unreg.push(registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'flames', kind: 'dom', priority: 2, ms: 0.1 })); // wisps stop while shed
 }
 export function stop() { offs.splice(0).forEach((f) => f()); unreg.splice(0).forEach((f) => f()); clearTimeout(gustT); clearTimeout(wispT); document.querySelectorAll('.f-wick, .e-lip').forEach((n) => n.remove()); defs && defs.remove(); defs = null; }
 export const name = 'flames';

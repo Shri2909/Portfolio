@@ -72,3 +72,5 @@ html[data-elev="1"] .proof-ember { position: fixed; left: 0; top: 0; width: 10px
 html[data-elev="1"] .proof-ember.tr { width: 6px; height: 6px; box-shadow: 0 0 8px 2px rgba(255, 179, 71, .5); }
 html[data-elev="1"] [data-proof="1"] { outline: 2px solid rgba(245, 166, 35, .8); outline-offset: 4px; border-radius: 12px; transition: outline-color .5s; }
 html[data-elev="1"] .proof-back-e { margin-top: 10px; min-height: 44px; }
+/* Calm: the guttering smoke is a still wisp, not a loop */
+html[data-elev="1"][data-calm="1"] .late .smoke-e i { animation: none; opacity: .35; }

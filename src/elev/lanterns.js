@@ -45,7 +45,7 @@ export function mount() {
   setTimeout(fill, 0);
   sec.setAttribute('data-lsky', '1');
   const cv = document.createElement('canvas'); cv.className = 'lsky'; cv.setAttribute('aria-hidden', 'true'); cv.setAttribute('data-e', '1'); sec.prepend(cv);
-  const fx = registerEffect({ id: 'lantern-sky', kind: 'canvas', priority: 6, ms: 1.2 });
+  const fx = registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'lantern-sky', kind: 'canvas', priority: 6, ms: 1.2 });
   let ctx = cv.getContext('2d'), w = 0, h = 0, dpr = 1, items = [], visitor = null, inView = false, t0 = performance.now(), offs = [], rise = null, lastEmber = 0, acc = 0;
   const base = () => getState().row.base || 0;
   const layout = () => {

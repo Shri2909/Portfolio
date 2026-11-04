@@ -61,7 +61,7 @@ function mote(n) {
   an.finished.then(() => { m.remove(); haptic('hop'); }, () => m.remove());
 }
 export function start() {
-  unreg = registerEffect({ id: 'way', kind: 'dom', priority: 5, ms: 0.1, onShed: () => wrap && wrap.classList.add('plain'), onRestore: () => wrap && wrap.classList.remove('plain') });
+  unreg = registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'way', kind: 'dom', priority: 5, ms: 0.1, onShed: () => wrap && wrap.classList.add('plain'), onRestore: () => wrap && wrap.classList.remove('plain') });
   build();
   sx = spring(FEEL.trailHead, { scale: 100, decor: true }); lean = spring(FEEL.lean, { scale: 10, decor: true });
   offs.push(subscribe(paint), on('diya:lit', ({ n }) => { paint(); const d = dots[n - 1]; if (d && !getState().calm) d.animate([{ transform: 'scale(0)' }, { transform: 'scale(1)' }], { duration: 360, easing: 'cubic-bezier(.34,1.45,.64,1)' }); mote(n); }));

@@ -57,7 +57,7 @@ function statics() { // always there, not counted as alive: a drawn curtain in o
 }
 export function mount() {
   rnd = mulberry32((Date.now() >>> 8) | 1); started = performance.now(); statics();
-  registerEffect({ id: 'homely', kind: 'dom', priority: 4, ms: 0.3 });
+  registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'homely', kind: 'dom', priority: 4, ms: 0.3 });
   if (getState().calm) { const p = litPanes()[0]; if (p) { const b = p.parentNode, x = +p.getAttribute('x'), y = +p.getAttribute('y'), w = +p.getAttribute('width'), h = +p.getAttribute('height'); const c = svg('path', { d: `M${x} ${y}h${w * 0.4}q-${w * 0.1} ${h * 0.5} ${w * 0.04} ${h}h-${w * 0.44}z`, fill: 'rgba(120,60,20,.55)' }); b.appendChild(c); staticEls.push(c); } }
   timer = setTimeout(once, 18000);
   return () => { clearTimeout(timer); alive.forEach((t) => t.m.cancel()); alive.clear(); staticEls.splice(0).forEach((e) => e.remove()); plays = {}; lastPlay = {}; };

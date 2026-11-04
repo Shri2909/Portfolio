@@ -27,7 +27,7 @@ function run() {
 function schedule(ms) { clearTimeout(timer); if (cycle >= 3 && !ms) { stillCue(); return; } timer = setTimeout(run, ms); }
 function cancel() { last = performance.now(); if (live || (timer && cycle > 0 && !dot?.classList.contains('rest'))) { reset(); emit('cue:play', { name: 'attract:stop' }); clearTimeout(timer); if (cycle < 3) schedule(9000); else stillCue(); } }
 export function start() {
-  unreg = registerEffect({ id: 'attract', kind: 'dom', priority: 5, ms: 0.1, onShed: reset });
+  unreg = registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'attract', kind: 'dom', priority: 5, ms: 0.1, onShed: reset });
   const ev = ['pointerdown', 'keydown', 'wheel', 'touchstart', 'scroll', 'focusin']; ev.forEach((e) => addEventListener(e, cancel, { passive: true, capture: true }));
   let lm = 0; const mv = (e) => { if (Math.hypot(e.clientX - lm, 0) > 8) cancel(); lm = e.clientX; }; addEventListener('pointermove', mv, { passive: true });
   const rp = () => { raf = 0; placeDot(); }; const sc = () => { if (dot && !raf) raf = requestAnimationFrame(rp); }; addEventListener('scroll', sc, { passive: true }); addEventListener('resize', sc);

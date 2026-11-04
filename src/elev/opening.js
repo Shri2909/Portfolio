@@ -105,7 +105,7 @@ export function start() {
   const SEEK = /[?&]cue=seek/.test(location.search);
   tier = s.quality || 'high'; running = true; skimmed = false; clock.t = SEEK ? 0 : Math.min(performance.now(), 1000); clock.scale = SEEK ? 0 : 1; clock.target = SEEK ? 0 : 1;
   measure();
-  unreg = registerEffect({ id: 'opening', kind: 'canvas', priority: 8, ms: 1.2, onShed: () => { if (!skimmed) { clock.target = 11; } } });
+  unreg = registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'opening', kind: 'canvas', priority: 8, ms: 1.2, onShed: () => { if (!skimmed) { clock.target = 11; } } });
   const stage = document.getElementById('stage');
   if (tier !== 'low' && stage) {
     cv = document.createElement('canvas'); cv.setAttribute('aria-hidden', 'true'); cv.setAttribute('data-e', '1'); cv.id = 'open-veil';

@@ -58,7 +58,7 @@ export function start() {
     if (a1 >= 125) { a1 = 0; const s = getState(); if (!(s.calm || s.ink || s.quality !== 'high' || document.hidden || !isOn('lightmap-breath'))) { const hu = document.documentElement.dataset.hush; if (!hu || hu === '0') draw(); } }
     if (a2 >= 500) { a2 = 0; sample(); }
   });
-  unreg.push(registerEffect({ id: 'lightmap-pool', kind: 'canvas', priority: 4, ms: 0.5, onRestore: () => draw() }), registerEffect({ id: 'lightmap-breath', kind: 'canvas', priority: 7, ms: 0.3 }));
+  unreg.push(registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'lightmap-pool', kind: 'canvas', priority: 4, ms: 0.5, onRestore: () => draw() }), registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'lightmap-breath', kind: 'canvas', priority: 7, ms: 0.3 }));
   light.mark(); setTimeout(() => { draw(); if (!getState().calm) sample(); }, 600);
 }
 export function stop() { tickStop && tickStop(); tickStop = null; unreg.splice(0).forEach((f) => f()); offs.splice(0).forEach((f) => f()); cv && cv.remove(); cv = ctx = null; bloomPts = []; }

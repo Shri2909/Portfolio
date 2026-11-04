@@ -2,7 +2,7 @@
  {
   "name": "director: acts visited in order, no repeats",
   "ok": true,
-  "info": "doorstep>baithak>chhat>awaaz>aakhri>vidaai"
+  "info": "doorstep>baithak>chhat>aakhri>vidaai"
  },
  {
   "name": "director: elevation still on, no page errors",

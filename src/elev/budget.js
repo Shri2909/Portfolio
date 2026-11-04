@@ -32,8 +32,9 @@ function pump() {
 }
 function ramp(e, to, dur, t = now()) { e.from = sc(e, t); e.to = to; e.t0 = t; e.dur = dur; pump(); }
 
-export function registerEffect({ id, kind = 'dom', priority = 5, minTier = 'low', ms = 0.3, onShed = null, onRestore = null }) {
-  const e = { id, kind, priority, minTier, ms, onShed, onRestore, from: 1, to: 1, t0: 0, dur: 0, last: 1, on: true, tierShed: false, pinned: false, restores: 0, restoredAt: 0, shedAt: 0, shedCount: 0, ewma: 0, active: 0, frames: 0 };
+export function registerEffect({ still = '', id, kind = 'dom', priority = 5, minTier = 'low', ms = 0.3, onShed = null, onRestore = null }) {
+  if (!still && typeof console !== 'undefined' && import.meta.env.DEV) console.warn('effect without a still equivalent: ' + id);
+  const e = { id, still, kind, priority, minTier, ms, onShed, onRestore, from: 1, to: 1, t0: 0, dur: 0, last: 1, on: true, tierShed: false, pinned: false, restores: 0, restoredAt: 0, shedAt: 0, shedCount: 0, ewma: 0, active: 0, frames: 0 };
   E.set(id, e);
   return () => { E.delete(id); typeof document !== 'undefined' && document.documentElement.style.removeProperty('--fxs-' + id); };
 }

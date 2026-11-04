@@ -47,7 +47,7 @@ const down = (e) => { if (e.pointerType === 'touch') away(); else if (el) el.cla
 const up = () => el && el.classList.remove('press');
 export function start() {
   if (!fine()) return; // never present on touch-first devices
-  unreg = registerEffect({ id: 'pointer', kind: 'dom', priority: 8, ms: 0.2, onShed: away });
+  unreg = registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'pointer', kind: 'dom', priority: 8, ms: 0.2, onShed: away });
   window.addEventListener('pointermove', move, { passive: true });
   window.addEventListener('pointerdown', down, { passive: true, capture: true });
   window.addEventListener('pointerup', up, { passive: true, capture: true });

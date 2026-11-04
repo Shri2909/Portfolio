@@ -37,7 +37,7 @@ const outside = (e) => {
   b && b.click();
 };
 export function start() {
-  unreg = registerEffect({ id: 'menu', kind: 'dom', priority: 5, ms: 0.1 });
+  unreg = registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'menu', kind: 'dom', priority: 5, ms: 0.1 });
   const scan = () => { const m = document.getElementById('menu'); if (m) enter(m); document.documentElement.toggleAttribute('data-menu', !!m); };
   mo = new MutationObserver(scan); mo.observe(document.getElementById('root'), { childList: true, subtree: true }); scan();
   document.addEventListener('pointerdown', outside, true);

@@ -24,10 +24,10 @@ export function start() {
     dpr: () => (budget.isOn('canvas-dpr') ? 1 : 0.72), cap: () => (budget.isOn('particle-cap') ? 1 : 0.5),
   };
   const nudge = () => emit('fx:setQuality', { tier: getState().quality }); // fx.js re-sizes its canvas and trims
-  unreg.push(budget.registerEffect({ id: 'ambient-particles', kind: 'canvas', priority: 2, ms: 1.2 }));
-  unreg.push(budget.registerEffect({ id: 'pointer-parallax', kind: 'dom', priority: 3, ms: 0.2 }));
-  unreg.push(budget.registerEffect({ id: 'canvas-dpr', kind: 'canvas', priority: 8, ms: 1.0, onShed: nudge, onRestore: nudge }));
-  unreg.push(budget.registerEffect({ id: 'particle-cap', kind: 'canvas', priority: 9, ms: 0.8, onShed: nudge, onRestore: nudge }));
+  unreg.push(budget.registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'ambient-particles', kind: 'canvas', priority: 2, ms: 1.2 }));
+  unreg.push(budget.registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'pointer-parallax', kind: 'dom', priority: 3, ms: 0.2 }));
+  unreg.push(budget.registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'canvas-dpr', kind: 'canvas', priority: 8, ms: 1.0, onShed: nudge, onRestore: nudge }));
+  unreg.push(budget.registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'particle-cap', kind: 'canvas', priority: 9, ms: 0.8, onShed: nudge, onRestore: nudge }));
   if (PERF) { const q = new URLSearchParams(location.search).get('q'); if (order.includes(q)) { budget.applyTier(q); return perf(); } } // forced tier: governor idle
   hints(); lastQ = getState().quality; budget.applyTier(lastQ);
   offs.push(subscribe(() => { const q = getState().quality; if (q !== lastQ) { lastQ = q; budget.applyTier(q); } }));

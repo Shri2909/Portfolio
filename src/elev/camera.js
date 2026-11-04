@@ -21,7 +21,7 @@ export function start() {
   const root = document.documentElement, stage = document.getElementById('stage');
   if (CAMERA) { // the layer camera lives behind the governor: it is shed (priority 5) before DPR and particle caps, and restorable
     root.setAttribute('data-camera', '1');
-    unreg = registerEffect({ id: 'camera-layers', kind: 'dom', priority: 5, ms: 1.5, onShed: () => root.removeAttribute('data-camera'), onRestore: () => root.setAttribute('data-camera', '1') });
+    unreg = registerEffect({ still: 'finished glowing frame, nothing moving (Calm)', id: 'camera-layers', kind: 'dom', priority: 5, ms: 1.5, onShed: () => root.removeAttribute('data-camera'), onRestore: () => root.setAttribute('data-camera', '1') });
   }
   off = on('stage:act', ({ id, prev, jump }) => {
     if (stage) { stage.classList.add('moving'); clearTimeout(tMove); tMove = setTimeout(() => stage.classList.remove('moving'), 1600 + 300 + 120); }
