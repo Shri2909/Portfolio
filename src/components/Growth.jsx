@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import copy, { X } from '../lib/copy.js';
 import { rich } from '../lib/rich.jsx';
+import { tpl } from '../lib/tpl.js';
+import { scrollToId } from '../lib/nav.js';
 import { useStore } from '../lib/useStore.js';
 import { announce } from '../lib/announce.js';
 import { shape } from './Lamp.jsx';
@@ -44,6 +46,7 @@ export default function Growth() {
         {g.idea.map((t, i) => <Line key={i} t={t} />)}
         <h3>{g.archHead}</h3>
         <ol className="arch">{g.arch.map((a, i) => <li key={i}><strong>{a.h}</strong><span>{a.t}</span></li>)}</ol>
+        <p className="next-lamp"><button className="btn btn-ghost" onClick={() => scrollToId('verdict')}>{rich(tpl(X('nextToInvite'), { step: copy.journey.s5.n }))}</button></p>
       </div>
     </section>
   );

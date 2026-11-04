@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import copy from '../lib/copy.js';
 import { rich } from '../lib/rich.jsx';
 import { useStore } from '../lib/useStore.js';
+import { emit } from '../lib/events.js';
+import { X } from '../lib/copy.js';
 
 // Act 1. The headline arrives in three beats (324 tests passed. / Then an audit found 19 problems. / Ship karte?), then the two lines.
 // Any tap completes it at once; reduced motion and Calm show it all at once. All text is in the page from the start (opacity only).
 export default function Night({ children, banner }) {
-  const o = copy.opening, calm = useStore((s) => s.calm);
+  const o = copy.opening, calm = useStore((s) => s.calm), lit1 = useStore((s) => s.lamps[1] === 'lit');
   const [beat, setBeat] = useState(calm ? 4 : 0);
   useEffect(() => {
     if (calm) { setBeat(4); return; }
@@ -25,7 +27,10 @@ export default function Night({ children, banner }) {
       </div>
       <p className="sr-only">{o.altText}</p>
       {children}
-      <p className="sixty-link"><a href="#sixty" data-sixty>{rich(o.quick)}</a></p>
+      <div className="sixty-link start-path">
+        <p>{rich(o.startLine)}</p>
+        <p className="start-btns"><a className="btn" href="#sixty" data-sixty>{o.sixtyCta}</a>{lit1 ? null : <button type="button" className="btn btn-primary" onClick={() => emit('lamp:request', { n: 1 })}>{rich(X('startLight'))}</button>}</p>
+      </div>
     </section>
   );
 }

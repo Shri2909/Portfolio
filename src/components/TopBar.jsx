@@ -21,6 +21,11 @@ export default function TopBar() {
     <header id="topbar">
       <a className="wordmark" href="#night" onClick={(e) => { e.preventDefault(); scrollToId('night'); }}>{copy.opening.label.split(' · ')[0]}</a>
       <div className="right">
+        <span className="quick" role="group" aria-label={X('quickNav')}>
+          <a href={copy.site.links.resume} target="_blank" rel="noopener noreferrer" aria-label={X('quickResume') + X('inviteTabAria')}><span className="qf">{X('quickResume')}</span><span className="qs" aria-hidden="true">{X('quickResumeShort')}</span></a>
+          {copy.site.contact.linkedin && <a href={copy.site.contact.linkedin} target="_blank" rel="noopener noreferrer" aria-label={X('quickLinkedin') + X('inviteTabAria')}><span className="qf">{X('quickLinkedin')}</span><span className="qs" aria-hidden="true">{X('quickLinkedinShort')}</span></a>}
+          {copy.site.contact.github && <a href={copy.site.contact.github} target="_blank" rel="noopener noreferrer" aria-label={X('quickGithub') + X('inviteTabAria')}><span className="qf">{X('quickGithub')}</span><span className="qs" aria-hidden="true">{X('quickGithubShort')}</span></a>}
+        </span>
         {after2 && <InviteButton short />}
         <button ref={btn} className="btn" aria-expanded={open} aria-controls="menu" aria-label={X('menu')} onClick={() => setOpen(!open)}>{X('menu')}</button>
       </div>

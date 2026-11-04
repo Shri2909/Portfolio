@@ -351,3 +351,7 @@ Ek diya doosre diye se jalta hai, aur pehle wale ki roshni kam nahi hoti. Aise h
 Darwaza khula hai, diya jal raha hai. The best interface gets out of the way. The best evidence doesn't.
 
 Wispr Flow ke India growth internship challenge ke liye banaya hai. Prototypes, not products.
+
+## FIRST SCREEN PATH
+
+Ek minute hai? 60-second file. Zyada waqt hai? Diya jalaiye.

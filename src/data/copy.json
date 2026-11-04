@@ -39,8 +39,8 @@
   "shareLine": "324 tests passed. Phir ek audit ne 19 problems dhoondhe. Ship karte? Aaiye, dekhiye: {link}",
   "contact": {
    "email": "shrniwaskholkute2282@gmail.com",
-   "linkedin": null,
-   "github": null
+   "linkedin": "https://www.linkedin.com/in/shrniwas-kholkute-47926b278",
+   "github": "https://github.com/Shri2909"
   },
   "links": {
    "resume": "https://drive.google.com/file/d/19DXFxUoCiynAvErP6KQVq-ArzV69Mgf2/view?usp=drive_link",
@@ -266,7 +266,19 @@
    "ctaLinkedin": "FIND ME ON LINKEDIN",
    "growthArchitecture": "Architecture",
    "flowTab": "Wispr Flow",
-   "flowTabHint": "<hi>Bolkar likhiye</hi>"
+   "flowTabHint": "<hi>Bolkar likhiye</hi>",
+   "quickNav": "Quick links",
+   "quickResume": "Résumé",
+   "quickResumeShort": "CV",
+   "quickLinkedin": "LinkedIn",
+   "quickLinkedinShort": "in",
+   "quickGithub": "GitHub",
+   "quickGithubShort": "GH",
+   "startLight": "<hi>Diya jalaiye</hi>",
+   "nextLamp": "<hi>Agla diya →</hi> {name}",
+   "nextToGrowth": "<hi>Agla diya →</hi> Lamp 4",
+   "nextToInvite": "<hi>Aage →</hi> {step}",
+   "readTime": "about {n} min read"
   },
   "idleHint": "<hi>Agla diya →</hi>",
   "fairWarning": "Fair warning"
@@ -291,7 +303,8 @@
   "headlineA": "324 tests passed.",
   "headlineB": "Then an audit found 19 problems.",
   "quick": "<hi>Jaldi mein? 60 second ki file →</hi>",
-  "awe1": "<hi>Ek diya jala. Poori gali jag uthi.</hi>"
+  "awe1": "<hi>Ek diya jala. Poori gali jag uthi.</hi>",
+  "startLine": "<hi>Ek minute hai? 60-second file. Zyada waqt hai? Diya jalaiye.</hi>"
  },
  "lamps": [
   {

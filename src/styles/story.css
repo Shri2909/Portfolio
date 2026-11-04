@@ -197,3 +197,9 @@ html[data-calm="1"] .pane-body .ml { opacity: 1; animation: none !important; tra
 .growth .arch { list-style: none; counter-reset: a; margin: 12px 0 8px; padding: 0 0 0 30px; position: relative; } .growth .arch::before { content: ""; position: absolute; left: 11px; top: 14px; bottom: 14px; width: 2px; background: linear-gradient(var(--marigold), rgba(245, 166, 35, .15)); }
 .growth .arch li { counter-increment: a; position: relative; margin: 0 0 14px; display: flex; flex-direction: column; gap: 2px; } .growth .arch li::before { content: counter(a); position: absolute; left: -30px; top: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--ground-2); border: 2px solid var(--marigold); color: var(--flame-core); font: 700 13px var(--font-mono); display: grid; place-items: center; }
 .growth .arch li span { color: var(--text-dim); }
+
+/* Quick links in the top bar, the first-screen path, the next-lamp nudge */
+#topbar .quick { display: inline-flex; align-items: center; gap: 2px; margin-right: 6px; } #topbar .quick a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 8px; color: var(--cream); text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 10px; } #topbar .quick a:hover { background: rgba(245, 166, 35, .18); } #topbar .quick .qs { display: none; }
+@media (max-width: 719px) { #topbar .quick .qf { display: none; } #topbar .quick .qs { display: inline; font-family: var(--font-mono); font-size: 13px; } #topbar .wordmark { display: none; } #topbar .quick { margin-right: 2px; } }
+.start-path p { margin: 0 0 6px; } .start-path .start-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.next-lamp { margin: 16px 0 0; }

@@ -169,3 +169,7 @@ Replaced the five lamp stories with Shriniwas's three (Certgen, Blitz, Vigil) wo
 ## 4 Nov 2026: the India growth tab now holds "Har Group Ka Ek Unpaid CEO Hota Hai." / The Group Admin Tax
 
 Replaced the whole Handover Test tab (draft, three taps, sources, the poora protocol button, invite line) and its evidence folder c8 with Shriniwas's new text and five-step architecture. Old-idea mentions in the loop, the "what I bring" items and the 60-second file were trimmed or replaced with sentences from the new text (see `website_copy_lamps.md`).
+
+## 4 Nov 2026: smoother first ten seconds
+
+First-screen path (60-second file or light the first lamp), next-lamp nudges (Certgen to Blitz to Vigil to Lamp 4 to 05 Continue the conversation), Level 2 reading time (words / 200), and quick links in the top bar: résumé, LinkedIn, GitHub (short CV / in / GH below 720 px). LinkedIn and GitHub are also set in `site.contact`, so the invite sheet and step 05 show them.

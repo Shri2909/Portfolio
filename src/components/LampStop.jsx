@@ -3,7 +3,7 @@ import { tpl } from '../lib/tpl.js';
 import { rich } from '../lib/rich.jsx';
 import { useStore } from '../lib/useStore.js';
 import { emit } from '../lib/events.js';
-import { openLampCard } from '../lib/nav.js';
+import { openLampCard, scrollToId } from '../lib/nav.js';
 import { LAMPS } from '../lib/lamps.js';
 import Step from './Step.jsx';
 import GuessAudit from './story/GuessAudit.jsx';
@@ -15,6 +15,8 @@ const DEVICE = { 1: GuessAudit, 2: StoryPriceTag, 3: LateReplySlider };
 // interaction. LEVEL 2 is the complete story (the lamp card, "Poora kissa"). LEVEL 3 is for curious reviewers: the repository link, the files and the receipt.
 export default function LampStop({ n }) {
   const l = copy.lamps[n - 1], st = l.stop || {}, lit = useStore((s) => s.lamps[n] === 'lit');
+  const words = [l.what, l.next, l.warning].flatMap((p) => [...(p.paras || []), ...(p.list || [])]).join(' ').split(/\s+/).length, minutes = Math.max(1, Math.ceil(words / 200));
+  const nextLabel = n < LAMPS ? tpl(X('nextLamp'), { name: copy.ui.extra.projectNames[n] }) : X('nextToGrowth'), nextId = n < LAMPS ? `lamp-${n + 1}` : 'lamp-6';
   const Device = DEVICE[n], project = copy.ui.extra.projectNames[n - 1], LV = copy.ui.extra.levelLabels;
   const folder = copy.evidence.folders.find((f) => f.id === l.level3.folder), insp = folder && folder.body && folder.body.inspect;
   return (
@@ -32,7 +34,7 @@ export default function LampStop({ n }) {
         </div>
         {Device && <Device />}
         {st.twin && <p className="sr-only">{st.twin}</p>}
-        <p className="chip-line"><button className="btn level-btn l2" aria-label={LV.level2 + ': ' + project} onClick={() => openLampCard(n, 'stop', true)}><span className="mono">{LV.level2}</span><small>{LV.level2Hint}</small></button></p>
+        <p className="chip-line"><button className="btn level-btn l2" aria-label={LV.level2 + ': ' + project} onClick={() => openLampCard(n, 'stop', true)}><span className="mono">{LV.level2}</span><small>{LV.level2Hint} · {tpl(X('readTime'), { n: minutes })}</small></button></p>
         <details className="level l3">
           <summary><span className="mono">{LV.level3}</span><small>{LV.level3Sub}</small></summary>
           <div className="l3-body">
@@ -44,6 +46,7 @@ export default function LampStop({ n }) {
           {!lit && n > 1 && <button className="btn btn-primary" onClick={() => emit('lamp:request', { n })}>{rich(tpl(X('passPrompt'), { n }))}</button>}
           {lit && <span className="litline" role="status">{rich(l.lit)}</span>}
         </p>
+        <p className="next-lamp"><button className="btn btn-ghost" onClick={() => scrollToId(nextId)}>{rich(nextLabel)}</button></p>
         {n === LAMPS && <div className={`auto-beat ${useStore((s) => s.litCount === LAMPS) ? 'on' : ''}`} aria-hidden="true">{copy.terrace.autoBeat.map((t, i) => <p key={i}>{rich(t)}</p>)}</div>}
       </div>
     </section>
