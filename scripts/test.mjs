@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { launch, openPage, VIEWPORTS, sleep, check, summary, ROOT } from './lib.mjs';
 
-const SECTIONS = ['case', 'exhibitA', 'exhibitB', 'exhibitC', 'transition', 'person', 'voice', 'verdict', 'evidence'];
+const SECTIONS = ['case', 'person', 'lamps', 'exhibitA', 'exhibitB', 'exhibitC', 'transition', 'voice', 'growth', 'verdict', 'evidence'];
 const STATUS = ['PUBLIC', 'LOCAL-BRANCH', 'REPO-REPORTED', 'PERSONALLY CONFIRMED', 'UNRESOLVED', 'PROPOSED', 'EVIDENCE AVAILABLE ON REQUEST'];
 const norm = (t) => t.replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/\s+/g, ' ').trim().toLowerCase();
 
@@ -54,6 +54,11 @@ for (const [vn, vp] of [['phone', VIEWPORTS.phone], ['laptop', VIEWPORTS.laptop]
   check('top bar sticks to the top', tb === 0, String(tb));
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
 
+  // Three levels: Level 1 visible, Level 2 and 3 closed until opened
+  const lv = await page.evaluate(() => ['exhibitA', 'exhibitB', 'exhibitC'].map((id) => ({ l1: !!document.querySelector('#' + id + ' .level.l1 .l1-sum') && !!document.querySelector('#' + id + ' .l1-capt'), l2: document.getElementById(id + '-l2') && !document.getElementById(id + '-l2').open, l3: document.getElementById(id + '-l3') && !document.getElementById(id + '-l3').open, repo: !!document.querySelector('#' + id + '-l3 a.repo-link') })));
+  check('each lamp has Level 1 visible, Levels 2 and 3 closed, and a repository link', lv.every((x) => x.l1 && x.l2 && x.l3 && x.repo), JSON.stringify(lv));
+  await page.evaluate(() => CF.openStory('exhibitC')); check('Longer story opens Level 2', await page.evaluate(() => document.getElementById('exhibitC-l2').open));
+  await page.evaluate(() => document.querySelectorAll('details.l2').forEach((d) => (d.open = true)));
   // Exhibit A: guess
   await page.evaluate(() => document.querySelector('.guess').scrollIntoView({ behavior: 'instant', block: 'center' }));
   check('324 tiles, 4 options', (await page.locator('.wall i').count()) === 324 && (await page.locator('.guess .opt').count()) === 4);
@@ -128,6 +133,7 @@ console.log('\nreduced motion');
 {
   const { page, ctx, log } = await openPage(b, { viewport: VIEWPORTS.phone, reducedMotion: true });
   await page.waitForFunction(() => document.documentElement.classList.contains('ready')); await sleep(300);
+  await page.evaluate(() => CF.openStory('exhibitA'));
   await page.locator('.guess .opt', { hasText: /^19$/ }).click(); await sleep(200);
   check('no animations running', (await page.evaluate(() => document.getAnimations().filter((a) => a.playState === 'running').length)) === 0);
   check('19 findings visible at once', (await page.evaluate(() => [...document.querySelectorAll('.finds i')].every((i) => +getComputedStyle(i).opacity === 1))));

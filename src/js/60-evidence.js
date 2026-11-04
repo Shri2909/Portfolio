@@ -36,8 +36,13 @@ CF.defineSection('evidence', (d) => {
   const x = d.evidence;
   if (!x || !(x.cases || []).length) return null;
   const ui = d.ui || {};
-  return CF.sheet('evidence', ui.navEvidence, 'evidence-h',
+  const dp = x.deeper || {}, site = d.site || {};
+  const person = d.person ? h('a', { class: 'btn', href: '#person', text: dp.personal }) : null;
+  const stories = ['exhibitA', 'exhibitB', 'exhibitC'].filter((k) => d[k] && has(dp.storyLabels && dp.storyLabels[k])).map((k) => h('button', { class: 'btn', type: 'button', text: dp.stories + ': ' + dp.storyLabels[k], onclick: () => CF.openStory(k) }));
+  return CF.sheet('evidence', '06', 'evidence-h',
+    CF.step(x),
     CF.heading('evidence', ui.evidenceTitle || ''),
     has(ui.evidenceIntro) ? h('p', { class: 'sub', text: ui.evidenceIntro }) : null,
+    has(dp.stories) || has(dp.personal) || has(dp.essay) ? h('div', { class: 'cta-row deeper' }, stories, has(dp.personal) ? person : null, CF.ext(dp.essay, site.essay)) : null,
     h('div', { class: 'cases' }, x.cases.map((c) => evCase(c, d))));
 });

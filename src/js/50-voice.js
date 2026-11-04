@@ -85,7 +85,6 @@ CF.defineSection('voice', (d) => {
   const body = (x.body || []).filter(has);
   const at = Math.min(body.length, Math.max(0, x.compareAfter == null ? body.length : x.compareAfter));
   const widget = compareWidget(x, d.ui || {});
-  return CF.sheet('voice', '6', 'voice-h', CF.heading('voice', x.heading),
-    CF.prose(body.slice(0, at)), widget, CF.prose(body.slice(at)),
-    x.growthCta ? h('div', { class: 'cta-row' }, CF.receiptBtn(x.growthCta)) : null);
+  return CF.sheet('voice', '03', 'voice-h', CF.step(x), CF.heading('voice', x.heading),
+    CF.prose(body.slice(0, at)), widget, CF.prose(body.slice(at)));
 });

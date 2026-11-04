@@ -173,3 +173,17 @@ dialog.plain::backdrop { background: rgba(10, 16, 13, .74); }
 }
 .repo-link { min-width: 44px; justify-content: center; }
 @media (max-width: 345px) { .brand { display: none; } .topbar { justify-content: flex-end; } }
+
+/* Recruiter journey and the three story levels */
+.step { margin: 0 0 12px; } .step-n { font-family: var(--type); font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--brass-text); margin: 0; }
+.step-sub { color: var(--muted); font-size: 15px; margin: 2px 0 0; }
+.intro-sheet { padding-top: 18px; padding-bottom: 14px; } .intro-sheet .sheet-title { margin-bottom: 4px; }
+.level.l1 { margin: 4px 0 14px; } .l1-sum { font-size: 17px; line-height: 1.6; margin: 0 0 12px; max-width: 64ch; }
+.l1-cap { border-left: 4px solid var(--string); padding: 2px 0 2px 12px; } .l1-cap .label-brass { margin: 0 0 4px; } .l1-capt { margin: 0; font-size: 16.5px; line-height: 1.5; }
+details.level { background: #FFFDF6; border: 1px solid var(--paper-edge); border-left: 4px solid var(--brass-art); border-radius: 4px; margin: 0 0 12px; scroll-margin-top: calc(var(--topbar-h) + 14px); }
+details.level > summary { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 52px; padding: 8px 12px; cursor: pointer; list-style: none; }
+details.level > summary::-webkit-details-marker { display: none; }
+details.level > summary svg { flex: 0 0 auto; width: 22px; height: 22px; color: var(--brass-text); transition: transform .25s var(--ease); } details.level[open] > summary svg { transform: rotate(180deg); }
+.lv-t { display: flex; flex-direction: column; } .lv-l { font-family: var(--display); font-weight: 750; font-size: 16px; letter-spacing: .02em; } .lv-h { font-size: 14px; color: var(--muted); }
+.lv-body { padding: 4px 14px 12px; }
+.cta-row.deeper { margin: 0 0 18px; }

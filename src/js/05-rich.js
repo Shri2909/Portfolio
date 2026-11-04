@@ -39,3 +39,16 @@ CF.interview = function (label, cls) {
 
 /* A button that opens a case in the evidence drawer. */
 CF.receiptBtn = (r, cls) => r && has(r.label) ? h('button', { class: cls || 'btn', type: 'button', text: r.label, onclick: () => CF.openEvidence(r.case) }) : null;
+
+/* The recruiter journey: a numbered kicker with a one-line description above a section heading. */
+CF.step = (x) => x && has(x.step) ? h('div', { class: 'step' }, h('p', { class: 'step-n', text: x.step }), has(x.sub) ? h('p', { class: 'step-sub', text: x.sub }) : null) : null;
+
+/* Open a lamp's Level 2 (the complete story) and bring it into view. */
+CF.openStory = function (id) {
+  const det = document.getElementById(id + '-l2');
+  if (!det) return;
+  det.open = true;
+  CF.goTo(det, false);
+  const f = det.querySelector('summary');
+  if (f) f.focus({ preventScroll: true });
+};
