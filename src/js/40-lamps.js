@@ -87,7 +87,7 @@ function storySheet(key, x, widget, d) {
   const ev = ((d.evidence && d.evidence.folders) || []).find((c) => c.id === (x.level3 && x.level3.folder));
   const insp = ev && ev.inspect;
   const files = insp && (insp.files || []).length ? h('ul', { class: 'files' }, insp.files.map((f) => h('li', null, h('code', { text: f })))) : null;
-  const flame = h('span', { class: 'story-flame', 'aria-hidden': 'true' }, EK.diya(x.n));
+  const fsv = EK.diya(x.n), flame = h('span', { class: 'story-flame', 'aria-hidden': 'true' }, fsv);
   const sec = EK.sheet(key, key + '-h',
     h('div', { class: 'story-head' }, flame, EK.kicker(x.heading)),
     EK.heading(key, x.title),
@@ -108,7 +108,7 @@ function storySheet(key, x, widget, d) {
         insp ? h('div', { class: 'field' }, h('h3', { text: ui.repoLabel }), EK.ext(insp.label, insp.url, 'repo-link'), files, has(insp.note) ? h('p', { class: 'note', text: insp.note }) : null) : null,
         h('div', { class: 'cta-row' }, h('button', { class: 'btn', type: 'button', text: (x.level3 && x.level3.label) || ui.level3, onclick: () => EK.openEvidence(ev.id) })))) : null);
   sec.classList.add('story');
-  EK.lamps.onChange(() => sec.classList.toggle('lit', EK.lamps.isLit(x.n)));
+  EK.lamps.onChange(() => { const on = EK.lamps.isLit(x.n); sec.classList.toggle('lit', on); EK.fx.set(fsv, on ? 1 : 0); });
   return sec;
 }
 

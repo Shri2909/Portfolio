@@ -21,13 +21,8 @@
   --font-body: system-ui, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, "SF Mono", "Roboto Mono", Menlo, Consolas, monospace;
   --ease: cubic-bezier(.22, .61, .36, 1);
-  --sky-a: #05060D; --sky-b: #0B0D1F; --sky-c: #17122A; --stars: 1; --veil: .55;
+  --o-ember: 0; --o-gold: 0; --o-gold2: 0; --stars: 1; --veil: .55; --warm: 0;
 }
-html[data-tone="1"] { --sky-a: #060814; --sky-b: #0E1024; --sky-c: #22142B; --veil: .52; }
-html[data-tone="2"] { --sky-a: #080A18; --sky-b: #141229; --sky-c: #2E1830; --stars: .95; --veil: .48; }
-html[data-tone="3"] { --sky-a: #120D1F; --sky-b: #2B1A33; --sky-c: #5A2A2C; --stars: .8; --veil: .4; }
-html.dusk { --sky-a: #1C1226; --sky-b: #5A2D3A; --sky-c: #D98A3D; --stars: .4; --veil: .26; }
-html.visitor-lit { --sky-a: #22152B; --sky-b: #6B3440; --sky-c: #F2A94E; --stars: .3; --veil: .22; }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { overflow-x: clip; background: var(--ground-0); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
@@ -42,11 +37,6 @@ button, input, textarea { font: inherit; color: inherit; }
 .skip-link:focus { top: 8px; }
 
 /* ---------- the night: sky layers cross-fade by tone ---------- */
-.sky { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(180deg, var(--sky-a) 0%, var(--sky-b) 55%, var(--sky-c) 100%); transition: background 1.6s var(--ease); }
-.sky::before { content: ""; position: absolute; inset: 0; opacity: var(--stars); transition: opacity 1.6s var(--ease);
-  background-image: radial-gradient(1.2px 1.2px at 22px 34px, #fff 50%, transparent 52%), radial-gradient(1px 1px at 96px 120px, #FFF3DC 50%, transparent 52%), radial-gradient(1.4px 1.4px at 170px 60px, #fff 50%, transparent 52%), radial-gradient(1px 1px at 230px 180px, #FFE9B8 50%, transparent 52%), radial-gradient(1px 1px at 60px 210px, #fff 50%, transparent 52%), radial-gradient(1.2px 1.2px at 150px 250px, #FFF3DC 50%, transparent 52%);
-  background-size: 260px 280px; }
-.sky::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 95% at 50% 35%, transparent 40%, rgba(0, 0, 0, var(--veil)) 100%); }
 .page { position: relative; z-index: 2; min-height: 100svh; display: flex; flex-direction: column; }
 
 /* ---------- top bar ---------- */
@@ -89,45 +79,14 @@ button, input, textarea { font: inherit; color: inherit; }
 .lbl { font-family: var(--font-mono); font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--marigold); display: block; margin: 12px 0 4px; }
 
 /* ---------- the opening ---------- */
-.opening { margin-top: 18px; padding-top: 26px; text-align: left; overflow: hidden; }
-.headline { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.9rem, 8.2vw, 4.25rem); line-height: 1.08; margin: 6px 0 12px; }
-.n324, .n19 { color: var(--flame-core); font-variant-numeric: tabular-nums; }
-.ship { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: clamp(1.3rem, 5.6vw, 2rem); margin: 0 0 14px; }
-.ek-lines { font-size: 1.1rem; line-height: 1.5; margin: 0 0 16px; }
-.hold-wrap { margin: 6px 0 4px; }
-.btn.hold { position: relative; overflow: hidden; min-height: 56px; padding: 10px 22px; font-size: 16px; letter-spacing: .04em; }
-.hold-ring { position: absolute; left: 0; bottom: 0; height: 4px; width: 100%; background: var(--flame-b); transform: scaleX(0); transform-origin: left; transition: transform .9s linear; }
-.hold.warming .hold-ring, { transform: scaleX(1); }
-.hold-hint { font-size: 14px; color: var(--cream-dim); margin-top: 6px; }
-.scene { margin: 18px 0 6px; padding: 14px 6px 8px; border-radius: 14px; background: linear-gradient(180deg, rgba(10, 11, 20, .5), rgba(70, 41, 26, .45)); border: 1px solid rgba(245, 166, 35, .18); }
-.row { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)); gap: 8px 4px; align-items: end; }
-.row-item { display: flex; flex-direction: column; align-items: center; }
-.lamp-btn, .home-lamp { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 88px; min-height: 96px; padding: 6px 4px; background: none; border: 1.5px solid transparent; border-radius: 14px; cursor: pointer; color: var(--cream); }
-.home-lamp { cursor: default; }
-.lamp-btn:hover { background: rgba(245, 166, 35, .1); }
-.lamp-btn.next { border-color: rgba(245, 166, 35, .55); }
-.lamp-btn.lit { border-color: var(--marigold); }
-.lamp-btn.warming { background: rgba(255, 179, 71, .2); }
-.lamp-btn svg:last-child { width: 14px; height: 14px; color: var(--marigold); opacity: 0; } .lamp-btn.lit svg:last-child { opacity: 1; }
-.chip-name { font-family: var(--font-mono); font-size: 13px; letter-spacing: .08em; color: var(--cream); }
-.lamp-btn.lit .chip-name { border-bottom: 2px solid var(--flame-a); }
-.row-status { min-height: 1.5em; text-align: center; color: var(--flame-core); margin: 8px 0 0; font-size: 15px; }
-.row-msg { text-align: center; margin: 10px 0; padding: 12px; border-radius: 12px; background: rgba(245, 166, 35, .1); }
+.row-msg { margin: 10px 0 0; text-shadow: 0 2px 12px rgba(0, 0, 0, .9); }
 .row-lit { font-family: var(--font-display); font-size: 1.3rem; color: var(--flame-core); } .row-dusk { font-style: italic; color: var(--cream-dim); }
 .sixty-line { margin: 18px 0 8px; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; color: var(--cream-dim); }
 .below { font-family: var(--font-display); font-size: 1.15rem; margin: 18px 0 8px; }
 .intro-p { max-width: 62ch; color: var(--cream-dim); }
 
 /* ---------- the clay diya (inline SVG) ---------- */
-.diya { width: 78px; height: auto; overflow: visible; }
-.diya .clay { fill: var(--kumkum); } .diya .rim { fill: #E0642B; } .diya .oil { fill: #3a1a0a; } .diya .wick { fill: #2a1a10; }
-.diya .glow { fill: url(#none); fill: rgba(255, 179, 71, .5); opacity: 0; transition: opacity .8s var(--ease); filter: blur(10px); }
-.diya .flame { opacity: 0; transform-box: fill-box; transform-origin: 50% 100%; transition: opacity .6s var(--ease); }
-.diya .fl-out { fill: var(--flame-b); } .diya .fl-in { fill: var(--flame-core); }
 .diya.dashed .clay, .diya.dashed .rim { fill: none; stroke: var(--cream-dim); stroke-width: 2; stroke-dasharray: 5 4; } .diya.dashed .oil { fill: none; }
-.home-lamp .flame, .lamp-btn.lit .flame, .story.lit .flame, .visitor-lit .visitor .flame { opacity: 1; animation: flicker 2.6s ease-in-out infinite; }
-.home-lamp .glow, .lamp-btn.lit .glow, .story.lit .glow, .visitor-lit .visitor .glow { opacity: 1; }
-@keyframes flicker { 0%, 100% { transform: scale(1, 1) rotate(0); } 25% { transform: scale(.95, 1.06) rotate(-2deg); } 55% { transform: scale(1.04, .96) rotate(1.5deg); } 80% { transform: scale(.97, 1.04) rotate(-1deg); } }
 
 /* ---------- lamp stories ---------- */
 .intro-panel { padding: 16px 18px 12px; } .intro-panel .panel-title { margin-bottom: 2px; }
@@ -242,6 +201,175 @@ dialog.plain::backdrop { background: rgba(5, 6, 13, .8); }
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
 
+/* =====================================================================================================================
+   THE NIGHT SCENE (fixed stage behind the page): sky, skyline, terrace. Decorative, aria-hidden.
+   ===================================================================================================================== */
+:root { --floor: 46svh; --tf: 27.6svh; --par: 5svh; }
+.stage { position: fixed; inset: 0; height: 100svh; z-index: 0; pointer-events: none; overflow: hidden; background: #05060D; --px: 0px; }
+.stage::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 95% at 50% 35%, transparent 40%, rgba(0, 0, 0, var(--veil)) 100%); }
+.defs { position: absolute; width: 0; height: 0; }
+.sk { position: absolute; inset: 0; }
+.sk i { position: absolute; inset: 0; display: block; }
+.sk-night { background: linear-gradient(180deg, #05060D 0%, #0B0D1F 55%, #17122A 100%); }
+.sk-ember { background: linear-gradient(180deg, #120D1F 0%, #2B1A33 55%, #5A2A2C 100%); opacity: var(--o-ember); }
+.sk-gold { background: linear-gradient(180deg, #1C1226 0%, #5A2D3A 55%, #D98A3D 100%); opacity: var(--o-gold); }
+.sk-gold2 { background: linear-gradient(180deg, #22152B 0%, #6B3440 55%, #F2A94E 100%); opacity: var(--o-gold2); }
+.sk-stars { position: absolute; inset: 0; width: 100%; height: 100%; opacity: var(--stars); }
+.sk-stars .tw { fill: #FFF3DC; animation: twinkle 4s ease-in-out infinite; }
+@keyframes twinkle { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+.sk-moon { position: absolute; top: 12%; right: 14%; width: 90px; height: 90px; }
+.cloud { position: absolute; left: 0; width: 70vw; height: 14svh; border-radius: 50%; opacity: .11; animation: drift linear infinite; will-change: transform;
+  background: radial-gradient(closest-side, rgba(140, 160, 190, .9), rgba(140, 160, 190, .35) 55%, transparent 100%); box-shadow: 0 0 40px 6px rgba(245, 166, 35, calc(var(--o-gold) * .25)); }
+@keyframes drift { from { transform: translateX(-80vw); } to { transform: translateX(110vw); } }
+.shoot { position: absolute; top: 18%; left: 20%; width: 2px; height: 60px; opacity: 0; background: linear-gradient(180deg, rgba(255, 243, 220, .9), transparent); transform: rotate(-45deg); }
+.shoot.go { animation: shoot .8s ease-out 1 both; }
+@keyframes shoot { 0% { opacity: 0; transform: translate(0, 0) rotate(-45deg); } 15% { opacity: .9; } 100% { opacity: 0; transform: translate(156px, 156px) rotate(-45deg); } }
+
+.skyline { position: absolute; left: 0; right: 0; bottom: calc(var(--tf) + var(--par) - 2px); height: min(30svh, 300px); }
+.skyline .layer { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.skyline .far { transform: translateX(calc(var(--px) * .2)); } .skyline .mid { transform: translateX(calc(var(--px) * .5)); } .skyline .near { transform: translateX(var(--px)); }
+.far-fill { fill: #14152B; } .mid-fill { fill: var(--ground-2); } .near-fill { fill: var(--ground-3); }
+.tank { fill: #0b0c16; } .ln { stroke: #0b0c16; stroke-width: 1.4; fill: none; } .cloth { fill: #5a3d3a; }
+.rail { stroke: var(--ground-4); stroke-width: 1.2; fill: none; } .unit { fill: var(--ground-4); } .solar { fill: var(--ground-5); }
+.w .win { fill: #FFD27A; opacity: 0; transition: opacity .6s var(--ease); } .w .wh { fill: #FFD27A; opacity: 0; transition: opacity .6s var(--ease); }
+.w.on .win { opacity: 1; } .w.on .wh { opacity: .18; } .w.now .win, .w.now .wh { transition: none; }
+.w[data-c="b"] .win, .w[data-c="b"] .wh { fill: #FFB347; } .w[data-c="c"] .win, .w[data-c="c"] .wh { fill: #FFF3DC; } .w[data-c="d"] .win, .w[data-c="d"] .wh { fill: #8FB4E8; }
+.w[data-c="d"].on .win { animation: tv var(--d, 3s) steps(1, end) infinite; }
+@keyframes tv { 0% { opacity: .9; } 20% { opacity: .5; } 35% { opacity: .85; } 60% { opacity: .55; } 80% { opacity: .9; } 100% { opacity: .7; } }
+.w.bright .win { fill: #FFD27A; } .w.bright .wh { opacity: .35; animation: vpulse 3s ease-in-out infinite; }
+@keyframes vpulse { 50% { opacity: .15; } }
+.fan { fill: #7a6a5a; opacity: 0; transform-box: fill-box; transform-origin: center; animation: spin 4s linear infinite; }
+html[data-lit="2"] .fan, html[data-lit="3"] .fan { opacity: .85; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.floor { position: absolute; left: 0; right: 0; bottom: 0; height: var(--floor); }
+.tfloor { position: absolute; left: 0; right: 0; bottom: 0; height: var(--tf); background: linear-gradient(180deg, var(--ground-4), var(--ground-5)); }
+.parapet { position: absolute; left: 0; right: 0; bottom: var(--tf); height: var(--par); background: var(--ground-3); border-top: 2px solid rgba(255, 243, 220, .25); }
+.parapet .cap { position: absolute; top: -10px; width: 26px; height: 10px; background: var(--ground-4); border-top: 2px solid rgba(255, 243, 220, .3); }
+.cap.c1 { left: 6%; } .cap.c2 { left: calc(50% - 13px); } .cap.c3 { right: 6%; }
+.rangoli { position: absolute; left: 50%; bottom: 7svh; width: min(92vw, 520px); height: min(92vw, 520px); transform: translateX(-50%) scaleY(.42); transform-origin: 50% 100%; overflow: visible; }
+@media (min-width: 900px) { .rangoli { width: 640px; height: 640px; } }
+.rangoli .under { fill: none; stroke: #FFF3DC; opacity: .12; stroke-linecap: round; } .rangoli .line { fill: none; stroke: #FFF3DC; opacity: .8; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.4; }
+.rangoli .line[data-fill] { fill: #FFF3DC; fill-opacity: 0; transition: fill-opacity .6s; }
+.rangoli .dotted { fill: none; stroke: #FFF3DC; stroke-width: 1.4; stroke-dasharray: 1.5 4; stroke-linecap: round; opacity: .7; }
+.rangoli.deco .colour .line[data-role="petal"] { fill: #F5A623; fill-opacity: .55; } .rangoli .colour .line[data-role="small"] { fill: #C2410C; fill-opacity: .5; }
+.rangoli .colour .line[data-role="star"] { fill: #2F6B4F; fill-opacity: .35; } .rangoli .colour .line[data-role="scallop"] { fill: #FFF3DC; fill-opacity: .2; }
+.rangoli .line { transition: fill-opacity 1.2s, fill 1.2s; }
+.pool { position: absolute; bottom: 4%; width: 140px; height: 40px; margin-left: -70px; border-radius: 50%; opacity: 0; transition: opacity 1s; background: radial-gradient(closest-side, rgba(255, 179, 71, .35), transparent); mix-blend-mode: screen; }
+.pool.on { opacity: 1; }
+.inkline { display: none; position: absolute; left: 6%; right: 6%; bottom: 20%; width: 88%; height: 4px; } .inkline line { stroke: #FFF3DC; stroke-width: 1; opacity: .6; vector-effect: non-scaling-stroke; transition: stroke-dashoffset 1s; }
+
+.toran { position: absolute; top: var(--topbar-h); left: 0; width: 100%; height: clamp(64px, 12svh, 108px); overflow: visible; opacity: calc(.82 + var(--warm)); }
+.toran .rope { stroke: #8a5a2a; stroke-width: 2; } .toran .thread { stroke: #8a5a2a; stroke-width: 1; }
+.toran .fl { fill: #F59E0B; } .toran .fl2 { fill: #D97706; } .toran .leaf { fill: #2F6B4F; }
+.strand { animation: sway 6s ease-in-out infinite; } .strand.gust { animation: gust 2.2s ease-in-out 1; }
+@keyframes sway { 0%, 100% { transform: rotate(-2.5deg); } 50% { transform: rotate(2.5deg); } }
+@keyframes gust { 0%, 100% { transform: rotate(0); } 40% { transform: rotate(7deg); } 70% { transform: rotate(-3deg); } }
+@media (max-width: 420px) { .strand.extra { display: none; } }
+.strlights { position: absolute; left: 0; top: 55svh; width: 100%; height: 40px; overflow: visible; }
+.strlights .wire { stroke: #1a1a22; stroke-width: 1.4; } .strlights .bulb { opacity: .65; }
+html.dusk .strlights .bulb { opacity: 1; }
+.strlights[data-mode="chase"] .bulb { animation: chase 1.2s steps(1, end) infinite; animation-delay: calc(var(--g) * .4s); }
+@keyframes chase { 0%, 66% { opacity: .3; } 33% { opacity: 1; } }
+.strlights[data-mode="twinkle"] .bulb { animation: twk 2.4s ease-in-out infinite; animation-delay: var(--r); } @keyframes twk { 50% { opacity: .25; } }
+.strlights[data-mode="fade"] .bulb { animation: fadeb 4s ease-in-out infinite; } @keyframes fadeb { 50% { opacity: .2; } }
+
+.stage-ui { position: fixed; inset: 0; z-index: 3; pointer-events: none; }
+.stage-ui button { pointer-events: auto; background: none; border: 0; padding: 0; cursor: pointer; }
+.lantern { position: absolute; top: calc(var(--topbar-h) + 20px); min-width: 44px; min-height: 44px; transform-origin: 50% 0; animation: pend 5s ease-in-out infinite; }
+.lantern.l1 { left: 5%; } .lantern.l2 { right: 6%; } .lantern.l3 { right: 24%; animation-duration: 6s; }
+.lantern .lglow { opacity: 0; transition: opacity 1s; } .lantern.lit .lglow { opacity: 1; } .lantern svg { display: block; margin: 0 auto; }
+.lantern .ln { stroke: #8a8a96; } .lantern .tas { stroke: #E9B866; stroke-width: 1; }
+@keyframes pend { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+.lantern.swing { animation: swing 2.4s ease-out 1; }
+@keyframes swing { 0% { transform: rotate(16deg); } 25% { transform: rotate(-10deg); } 50% { transform: rotate(6deg); } 75% { transform: rotate(-3deg); } 100% { transform: rotate(0); } }
+.cat { position: absolute; right: 2%; bottom: calc(var(--tf) + var(--par) - 4px); min-width: 44px; min-height: 44px; }
+.cat .body { fill: #07080f; } .cat .tail { fill: none; stroke: #07080f; stroke-width: 5; stroke-linecap: round; transform-origin: 42px 50px; } .cat .eye { fill: #3a3a30; } .cat.eyes .eye { fill: #FFD27A; }
+.cat.flick .tail { animation: flick .9s ease-in-out 1; } @keyframes flick { 30% { transform: rotate(-18deg); } 60% { transform: rotate(10deg); } }
+.ctl { position: absolute; right: 4px; top: calc(55svh - 4px); width: 44px; height: 44px; } .ctl-dot { display: block; margin: auto; width: 14px; height: 14px; border-radius: 3px; background: #0b0b12; border: 1px solid #555; position: relative; } .ctl-dot::after { content: ""; position: absolute; inset: 4px; border-radius: 50%; background: #FFB347; }
+.ring { position: absolute; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; background: radial-gradient(closest-side, transparent 60%, rgba(255, 210, 122, .35) 80%, transparent); animation: ringout 1.6s ease-out 1 both; }
+@keyframes ringout { from { transform: scale(0); opacity: .35; } to { transform: scale(160); opacity: 0; } }
+.birds { position: absolute; left: 0; top: 18%; width: 100%; height: 12%; } .birds i { position: absolute; display: block; animation: fly 7s linear 1 both; } .birds .bird { fill: #0F1020; }
+@keyframes fly { from { transform: translateX(0); } to { transform: translateX(calc(100vw + 120px)); } }
+
+/* ---------- the opening sits on the scene, not on a card ---------- */
+.opening { position: relative; width: 100%; max-width: 760px; margin: 0 auto; min-height: calc(100svh - var(--topbar-h)); display: flex; flex-direction: column; justify-content: space-between; padding: max(148px, 17svh) 16px 74px; pointer-events: none; }
+.opening button, .opening a, .opening .lamp-btn, .opening .hold { pointer-events: auto; }
+.kicker, .headline, .ship, .ek-lines, .hold-hint { text-shadow: 0 2px 14px rgba(0, 0, 0, .85); }
+.headline { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.9rem, 8.2vw, 4.25rem); line-height: 1.08; margin: 6px 0 12px; max-width: 14em; }
+.n324, .n19 { color: var(--flame-core); font-variant-numeric: tabular-nums; }
+.ship { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: clamp(1.3rem, 5.6vw, 2rem); margin: 0 0 12px; }
+.ek-lines { font-size: 1.05rem; line-height: 1.5; max-width: 30em; }
+.op-bottom { display: flex; flex-direction: column; align-items: stretch; gap: 4px; margin-top: 18px; }
+.hold-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.btn.hold { min-height: 56px; padding: 10px 22px; font-size: 16px; letter-spacing: .04em; }
+.hold-hint { font-size: 14px; color: var(--cream-dim); } .hold-hint.flash { color: var(--flame-core); font-weight: 600; }
+.row-status { min-height: 1.5em; text-align: center; color: var(--flame-core); margin: 6px 0 0; font-size: 15px; text-shadow: 0 1px 8px rgba(0, 0, 0, .9); }
+.scene { margin: 4px 0; }
+.row { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0 4px; align-items: end; }
+.row-item { display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.lamp-btn, .home-lamp { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 0; width: 100%; min-width: 44px; min-height: 96px; padding: 2px 0 4px; background: none; border: 1.5px solid transparent; border-radius: 14px; color: var(--cream); cursor: pointer; touch-action: pan-y; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.home-lamp { cursor: default; }
+.lamp-btn:hover { background: rgba(245, 166, 35, .1); } .lamp-btn.next { border-color: rgba(245, 166, 35, .5); } .lamp-btn.lit { border-color: var(--marigold); } .lamp-btn.warming { background: rgba(255, 179, 71, .18); }
+.row .diya { width: 100%; max-width: 64px; }
+.chip-name { font-family: var(--font-mono); font-size: 13px; letter-spacing: .03em; color: var(--cream); text-align: center; text-shadow: 0 1px 6px rgba(0, 0, 0, .9); }
+.lamp-btn.lit .chip-name { border-bottom: 2px solid var(--flame-a); }
+.lamp-btn.dashed .chip-name { font-size: 11px; letter-spacing: 0; }
+.fx-over { position: fixed; inset: 0; z-index: 38; pointer-events: none; } .fx-over > * { position: absolute; left: 0; top: 0; }
+.pring .pr-bg { fill: none; stroke: rgba(255, 210, 122, .22); stroke-width: 3; } .pring .pr-fg { fill: none; stroke: var(--flame-core); stroke-width: 3; stroke-linecap: round; }
+.hold-text { width: 200px; white-space: nowrap; text-align: center; font-style: italic; color: var(--flame-core); text-shadow: 0 1px 8px #000; font-size: 15px; }
+.trav .fl-out { fill: var(--flame-b); } .trav .fl-in { fill: var(--flame-core); }
+.fxcanvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 37; pointer-events: none; }
+.more-panel { margin-top: 0; }
+.sixty-line { margin: 0 0 12px; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; color: var(--cream-dim); } .below { font-family: var(--font-display); font-size: 1.15rem; margin: 6px 0 8px; } .intro-p { max-width: 62ch; color: var(--cream-dim); }
+
+/* ---------- clay diya and flames (drawn by the flame engine) ---------- */
+.diya { width: 78px; height: auto; overflow: visible; }
+.diya .clay { fill: var(--kumkum); } .diya .rim { fill: #E0642B; } .diya .oil { fill: #3a1a0a; } .diya .wick { fill: #2a1a10; }
+.diya .glow { fill: url(#ek-glow); } .diya .fl-out { fill: #FF7A1A; } .diya .fl-mid { fill: #FFB347; } .diya .fl-in { fill: #FFD27A; } .diya .fl-base { fill: #5B8CFF; opacity: .55; }
+.diya .fgrp { opacity: 0; }
+html:not(.q-low):not(.calm) .diya .glow { mix-blend-mode: screen; }
+.diya.dashed .clay, .diya.dashed .rim { fill: none; stroke: var(--cream-dim); stroke-width: 2; stroke-dasharray: 5 4; } .diya.dashed .oil { fill: none; }
+.lamp-btn.warm.dashed .clay { fill: rgba(194, 65, 12, .55); transition: fill 1.4s; }
+.diya.pulse .wick { animation: wp .9s ease-out 1; } @keyframes wp { 30% { fill: #FFD27A; } }
+
+/* ---------- panels over the scene ---------- */
+.panel { background: rgba(26, 20, 38, .9); background-image: radial-gradient(70% 50% at 50% 0, rgba(255, 179, 71, .1), transparent); }
+.panel.story { background-color: #F4E6C8; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 .4  0 0 0 0 .3  0 0 0 0 .15  0 0 0 .06 0'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>"); color: var(--ink); border-color: #c9a45c; border-radius: 14px 18px 12px 20px; }
+.story .kicker, .story .tagline, .story .label-gold, .story .reveals h3, .story .field h3 { color: #7C2D0A; }
+.story .panel-title, .story .prose strong, .story .l1-capt, .story .lv-l { color: var(--ink); } .story .prose em, .story .lv-h, .story .note { color: #4a3b2a; }
+.story .prose p.pull { border-left-color: #B45309; }
+.story .l1-cap { border-left-color: #B45309; }
+.story details.level { background: rgba(22, 17, 12, .05); border-color: rgba(124, 45, 10, .35); border-left-color: #B45309; }
+.story details.level > summary svg { color: #9A3412; }
+.story .btn { color: var(--ink); border-color: #B45309; background: rgba(22, 17, 12, .05); } .story .btn:hover { background: rgba(180, 83, 9, .15); }
+.story .repo-link { color: #9A3412; } .story .files code, .story .prose code { background: rgba(22, 17, 12, .08); }
+.story .widget { color: var(--cream); } .story .widget .prose p { color: var(--cream); }
+.story.lit { box-shadow: 0 0 0 1px rgba(245, 166, 35, .5), 0 0 46px -4px rgba(255, 179, 71, .45), 0 14px 40px -12px rgba(0, 0, 0, .6); }
+.story-head .story-flame .diya { width: 60px; }
+.foot { padding-bottom: 96px; background: transparent; }
+
+/* ---------- dock ---------- */
+.dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: flex; justify-content: center; align-items: center; gap: 8px; padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, rgba(5, 6, 13, .82)); pointer-events: none; }
+.dock > * { pointer-events: auto; } .dock-seg { display: inline-flex; }
+.dock-btn { min-height: 44px; min-width: 44px; padding: 0 14px; background: rgba(10, 11, 20, .86); color: var(--cream); border: 1.5px solid var(--edge); border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; }
+.dock-seg .dock-btn { border-radius: 0; } .dock-seg .dock-btn:first-child { border-radius: 12px 0 0 12px; } .dock-seg .dock-btn:last-child { border-radius: 0 12px 12px 0; margin-left: -1.5px; }
+.dock-btn[aria-pressed="true"] { background: rgba(245, 166, 35, .3); border-color: var(--marigold); }
+.dock-note { position: absolute; left: 8px; right: 8px; bottom: calc(60px + env(safe-area-inset-bottom)); margin: 0; text-align: center; font-size: 13px; color: var(--cream-dim); pointer-events: none; text-shadow: 0 1px 6px #000; }
+
+/* ---------- Ink: a plain, quiet look; Calm: the same light without movement ---------- */
+html.ink { --ground-0: #0C0B0A; --ground-1: #121110; --ground-2: #1A1816; --ground-3: #232019; --ground-4: #2B2822; --ground-5: #34302A; --ground-6: #3D382F; --cream: #F1EBDD; --panel: rgba(26, 24, 22, .92); --marigold: #D9A441; --edge: rgba(241, 235, 221, .25); }
+html.ink .deco, html.ink .cloud, html.ink .sk-moon, html.ink .stage-ui .lantern, html.ink .stage-ui .ctl, html.ink .stage-ui .cat { display: none !important; }
+html.ink .rangoli { display: none; } html.ink .inkline { display: block; } html.ink .w .win, html.ink .w .wh { fill: #F4EBD3 !important; }
+html.ink .sk-ember, html.ink .sk-gold, html.ink .sk-gold2 { display: none; } html.ink .sk-night { background: #0C0B0A; } html.ink .sk-stars { opacity: .35; } html.ink .fxcanvas { display: none; }
+html.ink .panel.story { background-image: none; background-color: #E9E2D2; } html.ink .parapet, html.ink .tfloor { background: var(--ground-3); }
+html.ink.dusk .sk-night { background: linear-gradient(180deg, #0C0B0A 60%, #34302A 100%); }
+html.calm *, html.calm *::before, html.calm *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+html.q-low .cloud, html.q-low .tw { animation: none; } html.q-low .cloud { display: none; }
+@media (max-height: 680px) { .lantern.l3, .cat { display: none; } .opening { padding-top: max(132px, 16svh); } }
+@media (max-height: 500px) { .parapet, .rangoli, .toran, .lantern, .cat { display: none; } }
+@media (min-width: 760px) { .row { max-width: 720px; margin: 0 auto; } .lamp-btn, .home-lamp { min-height: 120px; } .row .diya { max-width: 84px; } }
+
 /* Review build only. */
 .ek-filled { outline: 2px dotted #E8A317; outline-offset: 3px; }
 .review-mark { position: fixed; inset: 0; z-index: 40; pointer-events: none; overflow: hidden; display: flex; align-items: center; justify-content: center; }
@@ -264,7 +392,6 @@ dialog.plain::backdrop { background: rgba(5, 6, 13, .8); }
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
-<div class="sky" aria-hidden="true"></div>
 <div class="page" id="page">
   <header class="topbar" id="topbar" role="banner">
     <p class="brand">EK DIYA SE DOOSRA</p>
@@ -275,7 +402,7 @@ dialog.plain::backdrop { background: rgba(5, 6, 13, .8); }
 </div>
 <div class="review-mark" aria-hidden="true"><span>REVIEW DRAFT - NOT YET SPOKEN BY SHRINIWAS</span></div>
 <script type="application/json" id="ek-filled">[]</script>
-<script type="application/json" id="ek-data">{"site":{"title":"Ek Diya Se Doosra (one lamp lights another) · Shriniwas Kholkute","description":"324 tests passed. Then an audit found 19 problems. Shriniwas Kholkute's night page for Wispr Flow's India growth internship: one lamp lights another. Ek diya jalaiye, aage badhaiye.","ogTitle":"324 tests passed. 19 problems found. Ship karte?","subject":"Shriniwas Kholkute","contact":{"email":"shrniwaskholkute2282@gmail.com","linkedin":"","github":""},"resume":"https://drive.google.com/file/d/19DXFxUoCiynAvErP6KQVq-ArzV69Mgf2/view?usp=drive_link","essay":"https://drive.google.com/file/d/1ccYZ-WZOZTLmZ4A23Ed9yNGy9jiCNi2k/view?usp=drive_link"},"ui":{"brand":"EK DIYA SE DOOSRA","brandShort":"Ek Diya","navLamps":"The lamps","navEvidence":"Evidence","navSixty":"60-second file","navInvite":"INVITE ME","skip":"Skip to main content","close":"Close","plainly":"In plain words","holdWarm":"Baati abhi garam ho rahi hai.","lightAll":"Sab diye ek saath jalaiye","progress":"{n} diye jal chuke, {r} baaki.","progressDone":"Teenon jal uthe.","unlit":"Light lamp {n}, {name}.","unlitDesc":"Lamp {n}, unlit. Press and hold, tap or press Enter to light it from {from}.","fromHome":"the home flame","fromLamp":"lamp {n}","lit":"Lamp {n}, {name}, lit. Open its story.","litDesc":"Lamp {n}, lit.","lamp4":"Lamp 4, proposed, not run.","lamp4Desc":"Lamp 4 is proposed, not run. It stays unlit.","lamp4Chip":"PROPOSED, NOT RUN","lamp4Try":"Yeh diya abhi nahi jalega. Test chala nahi. Bujha hua, par imaandaar.","openStory":"Kissa kholiye","reduced":"Motion off hai? Diye seedhe jal jaate hain, koi animation nahi.","level1":"LEVEL 1 — Instantly visible","level2":"LEVEL 2 — Poora kissa","level2Hint":"The complete story","level3":"LEVEL 3 — Inspect the evidence","level3Sub":"For curious reviewers","capLabel":"The one capability this project best demonstrates","repoLabel":"Repository","evidenceTitle":"Evidence drawer","evidenceIntro":"Every figure above has a source and a status. Statuses are plain text: PUBLIC, LOCAL-BRANCH, REPO-REPORTED, PERSONALLY CONFIRMED, UNRESOLVED, PROPOSED. Jahan jawab abhi adhura hai, wahan UNRESOLVED likha hai.","inspect":"Where to inspect","purpose":"Plain-English purpose","finding":"The central finding","mine":"My part","results":"Recorded results","status":"Status","more":"Other findings","raw":"As I said it","flow":"As Flow wrote it","hint":"Flame ko meri awaaz se Flow ke text tak khiskaiye.","hintKeys":"(Arrow keys work too, or use “Read it plainly”.)","legend":"Blue pencil: words Flow trimmed. Highlighted: words Flow smoothed or added.","chip":"A real take, straight from my Flow history","custody":"Where this came from","readBoth":"Read it plainly","takes":"Takes","modelBadge":"MODEL OF DOCUMENTED BEHAVIOR","modelNote":"A simulated connection, not real monitoring.","logicLabel":"Which logic?","logicOld":"Original logic","logicNew":"Corrected logic","arrivalLabel":"When the reply arrives","deadlineLabel":"3-second deadline","guessAsk":"How many problems did the separate audit find?","guessHint":"Aapka andaza?","lateHint":"Khiskaiye aur dekhiye."},"opening":{"label":"EK DIYA SE DOOSRA · Shriniwas Kholkute","headline":"324 tests passed. Then an audit found 19 problems.","ship":"Ship karte? Imaandari se bataiye.","lines":["Ek diya pehle se jal raha hai. Woh mera hai.","Baaki teen aapke haath se jalenge."],"hold":"HOLD TO LIGHT THE FIRST LAMP","holdHint":"Dabaye rakhiye. Tap ya Enter bhi chalega.","sixtyLine":"Jaldi mein hain? Ek minute mein poori kahani. →","sixtyBtn":"THE 60-SECOND FILE","below":"Three projects. Three inconvenient discoveries. Aur ek sawaal: phir maine kya kiya?","intro":"I'm Shriniwas, a final-year VIT Pune engineering student applying for Wispr Flow's India growth internship. Strengths ki list nahi. Main aapko mushkil faisle dikhaunga.","alt":"A dark page with one small flame lit on the left and a row of three unlit lamps leading away to the right."},"row":{"lit":"Teen diye jal uthe.","body":"Dekhiye: ek diya doosre se jala, aur pehle wale ki roshni kam nahi hui.","dusk":"Kamra ab thoda sunehra ho gaya."},"person":{"step":"01 · Meet the person","sub":"Who I am, what drives me, what makes me different","kicker":"THE PERSON BEHIND THE FILE","heading":"Is file ke peeche ka insaan","body":["My father's accident brought serious financial pressure during my Class 12 exams. A gap year, unsuccessful entrance attempts, YouTube study and a ₹3,999 course formed my route to VIT Pune.","I coordinated four research contributors, placed second in a college debate, and enjoy business case studies, essays and Advaita Vedanta. I care about people as much as code.","**I didn't learn that every plan works. I learned to decide what to do when it doesn't.**"]},"lamps":{"step":"02 · Three lamps, three decisions","sub":"CERTGEN → BLITZ → VIGIL"},"lamp1":{"heading":"LAMP 01 — CERTGEN","title":"The Green Wall · Sab Green Tha. Par Kya Sab Theek Tha?","tagline":"324 Tests Passed. I Still Wasn't Convinced.","body":["A hiring assignment asked me to build a bulk certificate generator. Simple enough to make it work. But I wanted to build something that could survive when things went wrong.","Mera sawaal simple tha: agar hazaar students ke certificates ban rahe hain, toh ek galat entry ki wajah se baaki sab kyun rukenge?","So I mapped the entire workflow, designed the architecture, and chose background processing with fault isolation. AI agents helped with much of the implementation, while I directed the design and key product decisions.","Then came the interesting part.","324 tests passed. Everything was green.","Ab normally kya hota? Project complete. Screenshot lo. Aage badho.","But I wasn't convinced.","A separate audit uncovered 19 problems. I directed further remediation, made decisions about safeguards, resource limits, and authentication, and pushed for more corrections when the first fixes weren't sufficient.","I even dropped a QR-verification feature when it violated an existing requirement.","Feature impressive tha. Lekin requirement tod raha tha. Toh feature gaya, requirement nahi.","The remediation report eventually recorded zero open findings within its scope. Later local checks passed 479 main-suite and 232 audit-suite tests.","**What I learned:** Ownership doesn't mean defending everything you've built. It means having the courage to question it.","Apna banaya hua system khud challenge karna bhi ownership hai."],"revealsLabel":"Three things this reveals about me","reveals":["Systems Thinking: I design complete workflows around real-world constraints, not just happy-path demonstrations.","Product Judgment: I make difficult trade-offs and prioritize requirements over attractive extras.","Extreme Ownership: When initial fixes aren't enough, I continue directing improvements instead of declaring premature success."],"growth":"**My growth connection:** A dashboard full of green numbers doesn't automatically mean users are happy.\nNumbers achhe dikh rahe hain, par kya user ko sach mein value mil rahi hai? That's the question I want to ask.","note":"**Evidence note:** AI agents performed much of the coding, audits, and fixes. The results describe a tested prototype, not a production security guarantee.","guess":{"label":"GUESS THE AUDIT RESULT → REVEAL 19","options":[0,3,8,19],"answer":19,"high":2,"reveal":"The audit found 19 problems, two of them high. One crafted value caused disproportionate CPU work. A request of roughly 26 MB expanded into roughly 192 MB of response material. The tests hadn't asked those questions, and I directed more remediation.","plain":"324 of 324 tests passed. A separate audit then found 19 problems, two of them high.","status":"324 / 324 tests pass","lowAfter":"Kam socha? Aap akele nahi hain. 324 tests ne bhi wahi socha.","rightAfter":"Bilkul sahi. Tests ko yeh nahi dikha tha."},"level1":{"summary":"A hiring assignment asked me to build a bulk certificate generator. 324 tests passed. A separate audit uncovered 19 problems.","capability":"Extreme Ownership: When initial fixes aren't enough, I continue directing improvements instead of declaring premature success."},"level3":{"folder":"c1","label":"CHECK THE RECEIPT"},"n":1,"name":"Certgen","litMsg":"Lamp 1 jal utha. Ab iska kissa."},"lamp2":{"heading":"LAMP 02 — BLITZ","title":"The Number I Withdrew · Number Bada Tha. Par Sach?","tagline":"I Chose to Withdraw My Most Impressive Number.","body":["I wanted to build a high-performance stock-order matching engine. The challenge wasn't just making it fast. It was proving that the improvements were real.","Fast bolna aasaan hai. Lekin kitna fast? Aur uska proof kya hai?","I designed the workflow and architecture, and established an approach for comparing optimizations with simpler alternatives. AI agents handled much of the coding and benchmarking. I directed the evaluation and decisions about which claims were defensible.","Then came a number I could have proudly displayed.","1,205 nanoseconds.","Dekhne mein impressive tha. Resume par bhi achha lagta.","But an audit revealed that this headline came from an uncommitted version of the code. A more controlled historical run gave 1,850 nanoseconds.","And another claimed 3.1× advantage? It shrank to approximately 1.02×.","Ab do options the: impressive number bachao, ya sach accept karo.","I chose to withdraw or downgrade claims the evidence couldn't support. Later changes also made the replacement latency outdated.","**What I learned:** A smaller truth is worth more than a bigger claim you cannot defend.","Har achha dikhne wala number achha result nahi hota."],"revealsLabel":"Three things this reveals about me","reveals":["Analytical Thinking: I approach improvements as hypotheses requiring fair comparisons.","Independent Judgment: I'm willing to change a conclusion when better evidence contradicts it.","Evidence-Driven Problem-Solving: I question measurement methods and investigate unexpected results before deciding what to change."],"growth":"**My growth connection:** Imagine a campaign reporting thousands of sign-ups.\nSunne mein amazing hai. Lekin kitne log actually product use kar rahe hain? Kitne wapas aaye?\nThat's the difference between celebrating a number and understanding what it means.","note":"**Evidence note:** AI agents performed much of the implementation, benchmarking, and investigation. The 1,850 ns result is historical; current latency has not been remeasured.","level1":{"summary":"I wanted to build a high-performance stock-order matching engine. 1,205 nanoseconds. A more controlled historical run gave 1,850 nanoseconds.","capability":"Evidence-Driven Problem-Solving: I question measurement methods and investigate unexpected results before deciding what to change."},"level3":{"folder":"c3","label":"CHECK THE RECEIPT"},"n":2,"name":"Blitz","litMsg":"Lamp 2 jal utha. Ek diya jala. Ab agla."},"lamp3":{"heading":"LAMP 03 — VIGIL","title":"The Late Witness · System Bola Healthy. Maine Poochha, Pakka?","tagline":"The System Said Everything Was Fine. I Questioned Whether It Was.","body":["Imagine a trading system receiving live market prices. Suddenly, a connection stops responding—but the system still believes everything is fine.","Screen par sab normal dikh raha hai. Lekin data hi purana hai. Ab bharosa kis par karein?","That's the problem I wanted Vigil to address.","I defined the requirements, designed the monitoring and reconnection workflows, and made key decisions about failure handling. AI agents helped implement and investigate the system.","Then I asked a question that changed the direction of the testing:","Were our tests actually proving what the system promised?","Tests pass ho rahe the. Lekin kya woh sahi sawaal pooch rahe the?","An AI-assisted investigation exposed a serious flaw: a reply arriving after its deadline could still make a failed connection appear healthy.","Matlab jawab late aaya, aur system ne maan liya—sab theek hai!","I directed corrective work, approved changes to the connection rules, and sought evidence that the correction would detect the original problem.","When the fix was deliberately removed, two targeted tests failed. Restored, all 105 local tests passed.","I also challenged performance measurements that weren't measuring what they claimed.","**What I learned:** Before celebrating a successful result, make sure you're testing the right definition of success.","Galat sawaal ka correct answer bhi kaam ka nahi."],"revealsLabel":"Three things this reveals about me","reveals":["Systems Thinking: I translate complex problems into defined behaviors, workflows, and failure-handling decisions.","Critical Thinking: I question whether passing tests actually prove what matters.","Evidence-Driven Ownership: I direct corrective action and seek tests that can expose the original failure again."],"growth":"**My growth connection:** A new Wispr Flow installation might look like success.\nLekin agar user agle din Flow use hi na kare, toh kya woh real adoption hai?\nI want to understand what happens after the first interaction—not just count how many people started.","note":"**Evidence note:** AI agents carried out much of the technical investigation and implementation. Verification was local and simulation-based, not a production deployment. Some individual decision attributions remain subject to verification...","late":{"label":"TEST THE LATE REPLY","deadline":3,"max":6,"start":2,"plain":"A reply that arrives before the 3-second deadline counts as proof the connection is alive. In the original logic, a reply that arrived after the deadline could still count as proof of health. In the corrected logic it is not counted as proof of current health.","before":"Dono logic mein yahi hota hai.","oldLate":"Yahi dikkat thi."},"level1":{"summary":"Imagine a trading system receiving live market prices. Suddenly, a connection stops responding—but the system still believes everything is fine. That's the problem I wanted Vigil to address.","capability":"Critical Thinking: I question whether passing tests actually prove what matters."},"level3":{"folder":"c2","label":"SEE THE RECEIPT"},"n":3,"name":"Vigil","litMsg":"Lamp 3 jal utha. Lau aage badh rahi hai."},"transition":{"heading":"Three Lamps. One Pattern.","body":["One project taught me not to trust green tests blindly.","Another taught me not to fall in love with impressive numbers.","The third taught me to question whether I was measuring the right thing in the first place.","*Teen alag projects. Teen alag challenges. Lekin ek aadat common thi.*","**I don't want to be right. I want to find out what's right.**","And that is exactly the mindset I want to bring to growth.","Because getting someone to install a product is one thing.","Getting them to genuinely love it, use it again, and make it part of their daily life?","*Woh asli challenge hai.*","**Which brings me to my next question: What happens after someone installs Wispr Flow?**"]},"voice":{"step":"03 · Why Wispr Flow?","sub":"My voice, Flow's text · Soch poori hone do. My genuine voice experience and what it revealed.","kicker":"THE FIRST CLUE WAS MY VOICE","heading":"Soch poori hone do","tagline":"Let people finish thinking.","body":["Here's a real thought I spoke on **2 November 2026**: “Shouldn't the technology adapt to how we naturally think and communicate?”","Dono ko saath rakh ke padhiye: meri hand-transcribed voice memo, aur Flow ka actual text. Thought wahi raha; bas expression saaf ho gaya.","That matters more to me than “type faster”: **let people finish thinking.**"],"compareAfter":3,"compareLabel":"COMPARE THE TWO REAL TAKES","takes":[{"id":"take1","label":"Take 1","recordedAt":"2 Nov 2026, 7:27 pm","raw":"Okay, so... the best interface... I think it's basically when you don't have to think about using it, like learning it sorry sorry how to use it.\n\nLike, when you're using something and you're not constantly wondering where to click or what to do next.\n\nYou're just... doing what you came there to do.\n\nAnd, yeah, I think that's actually quite difficult to build. Because all the complicated stuff, the logic, the decisions... someone has to handle all of that. Just not the user.","output":"Okay the best interface, I think, is basically when you don't have to think about how to use it, like when you are using something and you are not constantly wondering where to click or what to do next. You are just doing what you came there to do. I think that's actually quite difficult to build because all the complicated stuff, the logic, the decisions, someone has to handle all of that, just not the user."},{"id":"take2","label":"Take 2","recordedAt":"2 Nov 2026, 7:30 pm","raw":"Wait, I think there's another way to look at this.\n\nWe spend so much time learning how to use technology... remembering commands, figuring out buttons, changing ourselves to fit the tool adjusting to how a tool works.\n\nBut why? I mean, shouldn't it be the other way around?\n\nShouldn't the technology adapt to how we naturally think and communicate?\n\nBecause we already know what we want to say. We shouldn't have to learn the tool first struggle just to get it out.","output":"I think there's another way to look at this. We spend so much time learning how to use technology: remembering commands, figuring out buttons, adjusting to how a tool works. But why? Shouldn't it be the other way around? Shouldn't the technology adapt to how we naturally think and communicate? Because we already know what we want to say, we shouldn't have to struggle just to get it out."}],"custody":{"source":"My Wispr Flow history","tool":"Wispr Flow","date":"2 Nov 2026","status":"Output matches Flow history word for word","note":"“As I said it” is my own hand transcription of what I said, typed from my voice memo."}},"growth":{"step":"04 · My India growth hypothesis","sub":"The Handover Test — proposed, not run","kicker":"LAMP 04 · PROPOSED, NOT RUN","heading":"The Handover Test — proposed, not run","title":"Yeh diya abhi bujha hai","ideaLabel":"The idea","body":["For India growth, I'd test whether a **Hinglish-first demo for students and early-career users** beats a speed-focused pitch on **first usable dictations** and **a second dictation within a day**. **Proposed, not run.**","Shuruaat ek chhote group se: jo log sach mein Hindi-English mein messages likhte hain. I would not assume every Indian student uses Hinglish."],"variants":["Variant A, speed: “Say the message. Skip typing it.”","Variant B, expression: “Don't stop the thought halfway through. Say it naturally.”"],"warnLabel":"Fair warning","warn":"This test has not been run, and no result is claimed. Koi sample, koi lift, koi number nahi.","cta":{"label":"SEE THE GROWTH TEST","folder":"c8"}},"verdict":{"step":"05 · Continue the conversation","sub":"Interview, résumé, GitHub, LinkedIn","kicker":"YOUR VERDICT","heading":"Seedhi baat","body":["AI helped implement and investigate. I mapped workflows, shaped architecture, made or approved decisions, identified bottlenecks, directed attempts to break the prototypes, and pursued fixes. I didn't personally write every line or discover every bug.","I haven't owned a growth channel or shipped these prototypes to customers. Yeh zimmedari main kamaana chahta hoon.","**I can't promise I'll always be right. I can show you what I do when I'm wrong.**","Koi ek claim chuniye. Uska evidence kholiye. Phir faisle ke baare mein mujhse poochhiye."],"closeHeading":"Ab mujhse ek sawaal poochhiye.","closeBody":["Teen projects mein se koi ek chuniye. Kya hua, maine kya kiya, aur kya abhi adhura hai: teeno batata hoon."],"ctaInterview":"INVITE ME TO AN INTERVIEW","interviewNote":"Ek email. Ek lamp. Baaki baat wahin.","ctaResume":"VIEW MY RÉSUMÉ","ctaEvidence":"EVIDENCE DRAWER","ctaGithub":"VIEW MY GITHUB","ctaLinkedin":"FIND ME ON LINKEDIN","after":["Mere teen diye bhi ek-ek karke jale. Jahan jawab adhura tha, wahan maine adhura hi likha.","Sawaal poochhne ke liye yeh page khula hai. The best interface gets out of the way. The best evidence doesn't."],"sign":"Shubh Deepavali.","signLater":"Shukriya.","name":"— Shriniwas"},"deeper":{"step":"06 · Go deeper","sub":"Evidence receipts, longer stories, personal details, visitor lamp, the essay link · Self-paced","heading":"Go deeper","stories":"Longer stories","personal":"Personal details","essay":"Read my long-form essay","evidence":"Evidence receipts"},"wish":{"kicker":"YOUR TURN","heading":"Ab aapki baari","visitor":"Visitor lamp","intro":["Is baar soan papdi nahi, ek wish.","Mere teen diye ab roshan hain. Ab ek aur: aapka apna.","Ek real insaan sochiye. Do-teen line, jo sirf aap unse keh sakte hain. Generic forward nahi.","Bolkar likhiye, jaise unse baat kar rahe hon. Flow ya koi voice typing ho toh bol dijiye; nahi ho toh type bhi chalega.","Deepavali ho ya na ho: koi achhi khabar, koi purani yaad, ya bas “yaad aaye”. Sab chalega."],"english":"Write one short wish for one real person, in any language you like.","ideasLabel":"Kuch idea chahiye? Chuniye (optional):","ideas":["Kisi ko, jinse aap is baar mil nahi paayenge.","Kisi ko, jinhone aapko kabhi kuch sikhaya.","Kisi ko, jise aapne kabhi theek se thank you nahi kaha.","Kisi ko, jinse baat kiye bahut din ho gaye."],"forLabel":"Kiske liye? (pehla naam, optional)","wishLabel":"Aapki wish","wishPlaceholder":"Jaise unse baat kar rahe hon, waise likhiye…","fromLabel":"Aapka pehla naam (optional)","make":"Card banaiye","empty":"Ek line toh likhiye, phir card ban jaayega.","privacy":"Ek baat saaf: yeh page aapki wish upload ya save nahi karta; woh sirf aapke tab mein banti hai. Jab aap card bhejte hain (WhatsApp ya copy), tab wish aur naam wahin tak jaate hain jahan aap bhejte hain. Bolkar likhte hain toh aapka voice tool apne niyam se chalega.","privacyEn":"In short: this page doesn't upload or save your wish. If you send the card, it goes only where you send it.","cardTitle":"EK DIYA SE DOOSRA","cardFor":"{name} ke liye:","cardTail":"Ek diya doosre diye se. Yahan se jalaiye: {link}","cardEn":"One lamp lights another.","ready":"Card taiyar hai. Jisko bhejna ho, bhej dijiye.","litHeading":"Aapka diya jal utha.","whatsapp":"WhatsApp par bhejiye","copyText":"Card ka text copy kijiye","copyLink":"Link copy kijiye","change":"Badlein","copied":"Copy ho gaya.","copyFail":"Copy nahi ho paya. Link select karke copy kar lijiye.","under":"Yeh wish sirf is tab mein hai. Bhejna ho toh abhi bhej dijiye.","again":"Phir se shuru kijiye"},"sixty":{"label":"THE 60-SECOND FILE · Jaldi mein hain? Yeh padhiye.","headline":"324 tests passed. A separate audit found 19 problems. Would you have shipped it?","body":["I'm Shriniwas, an engineering student applying to Wispr Flow's India growth internship. I mapped workflows and architectures, made or approved key design decisions, and used AI agents for implementation and investigation.","In one project, I approved further corrections after the first audit fixes weren't enough. In another, a watchdog called a late reply proof of a healthy connection. I questioned whether the tests actually proved the product's promise; the corrected test failed when its fix was removed.","I also withdrew a flattering speed claim.","I have no growth wins to borrow. But I've used Flow, and I want to test whether a Hinglish-first demonstration helps Indian students reach their first useful dictation and return for another."],"line":"I can't promise I'll always be right. I can show you what I do when I'm wrong.","ctaReceipt":{"label":"OPEN ONE RECEIPT","folder":"c1"},"ctaInterview":"INVITE ME TO AN INTERVIEW"},"evidence":{"folders":[{"id":"c1","name":"CERTGEN — The green wall","purpose":"A college can generate certificates for thousands of students, accept the valid rows and explain the invalid rows without making everyone else start again.","finding":"324 passing release-candidate tests preceded a separate 19-finding forensic audit (two high). Among the issues were disproportionate CPU work on a crafted value and memory-intensive expansion from a roughly 26 MB request into roughly 192 MB of response material. The audit did not certify the prototype for unrestricted network exposure.","mine":"Requirements and architectural decisions were recorded. I approved bounded error-reporting, resource limits, later authentication-related changes and continuing remediation when findings remained. AI agents performed many of the technical investigations and fixes.","results":"The remediation report says zero open findings within the identified list. Later local checks passed 479 main-suite and 232 audit-suite tests (separate suites, not necessarily 711 independent tests). The optional QR-verification branch passed its own tests but failed a pre-agreed existing requirement and was not merged. A series of further remediation attempts was necessary, and no claim of security certification is justified.","inspect":{"label":"Bulk Certificate Generator","url":"https://github.com/Shri2909/Bulk-Certificate-Generator","files":["audit/AUDIT_REPORT.md","audit/REMEDIATION_REPORT.md","docs/BLUEPRINT_AMENDMENTS.md","tests/"],"note":"Some of these reports are local or ignored in the repository. For those, the evidence is available on request."},"status":[["PUBLIC","Repository"],["REPO-REPORTED","Test counts, audit and remediation results"],["EVIDENCE AVAILABLE ON REQUEST","Some report files are local or ignored in the repository"],["UNRESOLVED","Who commissioned the forensic audit"]],"more":["“The Feature I Killed”: a QR enhancement was rejected because it regressed required PDF behavior. This is a scope and quality judgment, not a statement about the feature's inherent worth.","Commit trailers credit autonomous AI work. I did not personally write every endpoint."],"blurb":"324 tests, phir 19 findings, aur mera hissa kitna tha."},{"id":"c3","name":"BLITZ — The number I withdrew","purpose":"A fast matching engine keeps track of buyers and sellers, but a claimed speed improvement matters only if it can be reliably reproduced.","finding":"The README's earlier 1,205 ns headline came from an uncommitted working tree. A more controlled historical run gave 1,850 ns. A reported memory-layout advantage shrank from 3.1× to about 1.02× and some verdicts became inconclusive.","mine":"The decision to retract or downgrade the claim is visible in commit f46a9cb and in historical README revisions. AI agents were involved in the benchmark overhaul and the audits.","results":"A later AI-executed audit found 3,059 crossed-at-rest states in 110,000 replay events (2.78%). Remediation reported zero such states on the replay, and fixing the matching engine made earlier latency numbers stale. New engine latency was not remeasured. An existing test had actually asserted the invalid state.","inspect":{"label":"Blitz","url":"https://github.com/Shri2909/Blitz-Limit-Order-Book","files":["commit f46a9cb","historical README","METHODOLOGY.md","results/98a597b/","branch-only audit/ reports"]},"status":[["PUBLIC","Repository"],["REPO-REPORTED","Retraction of the 1,205 ns headline"],["LOCAL-BRANCH","Audit reports"],["UNRESOLVED","Current latency has not been remeasured. The 1,850 ns run is historical."]],"more":["At last review, the public default branch did not include the stale-results warning.","An AF_XDP latency spike was traced to competing processes pinned to the same cores and touchpad interrupts; that subsystem has since been removed from uncommitted work.","A chart displayed passing tests despite missing executables and an unverified sanitizer claim.","An Avellaneda–Stoikov strategy lost to a naive benchmark on five tickers; the reason for reverting it is not documented."],"blurb":"1,205 se 1,850 tak ka poora hisaab, aur jo abhi remeasure nahi hua."},{"id":"c2","name":"VIGIL — The late witness","purpose":"A monitor checks whether a stream of important information is still alive. A late reply must not count as proof of current health.","finding":"The original handle_pong logic accepted stale or future-timestamped replies. The project plan records a question about whether its tests truly established the stated state-machine behavior. An agent investigated the code and implemented the correction with an approval gate.","mine":"I questioned whether the tests proved the system's real promise.","results":"A later local verification reported 105/105 tests passing. Replacing the guard with `if (false)` made exactly two targeted tests fail. A simulated three-feed lifecycle demonstrated failure, reconnection and recovery. There was no production exchange deployment, and the kernel-level network-loss script was not run.","inspect":{"label":"Vigil","url":"https://github.com/Shri2909/Vigil-Low-latency-TCP-heartbeat-monitor","files":["PROJECT_PLAN.md §§18–19","src/connection.cpp","test/connection_test.cpp","test/feed_monitor_test.cpp","demo/lifecycle_demo.cpp"]},"status":[["PUBLIC","Repository"],["REPO-REPORTED","105/105 tests, verified locally in an agent session (not CI)"],["UNRESOLVED","Who asked the correctness question and who approved the semantic change"]],"more":["A CLI dropped piped commands when EOF arrived with the final input; the pattern appeared at three sites.","A benchmark comparing reactor architectures inherited a one-CPU affinity mask, invalidating the original naive-baseline comparison. Committed documents still disagree on absolute CPU numbers.","An 18-gap specification exercise led to a first-class feed simulator and protocol decisions.","One deeper fuzzing harness hung in the sandbox and remains incompletely validated. None of this is production or CI evidence."],"blurb":"Ek late reply, ek sawaal, aur do tests jo correction hatane par fail hue."},{"id":"c6","name":"ROLES — Who designed, who executed, who verified?","mine":"As I describe it: sketching complete workflows and architectures; defining goals and constraints; making or approving major design, scope and user-flow decisions; identifying bottlenecks; directing deliberate attempts to break the prototypes; reading audit results and deciding which fixes or further tests to pursue. This is my firsthand account, which is different from actions specifically recorded in each repository's logs. The provenance of some prompts and audit initiations remains uncertain.","finding":"AI agents did the coding, many root-cause investigations, fuzzing, audits, tests, benchmarks and documentation. AI-generated code is not claimed as manually implemented or independently discovered. Individual tests and reports are called repository-reported unless freshly rerun as noted.","status":[["UNRESOLVED","Provenance of some prompts and audit initiations"]],"labels":{"finding":"The AI agents' role","mine":"My role, as I describe it"},"blurb":"Kisne kya kiya, seedhe shabdon mein."},{"id":"c7","name":"THE PERSON AND THE VOICE — Sources","purpose":"Where to read more, and what is and is not claimed about the voice receipt.","results":"The two takes on this page are from 2 November 2026, at 7:27 pm and 7:30 pm. The “As I said it” text is my own hand transcription of a separate voice memo; it is not an automatically produced transcript. No audio is published on this page. A recorded build in which Flow dictation drives a builder, followed by a spoken correction, has not been supplied, so that build receipt is pending. The original engineering repositories were not built with Flow.","links":[{"label":"Read my long-form essay","key":"essay"},{"label":"View my résumé","key":"resume"}],"status":[["PROPOSED","A voice-to-builder build receipt"]],"labels":{"results":"Provenance"},"blurb":"Voice takes kahan se aaye, aur kya abhi baaki hai."},{"id":"c8","name":"INDIA GROWTH TEST — The proposed protocol","purpose":"Can an actual message-first Hinglish demonstration help Indian students and early-career workers experience the value of Flow more effectively than a speed-focused pitch?","finding":"Audience: a small, reachable group of students and early-career users who naturally write Hindi-English messages. I would not assume that every Indian student uses Hinglish.\n\nVariant A, speed: “Say the message. Skip typing it.”\n\nVariant B, expression: “Don't stop the thought halfway through. Say it naturally.”","mine":"Design: the same real task and demo duration, rotated message order, success defined in advance, consent collected, no sensitive content. A small exploratory sample with counts per variant; no causal certainty claimed. Record what objection people raise and what they actually do.","results":"First useful action: the recipient creates a usable first dictation in a real app without needing a full rewrite. Return action: a second useful dictation within 24 hours, confirmed appropriately, not merely opening the app. Failure condition: no improvement on first success or second use, or results too small or noisy. Next iteration: revise the framing, user segment or first-message context based on the objections, and test again.","more":["A separate self-only experiment: five paired tasks, typed versus Flow, alternating order and recording time, edit count and whether the result was usable. That would give a personal workflow observation, not a claim about user behavior."],"status":[["PROPOSED","No activation result, conversion lift, sample count or cohort metric is claimed. Neither experiment has been run."]],"labels":{"finding":"Audience and variants","mine":"Design","results":"Actions, failure condition and next step","more":"A separate self-only experiment"},"blurb":"Poora protocol. Proposed, not run."}]},"footer":["Wispr Flow ke India growth internship challenge ke liye banaya hai. Prototypes, not products. Har number ka source aur status Evidence drawer mein hai.","AI agents wrote a substantial share of the code in these projects. I directed, approved and questioned. Kisne kya kiya, woh drawer mein hai, jitna main saabit kar sakta hoon.","Yeh page aapki wish upload ya save nahi karta.","Is page mein koi analytics, cookies ya third-party script nahi hai.","Only the two takes above were spoken with Wispr Flow.","This is an independent application page. Wispr Flow and Emergent have not reviewed or endorsed it.","© Shriniwas Kholkute"]}</script>
+<script type="application/json" id="ek-data">{"site":{"title":"Ek Diya Se Doosra (one lamp lights another) · Shriniwas Kholkute","description":"324 tests passed. Then an audit found 19 problems. Shriniwas Kholkute's night page for Wispr Flow's India growth internship: one lamp lights another. Ek diya jalaiye, aage badhaiye.","ogTitle":"324 tests passed. 19 problems found. Ship karte?","subject":"Shriniwas Kholkute","contact":{"email":"shrniwaskholkute2282@gmail.com","linkedin":"","github":""},"resume":"https://drive.google.com/file/d/19DXFxUoCiynAvErP6KQVq-ArzV69Mgf2/view?usp=drive_link","essay":"https://drive.google.com/file/d/1ccYZ-WZOZTLmZ4A23Ed9yNGy9jiCNi2k/view?usp=drive_link"},"ui":{"brand":"EK DIYA SE DOOSRA","brandShort":"Ek Diya","navLamps":"The lamps","navEvidence":"Evidence","navSixty":"60-second file","navInvite":"INVITE ME","skip":"Skip to main content","close":"Close","plainly":"In plain words","holdWarm":"Baati abhi garam ho rahi hai.","lightAll":"Sab diye ek saath jalaiye","progress":"{n} diye jal chuke, {r} baaki.","progressDone":"Teenon jal uthe.","unlit":"Light lamp {n}, {name}.","unlitDesc":"Lamp {n}, unlit. Press and hold, tap or press Enter to light it from {from}.","fromHome":"the home flame","fromLamp":"lamp {n}","lit":"Lamp {n}, {name}, lit. Open its story.","litDesc":"Lamp {n}, lit.","lamp4":"Lamp 4, proposed, not run.","lamp4Desc":"Lamp 4 is proposed, not run. It stays unlit.","lamp4Chip":"PROPOSED, NOT RUN","lamp4Try":"Yeh diya abhi nahi jalega. Test chala nahi. Bujha hua, par imaandaar.","openStory":"Kissa kholiye","reduced":"Motion off hai? Diye seedhe jal jaate hain, koi animation nahi.","level1":"LEVEL 1 — Instantly visible","level2":"LEVEL 2 — Poora kissa","level2Hint":"The complete story","level3":"LEVEL 3 — Inspect the evidence","level3Sub":"For curious reviewers","capLabel":"The one capability this project best demonstrates","repoLabel":"Repository","evidenceTitle":"Evidence drawer","evidenceIntro":"Every figure above has a source and a status. Statuses are plain text: PUBLIC, LOCAL-BRANCH, REPO-REPORTED, PERSONALLY CONFIRMED, UNRESOLVED, PROPOSED. Jahan jawab abhi adhura hai, wahan UNRESOLVED likha hai.","inspect":"Where to inspect","purpose":"Plain-English purpose","finding":"The central finding","mine":"My part","results":"Recorded results","status":"Status","more":"Other findings","raw":"As I said it","flow":"As Flow wrote it","hint":"Flame ko meri awaaz se Flow ke text tak khiskaiye.","hintKeys":"(Arrow keys work too, or use “Read it plainly”.)","legend":"Blue pencil: words Flow trimmed. Highlighted: words Flow smoothed or added.","chip":"A real take, straight from my Flow history","custody":"Where this came from","readBoth":"Read it plainly","takes":"Takes","modelBadge":"MODEL OF DOCUMENTED BEHAVIOR","modelNote":"A simulated connection, not real monitoring.","logicLabel":"Which logic?","logicOld":"Original logic","logicNew":"Corrected logic","arrivalLabel":"When the reply arrives","deadlineLabel":"3-second deadline","guessAsk":"How many problems did the separate audit find?","guessHint":"Aapka andaza?","lateHint":"Khiskaiye aur dekhiye.","calmOff":"Roshni kam karo","calmOn":"Roshni waapas laao","lookDeepavali":"Deepavali","lookInk":"Ink","dockLabel":"Display options","lookLabel":"Look","notReady":"Light lamp {k} first.","liveLit":"Lamp {n} is lit. {n} of 3 lamps lit.","travel":"Lau aage badh rahi hai...","allLitLive":"All three lamps are lit. The room has turned warm gold."},"opening":{"label":"EK DIYA SE DOOSRA · Shriniwas Kholkute","headline":"324 tests passed. Then an audit found 19 problems.","ship":"Ship karte? Imaandari se bataiye.","lines":["Ek diya pehle se jal raha hai. Woh mera hai.","Baaki teen aapke haath se jalenge."],"hold":"HOLD TO LIGHT THE FIRST LAMP","holdHint":"Dabaye rakhiye. Tap ya Enter bhi chalega.","sixtyLine":"Jaldi mein hain? Ek minute mein poori kahani. →","sixtyBtn":"THE 60-SECOND FILE","below":"Three projects. Three inconvenient discoveries. Aur ek sawaal: phir maine kya kiya?","intro":"I'm Shriniwas, a final-year VIT Pune engineering student applying for Wispr Flow's India growth internship. Strengths ki list nahi. Main aapko mushkil faisle dikhaunga.","alt":"A dark page with one small flame lit on the left and a row of three unlit lamps leading away to the right."},"row":{"lit":"Teen diye jal uthe.","body":"Dekhiye: ek diya doosre se jala, aur pehle wale ki roshni kam nahi hui.","dusk":"Kamra ab thoda sunehra ho gaya."},"person":{"step":"01 · Meet the person","sub":"Who I am, what drives me, what makes me different","kicker":"THE PERSON BEHIND THE FILE","heading":"Is file ke peeche ka insaan","body":["My father's accident brought serious financial pressure during my Class 12 exams. A gap year, unsuccessful entrance attempts, YouTube study and a ₹3,999 course formed my route to VIT Pune.","I coordinated four research contributors, placed second in a college debate, and enjoy business case studies, essays and Advaita Vedanta. I care about people as much as code.","**I didn't learn that every plan works. I learned to decide what to do when it doesn't.**"]},"lamps":{"step":"02 · Three lamps, three decisions","sub":"CERTGEN → BLITZ → VIGIL"},"lamp1":{"heading":"LAMP 01 — CERTGEN","title":"The Green Wall · Sab Green Tha. Par Kya Sab Theek Tha?","tagline":"324 Tests Passed. I Still Wasn't Convinced.","body":["A hiring assignment asked me to build a bulk certificate generator. Simple enough to make it work. But I wanted to build something that could survive when things went wrong.","Mera sawaal simple tha: agar hazaar students ke certificates ban rahe hain, toh ek galat entry ki wajah se baaki sab kyun rukenge?","So I mapped the entire workflow, designed the architecture, and chose background processing with fault isolation. AI agents helped with much of the implementation, while I directed the design and key product decisions.","Then came the interesting part.","324 tests passed. Everything was green.","Ab normally kya hota? Project complete. Screenshot lo. Aage badho.","But I wasn't convinced.","A separate audit uncovered 19 problems. I directed further remediation, made decisions about safeguards, resource limits, and authentication, and pushed for more corrections when the first fixes weren't sufficient.","I even dropped a QR-verification feature when it violated an existing requirement.","Feature impressive tha. Lekin requirement tod raha tha. Toh feature gaya, requirement nahi.","The remediation report eventually recorded zero open findings within its scope. Later local checks passed 479 main-suite and 232 audit-suite tests.","**What I learned:** Ownership doesn't mean defending everything you've built. It means having the courage to question it.","Apna banaya hua system khud challenge karna bhi ownership hai."],"revealsLabel":"Three things this reveals about me","reveals":["Systems Thinking: I design complete workflows around real-world constraints, not just happy-path demonstrations.","Product Judgment: I make difficult trade-offs and prioritize requirements over attractive extras.","Extreme Ownership: When initial fixes aren't enough, I continue directing improvements instead of declaring premature success."],"growth":"**My growth connection:** A dashboard full of green numbers doesn't automatically mean users are happy.\nNumbers achhe dikh rahe hain, par kya user ko sach mein value mil rahi hai? That's the question I want to ask.","note":"**Evidence note:** AI agents performed much of the coding, audits, and fixes. The results describe a tested prototype, not a production security guarantee.","guess":{"label":"GUESS THE AUDIT RESULT → REVEAL 19","options":[0,3,8,19],"answer":19,"high":2,"reveal":"The audit found 19 problems, two of them high. One crafted value caused disproportionate CPU work. A request of roughly 26 MB expanded into roughly 192 MB of response material. The tests hadn't asked those questions, and I directed more remediation.","plain":"324 of 324 tests passed. A separate audit then found 19 problems, two of them high.","status":"324 / 324 tests pass","lowAfter":"Kam socha? Aap akele nahi hain. 324 tests ne bhi wahi socha.","rightAfter":"Bilkul sahi. Tests ko yeh nahi dikha tha."},"level1":{"summary":"A hiring assignment asked me to build a bulk certificate generator. 324 tests passed. A separate audit uncovered 19 problems.","capability":"Extreme Ownership: When initial fixes aren't enough, I continue directing improvements instead of declaring premature success."},"level3":{"folder":"c1","label":"CHECK THE RECEIPT"},"n":1,"name":"Certgen","litMsg":"Lamp 1 jal utha. Ab iska kissa."},"lamp2":{"heading":"LAMP 02 — BLITZ","title":"The Number I Withdrew · Number Bada Tha. Par Sach?","tagline":"I Chose to Withdraw My Most Impressive Number.","body":["I wanted to build a high-performance stock-order matching engine. The challenge wasn't just making it fast. It was proving that the improvements were real.","Fast bolna aasaan hai. Lekin kitna fast? Aur uska proof kya hai?","I designed the workflow and architecture, and established an approach for comparing optimizations with simpler alternatives. AI agents handled much of the coding and benchmarking. I directed the evaluation and decisions about which claims were defensible.","Then came a number I could have proudly displayed.","1,205 nanoseconds.","Dekhne mein impressive tha. Resume par bhi achha lagta.","But an audit revealed that this headline came from an uncommitted version of the code. A more controlled historical run gave 1,850 nanoseconds.","And another claimed 3.1× advantage? It shrank to approximately 1.02×.","Ab do options the: impressive number bachao, ya sach accept karo.","I chose to withdraw or downgrade claims the evidence couldn't support. Later changes also made the replacement latency outdated.","**What I learned:** A smaller truth is worth more than a bigger claim you cannot defend.","Har achha dikhne wala number achha result nahi hota."],"revealsLabel":"Three things this reveals about me","reveals":["Analytical Thinking: I approach improvements as hypotheses requiring fair comparisons.","Independent Judgment: I'm willing to change a conclusion when better evidence contradicts it.","Evidence-Driven Problem-Solving: I question measurement methods and investigate unexpected results before deciding what to change."],"growth":"**My growth connection:** Imagine a campaign reporting thousands of sign-ups.\nSunne mein amazing hai. Lekin kitne log actually product use kar rahe hain? Kitne wapas aaye?\nThat's the difference between celebrating a number and understanding what it means.","note":"**Evidence note:** AI agents performed much of the implementation, benchmarking, and investigation. The 1,850 ns result is historical; current latency has not been remeasured.","level1":{"summary":"I wanted to build a high-performance stock-order matching engine. 1,205 nanoseconds. A more controlled historical run gave 1,850 nanoseconds.","capability":"Evidence-Driven Problem-Solving: I question measurement methods and investigate unexpected results before deciding what to change."},"level3":{"folder":"c3","label":"CHECK THE RECEIPT"},"n":2,"name":"Blitz","litMsg":"Lamp 2 jal utha. Ek diya jala. Ab agla."},"lamp3":{"heading":"LAMP 03 — VIGIL","title":"The Late Witness · System Bola Healthy. Maine Poochha, Pakka?","tagline":"The System Said Everything Was Fine. I Questioned Whether It Was.","body":["Imagine a trading system receiving live market prices. Suddenly, a connection stops responding—but the system still believes everything is fine.","Screen par sab normal dikh raha hai. Lekin data hi purana hai. Ab bharosa kis par karein?","That's the problem I wanted Vigil to address.","I defined the requirements, designed the monitoring and reconnection workflows, and made key decisions about failure handling. AI agents helped implement and investigate the system.","Then I asked a question that changed the direction of the testing:","Were our tests actually proving what the system promised?","Tests pass ho rahe the. Lekin kya woh sahi sawaal pooch rahe the?","An AI-assisted investigation exposed a serious flaw: a reply arriving after its deadline could still make a failed connection appear healthy.","Matlab jawab late aaya, aur system ne maan liya—sab theek hai!","I directed corrective work, approved changes to the connection rules, and sought evidence that the correction would detect the original problem.","When the fix was deliberately removed, two targeted tests failed. Restored, all 105 local tests passed.","I also challenged performance measurements that weren't measuring what they claimed.","**What I learned:** Before celebrating a successful result, make sure you're testing the right definition of success.","Galat sawaal ka correct answer bhi kaam ka nahi."],"revealsLabel":"Three things this reveals about me","reveals":["Systems Thinking: I translate complex problems into defined behaviors, workflows, and failure-handling decisions.","Critical Thinking: I question whether passing tests actually prove what matters.","Evidence-Driven Ownership: I direct corrective action and seek tests that can expose the original failure again."],"growth":"**My growth connection:** A new Wispr Flow installation might look like success.\nLekin agar user agle din Flow use hi na kare, toh kya woh real adoption hai?\nI want to understand what happens after the first interaction—not just count how many people started.","note":"**Evidence note:** AI agents carried out much of the technical investigation and implementation. Verification was local and simulation-based, not a production deployment. Some individual decision attributions remain subject to verification...","late":{"label":"TEST THE LATE REPLY","deadline":3,"max":6,"start":2,"plain":"A reply that arrives before the 3-second deadline counts as proof the connection is alive. In the original logic, a reply that arrived after the deadline could still count as proof of health. In the corrected logic it is not counted as proof of current health.","before":"Dono logic mein yahi hota hai.","oldLate":"Yahi dikkat thi."},"level1":{"summary":"Imagine a trading system receiving live market prices. Suddenly, a connection stops responding—but the system still believes everything is fine. That's the problem I wanted Vigil to address.","capability":"Critical Thinking: I question whether passing tests actually prove what matters."},"level3":{"folder":"c2","label":"SEE THE RECEIPT"},"n":3,"name":"Vigil","litMsg":"Lamp 3 jal utha. Lau aage badh rahi hai."},"transition":{"heading":"Three Lamps. One Pattern.","body":["One project taught me not to trust green tests blindly.","Another taught me not to fall in love with impressive numbers.","The third taught me to question whether I was measuring the right thing in the first place.","*Teen alag projects. Teen alag challenges. Lekin ek aadat common thi.*","**I don't want to be right. I want to find out what's right.**","And that is exactly the mindset I want to bring to growth.","Because getting someone to install a product is one thing.","Getting them to genuinely love it, use it again, and make it part of their daily life?","*Woh asli challenge hai.*","**Which brings me to my next question: What happens after someone installs Wispr Flow?**"]},"voice":{"step":"03 · Why Wispr Flow?","sub":"My voice, Flow's text · Soch poori hone do. My genuine voice experience and what it revealed.","kicker":"THE FIRST CLUE WAS MY VOICE","heading":"Soch poori hone do","tagline":"Let people finish thinking.","body":["Here's a real thought I spoke on **2 November 2026**: “Shouldn't the technology adapt to how we naturally think and communicate?”","Dono ko saath rakh ke padhiye: meri hand-transcribed voice memo, aur Flow ka actual text. Thought wahi raha; bas expression saaf ho gaya.","That matters more to me than “type faster”: **let people finish thinking.**"],"compareAfter":3,"compareLabel":"COMPARE THE TWO REAL TAKES","takes":[{"id":"take1","label":"Take 1","recordedAt":"2 Nov 2026, 7:27 pm","raw":"Okay, so... the best interface... I think it's basically when you don't have to think about using it, like learning it sorry sorry how to use it.\n\nLike, when you're using something and you're not constantly wondering where to click or what to do next.\n\nYou're just... doing what you came there to do.\n\nAnd, yeah, I think that's actually quite difficult to build. Because all the complicated stuff, the logic, the decisions... someone has to handle all of that. Just not the user.","output":"Okay the best interface, I think, is basically when you don't have to think about how to use it, like when you are using something and you are not constantly wondering where to click or what to do next. You are just doing what you came there to do. I think that's actually quite difficult to build because all the complicated stuff, the logic, the decisions, someone has to handle all of that, just not the user."},{"id":"take2","label":"Take 2","recordedAt":"2 Nov 2026, 7:30 pm","raw":"Wait, I think there's another way to look at this.\n\nWe spend so much time learning how to use technology... remembering commands, figuring out buttons, changing ourselves to fit the tool adjusting to how a tool works.\n\nBut why? I mean, shouldn't it be the other way around?\n\nShouldn't the technology adapt to how we naturally think and communicate?\n\nBecause we already know what we want to say. We shouldn't have to learn the tool first struggle just to get it out.","output":"I think there's another way to look at this. We spend so much time learning how to use technology: remembering commands, figuring out buttons, adjusting to how a tool works. But why? Shouldn't it be the other way around? Shouldn't the technology adapt to how we naturally think and communicate? Because we already know what we want to say, we shouldn't have to struggle just to get it out."}],"custody":{"source":"My Wispr Flow history","tool":"Wispr Flow","date":"2 Nov 2026","status":"Output matches Flow history word for word","note":"“As I said it” is my own hand transcription of what I said, typed from my voice memo."}},"growth":{"step":"04 · My India growth hypothesis","sub":"The Handover Test — proposed, not run","kicker":"LAMP 04 · PROPOSED, NOT RUN","heading":"The Handover Test — proposed, not run","title":"Yeh diya abhi bujha hai","ideaLabel":"The idea","body":["For India growth, I'd test whether a **Hinglish-first demo for students and early-career users** beats a speed-focused pitch on **first usable dictations** and **a second dictation within a day**. **Proposed, not run.**","Shuruaat ek chhote group se: jo log sach mein Hindi-English mein messages likhte hain. I would not assume every Indian student uses Hinglish."],"variants":["Variant A, speed: “Say the message. Skip typing it.”","Variant B, expression: “Don't stop the thought halfway through. Say it naturally.”"],"warnLabel":"Fair warning","warn":"This test has not been run, and no result is claimed. Koi sample, koi lift, koi number nahi.","cta":{"label":"SEE THE GROWTH TEST","folder":"c8"}},"verdict":{"step":"05 · Continue the conversation","sub":"Interview, résumé, GitHub, LinkedIn","kicker":"YOUR VERDICT","heading":"Seedhi baat","body":["AI helped implement and investigate. I mapped workflows, shaped architecture, made or approved decisions, identified bottlenecks, directed attempts to break the prototypes, and pursued fixes. I didn't personally write every line or discover every bug.","I haven't owned a growth channel or shipped these prototypes to customers. Yeh zimmedari main kamaana chahta hoon.","**I can't promise I'll always be right. I can show you what I do when I'm wrong.**","Koi ek claim chuniye. Uska evidence kholiye. Phir faisle ke baare mein mujhse poochhiye."],"closeHeading":"Ab mujhse ek sawaal poochhiye.","closeBody":["Teen projects mein se koi ek chuniye. Kya hua, maine kya kiya, aur kya abhi adhura hai: teeno batata hoon."],"ctaInterview":"INVITE ME TO AN INTERVIEW","interviewNote":"Ek email. Ek lamp. Baaki baat wahin.","ctaResume":"VIEW MY RÉSUMÉ","ctaEvidence":"EVIDENCE DRAWER","ctaGithub":"VIEW MY GITHUB","ctaLinkedin":"FIND ME ON LINKEDIN","after":["Mere teen diye bhi ek-ek karke jale. Jahan jawab adhura tha, wahan maine adhura hi likha.","Sawaal poochhne ke liye yeh page khula hai. The best interface gets out of the way. The best evidence doesn't."],"sign":"Shubh Deepavali.","signLater":"Shukriya.","name":"— Shriniwas"},"deeper":{"step":"06 · Go deeper","sub":"Evidence receipts, longer stories, personal details, visitor lamp, the essay link · Self-paced","heading":"Go deeper","stories":"Longer stories","personal":"Personal details","essay":"Read my long-form essay","evidence":"Evidence receipts"},"wish":{"kicker":"YOUR TURN","heading":"Ab aapki baari","visitor":"Visitor lamp","intro":["Is baar soan papdi nahi, ek wish.","Mere teen diye ab roshan hain. Ab ek aur: aapka apna.","Ek real insaan sochiye. Do-teen line, jo sirf aap unse keh sakte hain. Generic forward nahi.","Bolkar likhiye, jaise unse baat kar rahe hon. Flow ya koi voice typing ho toh bol dijiye; nahi ho toh type bhi chalega.","Deepavali ho ya na ho: koi achhi khabar, koi purani yaad, ya bas “yaad aaye”. Sab chalega."],"english":"Write one short wish for one real person, in any language you like.","ideasLabel":"Kuch idea chahiye? Chuniye (optional):","ideas":["Kisi ko, jinse aap is baar mil nahi paayenge.","Kisi ko, jinhone aapko kabhi kuch sikhaya.","Kisi ko, jise aapne kabhi theek se thank you nahi kaha.","Kisi ko, jinse baat kiye bahut din ho gaye."],"forLabel":"Kiske liye? (pehla naam, optional)","wishLabel":"Aapki wish","wishPlaceholder":"Jaise unse baat kar rahe hon, waise likhiye…","fromLabel":"Aapka pehla naam (optional)","make":"Card banaiye","empty":"Ek line toh likhiye, phir card ban jaayega.","privacy":"Ek baat saaf: yeh page aapki wish upload ya save nahi karta; woh sirf aapke tab mein banti hai. Jab aap card bhejte hain (WhatsApp ya copy), tab wish aur naam wahin tak jaate hain jahan aap bhejte hain. Bolkar likhte hain toh aapka voice tool apne niyam se chalega.","privacyEn":"In short: this page doesn't upload or save your wish. If you send the card, it goes only where you send it.","cardTitle":"EK DIYA SE DOOSRA","cardFor":"{name} ke liye:","cardTail":"Ek diya doosre diye se. Yahan se jalaiye: {link}","cardEn":"One lamp lights another.","ready":"Card taiyar hai. Jisko bhejna ho, bhej dijiye.","litHeading":"Aapka diya jal utha.","whatsapp":"WhatsApp par bhejiye","copyText":"Card ka text copy kijiye","copyLink":"Link copy kijiye","change":"Badlein","copied":"Copy ho gaya.","copyFail":"Copy nahi ho paya. Link select karke copy kar lijiye.","under":"Yeh wish sirf is tab mein hai. Bhejna ho toh abhi bhej dijiye.","again":"Phir se shuru kijiye"},"sixty":{"label":"THE 60-SECOND FILE · Jaldi mein hain? Yeh padhiye.","headline":"324 tests passed. A separate audit found 19 problems. Would you have shipped it?","body":["I'm Shriniwas, an engineering student applying to Wispr Flow's India growth internship. I mapped workflows and architectures, made or approved key design decisions, and used AI agents for implementation and investigation.","In one project, I approved further corrections after the first audit fixes weren't enough. In another, a watchdog called a late reply proof of a healthy connection. I questioned whether the tests actually proved the product's promise; the corrected test failed when its fix was removed.","I also withdrew a flattering speed claim.","I have no growth wins to borrow. But I've used Flow, and I want to test whether a Hinglish-first demonstration helps Indian students reach their first useful dictation and return for another."],"line":"I can't promise I'll always be right. I can show you what I do when I'm wrong.","ctaReceipt":{"label":"OPEN ONE RECEIPT","folder":"c1"},"ctaInterview":"INVITE ME TO AN INTERVIEW"},"evidence":{"folders":[{"id":"c1","name":"CERTGEN — The green wall","purpose":"A college can generate certificates for thousands of students, accept the valid rows and explain the invalid rows without making everyone else start again.","finding":"324 passing release-candidate tests preceded a separate 19-finding forensic audit (two high). Among the issues were disproportionate CPU work on a crafted value and memory-intensive expansion from a roughly 26 MB request into roughly 192 MB of response material. The audit did not certify the prototype for unrestricted network exposure.","mine":"Requirements and architectural decisions were recorded. I approved bounded error-reporting, resource limits, later authentication-related changes and continuing remediation when findings remained. AI agents performed many of the technical investigations and fixes.","results":"The remediation report says zero open findings within the identified list. Later local checks passed 479 main-suite and 232 audit-suite tests (separate suites, not necessarily 711 independent tests). The optional QR-verification branch passed its own tests but failed a pre-agreed existing requirement and was not merged. A series of further remediation attempts was necessary, and no claim of security certification is justified.","inspect":{"label":"Bulk Certificate Generator","url":"https://github.com/Shri2909/Bulk-Certificate-Generator","files":["audit/AUDIT_REPORT.md","audit/REMEDIATION_REPORT.md","docs/BLUEPRINT_AMENDMENTS.md","tests/"],"note":"Some of these reports are local or ignored in the repository. For those, the evidence is available on request."},"status":[["PUBLIC","Repository"],["REPO-REPORTED","Test counts, audit and remediation results"],["EVIDENCE AVAILABLE ON REQUEST","Some report files are local or ignored in the repository"],["UNRESOLVED","Who commissioned the forensic audit"]],"more":["“The Feature I Killed”: a QR enhancement was rejected because it regressed required PDF behavior. This is a scope and quality judgment, not a statement about the feature's inherent worth.","Commit trailers credit autonomous AI work. I did not personally write every endpoint."],"blurb":"324 tests, phir 19 findings, aur mera hissa kitna tha."},{"id":"c3","name":"BLITZ — The number I withdrew","purpose":"A fast matching engine keeps track of buyers and sellers, but a claimed speed improvement matters only if it can be reliably reproduced.","finding":"The README's earlier 1,205 ns headline came from an uncommitted working tree. A more controlled historical run gave 1,850 ns. A reported memory-layout advantage shrank from 3.1× to about 1.02× and some verdicts became inconclusive.","mine":"The decision to retract or downgrade the claim is visible in commit f46a9cb and in historical README revisions. AI agents were involved in the benchmark overhaul and the audits.","results":"A later AI-executed audit found 3,059 crossed-at-rest states in 110,000 replay events (2.78%). Remediation reported zero such states on the replay, and fixing the matching engine made earlier latency numbers stale. New engine latency was not remeasured. An existing test had actually asserted the invalid state.","inspect":{"label":"Blitz","url":"https://github.com/Shri2909/Blitz-Limit-Order-Book","files":["commit f46a9cb","historical README","METHODOLOGY.md","results/98a597b/","branch-only audit/ reports"]},"status":[["PUBLIC","Repository"],["REPO-REPORTED","Retraction of the 1,205 ns headline"],["LOCAL-BRANCH","Audit reports"],["UNRESOLVED","Current latency has not been remeasured. The 1,850 ns run is historical."]],"more":["At last review, the public default branch did not include the stale-results warning.","An AF_XDP latency spike was traced to competing processes pinned to the same cores and touchpad interrupts; that subsystem has since been removed from uncommitted work.","A chart displayed passing tests despite missing executables and an unverified sanitizer claim.","An Avellaneda–Stoikov strategy lost to a naive benchmark on five tickers; the reason for reverting it is not documented."],"blurb":"1,205 se 1,850 tak ka poora hisaab, aur jo abhi remeasure nahi hua."},{"id":"c2","name":"VIGIL — The late witness","purpose":"A monitor checks whether a stream of important information is still alive. A late reply must not count as proof of current health.","finding":"The original handle_pong logic accepted stale or future-timestamped replies. The project plan records a question about whether its tests truly established the stated state-machine behavior. An agent investigated the code and implemented the correction with an approval gate.","mine":"I questioned whether the tests proved the system's real promise.","results":"A later local verification reported 105/105 tests passing. Replacing the guard with `if (false)` made exactly two targeted tests fail. A simulated three-feed lifecycle demonstrated failure, reconnection and recovery. There was no production exchange deployment, and the kernel-level network-loss script was not run.","inspect":{"label":"Vigil","url":"https://github.com/Shri2909/Vigil-Low-latency-TCP-heartbeat-monitor","files":["PROJECT_PLAN.md §§18–19","src/connection.cpp","test/connection_test.cpp","test/feed_monitor_test.cpp","demo/lifecycle_demo.cpp"]},"status":[["PUBLIC","Repository"],["REPO-REPORTED","105/105 tests, verified locally in an agent session (not CI)"],["UNRESOLVED","Who asked the correctness question and who approved the semantic change"]],"more":["A CLI dropped piped commands when EOF arrived with the final input; the pattern appeared at three sites.","A benchmark comparing reactor architectures inherited a one-CPU affinity mask, invalidating the original naive-baseline comparison. Committed documents still disagree on absolute CPU numbers.","An 18-gap specification exercise led to a first-class feed simulator and protocol decisions.","One deeper fuzzing harness hung in the sandbox and remains incompletely validated. None of this is production or CI evidence."],"blurb":"Ek late reply, ek sawaal, aur do tests jo correction hatane par fail hue."},{"id":"c6","name":"ROLES — Who designed, who executed, who verified?","mine":"As I describe it: sketching complete workflows and architectures; defining goals and constraints; making or approving major design, scope and user-flow decisions; identifying bottlenecks; directing deliberate attempts to break the prototypes; reading audit results and deciding which fixes or further tests to pursue. This is my firsthand account, which is different from actions specifically recorded in each repository's logs. The provenance of some prompts and audit initiations remains uncertain.","finding":"AI agents did the coding, many root-cause investigations, fuzzing, audits, tests, benchmarks and documentation. AI-generated code is not claimed as manually implemented or independently discovered. Individual tests and reports are called repository-reported unless freshly rerun as noted.","status":[["UNRESOLVED","Provenance of some prompts and audit initiations"]],"labels":{"finding":"The AI agents' role","mine":"My role, as I describe it"},"blurb":"Kisne kya kiya, seedhe shabdon mein."},{"id":"c7","name":"THE PERSON AND THE VOICE — Sources","purpose":"Where to read more, and what is and is not claimed about the voice receipt.","results":"The two takes on this page are from 2 November 2026, at 7:27 pm and 7:30 pm. The “As I said it” text is my own hand transcription of a separate voice memo; it is not an automatically produced transcript. No audio is published on this page. A recorded build in which Flow dictation drives a builder, followed by a spoken correction, has not been supplied, so that build receipt is pending. The original engineering repositories were not built with Flow.","links":[{"label":"Read my long-form essay","key":"essay"},{"label":"View my résumé","key":"resume"}],"status":[["PROPOSED","A voice-to-builder build receipt"]],"labels":{"results":"Provenance"},"blurb":"Voice takes kahan se aaye, aur kya abhi baaki hai."},{"id":"c8","name":"INDIA GROWTH TEST — The proposed protocol","purpose":"Can an actual message-first Hinglish demonstration help Indian students and early-career workers experience the value of Flow more effectively than a speed-focused pitch?","finding":"Audience: a small, reachable group of students and early-career users who naturally write Hindi-English messages. I would not assume that every Indian student uses Hinglish.\n\nVariant A, speed: “Say the message. Skip typing it.”\n\nVariant B, expression: “Don't stop the thought halfway through. Say it naturally.”","mine":"Design: the same real task and demo duration, rotated message order, success defined in advance, consent collected, no sensitive content. A small exploratory sample with counts per variant; no causal certainty claimed. Record what objection people raise and what they actually do.","results":"First useful action: the recipient creates a usable first dictation in a real app without needing a full rewrite. Return action: a second useful dictation within 24 hours, confirmed appropriately, not merely opening the app. Failure condition: no improvement on first success or second use, or results too small or noisy. Next iteration: revise the framing, user segment or first-message context based on the objections, and test again.","more":["A separate self-only experiment: five paired tasks, typed versus Flow, alternating order and recording time, edit count and whether the result was usable. That would give a personal workflow observation, not a claim about user behavior."],"status":[["PROPOSED","No activation result, conversion lift, sample count or cohort metric is claimed. Neither experiment has been run."]],"labels":{"finding":"Audience and variants","mine":"Design","results":"Actions, failure condition and next step","more":"A separate self-only experiment"},"blurb":"Poora protocol. Proposed, not run."}]},"footer":["Wispr Flow ke India growth internship challenge ke liye banaya hai. Prototypes, not products. Har number ka source aur status Evidence drawer mein hai.","AI agents wrote a substantial share of the code in these projects. I directed, approved and questioned. Kisne kya kiya, woh drawer mein hai, jitna main saabit kar sakta hoon.","Yeh page aapki wish upload ya save nahi karta.","Is page mein koi analytics, cookies ya third-party script nahi hai.","Only the two takes above were spoken with Wispr Flow.","This is an independent application page. Wispr Flow and Emergent have not reviewed or endorsed it.","© Shriniwas Kholkute"]}</script>
 <script>
 (function () {
 'use strict';
@@ -355,6 +482,28 @@ EK.goTo = function (el, focus) {
   if (!EK.reduced) [900, 1900].forEach((ms) => setTimeout(() => { const top = el.getBoundingClientRect().top; if (Math.abs(top - parseFloat(getComputedStyle(el).scrollMarginTop || 0)) > 80) aim(); }, ms));
   if (focus !== false) el.focus({ preventScroll: true });
 };
+
+/* A tiny event bus (diya:lit, diya:allLit, diya:visitorLit, fx:burst ...). Listeners never break the page. */
+EK.bus = (function () {
+  const m = {};
+  return {
+    on(ev, fn) { (m[ev] = m[ev] || []).push(fn); },
+    emit(ev, d) { (m[ev] || []).forEach((fn) => { try { fn(d); } catch (e) { /* decorative */ } }); },
+  };
+})();
+
+/* Seeded random (mulberry32) so the scenery looks the same on every visit. */
+EK.rng = function (seed) {
+  return function () {
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+};
+
+/* Look and motion settings. In memory only: nothing is stored. Calm starts on when the phone asks for reduced motion. */
+EK.mode = { calm: EK.reduced, ink: false, tier: 'high' };
 
 /* ---- 05-rich.js ---- */
 /* Small text helpers: **bold**, *italic* and `code` inline markup, paragraphs, buttons and links that the sections share. */
@@ -490,10 +639,443 @@ EK.engine = (function () {
   return { norm, words, lcsPairs, buildStream, textAt };
 })();
 
+/* ---- 15-scene.js ---- */
+/* The night scene, drawn in code: sky (gradients, stars, hairline moon, clouds, one shooting star), a three-layer Indian apartment skyline where every
+   window is a home, the terrace (parapet, rangoli that draws itself, toran, string lights, star lanterns, cat), dusk-gold and the visitor's window.
+   Everything is decorative (aria-hidden) and reads its state from the lamps through the event bus. */
+EK.scene = (function () {
+  const rnd = EK.rng(2026);
+  const R = (a, b) => a + (b - a) * rnd();
+  const TONES = { ember: [0, 0.25, 0.5, 0.75, 1, 1, 1], gold: [0, 0, 0, 0, 0, 1, 1], gold2: [0, 0, 0, 0, 0, 0, 1], stars: [1, 1, .95, .9, .8, .4, .3], veil: [.55, .52, .48, .44, .4, .26, .22] };
+  const COUNTS = [5, 14, 23, 32, 41, 56, 64];
+  const toneOfLit = (n) => [0, 2, 4, 5][Math.min(3, n)];
+  let T = 0, tweenId = 0, stage, wins = [], pool = [], pools = [], rangoli = [], lanterns = [], visitorWin = null, cat = null, ringed = false, birded = false, shot = false;
+  const root = document.documentElement;
+
+  const lerpTab = (tab, t) => { const i = Math.min(5, Math.floor(t)), f = t - i; return tab[i] + (tab[i + 1] - tab[i]) * f; };
+  function applyTone(t) {
+    T = t;
+    const st = root.style;
+    st.setProperty('--o-ember', lerpTab(TONES.ember, t).toFixed(3));
+    st.setProperty('--o-gold', lerpTab(TONES.gold, t).toFixed(3));
+    st.setProperty('--o-gold2', lerpTab(TONES.gold2, t).toFixed(3));
+    st.setProperty('--stars', lerpTab(TONES.stars, t).toFixed(3));
+    st.setProperty('--veil', lerpTab(TONES.veil, t).toFixed(3));
+    st.setProperty('--warm', Math.max(0, Math.min(.25, (t - 3) * .125)).toFixed(3));
+  }
+  function setTone(target, ms, delay) {
+    const id = ++tweenId, from = T;
+    const go = () => {
+      if (id !== tweenId) return;
+      if (EK.mode.calm || !ms) { applyTone(target); return; }
+      const t0 = performance.now();
+      (function step(now) {
+        if (id !== tweenId) return;
+        const k = easeInOut((now - t0) / ms);
+        applyTone(from + (target - from) * k);
+        if (k < 1) requestAnimationFrame(step);
+      })(t0);
+    };
+    if (delay && !EK.mode.calm) setTimeout(go, delay); else go();
+  }
+
+  /* ---------- sky ---------- */
+  function buildSky() {
+    const sky = h('div', { class: 'sk' }, h('i', { class: 'sk-night' }), h('i', { class: 'sk-ember' }), h('i', { class: 'sk-gold' }), h('i', { class: 'sk-gold2' }));
+    const W = 1000, H = 1000;
+    let path = '';
+    const n = 120;
+    for (let i = 0; i < n; i++) { const y = Math.pow(rnd(), 1.6) * H * .6, x = rnd() * W, r = R(.6, 1.6) / 2.2; path += 'M' + x.toFixed(1) + ' ' + y.toFixed(1) + 'h' + (r * 2).toFixed(1) + 'v' + (r * 2).toFixed(1) + 'h-' + (r * 2).toFixed(1) + 'z'; }
+    const tw = [];
+    for (let i = 0; i < 14; i++) tw.push(s('circle', { class: 'tw', cx: (rnd() * W).toFixed(0), cy: (rnd() * H * .45).toFixed(0), r: R(.8, 1.5).toFixed(1), style: 'animation-duration:' + R(2.5, 6).toFixed(1) + 's;animation-delay:-' + R(0, 6).toFixed(1) + 's' }));
+    const stars = s('svg', { class: 'sk-stars', viewBox: '0 0 ' + W + ' ' + H, preserveAspectRatio: 'xMidYMin slice', focusable: 'false' }, s('path', { d: path, fill: '#FFF3DC', opacity: '.85' }), tw);
+    const moon = s('svg', { class: 'sk-moon', viewBox: '-90 -90 180 180', focusable: 'false' },
+      s('defs', null, s('radialGradient', { id: 'ek-halo' }, s('stop', { offset: '0', 'stop-color': '#FFF3DC', 'stop-opacity': '.07' }), s('stop', { offset: '1', 'stop-color': '#FFF3DC', 'stop-opacity': '0' })),
+        s('mask', { id: 'ek-crescent' }, s('rect', { x: -90, y: -90, width: 180, height: 180, fill: '#fff' }), s('circle', { cx: 17, cy: -2, r: 19, fill: '#000' }))),
+      s('circle', { r: 90, fill: 'url(#ek-halo)' }), s('circle', { r: 20, fill: '#FFF3DC', opacity: '.9', mask: 'url(#ek-crescent)' }));
+    const clouds = [90, 120, 140].map((d, i) => h('i', { class: 'cloud c' + i, style: 'animation-duration:' + d + 's;animation-delay:-' + (i * 37) + 's;top:' + (10 + i * 11) + '%' }));
+    sky.append(stars, moon, ...clouds, h('i', { class: 'shoot' }));
+    return sky;
+  }
+
+  /* ---------- skyline ---------- */
+  function addWindow(layer, svg, x, y, w, hh, tv) {
+    const halo = s('rect', { class: 'wh', x: x - 1.5, y: y - 1.5, width: w + 3, height: hh + 3, rx: 1 });
+    const r = s('rect', { class: 'win' + (tv ? ' tv' : ''), x, y, width: w, height: hh });
+    const g = s('g', { class: 'w' }, halo, r);
+    if (tv) g.style.setProperty('--d', R(2, 5).toFixed(1) + 's');
+    svg.appendChild(g);
+    const o = { el: g, layer, x, y, w, h: hh, on: false, tv: !!tv };
+    const k = rnd(); o.col = k < .70 ? 'a' : k < .90 ? 'b' : k < .96 ? 'c' : 'd';
+    g.setAttribute('data-c', tv ? 'd' : o.col);
+    return o;
+  }
+  function buildSkyline() {
+    const box = h('div', { class: 'skyline' });
+    const mk = (cls) => { const svg = s('svg', { class: 'layer ' + cls, viewBox: '0 0 1200 500', preserveAspectRatio: 'xMidYMax slice', focusable: 'false' }); box.appendChild(svg); return svg; };
+    const far = mk('far'), mid = mk('mid'), near = mk('near');
+    // FAR: 13 blocks
+    let x = -10; const farBlocks = [];
+    for (let i = 0; i < 13; i++) { const w = R(80, 105), hh = R(150, 270); far.appendChild(s('rect', { class: 'bl far-fill', x, y: 500 - hh, width: w, height: hh })); farBlocks.push({ x, w, hh }); x += w + 2; }
+    for (let i = 0; i < 16; i++) { const b = farBlocks[i % 13]; wins.push(addWindow('far', far, b.x + R(8, b.w - 12), 500 - b.hh + R(14, b.hh - 24), 3, 4)); }
+    // MID: 8 blocks + rooftop kit
+    x = 10; const midBlocks = [];
+    for (let i = 0; i < 8; i++) { const w = R(130, 160), hh = R(190, 330); mid.appendChild(s('rect', { class: 'bl mid-fill', x, y: 500 - hh, width: w, height: hh })); midBlocks.push({ x, w, hh, top: 500 - hh }); x += w + R(8, 20); }
+    for (let i = 0; i < 24; i++) { const b = midBlocks[i % 8]; wins.push(addWindow('mid', mid, b.x + 10 + ((i % 3) * (b.w - 30) / 2.4), b.top + 20 + Math.floor(i / 8) * R(36, 48) + R(0, 14), 6, 8, i === 5 || i === 17)); }
+    const kit = s('g', { class: 'kit' });
+    [0, 3, 6].forEach((bi) => { const b = midBlocks[bi], tx = b.x + b.w * .3; kit.append(s('rect', { class: 'tank', x: tx, y: b.top - 32, width: 26, height: 32 }), s('ellipse', { class: 'tank', cx: tx + 13, cy: b.top - 32, rx: 13, ry: 5 }), s('path', { class: 'ln', d: 'M' + (tx + 3) + ' ' + b.top + 'v-3 M' + (tx + 13) + ' ' + b.top + 'v-3 M' + (tx + 23) + ' ' + b.top + 'v-3' })); });
+    [1, 2, 4, 7].forEach((bi) => { const b = midBlocks[bi], ax = b.x + b.w * .7; kit.append(s('path', { class: 'ln', d: 'M' + ax + ' ' + b.top + 'v-30 M' + (ax - 7) + ' ' + (b.top - 24) + 'h14 M' + (ax - 5) + ' ' + (b.top - 18) + 'h10 M' + (ax - 4) + ' ' + (b.top - 12) + 'h8' })); });
+    const bd = midBlocks[5]; kit.append(s('path', { class: 'ln', d: 'M' + (bd.x + 30) + ' ' + bd.top + 'v-8' }), s('ellipse', { class: 'tank', cx: bd.x + 30, cy: bd.top - 12, rx: 7, ry: 5, transform: 'rotate(-25 ' + (bd.x + 30) + ' ' + (bd.top - 12) + ')' }));
+    [midBlocks[2], midBlocks[6]].forEach((b) => kit.append(s('rect', { class: 'tank', x: b.x + b.w * .45, y: b.top - 16, width: 22, height: 16 })));
+    const cb = midBlocks[4]; kit.append(s('path', { class: 'ln', d: 'M' + (cb.x + 12) + ' ' + (cb.top - 20) + ' Q' + (cb.x + 47) + ' ' + (cb.top - 12) + ' ' + (cb.x + 82) + ' ' + (cb.top - 20) + ' M' + (cb.x + 12) + ' ' + cb.top + 'v-20 M' + (cb.x + 82) + ' ' + cb.top + 'v-20' }), s('path', { class: 'cloth', d: 'M' + (cb.x + 28) + ' ' + (cb.top - 16) + 'h8v14h-8z M' + (cb.x + 46) + ' ' + (cb.top - 15) + 'h8v18h-8z M' + (cb.x + 62) + ' ' + (cb.top - 16) + 'h8v12h-8z' }));
+    mid.appendChild(kit);
+    // NEAR: 4 blocks + balconies, units, solar heater, ceiling fan
+    x = 40; const nearBlocks = [];
+    for (let i = 0; i < 4; i++) { const w = R(250, 290), hh = R(260, 420); near.appendChild(s('rect', { class: 'bl near-fill', x, y: 500 - hh, width: w, height: hh })); nearBlocks.push({ x, w, hh, top: 500 - hh }); x += w + R(30, 60); }
+    nearBlocks.forEach((b, bi) => {
+      for (let f = 0; f < 3; f++) {
+        const ry = b.top + 60 + f * 90;
+        let d = 'M' + (b.x + 14) + ' ' + ry + 'h' + (b.w - 28);
+        for (let vx = b.x + 14; vx <= b.x + b.w - 14; vx += 6) d += 'M' + vx + ' ' + ry + 'v12';
+        near.appendChild(s('path', { class: 'rail', d }));
+      }
+      if (bi % 2 === 0) near.appendChild(s('rect', { class: 'unit', x: b.x + b.w - 40, y: b.top + 106, width: 14, height: 10 }));
+    });
+    const sb = nearBlocks[1]; near.append(s('path', { class: 'solar', d: 'M' + (sb.x + 40) + ' ' + sb.top + 'l34 -18 l6 10 l-34 18z' }), s('rect', { class: 'tank', x: sb.x + 82, y: sb.top - 16, width: 18, height: 14, rx: 3 }));
+    for (let i = 0; i < 24; i++) { const b = nearBlocks[i % 4], col = Math.floor(i / 4) % 3, row = Math.floor(i / 12); wins.push(addWindow('near', near, b.x + 30 + col * (b.w - 90) / 2, b.top + 24 + row * 90 + R(0, 6), 10, 13, i === 9)); }
+    // ceiling fan in one near window (visible from tone 2)
+    const fw = wins.filter((w) => w.layer === 'near')[7];
+    const fan = s('g', { transform: 'translate(' + (fw.x + 5) + ' ' + (fw.y + 6) + ')' }, s('g', { class: 'fan' }, [0, 120, 240].map((a) => s('ellipse', { cx: 0, cy: 0, rx: 4.5, ry: 1, transform: 'rotate(' + a + ') translate(3 0)' }))));
+    near.appendChild(fan); fw.fan = fan;
+    visitorWin = addWindow('near', near, nearBlocks[2].x + nearBlocks[2].w - 48, nearBlocks[2].top + 24, 10, 13); visitorWin.el.classList.add('visitor-win');
+    wins.pop();
+    // pre-shuffle (seed 2026); the first 5 are fixed, spread across all layers
+    const fixed = []; ['far', 'mid', 'near', 'mid', 'near'].forEach((ly) => { const c = wins.find((w) => w.layer === ly && fixed.indexOf(w) < 0 && !w.tv); if (c) fixed.push(c); });
+    pool = wins.filter((w) => fixed.indexOf(w) < 0).map((w) => [rnd(), w]).sort((a, b) => a[0] - b[0]).map((p) => p[1]);
+    fixed.forEach((w) => lightWin(w, true));
+    return box;
+  }
+  function lightWin(w, now) { if (w.on) return; w.on = true; if (now || EK.mode.calm) w.el.classList.add('on', 'now'); else w.el.classList.add('on'); }
+  function lightMore(k, lampX) {
+    const centre = (w) => { const r = w.el.getBoundingClientRect(); return r.left + r.width / 2; };
+    const take = pool.slice().sort((a, b) => Math.abs(centre(a) - lampX) - Math.abs(centre(b) - lampX)).slice(0, k);
+    take.forEach((w, i) => { pool.splice(pool.indexOf(w), 1); if (EK.mode.calm) lightWin(w, true); else setTimeout(() => lightWin(w), i * 90); });
+  }
+
+  /* ---------- terrace: rangoli ---------- */
+  const polar = (r, deg) => [r * Math.cos(deg * Math.PI / 180), r * Math.sin(deg * Math.PI / 180)];
+  const f1 = (n) => n.toFixed(2);
+  function rangoliPaths() {
+    const L = [[], [], [], [], []];
+    L[0].push({ d: 'M-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0', fill: 1 }, { d: 'M-20 0a20 20 0 1 0 40 0a20 20 0 1 0 -40 0' });
+    for (let k = 0; k < 8; k++) { const [x, y] = polar(34, k * 45); L[0].push({ d: 'M' + f1(x - 2.2) + ' ' + f1(y) + 'a2.2 2.2 0 1 0 4.4 0a2.2 2.2 0 1 0 -4.4 0', fill: 1 }); }
+    const petal = 'M0,-22 C14,-36 14,-60 0,-72 C-14,-60 -14,-36 0,-22 Z', small = 'M0,-30 C7,-37 7,-46 0,-52 C-7,-46 -7,-37 0,-30 Z';
+    for (let k = 0; k < 8; k++) { L[1].push({ d: petal, rot: k * 45, role: 'petal' }); L[1].push({ d: small, rot: 22.5 + k * 45, role: 'small' }); }
+    for (let k = 0; k < 16; k++) { const [x1, y1] = polar(80, k * 22.5), [x2, y2] = polar(80, (k + 1) * 22.5); L[2].push({ d: 'M' + f1(x1) + ' ' + f1(y1) + 'A16 16 0 0 1 ' + f1(x2) + ' ' + f1(y2), role: 'scallop' }); }
+    L[3].push({ d: 'M-70 -70H70V70H-70Z', role: 'star' }, { d: 'M-70 -70H70V70H-70Z', rot: 45, role: 'star' }, { d: 'M-106 0a106 106 0 1 0 212 0a106 106 0 1 0 -212 0' });
+    const arc = (r) => { const [x1, y1] = polar(r, 60), [x2, y2] = polar(r, 30 + 360); return 'M' + f1(x1) + ' ' + f1(y1) + 'A' + r + ' ' + r + ' 0 1 1 ' + f1(polar(r, 30)[0]) + ' ' + f1(polar(r, 30)[1]); };
+    L[4].push({ d: arc(126) }, { d: arc(132) });
+    for (let k = 0; k < 24; k++) { const a = k * 15; if (a >= 30 && a <= 60) continue; const [x, y] = polar(129, a); L[4].push({ d: 'M' + f1(x) + ' ' + f1(y - 3) + 'l2.2 3l-2.2 3l-2.2 -3z', fill: 1 }); }
+    return L;
+  }
+  function buildRangoli() {
+    const svg = s('svg', { class: 'rangoli deco', viewBox: '-150 -150 300 300', focusable: 'false' });
+    const layers = rangoliPaths();
+    layers.forEach((paths, li) => {
+      const g = s('g', { class: 'rl rl' + (li + 1) }); const els = [];
+      paths.forEach((p) => {
+        const mk = (cls, w, op) => { const e = s('path', { class: cls, d: p.d, pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1, 'stroke-width': w, transform: p.rot ? 'rotate(' + p.rot + ')' : null }); if (p.role) e.setAttribute('data-role', p.role); if (p.fill) e.setAttribute('data-fill', '1'); return e; };
+        const under = mk('under', 6), line = mk('line', 1.4); g.append(under, line); els.push(under, line);
+      });
+      svg.appendChild(g); rangoli.push({ g, els, p: 0 });
+    });
+    // the one arc that stays dotted, a quiet nod to the lamp that has not been run
+    const [x1, y1] = polar(129, 30), [x2, y2] = polar(129, 60);
+    svg.appendChild(s('path', { class: 'dotted', d: 'M' + f1(x1) + ' ' + f1(y1) + 'A129 129 0 0 1 ' + f1(x2) + ' ' + f1(y2) }));
+    return svg;
+  }
+  function drawLayer(i, p) { const L = rangoli[i]; if (!L) return; L.p = p; L.els.forEach((e, k) => { const stag = EK.mode.tier === 'high' ? (k % 12) * .004 : 0; const v = clamp01((p - stag) / (1 - stag || 1)); e.setAttribute('stroke-dashoffset', (1 - v).toFixed(3)); if (e.getAttribute('data-fill')) e.style.fillOpacity = (v >= 1 ? .8 : 0); }); }
+  const LAYERS_OF = { 1: [0, 1], 2: [2, 3], 3: [4] };
+  /* progress 0..1 of lamp n's rangoli layers (hold progress or the lighting tween) */
+  function rangoliProgress(n, p) { const ls = LAYERS_OF[n] || []; ls.forEach((li, k) => drawLayer(li, clamp01(p * ls.length - k))); }
+  function animateRangoli(n, ms) {
+    if (EK.mode.calm) { rangoliProgress(n, 1); return; }
+    const t0 = performance.now(); (function step(now) { const k = easeOut((now - t0) / ms); rangoliProgress(n, k); if (k < 1) requestAnimationFrame(step); })(t0);
+  }
+
+  /* ---------- terrace: toran, string lights, lanterns, cat, floor pools ---------- */
+  function buildToran() {
+    const W = 360, svg = s('svg', { class: 'toran deco', viewBox: '0 0 360 96', preserveAspectRatio: 'xMidYMin slice', focusable: 'false' });
+    svg.appendChild(s('path', { class: 'rope', d: 'M-4 8 Q180 44 364 8', fill: 'none' }));
+    const N = 11;
+    for (let i = 0; i < N; i++) {
+      const t = (i + .5) / N, x = -4 + 368 * t, y = (1 - t) * (1 - t) * 8 + 2 * (1 - t) * t * 44 + t * t * 8, len = i % 2 ? 58 : 38;
+      const g = s('g', { class: 'strand' + (i >= 7 ? ' extra' : ''), style: 'transform-origin:' + x.toFixed(0) + 'px ' + y.toFixed(0) + 'px;animation-duration:' + R(5, 7).toFixed(1) + 's;animation-delay:-' + R(0, 6).toFixed(1) + 's', 'data-i': i });
+      g.appendChild(s('path', { class: 'thread', d: 'M' + x.toFixed(1) + ' ' + y.toFixed(1) + 'v' + len }));
+      for (let f = 0; f < 3; f++) { const cy = y + 6 + f * ((len - 14) / 2); g.append(s('circle', { class: 'fl', cx: x.toFixed(1), cy: cy.toFixed(1), r: 7 }), s('circle', { class: 'fl2', cx: x.toFixed(1), cy: cy.toFixed(1), r: 3 })); }
+      g.appendChild(s('path', { class: 'leaf', d: 'M' + x.toFixed(1) + ' ' + (y + len - 2).toFixed(1) + 'c-6 4 -7 12 0 18 c7 -6 6 -14 0 -18z' }));
+      svg.appendChild(g);
+    }
+    return svg;
+  }
+  function buildStringLights() {
+    const svg = s('svg', { class: 'strlights deco', viewBox: '0 0 360 40', preserveAspectRatio: 'xMidYMid slice', focusable: 'false', 'data-mode': 'steady' });
+    svg.appendChild(s('path', { class: 'wire', d: 'M-4 6 Q180 34 364 6', fill: 'none' }));
+    const cols = ['#FFD27A', '#FFB347', '#F5A623', '#FFF3DC', '#8FD3A8'];
+    for (let i = 0; i < 18; i++) { const t = (i + .5) / 18, x = -4 + 368 * t, y = (1 - t) * (1 - t) * 6 + 2 * (1 - t) * t * 34 + t * t * 6; svg.appendChild(s('circle', { class: 'bulb', cx: x.toFixed(1), cy: (y + 5).toFixed(1), r: 3.6, fill: cols[(i * 7) % 5], style: '--i:' + i + ';--g:' + (i % 3) + ';--r:' + R(0, 2).toFixed(2) + 's' })); }
+    return svg;
+  }
+  function buildLantern(size, color, len, cls) {
+    const pts = (r, a0) => Array.from({ length: 16 }, (_, k) => { const a = (k * 22.5 + a0) * Math.PI / 180, rr = k % 2 ? 11 : r; return (24 + rr * Math.cos(a)).toFixed(1) + ',' + (24 + rr * Math.sin(a)).toFixed(1); }).join(' ');
+    const facets = Array.from({ length: 16 }, (_, k) => { const a1 = k * 22.5 * Math.PI / 180, a2 = (k + 1) * 22.5 * Math.PI / 180, ro = k % 2 ? 11 : 24; return s('path', { d: 'M24 24L' + (24 + ro * Math.cos(a1)).toFixed(1) + ' ' + (24 + ro * Math.sin(a1)).toFixed(1) + 'L' + (24 + (k % 2 ? 24 : 11) * Math.cos(a2)).toFixed(1) + ' ' + (24 + (k % 2 ? 24 : 11) * Math.sin(a2)).toFixed(1) + 'Z', fill: color, opacity: k % 2 ? .95 : .7 }); });
+    const svg = s('svg', { viewBox: '0 0 48 ' + (60 + len), focusable: 'false', width: size, height: size * (60 + len) / 48, 'aria-hidden': 'true' },
+      s('path', { class: 'ln', d: 'M24 0v' + len, transform: '' }),
+      s('g', { transform: 'translate(0 ' + len + ')' }, s('circle', { class: 'lglow', cx: 24, cy: 24, r: 26, fill: 'url(#ek-lant)' }), facets, s('path', { class: 'tas', d: 'M16 45v14M24 47v14M32 45v14' })));
+    return svg;
+  }
+  function buildLanterns() {
+    const defs = [{ size: 48, color: '#E9B866', len: 28, pos: 'l1' }, { size: 36, color: '#C2410C', len: 20, pos: 'l2' }, { size: 30, color: '#2F6B4F', len: 36, pos: 'l3' }];
+    return defs.map((d, i) => {
+      const b = h('button', { type: 'button', class: 'lantern deco ' + d.pos, 'aria-label': 'Star lantern: tap to make it swing', onclick: () => { b.classList.remove('swing'); void b.offsetWidth; if (!EK.mode.calm) b.classList.add('swing'); } }, buildLantern(d.size, d.color, d.len));
+      lanterns.push(b); return b;
+    });
+  }
+  function buildCat() {
+    const b = h('button', { type: 'button', class: 'cat deco', 'aria-label': 'Cat on the parapet: tap to flick its tail', onclick: () => { b.classList.remove('flick'); void b.offsetWidth; if (!EK.mode.calm) b.classList.add('flick'); } },
+      s('svg', { viewBox: '0 0 60 56', width: 54, height: 50, focusable: 'false', 'aria-hidden': 'true' },
+        s('path', { class: 'tail', d: 'M42 50 C58 50 58 30 50 26' }),
+        s('path', { class: 'body', d: 'M12 52 C8 36 16 24 24 22 L22 10 L28 16 L36 16 L40 10 L40 22 C46 28 48 44 44 52 Z' }),
+        s('circle', { class: 'eye', cx: 28, cy: 22, r: 1.6 }), s('circle', { class: 'eye', cx: 36, cy: 22, r: 1.6 })));
+    cat = b; return b;
+  }
+  function buildFloor() {
+    const fl = h('div', { class: 'floor' }, h('div', { class: 'parapet' }, h('i', { class: 'cap c1' }), h('i', { class: 'cap c2' }), h('i', { class: 'cap c3' })), h('div', { class: 'tfloor' }, buildRangoli(),
+      h('svg', { class: 'inkline', viewBox: '0 0 100 4', preserveAspectRatio: 'none', 'aria-hidden': 'true' })));
+    for (let i = 0; i < 3; i++) { const p = h('i', { class: 'pool deco' }); pools.push(p); fl.appendChild(p); }
+    const il = fl.querySelector('.inkline'); il.innerHTML = '<line x1="0" y1="2" x2="100" y2="2" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>';
+    return fl;
+  }
+
+  /* ---------- the big moments ---------- */
+  function ring(x, y) {
+    if (EK.mode.calm || EK.mode.tier === 'low') return;
+    const r = h('i', { class: 'ring', style: 'left:' + x + 'px;top:' + y + 'px' }); stage.appendChild(r); setTimeout(() => r.remove(), 1800);
+  }
+  function birds() {
+    if (birded || EK.mode.calm || EK.mode.tier === 'low') return; birded = true;
+    const wrap = h('div', { class: 'birds' });
+    for (let i = 0; i < 9; i++) wrap.appendChild(h('i', { style: 'left:' + (-12 - i * 5 - R(0, 6)).toFixed(0) + 'px;top:' + (R(0, 12)).toFixed(0) + '%;animation-delay:' + (i * .12).toFixed(2) + 's', html: null }, s('svg', { viewBox: '0 0 20 10', width: 18, height: 9, focusable: 'false' }, s('path', { class: 'bird', d: 'M0 2 Q5 0 10 6 Q15 0 20 2 Q15 4 10 10 Q5 4 0 2Z' }))));
+    stage.appendChild(wrap); setTimeout(() => wrap.remove(), 9000);
+  }
+  function shoot() { if (shot || EK.mode.calm) return; shot = true; const e = stage.querySelector('.shoot'); if (e) { e.classList.add('go'); } }
+  function lampX(n) { const el = document.getElementById('lampbtn-' + n); if (!el) return innerWidth / 2; const r = el.getBoundingClientRect(); return r.left + r.width / 2; }
+
+  function onLit(d) {
+    const n = d.n, c = EK.lamps.count(), x = d.x || lampX(n);
+    animateRangoli(n, 1400);
+    lanterns[Math.min(2, n - 1)] && lanterns[n - 1].classList.add('lit');
+    pools[n - 1] && (pools[n - 1].style.left = x + 'px', pools[n - 1].classList.add('on'));
+    if (n === 3) { shoot(); if (cat) cat.classList.add('eyes'); }
+    if (c < 3) { setTone(toneOfLit(c), 1200); lightMore(9, x); }
+    else {
+      lightMore(9, x);
+      setTimeout(() => { EK.bus.emit('diya:allLit', { x, y: d.y }); }, EK.mode.calm ? 0 : 500);
+    }
+  }
+  function onAllLit(d) {
+    setTone(5, 1500, 700);
+    setTimeout(() => lightMore(15, d.x || innerWidth / 2), EK.mode.calm ? 0 : 800);
+    if (!ringed) { ringed = true; ring(d.x || innerWidth / 2, d.y || innerHeight * .7); setTimeout(birds, 2000); }
+    document.documentElement.classList.add('dusk');
+  }
+  function onVisitor() { setTone(6, 1600); lightWin(visitorWin, EK.mode.calm); visitorWin.el.classList.add('bright'); rangoli.forEach((L) => L.g.classList.add('colour')); lanterns.forEach((l) => l.classList.add('lit')); }
+
+  function parallax() {
+    if (!window.matchMedia || !matchMedia('(pointer: fine)').matches) return;
+    let tx = 0, cx = 0, raf = 0;
+    addEventListener('pointermove', (e) => { tx = (e.clientX / innerWidth - .5) * 2; if (!raf && !EK.mode.calm) raf = requestAnimationFrame(loop); }, { passive: true });
+    function loop() { cx += (tx - cx) * .08; stage.style.setProperty('--px', (cx * 10).toFixed(2) + 'px'); raf = Math.abs(tx - cx) > .002 && !EK.mode.calm ? requestAnimationFrame(loop) : 0; }
+  }
+
+  function build() {
+    const defs = s('svg', { class: 'defs', width: 0, height: 0, 'aria-hidden': 'true', focusable: 'false' }, s('defs', null,
+      s('radialGradient', { id: 'ek-glow' }, s('stop', { offset: '0', 'stop-color': '#FFB347', 'stop-opacity': '.75' }), s('stop', { offset: '.5', 'stop-color': '#FF7A1A', 'stop-opacity': '.25' }), s('stop', { offset: '1', 'stop-color': '#FF7A1A', 'stop-opacity': '0' })),
+      s('radialGradient', { id: 'ek-lant' }, s('stop', { offset: '0', 'stop-color': '#FFD27A', 'stop-opacity': '.9' }), s('stop', { offset: '1', 'stop-color': '#FF7A1A', 'stop-opacity': '0' }))));
+    stage = h('div', { class: 'stage', 'aria-hidden': 'true' }, defs, buildSky(), buildSkyline(), buildFloor(), buildToran(), buildStringLights());
+    document.body.insertBefore(stage, document.body.firstChild);
+    const ui = h('div', { class: 'stage-ui' }, buildLanterns(), buildCat(), h('button', { type: 'button', class: 'ctl deco', 'aria-label': 'String lights: change the pattern', onclick: cycle }, h('i', { class: 'ctl-dot' })), h('p', { class: 'sr-only', id: 'lights-live', role: 'status', 'aria-live': 'polite' }));
+    document.body.appendChild(ui);
+    EK.bus.on('diya:lit', onLit); EK.bus.on('diya:allLit', onAllLit); EK.bus.on('diya:visitorLit', onVisitor);
+    EK.bus.on('diya:lighting', (d) => rangoliProgress(d.n, d.p * (EK.lamps.isLit(d.n) ? 0 : 1)));
+    parallax();
+    setInterval(() => { if (cat && !document.hidden && !EK.mode.calm) { cat.classList.remove('flick'); void cat.offsetWidth; cat.classList.add('flick'); } }, 9000);
+    setInterval(() => { if (document.hidden || EK.mode.calm) return; stage.querySelectorAll('.strand').forEach((g, i) => { g.classList.remove('gust'); setTimeout(() => g.classList.add('gust'), i * 140); setTimeout(() => g.classList.remove('gust'), 2400 + i * 140); }); }, 12000);
+    applyTone(0);
+  }
+  function cycle() {
+    const modes = ['steady', 'chase', 'twinkle', 'fade'], el = stage.querySelector('.strlights');
+    const next = modes[(modes.indexOf(el.getAttribute('data-mode')) + 1) % 4];
+    el.setAttribute('data-mode', next); document.getElementById('lights-live').textContent = 'String lights: ' + next + '.';
+  }
+  return { build, setTone, applyTone, currentTone: () => T, rangoliProgress, toneOfLit, lampX, inkLine(c) { const l = stage && stage.querySelector('.inkline line'); if (l) l.setAttribute('stroke-dashoffset', (1 - c / 3).toFixed(2)); } };
+})();
+
+/* ---- 16-fx.js ---- */
+/* Flames and sparks. One shared loop drives every flame (three stacked teardrops, a blue base and a soft glow, wobbling on smooth noise) and one
+   shared canvas draws sparks, embers, petals and fireflies. A frame-time governor drops to a lighter tier on slow phones. Calm draws still flames. */
+EK.fx = (function () {
+  const flames = [];
+  let wind = 0, lastX = null, breathT = -1, holding = false, last = performance.now(), slow = 0, frames = 0, running = false;
+  const n1 = (t) => (Math.sin(t * 1.3) + Math.sin(t * 2.1 + 1.7) * .5 + Math.sin(t * 3.7 + .3) * .25) / 1.75;
+
+  /* The clay diya. kind sets the silhouette (lip length, tilt) so the lamps are a family, not clones. */
+  const VAR = { 1: { lip: 14, tilt: -2, mood: 'steady' }, 2: { lip: 18, tilt: 1.5, mood: 'pulse' }, 3: { lip: 12, tilt: 0, mood: 'twitch' }, 4: { lip: 14, tilt: 2, mood: 'steady' }, v: { lip: 16, tilt: -1, mood: 'steady' }, home: { lip: 14, tilt: 0, mood: 'breath' } };
+  EK.diya = function (kind, opts) {
+    const o = opts || {}, k = VAR[kind] || VAR[1], dashed = !!o.dashed, fx = 62 + k.lip;
+    const tear = (cls) => s('path', { class: cls, d: '' });
+    const outer = tear('fl-out'), mid = tear('fl-mid'), core = tear('fl-in');
+    const base = s('ellipse', { class: 'fl-base', cx: 0, cy: -1, rx: 3.2, ry: 1.8 });
+    const glow = s('ellipse', { class: 'glow', cx: 0, cy: -12, rx: 30, ry: 26 });
+    const fg = s('g', { class: 'fgrp' }, glow, outer, mid, core, base);
+    const wrap = s('g', { transform: 'translate(' + fx + ' 32)' }, fg);
+    const svg = s('svg', { class: 'diya' + (dashed ? ' dashed' : ''), viewBox: '0 -28 130 104', 'aria-hidden': 'true', focusable: 'false', style: 'transform:rotate(' + k.tilt + 'deg)' },
+      s('path', { class: 'clay', d: 'M12 40 C12 62 34 72 62 72 C86 72 104 62 108 50 L' + (fx + 18) + ' 44 C' + (fx + 10) + ' 46 ' + (fx + 4) + ' 46 ' + fx + ' 44 L108 40 Z' }),
+      s('path', { class: 'rim', d: 'M12 40 C30 34 90 34 108 40 C90 46 30 46 12 40 Z' }),
+      s('ellipse', { class: 'oil', cx: 60, cy: 40, rx: 36, ry: 4 }),
+      s('rect', { class: 'wick', x: fx - 2, y: 30, width: 4, height: 12, rx: 2 }), wrap);
+    const f = { svg, g: fg, outer, mid, core, base, glow, amt: 0, target: 0, kind: kind === 'home' ? 0 : kind, mood: k.mood, seed: Math.random() * 100, vis: true };
+    svg._f = f; flames.push(f);
+    if (kind === 'home') { f.target = 1; f.amt = 1; }
+    draw(f, 0, true);
+    start();
+    return svg;
+  };
+
+  function teardrop(h, w, a, b, c) {
+    return 'M0 0 C' + (-w).toFixed(2) + ' ' + (-h * .25).toFixed(2) + ' ' + (-w * .9 + a).toFixed(2) + ' ' + (-h * .7).toFixed(2) + ' ' + b.toFixed(2) + ' ' + (-h).toFixed(2) +
+      ' C' + (w * .9 + c).toFixed(2) + ' ' + (-h * .7).toFixed(2) + ' ' + w.toFixed(2) + ' ' + (-h * .25).toFixed(2) + ' 0 0Z';
+  }
+  function draw(f, t, still) {
+    const a = f.amt;
+    f.g.style.opacity = a <= .01 ? 0 : 1;
+    if (a <= .01) return;
+    let sc = a, lean = 0, glowS = 1;
+    if (!still) {
+      const w = Math.min(1, Math.abs(wind));
+      sc *= (1 - .2 * w);
+      if (f.mood === 'pulse') sc *= 1 + .06 * Math.sin(t * Math.PI * 2 / 1.2);
+      else if (f.mood === 'twitch') sc *= 1 + .05 * Math.max(0, n1(t * 3 + f.seed)) * 2;
+      else if (f.mood === 'breath') { sc *= 1 + .03 * Math.sin(t * .9); glowS = 1.1; }
+      if (breathT >= 0) { const k = Math.sin(Math.min(1, breathT / 600) * Math.PI); sc *= 1 + .14 * k; glowS *= 1 + .5 * k; }
+      lean = wind * 20 * (holding ? 0 : 1);
+    }
+    const j = still || EK.mode.calm ? [0, 0, 0] : [n1(t * 1.1 + f.seed) * 2, n1(t * 1.7 + f.seed * 2) * 2.4, n1(t * 1.4 + f.seed * 3) * 2];
+    f.outer.setAttribute('d', teardrop(26, 8, j[0], j[1], j[2]));
+    f.mid.setAttribute('d', teardrop(19, 5.8, j[2] * .7, j[0] * .8, j[1] * .6));
+    f.core.setAttribute('d', teardrop(11, 3.4, j[1] * .4, j[2] * .4, j[0] * .4));
+    f.g.setAttribute('transform', 'rotate(' + lean.toFixed(1) + ') scale(' + sc.toFixed(3) + ')');
+    f.glow.setAttribute('rx', (30 * glowS).toFixed(1)); f.glow.setAttribute('ry', (26 * glowS).toFixed(1));
+    f.glow.style.opacity = Math.max(.8 * a, a > 0 ? .0 : 0);
+  }
+
+  /* ---------- particles (one canvas, pooled) ---------- */
+  const CAP = { high: 220, low: 40 };
+  const parts = []; let canvas, ctx, dpr = 1;
+  const amb = { fire: [], petal: [] };
+  function buildCanvas() {
+    canvas = h('canvas', { class: 'fxcanvas', 'aria-hidden': 'true' }); document.body.appendChild(canvas);
+    ctx = canvas.getContext('2d'); size();
+    addEventListener('resize', size);
+    const r = EK.rng(11);
+    for (let i = 0; i < 7; i++) amb.fire.push({ x: r(), y: .35 + r() * .45, p: r() * 6, s: .02 + r() * .03 });
+    for (let i = 0; i < 8; i++) amb.petal.push({ x: r(), y: r(), p: r() * 6, s: .012 + r() * .02 });
+  }
+  function size() { dpr = EK.mode.tier === 'high' ? Math.min(devicePixelRatio || 1, 1.75) : 1; canvas.width = Math.round(innerWidth * dpr); canvas.height = Math.round(innerHeight * dpr); }
+  function burst(kind, x, y, o) {
+    if (EK.mode.calm || !ctx) return;
+    const cap = CAP[EK.mode.tier] || 40;
+    const add = (n, mk) => { for (let i = 0; i < n && parts.length < cap; i++) parts.push(mk(i)); };
+    const rr = Math.random;
+    if (kind === 'spark') add(1, () => ({ k: 's', x, y, vx: (rr() - .5) * 30, vy: (rr() - .7) * 20, life: 350, age: 0, r: 1.6 }));
+    else if (kind === 'ignite') add(10, (i) => { const a = i / 10 * 6.283; return { k: 'i', x, y, vx: Math.cos(a) * (60 + rr() * 40), vy: Math.sin(a) * (60 + rr() * 40), life: 450, age: 0, r: 2.2 }; });
+    else if (kind === 'ember') add(1 + (rr() < .5 ? 1 : 0), () => ({ k: 'e', x, y, vx: (rr() - .5) * 14 + ((o && o.dir) || 0) * 10, vy: -(20 + rr() * 20), life: 2000, age: 0, r: 1.8 }));
+    else if (kind === 'fizzle') add(3, () => ({ k: 'z', x, y, vx: (rr() - .5) * 24, vy: -(4 + rr() * 10), life: 700, age: 0, r: 1.8 }));
+    start();
+  }
+  function drawParts(dt, t) {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, innerWidth, innerHeight);
+    if (EK.mode.calm) return;
+    ctx.globalCompositeOperation = EK.mode.tier === 'high' ? 'lighter' : 'source-over';
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i]; p.age += dt;
+      if (p.age >= p.life) { parts.splice(i, 1); continue; }
+      const k = 1 - p.age / p.life; p.x += p.vx * dt / 1000; p.y += p.vy * dt / 1000;
+      ctx.globalAlpha = Math.min(.8, k);
+      ctx.fillStyle = p.k === 'z' ? '#C2561A' : p.k === 'e' ? '#FFB347' : '#FFD27A';
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r * (p.k === 'e' ? 1 : .6 + k * .6), 0, 6.283); ctx.fill();
+    }
+    if (EK.mode.tier === 'high' && parts.length < CAP.high * .7) {
+      const lit = EK.lamps.count();
+      ctx.globalAlpha = .55;
+      amb.fire.forEach((f) => { const x = (f.x + n1(t / 1000 * f.s * 6 + f.p) * .08) * innerWidth, y = (f.y + n1(t / 1000 * f.s * 5 + f.p * 2) * .06) * innerHeight, g = .3 + .7 * Math.max(0, Math.sin(t / 1000 * 1.1 + f.p)); ctx.fillStyle = 'rgba(255,210,122,' + (g * (.25 + lit * .2)).toFixed(2) + ')'; ctx.beginPath(); ctx.arc(x, y, 1.8, 0, 6.283); ctx.fill(); });
+      if (lit > 0) { ctx.globalCompositeOperation = 'source-over'; amb.petal.forEach((f) => { const y = ((f.y + t / 1000 * f.s) % 1) * innerHeight, x = (f.x + Math.sin(t / 1000 * .6 + f.p) * .04) * innerWidth; ctx.globalAlpha = .45; ctx.fillStyle = '#F5A623'; ctx.beginPath(); ctx.ellipse(x, y, 3.2, 1.8, f.p + t / 1500, 0, 6.283); ctx.fill(); }); }
+    }
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+  }
+
+  /* ---------- the shared loop ---------- */
+  function start() { if (running) return; running = true; last = performance.now(); requestAnimationFrame(loop); }
+  function loop(now) {
+    if (document.hidden) { running = false; return; }
+    const dt = Math.min(50, now - last); last = now;
+    wind *= Math.pow(.5, dt / 700); if (Math.abs(wind) < .01) wind = 0;
+    if (breathT >= 0) { breathT += dt; if (breathT > 600) breathT = -1; }
+    flames.forEach((f) => {
+      const d = f.target - f.amt;
+      if (EK.mode.calm) f.amt = f.target; else f.amt += d * Math.min(1, dt / 220);
+      if (f.vis) draw(f, now / 1000, EK.mode.calm);
+    });
+    if (ctx) drawParts(dt, now);
+    // governor: a slow phone drops to the light tier (no additive glow, no ambient, no embers)
+    frames++; slow += dt > 28 ? 1 : 0;
+    if (frames === 60 && slow > 20 && EK.mode.tier === 'high') { EK.mode.tier = 'low'; document.documentElement.classList.add('q-low'); size(); }
+    if (frames === 60) { frames = 0; slow = 0; }
+    requestAnimationFrame(loop);
+  }
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) start(); });
+
+  /* embers rise from lit lamps now and then */
+  function emberTick() {
+    setTimeout(emberTick, 1000 + Math.random() * 1200);
+    if (document.hidden || EK.mode.calm || EK.mode.tier !== 'high') return;
+    flames.forEach((f) => { if (f.amt > .9 && Math.random() < .45) { const r = f.svg.getBoundingClientRect(); if (r.bottom > 0 && r.top < innerHeight) burst('ember', r.left + r.width * (62 + 14) / 130, r.top + r.height * .25, { dir: wind }); } });
+  }
+
+  function init() {
+    buildCanvas();
+    EK.bus.on('fx:burst', (d) => burst(d.kind, d.x, d.y, d));
+    addEventListener('pointermove', (e) => { if (lastX !== null && !EK.mode.calm) { wind = Math.max(-1, Math.min(1, wind + (e.clientX - lastX) * .012)); } lastX = e.clientX; }, { passive: true });
+    addEventListener('pointerleave', () => { lastX = null; });
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => es.forEach((e) => { e.target._f && (e.target._f.vis = e.isIntersecting); }));
+      flames.forEach((f) => io.observe(f.svg));
+    }
+    setTimeout(emberTick, 2000);
+    start();
+  }
+  return {
+    init, burst,
+    breath() { if (!EK.mode.calm) breathT = 0; },
+    setHolding(v) { holding = v; },
+    set(svg, target) { if (svg && svg._f) { svg._f.target = target; if (EK.mode.calm) svg._f.amt = target; start(); } },
+    wick(svg) { const r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal; const f = VAR[svg._f && svg._f.kind || 1] || VAR[1]; const lip = svg._f && svg._f.kind === 0 ? 14 : (VAR[svg._f.kind] || VAR[1]).lip; return { x: r.left + r.width * (62 + lip) / vb.width, y: r.top + r.height * (32 - vb.y) / vb.height, w: r.width }; },
+  };
+})();
+
 /* ---- 20-shell.js ---- */
 /* The shell: section registry, the top bar, the lamp state (which lamps are lit) and the tone of the night.
    A section renders nothing when its content is empty. */
-EK.order = ['opening', 'person', 'lamps', 'lamp1', 'lamp2', 'lamp3', 'transition', 'voice', 'growth', 'verdict', 'deeper', 'evidence', 'wish'];
+EK.order = ['opening', 'intro', 'person', 'lamps', 'lamp1', 'lamp2', 'lamp3', 'transition', 'voice', 'growth', 'verdict', 'deeper', 'evidence', 'wish'];
 EK.defs = {};
 EK.defineSection = (id, mount) => { EK.defs[id] = mount; };
 EK.onReady = [];
@@ -509,18 +1091,17 @@ EK.lamps = (function () {
     isLit: (n) => !!lit[n - 1],
     visitor: () => visitor,
     onChange: (fn) => { subs.push(fn); },
-    light(n) {
+    light(n, pos) {
       if (n < 1 || n > lit.length || lit[n - 1]) return false;
       lit[n - 1] = true;
       api.notify(n);
+      EK.bus.emit('diya:lit', { n, x: pos && pos.x, y: pos && pos.y });
       return true;
     },
-    lightAll() { lit.forEach((_, i) => { if (!lit[i]) { lit[i] = true; } }); api.notify(0); },
-    lightVisitor() { if (visitor) return; visitor = true; api.notify(-1); },
+    lightAll() { if (api.sequence) api.sequence(); else { lit.forEach((_, i) => { lit[i] = true; }); api.notify(0); } },
+    lightVisitor() { if (visitor) return; visitor = true; api.notify(-1); EK.bus.emit('diya:visitorLit', {}); },
     notify(n) {
-      const c = count();
-      document.documentElement.setAttribute('data-tone', String(c));
-      document.documentElement.classList.toggle('dusk', c === lit.length);
+      document.documentElement.setAttribute('data-lit', String(count()));
       document.documentElement.classList.toggle('visitor-lit', visitor);
       subs.forEach((fn) => { try { fn(n); } catch (e) { /* decorative */ } });
     },
@@ -558,6 +1139,28 @@ EK.shell = (function () {
     lines.forEach((t) => foot.appendChild(h('p', null, t)));
   }
 
+  /* The dock: Calm (no movement, same light) and the look (Deepavali or Ink). Both live in memory only. */
+  function buildDock() {
+    const ui = data.ui || {};
+    const root = document.documentElement;
+    const calm = h('button', { type: 'button', class: 'dock-btn', id: 'dock-calm', onclick: () => setCalm(!EK.mode.calm) });
+    const dv = h('button', { type: 'button', class: 'dock-btn', id: 'dock-dv', onclick: () => setInk(false) });
+    const ik = h('button', { type: 'button', class: 'dock-btn', id: 'dock-ink', onclick: () => setInk(true) });
+    const note = h('p', { class: 'dock-note', id: 'dock-note', text: ui.reduced || '' });
+    function setCalm(v) {
+      EK.mode.calm = v; root.classList.toggle('calm', v);
+      calm.textContent = v ? ui.calmOn : ui.calmOff; calm.setAttribute('aria-pressed', String(v)); note.hidden = !v;
+      EK.scene.applyTone(Math.round(EK.scene.currentTone()));
+    }
+    function setInk(v) {
+      EK.mode.ink = v; root.classList.toggle('ink', v);
+      dv.textContent = ui.lookDeepavali; ik.textContent = ui.lookInk; dv.setAttribute('aria-pressed', String(!v)); ik.setAttribute('aria-pressed', String(v));
+    }
+    const dock = h('aside', { class: 'dock', 'aria-label': ui.dockLabel || 'Display options' }, note, calm, h('div', { class: 'dock-seg', role: 'group', 'aria-label': ui.lookLabel || 'Look' }, dv, ik));
+    document.body.appendChild(dock);
+    setCalm(EK.mode.calm); setInk(false);
+  }
+
   function mountAll() {
     const main = document.getElementById('main');
     EK.visibleSections = [];
@@ -571,121 +1174,249 @@ EK.shell = (function () {
     });
     buildBar();
     buildFooter();
-    document.documentElement.setAttribute('data-tone', '0');
+    document.documentElement.setAttribute('data-lit', '0');
+    buildDock();
     EK.onReady.forEach((fn) => { try { fn(); } catch (e) { /* a decorative step must never stop the page */ } });
     document.documentElement.classList.add('ready');
   }
 
   function boot() {
     data = EK.data = JSON.parse(document.getElementById('ek-data').textContent);
+    EK.scene.build();
+    EK.fx.init();
     mountAll();
   }
   return { boot };
 })();
 
 /* ---- 30-opening.js ---- */
-/* The opening: a dark page, one flame already lit, and a row of lamps waiting to be lit one from the next. */
-
-/* A small clay diya as inline SVG. Decorative: the button around it carries the name. kind sets lip length and tilt so the lamps are a family, not clones. */
-EK.diya = function (kind, opts) {
-  const o = opts || {};
-  const k = { 1: { lip: 14, tilt: -2 }, 2: { lip: 18, tilt: 1.5 }, 3: { lip: 12, tilt: 0 }, 4: { lip: 14, tilt: 2 }, v: { lip: 16, tilt: -1 }, home: { lip: 14, tilt: 0 } }[kind] || { lip: 14, tilt: 0 };
-  const dashed = !!o.dashed;
-  const flame = s('g', { transform: 'translate(' + (62 + k.lip) + ' 4)' }, s('g', { class: 'flame' },
-    s('path', { class: 'fl-out', d: 'M0 0 C6 10 8 18 0 26 C-8 18 -6 10 0 0 Z' }),
-    s('path', { class: 'fl-in', d: 'M0 9 C3 14 4 19 0 24 C-4 19 -3 14 0 9 Z' })));
-  return s('svg', { class: 'diya' + (dashed ? ' dashed' : ''), viewBox: '0 0 130 76', 'aria-hidden': 'true', focusable: 'false', style: 'transform:rotate(' + k.tilt + 'deg)' },
-    s('ellipse', { class: 'glow', cx: 62 + k.lip, cy: 34, rx: 30, ry: 30 }),
-    s('path', { class: 'clay', d: 'M12 40 C12 62 34 72 62 72 C86 72 104 62 108 50 L' + (62 + k.lip + 18) + ' 44 C' + (62 + k.lip + 10) + ' 46 ' + (62 + k.lip + 4) + ' 46 ' + (62 + k.lip) + ' 44 L108 40 Z' }),
-    s('path', { class: 'rim', d: 'M12 40 C30 34 90 34 108 40 C90 46 30 46 12 40 Z' }),
-    s('ellipse', { class: 'oil', cx: 60, cy: 40, rx: 36, ry: 4 }),
-    s('rect', { class: 'wick', x: 62 + k.lip - 2, y: 30, width: 4, height: 12, rx: 2 }),
-    flame);
-};
-
+/* The opening: the night scene behind, one flame already lit, and a row of lamps. Lamp 1 lights from the home flame, lamp 2 from lamp 1, and so on.
+   Lighting: HOLD (a pressure ring fills around the wick, the flame travels along an arc as you hold), TAP (the whole path in about 450 ms),
+   or Enter / Space / assistive click. Holding is never required. Calm lights instantly. Lamp 4 is proposed, not run: it tries, flickers and never lights. */
 EK.defineSection('opening', (d) => {
   const x = d.opening, ui = d.ui || {};
   if (!x || !has(x.headline)) return null;
   const head = x.headline.split(/(324|19)/).map((p) => p === '324' ? h('span', { class: 'n324', text: p }) : p === '19' ? h('span', { class: 'n19', text: p }) : p);
-  const status = h('p', { class: 'row-status', role: 'status', 'aria-live': 'polite' });
+  const status = h('p', { class: 'row-status', id: 'row-status' });
+  const live = h('p', { class: 'sr-only', id: 'row-live', role: 'status', 'aria-live': 'polite' });
   const lamps = [1, 2, 3].map((n) => d['lamp' + n]).filter(Boolean);
+  const home = EK.diya('home');
+  const svgs = {};
+  let stat = '', statTimer = 0, active = null, hintTimer = 0;
 
-  /* hold, tap or Enter: all light the lamp. Releasing early still lights it. */
-  function holdable(btn, n) {
-    let timer = 0;
-    const go = () => { clearTimeout(timer); btn.classList.remove('warming'); lightFrom(n); };
-    btn.addEventListener('pointerdown', (e) => {
-      if (e.button) return;
-      btn._litAtDown = EK.lamps.isLit(n);
-      if (btn._litAtDown) return;
-      if (n > 1 && !EK.lamps.isLit(n - 1)) return;
-      btn.classList.add('warming');
-      status.textContent = ui.holdWarm || '';
-      timer = setTimeout(go, EK.reduced ? 0 : 900);
-    });
-    ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => btn.addEventListener(ev, () => { if (btn.classList.contains('warming')) go(); }));
-    btn.addEventListener('click', (e) => {
-      const wasLit = e.detail === 0 ? EK.lamps.isLit(n) : btn._litAtDown;
-      if (wasLit) EK.openStory('lamp' + n); else if (e.detail === 0) lightFrom(n);
-    });
+  /* ---------- overlay: the travelling flame, the pressure ring, the line above the lamp ---------- */
+  const trav = s('svg', { class: 'trav', viewBox: '-10 -22 20 30', width: 22, height: 32, 'aria-hidden': 'true', focusable: 'false' }, s('path', { class: 'fl-out', d: 'M0 4 C5 -2 6 -10 0 -18 C-6 -10 -5 -2 0 4Z' }), s('path', { class: 'fl-in', d: 'M0 4 C2 0 2 -5 0 -10 C-2 -5 -2 0 0 4Z' }));
+  const ringEl = s('svg', { class: 'pring', viewBox: '-30 -30 60 60', width: 60, height: 60, 'aria-hidden': 'true', focusable: 'false' }, s('circle', { r: 26, class: 'pr-bg' }), s('circle', { r: 26, class: 'pr-fg', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1, transform: 'rotate(-90)' }));
+  const holdText = h('p', { class: 'hold-text', text: ui.holdWarm });
+  const over = h('div', { class: 'fx-over', 'aria-hidden': 'true', hidden: true }, trav, ringEl, holdText);
+  const show = (v) => { over.hidden = !v; };
+
+  const wickOf = (n) => EK.fx.wick(n === 0 ? home : svgs[n]);
+  const vib = (ms, kb) => { if (!EK.mode.calm && !kb && navigator.vibrate) { try { navigator.vibrate(ms); } catch (e) { /* none */ } } };
+  function setStatus(t, hold) {
+    clearTimeout(statTimer); status.textContent = t || '';
+    if (!hold) statTimer = setTimeout(progress, 4000);
   }
-  function lightFrom(n) {
+  function progress() { const c = EK.lamps.count(); status.textContent = c === 3 ? (ui.progressDone || '') : (ui.progress || '').replace('{n}', c).replace('{r}', 3 - c); }
+
+  /* a quadratic arc that bows upward, worked out from where the two wicks really are on screen */
+  function pathFor(n) {
+    const a = wickOf(n - 1), b = wickOf(n);
+    const dist = Math.hypot(b.x - a.x, b.y - a.y), cx = (a.x + b.x) / 2, cy = (a.y + b.y) / 2 - Math.max(40, dist * .35);
+    return { a, b, cx, cy };
+  }
+  const at = (P, t) => ({ x: (1 - t) * (1 - t) * P.a.x + 2 * (1 - t) * t * P.cx + t * t * P.b.x, y: (1 - t) * (1 - t) * P.a.y + 2 * (1 - t) * t * P.cy + t * t * P.b.y });
+  function place(P, n, p) {
+    const q = at(P, easeInOut(p)), sc = .5 + .5 * p;
+    trav.style.transform = 'translate(' + (q.x - 11) + 'px,' + (q.y - 28) + 'px) scale(' + sc.toFixed(2) + ')';
+    ringEl.style.transform = 'translate(' + (P.b.x - 30) + 'px,' + (P.b.y - 30) + 'px)';
+    ringEl.querySelector('.pr-fg').setAttribute('stroke-dashoffset', (1 - p).toFixed(3));
+    holdText.style.transform = 'translate(' + (P.b.x - 90) + 'px,' + (P.b.y - 96) + 'px)';
+    return q;
+  }
+
+  /* ---------- lighting ---------- */
+  function ignite(n, kb) {
     if (EK.lamps.isLit(n)) return;
-    if (n > 1 && !EK.lamps.isLit(n - 1)) { status.textContent = 'Lamp ' + (n - 1) + ' pehle.'; return; }
-    EK.lamps.light(n);
+    const b = wickOf(n);
+    active = null; show(false); EK.fx.setHolding(false);
+    EK.fx.set(svgs[n], 1);
+    EK.bus.emit('fx:burst', { kind: 'ignite', x: b.x, y: b.y - 10 });
+    vib(20, kb);
+    EK.lamps.light(n, { x: b.x, y: b.y });
+    setStatus(lamps[n - 1].litMsg || '');
+    live.textContent = (ui.liveLit || '').replace(/\{n\}/g, n);
+    if (n === 3) setTimeout(() => EK.fx.breath(), EK.mode.calm ? 0 : 500);
+  }
+  /* run the travel from a progress up to 1 over ms, then ignite */
+  function finish(n, from, ms, kb) {
+    if (EK.mode.calm) { ignite(n, kb); return; }
+    const P = pathFor(n), t0 = performance.now(); let lastSpark = 0;
+    active = { n, P, anim: true };
+    show(true); holdText.hidden = true; setStatus(ui.travel, true);
+    (function step(now) {
+      if (!active || active.n !== n || !active.anim) return;
+      const p = from + (1 - from) * clamp01((now - t0) / ms);
+      const q = place(P, n, p); EK.fx.set(svgs[n], .15 + .85 * p); EK.bus.emit('diya:lighting', { n, p });
+      if (now - lastSpark > 40) { lastSpark = now; EK.bus.emit('fx:burst', { kind: 'spark', x: q.x, y: q.y - 10 }); }
+      if (p < 1) requestAnimationFrame(step); else setTimeout(() => ignite(n, kb), 120);
+    })(t0);
+  }
+  function bind(el, n) {
+    let t0 = 0, x0 = 0, y0 = 0, raf = 0, warm = 0, litAtDown = false, ptr = false;
+    el.addEventListener('contextmenu', (e) => e.preventDefault());
+    el.addEventListener('pointerdown', (e) => {
+      if (e.button) return;
+      ptr = true; litAtDown = EK.lamps.isLit(n);
+      if (litAtDown) return;
+      if (active) return;
+      if (n > 1 && !EK.lamps.isLit(n - 1)) {
+        const k = EK.lamps.count() + 1, sv = svgs[k]; if (sv) { sv.classList.remove('pulse'); void sv.getBoundingClientRect(); sv.classList.add('pulse'); }
+        live.textContent = (ui.notReady || '').replace('{k}', k); setStatus((ui.notReady || '').replace('{k}', k));
+        return;
+      }
+      try { el.setPointerCapture(e.pointerId); } catch (er) { /* ok */ }
+      vib(10);
+      t0 = performance.now(); x0 = e.clientX; y0 = e.clientY;
+      if (EK.mode.calm) return;
+      const P = pathFor(n); active = { n, P, hold: true }; show(true); holdText.hidden = false; EK.fx.setHolding(true);
+      setStatus(ui.travel, true); el.classList.add('warming');
+      let lastSpark = 0;
+      (function tick(now) {
+        if (!active || active.n !== n || !active.hold) return;
+        const p = clamp01(warm + (now - t0) / 900);
+        const q = place(P, n, p); EK.fx.set(svgs[n], .15 + .85 * p); EK.bus.emit('diya:lighting', { n, p });
+        if (now - lastSpark > 40) { lastSpark = now; EK.bus.emit('fx:burst', { kind: 'spark', x: q.x, y: q.y - 10 }); }
+        if (p >= 1) { el.classList.remove('warming'); ignite(n); return; }
+        raf = requestAnimationFrame(tick);
+      })(t0);
+    });
+    const end = (e) => {
+      if (!ptr || litAtDown) return;
+      const dt = performance.now() - t0, moved = Math.hypot((e.clientX || 0) - x0, (e.clientY || 0) - y0);
+      el.classList.remove('warming');
+      if (!active || active.n !== n) { if (EK.mode.calm && e.type === 'pointerup' && !EK.lamps.isLit(n) && (n === 1 || EK.lamps.isLit(n - 1))) ignite(n); return; }
+      if (active.hold) {
+        cancelAnimationFrame(raf); active.hold = false;
+        const cur = parseFloat(ringEl.querySelector('.pr-fg').getAttribute('stroke-dashoffset'));
+        const p = 1 - cur;
+        if (e.type === 'pointerup' && dt < 350 && moved < 10) { finish(n, p, 450, false); return; }
+        // early release: ring and ember drain back over 300 ms, then show the hint for a few seconds
+        warm = p * .5; setTimeout(() => { warm = 0; }, 4000);
+        const P = active.P, t1 = performance.now(), from = p; active = { n, drain: true };
+        (function back(now) { const k = clamp01((now - t1) / 300), v = from * (1 - k); place(P, n, v); EK.fx.set(svgs[n], v > .02 ? .15 + .85 * v : 0); EK.bus.emit('diya:lighting', { n, p: v }); if (k < 1) requestAnimationFrame(back); else { active = null; show(false); EK.fx.setHolding(false); progress(); const hint = document.getElementById('hold-hint'); if (hint) { hint.classList.add('flash'); clearTimeout(hintTimer); hintTimer = setTimeout(() => hint.classList.remove('flash'), 4000); } } })(t1);
+      }
+    };
+    el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+    el.addEventListener('click', (e) => {
+      const wasLit = e.detail === 0 ? EK.lamps.isLit(n) : litAtDown;
+      if (wasLit) { EK.openStory('lamp' + n); ptr = false; return; }
+      if (e.detail === 0 && !ptr) {            // Enter, Space or an assistive click: no hold needed
+        if (active) return;
+        if (n > 1 && !EK.lamps.isLit(n - 1)) { const k = EK.lamps.count() + 1; live.textContent = (ui.notReady || '').replace('{k}', k); setStatus((ui.notReady || '').replace('{k}', k)); return; }
+        finish(n, 0, 450, true);
+      }
+      ptr = false;
+    });
   }
 
+  /* ---------- the row ---------- */
   const items = lamps.map((l) => {
-    const n = l.n;
+    const n = l.n, sv = EK.diya(n); svgs[n] = sv;
     const name = (ui.unlit || '').replace('{n}', n).replace('{name}', l.name);
     const desc = (ui.unlitDesc || '').replace('{n}', n).replace('{from}', n === 1 ? ui.fromHome : (ui.fromLamp || '').replace('{n}', n - 1));
-    const btn = h('button', { type: 'button', class: 'lamp-btn', id: 'lampbtn-' + n, 'aria-label': name, 'aria-describedby': 'lampdesc-' + n }, EK.diya(n),
-      h('span', { class: 'chip-name', text: l.name.toUpperCase() }), EK.icon('chevron'));
+    const btn = h('button', { type: 'button', class: 'lamp-btn', id: 'lampbtn-' + n, 'aria-label': name, 'aria-describedby': 'lampdesc-' + n }, sv, h('span', { class: 'chip-name', text: l.name.toUpperCase() }));
     const dsc = h('span', { class: 'sr-only', id: 'lampdesc-' + n, text: desc });
-    holdable(btn, n);
+    bind(btn, n);
     EK.lamps.onChange(() => {
       const on = EK.lamps.isLit(n);
-      if (on && !btn.classList.contains('lit')) { btn.classList.add('lit'); }
       btn.classList.toggle('lit', on);
       btn.setAttribute('aria-label', on ? (ui.lit || '').replace('{n}', n).replace('{name}', l.name) : name);
       dsc.textContent = on ? (ui.litDesc || '').replace('{n}', n) : desc;
-      const next = EK.lamps.count() + 1;
-      btn.classList.toggle('next', !on && n === next);
+      btn.classList.toggle('next', !on && n === EK.lamps.count() + 1);
     });
     if (n === 1) btn.classList.add('next');
     return h('li', { class: 'row-item' }, btn, dsc);
   });
-  const home = h('li', { class: 'row-item home' }, h('div', { class: 'home-lamp lit', 'aria-hidden': 'true' }, EK.diya('home'), h('span', { class: 'chip-name', text: 'EK DIYA' })));
-  const four = d.growth ? h('li', { class: 'row-item four' }, h('button', { type: 'button', class: 'lamp-btn dashed', 'aria-label': ui.lamp4, 'aria-describedby': 'lampdesc-4',
-    onclick: () => { status.textContent = ui.lamp4Try || ''; EK.goTo(document.getElementById('growth'), false); } }, EK.diya(4, { dashed: true }), h('span', { class: 'chip-name', text: ui.lamp4Chip }))
-    , h('span', { class: 'sr-only', id: 'lampdesc-4', text: ui.lamp4Desc })) : null;
+  const homeItem = h('li', { class: 'row-item home' }, h('div', { class: 'home-lamp lit', 'aria-hidden': 'true' }, home, h('span', { class: 'chip-name', text: 'EK DIYA' })));
 
-  const holdBtn = h('button', { type: 'button', class: 'btn primary hold', id: 'hold-first', 'aria-describedby': 'hold-hint' }, h('span', { class: 'hold-ring', 'aria-hidden': 'true' }), h('span', { text: x.hold }));
-  holdable(holdBtn, 1);
-  const allBtn = h('button', { type: 'button', class: 'linkbtn', text: ui.lightAll, onclick: () => EK.lamps.lightAll() });
+  /* Lamp 4: proposed, not run. It tries, flickers three times, fizzles and never lights. */
+  let tries = false;
+  const sv4 = d.growth ? EK.diya(4, { dashed: true }) : null; if (sv4) svgs[4] = sv4;
+  function tryFour() {
+    if (tries || !sv4) return; tries = true;
+    const lastLit = Math.max(0, ...[1, 2, 3].filter((k) => EK.lamps.isLit(k)));
+    const a = wickOf(lastLit), b = EK.fx.wick(sv4);
+    vib(10);
+    const finish4 = () => {
+      setStatus(ui.lamp4Try || '', true); live.textContent = ui.lamp4Desc || '';
+      if (EK.mode.calm) { EK.fx.set(sv4, .3); setTimeout(() => { EK.fx.set(sv4, 0); tries = false; }, 1000); return; }
+      [.33, .22, .3, .18, .26, .12].forEach((v, i) => setTimeout(() => EK.fx.set(sv4, v), i * 150));
+      setTimeout(() => { EK.fx.set(sv4, .05); EK.bus.emit('fx:burst', { kind: 'fizzle', x: b.x, y: b.y - 6 }); }, 1250);
+      setTimeout(() => { EK.fx.set(sv4, 0); tries = false; }, 2200);
+    };
+    if (EK.mode.calm) { finish4(); return; }
+    const P = { a, b, cx: (a.x + b.x) / 2, cy: (a.y + b.y) / 2 - Math.max(40, Math.hypot(b.x - a.x, b.y - a.y) * .35) };
+    show(true); holdText.hidden = true; const t0 = performance.now();
+    (function step(now) { const p = clamp01((now - t0) / 450), q = at(P, easeInOut(p)); trav.style.transform = 'translate(' + (q.x - 11) + 'px,' + (q.y - 28) + 'px) scale(' + (.5 + .5 * p) + ')'; ringEl.style.transform = 'translate(-999px,-999px)'; if (p < 1) requestAnimationFrame(step); else { show(false); finish4(); } })(t0);
+  }
+  const four = sv4 ? h('li', { class: 'row-item four' }, h('button', { type: 'button', class: 'lamp-btn dashed', id: 'lampbtn-4', 'aria-label': ui.lamp4, 'aria-describedby': 'lampdesc-4', onclick: tryFour }, sv4, h('span', { class: 'chip-name', text: ui.lamp4Chip })),
+    h('span', { class: 'sr-only', id: 'lampdesc-4', text: ui.lamp4Desc })) : null;
+
+  const holdBtn = h('button', { type: 'button', class: 'btn primary hold', id: 'hold-first', 'aria-describedby': 'hold-hint' }, h('span', { text: x.hold }));
+  bind(holdBtn, 1);
+  const allBtn = h('button', { type: 'button', class: 'linkbtn', id: 'light-all', text: ui.lightAll, onclick: () => EK.lamps.lightAll() });
   const rowMsg = d.row ? h('div', { class: 'row-msg', hidden: true }, h('p', { class: 'row-lit', text: d.row.lit }), h('p', { text: d.row.body }), h('p', { class: 'row-dusk', text: d.row.dusk })) : null;
 
+  /* Light all: every remaining lamp in order, about 200 ms apart, with a short travel each. Same events as lighting by hand. */
+  EK.lamps.sequence = function () {
+    const todo = [1, 2, 3].filter((k) => !EK.lamps.isLit(k));
+    allBtn.hidden = true;
+    let i = 0;
+    (function next() {
+      if (i >= todo.length) return;
+      const n = todo[i++];
+      if (EK.mode.calm) { ignite(n); next(); return; }
+      finish(n, .5, 250, false);
+      setTimeout(next, 250 + 120 + 200);
+    })();
+  };
   EK.lamps.onChange((n) => {
-    const c = EK.lamps.count(), l = n > 0 ? d['lamp' + n] : null;
+    const c = EK.lamps.count();
     holdBtn.hidden = EK.lamps.isLit(1);
-    document.getElementById('hold-hint').hidden = EK.lamps.isLit(1);
-    if (l && l.litMsg) status.textContent = l.litMsg;
-    else if (c === 3) status.textContent = ui.progressDone || '';
-    else status.textContent = (ui.progress || '').replace('{n}', c).replace('{r}', 3 - c);
-    if (rowMsg) rowMsg.hidden = c < 3;
+    const hh = document.getElementById('hold-hint'); if (hh) hh.hidden = EK.lamps.isLit(1);
     allBtn.hidden = c === 3;
+    for (let k = 1; k <= 3; k++) if (EK.lamps.isLit(k)) EK.fx.set(svgs[k], 1);
+    if (c === 3) { document.getElementById('lampbtn-4') && document.getElementById('lampbtn-4').classList.add('warm'); }
   });
+  EK.bus.on('diya:allLit', () => {
+    EK.fx.breath();
+    live.textContent = (ui.allLitLive || '');
+    setTimeout(() => { if (rowMsg) rowMsg.hidden = false; }, EK.mode.calm ? 0 : 700);
+  });
+  EK.bus.on('diya:lit', () => { EK.scene.inkLine(EK.lamps.count()); });
+  progress();
+  const sectionEl = h('section', { class: 'opening', id: 'top', 'aria-labelledby': 'top-h' },
+    h('div', { class: 'op-top' },
+      h('p', { class: 'kicker', text: x.label }),
+      h('h1', { class: 'headline', id: 'top-h' }, head),
+      has(x.ship) ? h('p', { class: 'ship', text: x.ship }) : null,
+      h('p', { class: 'ek-lines' }, x.lines.filter(has).map((t) => [t, h('br')])), rowMsg),
+    h('div', { class: 'op-bottom' },
+      h('div', { class: 'hold-wrap' }, holdBtn, h('p', { class: 'hold-hint', id: 'hold-hint', text: x.holdHint })),
+      status,
+      h('div', { class: 'scene', id: 'night', role: 'group', 'aria-label': x.alt }, h('ol', { class: 'row' }, homeItem, items, four)),
+      h('div', { class: 'cta-row center' }, allBtn)),
+    live, over);
+  EK.onReady.push(() => { document.body.appendChild(over); });
+  EK.onReady.push(() => { EK.lamps.notify(0); });
+  return sectionEl;
+});
 
-  return h('section', { class: 'panel opening', id: 'top', 'aria-labelledby': 'top-h' },
-    h('p', { class: 'kicker', text: x.label }),
-    h('h1', { class: 'headline', id: 'top-h' }, head),
-    has(x.ship) ? h('p', { class: 'ship', text: x.ship }) : null,
-    h('p', { class: 'ek-lines' }, x.lines.filter(has).map((t) => [t, h('br')])),
-    h('div', { class: 'hold-wrap' }, holdBtn, h('p', { class: 'hold-hint', id: 'hold-hint', text: x.holdHint })),
-    h('div', { class: 'scene', role: 'group', 'aria-label': x.alt },
-      h('ol', { class: 'row' }, home, items, four)),
-    status, rowMsg,
-    h('div', { class: 'cta-row center' }, allBtn),
+EK.defineSection('intro', (d) => {
+  const x = d.opening;
+  if (!x) return null;
+  return h('section', { class: 'panel more-panel', id: 'intro', 'aria-label': x.label },
     d.sixty ? h('p', { class: 'sixty-line' }, x.sixtyLine + ' ', h('button', { type: 'button', class: 'btn', text: x.sixtyBtn, onclick: (e) => EK.openSixty(e.currentTarget) })) : null,
     has(x.below) ? h('p', { class: 'below', text: x.below }) : null,
     has(x.intro) ? h('p', { class: 'intro-p', text: x.intro }) : null);
@@ -781,7 +1512,7 @@ function storySheet(key, x, widget, d) {
   const ev = ((d.evidence && d.evidence.folders) || []).find((c) => c.id === (x.level3 && x.level3.folder));
   const insp = ev && ev.inspect;
   const files = insp && (insp.files || []).length ? h('ul', { class: 'files' }, insp.files.map((f) => h('li', null, h('code', { text: f })))) : null;
-  const flame = h('span', { class: 'story-flame', 'aria-hidden': 'true' }, EK.diya(x.n));
+  const fsv = EK.diya(x.n), flame = h('span', { class: 'story-flame', 'aria-hidden': 'true' }, fsv);
   const sec = EK.sheet(key, key + '-h',
     h('div', { class: 'story-head' }, flame, EK.kicker(x.heading)),
     EK.heading(key, x.title),
@@ -802,7 +1533,7 @@ function storySheet(key, x, widget, d) {
         insp ? h('div', { class: 'field' }, h('h3', { text: ui.repoLabel }), EK.ext(insp.label, insp.url, 'repo-link'), files, has(insp.note) ? h('p', { class: 'note', text: insp.note }) : null) : null,
         h('div', { class: 'cta-row' }, h('button', { class: 'btn', type: 'button', text: (x.level3 && x.level3.label) || ui.level3, onclick: () => EK.openEvidence(ev.id) })))) : null);
   sec.classList.add('story');
-  EK.lamps.onChange(() => sec.classList.toggle('lit', EK.lamps.isLit(x.n)));
+  EK.lamps.onChange(() => { const on = EK.lamps.isLit(x.n); sec.classList.toggle('lit', on); EK.fx.set(fsv, on ? 1 : 0); });
   return sec;
 }
 

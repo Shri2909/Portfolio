@@ -76,7 +76,17 @@
     "deadlineLabel": "3-second deadline",
     "guessAsk": "How many problems did the separate audit find?",
     "guessHint": "Aapka andaza?",
-    "lateHint": "Khiskaiye aur dekhiye."
+    "lateHint": "Khiskaiye aur dekhiye.",
+    "calmOff": "Roshni kam karo",
+    "calmOn": "Roshni waapas laao",
+    "lookDeepavali": "Deepavali",
+    "lookInk": "Ink",
+    "dockLabel": "Display options",
+    "lookLabel": "Look",
+    "notReady": "Light lamp {k} first.",
+    "liveLit": "Lamp {n} is lit. {n} of 3 lamps lit.",
+    "travel": "Lau aage badh rahi hai...",
+    "allLitLive": "All three lamps are lit. The room has turned warm gold."
   },
   "opening": {
     "label": "EK DIYA SE DOOSRA · Shriniwas Kholkute",

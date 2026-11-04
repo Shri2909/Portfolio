@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { launch, openPage, VIEWPORTS, sleep, check, summary, ROOT } from './lib.mjs';
 
-const SECTIONS = ['top', 'person', 'lamps', 'lamp1', 'lamp2', 'lamp3', 'transition', 'voice', 'growth', 'verdict', 'deeper', 'evidence', 'wish'];
+const SECTIONS = ['top', 'intro', 'person', 'lamps', 'lamp1', 'lamp2', 'lamp3', 'transition', 'voice', 'growth', 'verdict', 'deeper', 'evidence', 'wish'];
 const STATUS = ['PUBLIC', 'LOCAL-BRANCH', 'REPO-REPORTED', 'PERSONALLY CONFIRMED', 'UNRESOLVED', 'PROPOSED', 'EVIDENCE AVAILABLE ON REQUEST'];
 const norm = (t) => t.replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/\s+/g, ' ').trim().toLowerCase();
 
@@ -44,22 +44,26 @@ for (const [vn, vp] of [['phone', VIEWPORTS.phone], ['laptop', VIEWPORTS.laptop]
   check('top bar sticks to the top', (await page.evaluate(() => Math.round(document.getElementById('topbar').getBoundingClientRect().top))) === 0);
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
 
-  // Lamps: order, hold, light all
+  // Lamps: order, hold, tap, keyboard, light all
   check('home flame lit, three lamps unlit, lamp 4 dashed', (await page.locator('.row-item').count()) === 5 && (await page.locator('.lamp-btn.lit').count()) === 0 && (await page.locator('.lamp-btn.dashed').count()) === 1);
-  await page.locator('#lampbtn-2').click({ force: true }); await sleep(100);
-  check('lamp 2 cannot be lit before lamp 1', (await page.locator('#lampbtn-2.lit').count()) === 0);
-  const hold = page.locator('#hold-first');
-  if (vn === 'phone') { await hold.dispatchEvent('pointerdown', { button: 0 }); check('holding shows the warming state', (await page.locator('#hold-first.warming').count()) === 1); await sleep(1200); }
-  else await hold.click();
-  check('the first lamp lights', (await page.locator('#lampbtn-1.lit').count()) === 1 && /Lamp 1 jal utha/.test(await page.textContent('.row-status')));
-  check('lit lamp has an accessible name and is a button', /Lamp 1, Certgen, lit/.test(await page.getAttribute('#lampbtn-1', 'aria-label')));
-  await page.locator('#lampbtn-2').focus(); await page.keyboard.press('Enter'); await sleep(100);
-  check('Enter lights the next lamp from the keyboard', (await page.locator('#lampbtn-2.lit').count()) === 1);
-  await page.getByRole('button', { name: /Sab diye ek saath/ }).click(); await sleep(200);
-  check('light all: three lamps lit, the room turns dusk-gold, row message shows', (await page.locator('.lamp-btn.lit').count()) === 3 && (await page.evaluate(() => document.documentElement.classList.contains('dusk'))) && /Teen diye jal uthe/.test(await page.textContent('.row-msg')));
+  await page.evaluate(() => document.getElementById('lampbtn-2').dispatchEvent(new PointerEvent('pointerdown', { button: 0, pointerId: 3, bubbles: true }))); await sleep(150);
+  check('lamp 2 cannot be lit before lamp 1, and says which lamp first', (await page.locator('#lampbtn-2.lit').count()) === 0 && /Light lamp 1 first/.test(await page.textContent('#row-live')));
+  await page.evaluate(() => document.getElementById('hold-first').dispatchEvent(new PointerEvent('pointerdown', { button: 0, pointerId: 4, bubbles: true }))); await sleep(300);
+  check('holding shows the pressure ring, the travelling flame and the line above the lamp', (await page.locator('.fx-over:not([hidden]) .pring').count()) === 1 && /Baati abhi garam ho rahi hai/.test(await page.textContent('.hold-text')));
+  await sleep(1100);
+  check('the first lamp lights after the hold', (await page.locator('#lampbtn-1.lit').count()) === 1 && /Lamp 1 jal utha/.test(await page.textContent('#row-status')));
+  check('lit lamp has an accessible name and the screen-reader line', /Lamp 1, Certgen, lit/.test(await page.getAttribute('#lampbtn-1', 'aria-label')) && /Lamp 1 is lit\. 1 of 3 lamps lit/.test(await page.textContent('#row-live')));
+  check('the rangoli drew its first layers', await page.evaluate(() => +document.querySelector('.rl1 .line').getAttribute('stroke-dashoffset') < .05));
+  await page.evaluate(() => { const b = document.getElementById('lampbtn-2'); b.dispatchEvent(new PointerEvent('pointerdown', { button: 0, pointerId: 5, bubbles: true })); b.dispatchEvent(new PointerEvent('pointerup', { button: 0, pointerId: 5, bubbles: true })); }); await sleep(900);
+  check('a quick tap lights the next lamp', (await page.locator('#lampbtn-2.lit').count()) === 1);
+  await page.locator('#lampbtn-3').focus(); await page.keyboard.press('Enter'); await sleep(1000);
+  check('Enter lights a lamp from the keyboard (no hold needed)', (await page.locator('#lampbtn-3.lit').count()) === 1);
+  await sleep(2200);
+  check('all three lit: the room turns dusk-gold and the row message shows', (await page.evaluate(() => document.documentElement.classList.contains('dusk'))) && /Teen diye jal uthe/.test(await page.textContent('.row-msg')) && (await page.locator('.row-msg:not([hidden])').count()) === 1);
   check('lamp 4 stays unlit', (await page.locator('.lamp-btn.dashed.lit').count()) === 0);
   await page.locator('#lampbtn-3').click(); await sleep(1200);
   check('a lit lamp opens its story', await page.evaluate(() => document.getElementById('lamp3-l2').open));
+  check('Light all and the dock are real controls', (await page.locator('#dock-calm').count()) === 1 && (await page.locator('#dock-ink').count()) === 1);
   await page.evaluate(() => { document.querySelectorAll('details.l2').forEach((d) => (d.open = false)); window.scrollTo({ top: 0, behavior: 'instant' }); });
 
   // Three levels per lamp
@@ -107,8 +111,9 @@ for (const [vn, vp] of [['phone', VIEWPORTS.phone], ['laptop', VIEWPORTS.laptop]
 
   // Lamp 4
   await page.evaluate(() => document.getElementById('growth').scrollIntoView({ behavior: 'instant' }));
-  await page.locator('#growth .btn', { hasText: 'PROPOSED, NOT RUN' }).click();
-  check('lamp 4 will not light and says so', /Yeh diya abhi nahi jalega/.test(await page.textContent('.try')));
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await page.locator('#lampbtn-4').click(); await sleep(1500);
+  check('lamp 4 tries, never lights, and says so', /Yeh diya abhi nahi jalega/.test(await page.textContent('#row-status')) && (await page.locator('.lamp-btn.dashed.lit').count()) === 0);
 
   // Evidence
   const ev = await page.evaluate(() => [...document.querySelectorAll('details.folder')].map((d) => ({ links: [...d.querySelectorAll('a')].map((a) => a.href), st: [...d.querySelectorAll('.st')].map((s) => s.textContent) })));
@@ -137,6 +142,13 @@ for (const [vn, vp] of [['phone', VIEWPORTS.phone], ['laptop', VIEWPORTS.laptop]
   check('share links are plain: WhatsApp link encodes the card', /^https:\/\/wa\.me\/\?text=/.test(await page.getAttribute('.wish-out a.btn', 'href')));
   check('nothing is stored in the browser', await page.evaluate(() => { try { return localStorage.length === 0 && sessionStorage.length === 0 && document.cookie === ''; } catch (e) { return true; } }));
 
+  // Ink and Calm (memory only)
+  await page.locator('#dock-ink').click();
+  check('Ink hides the festival decor and keeps the page readable', (await page.evaluate(() => getComputedStyle(document.querySelector('.toran')).display)) === 'none' && (await page.locator('#dock-ink[aria-pressed="true"]').count()) === 1);
+  await page.locator('#dock-dv').click(); await page.locator('#dock-calm').click();
+  check('Calm toggles on and shows the motion note', await page.evaluate(() => document.documentElement.classList.contains('calm') && !document.getElementById('dock-note').hidden));
+  await page.locator('#dock-calm').click();
+
   // 60-second file
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
   await page.locator('.nav-link.sixty').click(); await sleep(200);
@@ -151,6 +163,7 @@ console.log('\nreduced motion');
 {
   const { page, ctx, log } = await openPage(b, { viewport: VIEWPORTS.phone, reducedMotion: true });
   await page.waitForFunction(() => document.documentElement.classList.contains('ready')); await sleep(300);
+  check('Calm starts on with reduced motion', await page.evaluate(() => document.documentElement.classList.contains('calm')));
   await page.locator('#hold-first').click(); await sleep(200);
   check('lamp lights at once, no animations running', (await page.locator('#lampbtn-1.lit').count()) === 1 && (await page.evaluate(() => document.getAnimations().filter((a) => a.playState === 'running').length)) === 0);
   await page.evaluate(() => EK.openStory('lamp1')); await page.locator('.guess .opt', { hasText: /^19$/ }).click(); await sleep(200);

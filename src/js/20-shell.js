@@ -1,6 +1,6 @@
 /* The shell: section registry, the top bar, the lamp state (which lamps are lit) and the tone of the night.
    A section renders nothing when its content is empty. */
-EK.order = ['opening', 'person', 'lamps', 'lamp1', 'lamp2', 'lamp3', 'transition', 'voice', 'growth', 'verdict', 'deeper', 'evidence', 'wish'];
+EK.order = ['opening', 'intro', 'person', 'lamps', 'lamp1', 'lamp2', 'lamp3', 'transition', 'voice', 'growth', 'verdict', 'deeper', 'evidence', 'wish'];
 EK.defs = {};
 EK.defineSection = (id, mount) => { EK.defs[id] = mount; };
 EK.onReady = [];
@@ -16,18 +16,17 @@ EK.lamps = (function () {
     isLit: (n) => !!lit[n - 1],
     visitor: () => visitor,
     onChange: (fn) => { subs.push(fn); },
-    light(n) {
+    light(n, pos) {
       if (n < 1 || n > lit.length || lit[n - 1]) return false;
       lit[n - 1] = true;
       api.notify(n);
+      EK.bus.emit('diya:lit', { n, x: pos && pos.x, y: pos && pos.y });
       return true;
     },
-    lightAll() { lit.forEach((_, i) => { if (!lit[i]) { lit[i] = true; } }); api.notify(0); },
-    lightVisitor() { if (visitor) return; visitor = true; api.notify(-1); },
+    lightAll() { if (api.sequence) api.sequence(); else { lit.forEach((_, i) => { lit[i] = true; }); api.notify(0); } },
+    lightVisitor() { if (visitor) return; visitor = true; api.notify(-1); EK.bus.emit('diya:visitorLit', {}); },
     notify(n) {
-      const c = count();
-      document.documentElement.setAttribute('data-tone', String(c));
-      document.documentElement.classList.toggle('dusk', c === lit.length);
+      document.documentElement.setAttribute('data-lit', String(count()));
       document.documentElement.classList.toggle('visitor-lit', visitor);
       subs.forEach((fn) => { try { fn(n); } catch (e) { /* decorative */ } });
     },
@@ -65,6 +64,28 @@ EK.shell = (function () {
     lines.forEach((t) => foot.appendChild(h('p', null, t)));
   }
 
+  /* The dock: Calm (no movement, same light) and the look (Deepavali or Ink). Both live in memory only. */
+  function buildDock() {
+    const ui = data.ui || {};
+    const root = document.documentElement;
+    const calm = h('button', { type: 'button', class: 'dock-btn', id: 'dock-calm', onclick: () => setCalm(!EK.mode.calm) });
+    const dv = h('button', { type: 'button', class: 'dock-btn', id: 'dock-dv', onclick: () => setInk(false) });
+    const ik = h('button', { type: 'button', class: 'dock-btn', id: 'dock-ink', onclick: () => setInk(true) });
+    const note = h('p', { class: 'dock-note', id: 'dock-note', text: ui.reduced || '' });
+    function setCalm(v) {
+      EK.mode.calm = v; root.classList.toggle('calm', v);
+      calm.textContent = v ? ui.calmOn : ui.calmOff; calm.setAttribute('aria-pressed', String(v)); note.hidden = !v;
+      EK.scene.applyTone(Math.round(EK.scene.currentTone()));
+    }
+    function setInk(v) {
+      EK.mode.ink = v; root.classList.toggle('ink', v);
+      dv.textContent = ui.lookDeepavali; ik.textContent = ui.lookInk; dv.setAttribute('aria-pressed', String(!v)); ik.setAttribute('aria-pressed', String(v));
+    }
+    const dock = h('aside', { class: 'dock', 'aria-label': ui.dockLabel || 'Display options' }, note, calm, h('div', { class: 'dock-seg', role: 'group', 'aria-label': ui.lookLabel || 'Look' }, dv, ik));
+    document.body.appendChild(dock);
+    setCalm(EK.mode.calm); setInk(false);
+  }
+
   function mountAll() {
     const main = document.getElementById('main');
     EK.visibleSections = [];
@@ -78,13 +99,16 @@ EK.shell = (function () {
     });
     buildBar();
     buildFooter();
-    document.documentElement.setAttribute('data-tone', '0');
+    document.documentElement.setAttribute('data-lit', '0');
+    buildDock();
     EK.onReady.forEach((fn) => { try { fn(); } catch (e) { /* a decorative step must never stop the page */ } });
     document.documentElement.classList.add('ready');
   }
 
   function boot() {
     data = EK.data = JSON.parse(document.getElementById('ek-data').textContent);
+    EK.scene.build();
+    EK.fx.init();
     mountAll();
   }
   return { boot };
