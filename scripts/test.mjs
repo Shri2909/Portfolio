@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { launch, openPage, VIEWPORTS, sleep, check, summary, ROOT } from './lib.mjs';
 
-const SECTIONS = ['case', 'exhibitA', 'exhibitB', 'more', 'person', 'voice', 'verdict', 'evidence'];
+const SECTIONS = ['case', 'exhibitA', 'exhibitB', 'exhibitC', 'transition', 'person', 'voice', 'verdict', 'evidence'];
 const STATUS = ['PUBLIC', 'LOCAL-BRANCH', 'REPO-REPORTED', 'PERSONALLY CONFIRMED', 'UNRESOLVED', 'PROPOSED', 'EVIDENCE AVAILABLE ON REQUEST'];
 const norm = (t) => t.replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/\s+/g, ' ').trim().toLowerCase();
 
@@ -103,9 +103,9 @@ for (const [vn, vp] of [['phone', VIEWPORTS.phone], ['laptop', VIEWPORTS.laptop]
 
   // Evidence drawer
   const ev = await page.evaluate(() => [...document.querySelectorAll('details.case')].map((d) => ({ id: d.id, links: [...d.querySelectorAll('a')].map((a) => a.href), st: [...d.querySelectorAll('.st')].map((s) => s.textContent) })));
-  check('eight evidence cases', ev.length === 8, String(ev.length));
+  check('six evidence cases', ev.length === 6, String(ev.length));
   check('every status uses the plain vocabulary', ev.every((c) => c.st.every((s) => STATUS.includes(s))), JSON.stringify(ev.map((c) => c.st)));
-  check('links are the five repositories, the essay and the résumé only', ev.flatMap((c) => c.links).every((u) => /^https:\/\/(github\.com\/Shri2909\/|drive\.google\.com\/file\/d\/)/.test(u)));
+  check('links are the three repositories, the essay and the résumé only', ev.flatMap((c) => c.links).every((u) => /^https:\/\/(github\.com\/Shri2909\/|drive\.google\.com\/file\/d\/)/.test(u)));
   await page.evaluate(() => CF.openEvidence('c3')); await sleep(1200);
   check('receipt opens its case', await page.evaluate(() => document.getElementById('ev-c3').open && document.activeElement.closest('details') === document.getElementById('ev-c3')));
   const em = content.site.contact.email;
@@ -169,7 +169,7 @@ if (process.env.COPY_FILE && existsSync(process.env.COPY_FILE)) {
   const missing = [];
   let n = 0;
   for (let l of lines) {
-    l = l.replace(/^#+\s*/, '').replace(/\[([^\]]*)\]\([^)]*\)/g, '[$1]').replace(/\*\*/g, '').replace(/^\*(.*)\*$/, '$1');
+    l = l.replace(/^[*-] +/, '').replace(/^#+\s*/, '').replace(/\[([^\]]*)\]\([^)]*\)/g, '[$1]').replace(/\*\*/g, '').replace(/^\*(.*)\*$/, '$1');
     const parts = /^\[/.test(l) ? l.split(' · ').map((p) => p.replace(/^\[|\]$/g, '')) : [l];
     for (let p of parts) {
       p = norm(p.replace(/^\[|\]$/g, '').replace(/\s*→\s*/g, ' → '));

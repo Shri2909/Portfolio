@@ -1,9 +1,10 @@
-/* Small text helpers: **bold** and `code` inline markup, paragraphs, buttons and links that the sections share. */
+/* Small text helpers: **bold**, *italic* and `code` inline markup, paragraphs, buttons and links that the sections share. */
 CF.rich = function (text) {
   const out = [];
-  String(text == null ? '' : text).split(/(\*\*[^*]+\*\*|`[^`]+`)/).forEach((p) => {
+  String(text == null ? '' : text).split(/(\*\*[^*]+\*\*|\*[^*\s][^*]*\*|`[^`]+`)/).forEach((p) => {
     if (!p) return;
     if (p.startsWith('**') && p.endsWith('**') && p.length > 4) out.push(h('strong', { text: p.slice(2, -2) }));
+    else if (p.startsWith('*') && p.endsWith('*') && p.length > 2) out.push(h('em', { text: p.slice(1, -1) }));
     else if (p.startsWith('`') && p.endsWith('`') && p.length > 2) out.push(h('code', { text: p.slice(1, -1) }));
     else out.push(p);
   });
@@ -13,7 +14,7 @@ CF.rich = function (text) {
 /* Paragraphs from an array of strings. A paragraph that is one bold sentence becomes a pull line. */
 CF.prose = function (arr, cls) {
   return h('div', { class: 'prose' + (cls ? ' ' + cls : '') }, (arr || []).filter(has).flatMap((t) => String(t).split(/\n\s*\n/)).map((t) =>
-    h('p', { class: /^\*\*[^*]+\*\*$/.test(t.trim()) ? 'pull' : null }, CF.rich(t))));
+    h('p', { class: /^\*\*[^*]+\*\*$/.test(t.trim()) ? 'pull' : null }, t.split('\n').flatMap((ln, i) => (i ? [h('br'), ...CF.rich(ln)] : CF.rich(ln))))));
 };
 
 /* A sheet of paper with a brass index tab. */

@@ -1,6 +1,6 @@
 /* The shell: section registry, top bar with its two persistent links and the 60-second file, the red string progress rail.
    A section renders nothing when its content is empty. */
-CF.order = ['hero', 'exhibitA', 'exhibitB', 'more', 'person', 'voice', 'verdict', 'evidence'];
+CF.order = ['hero', 'exhibitA', 'exhibitB', 'exhibitC', 'transition', 'person', 'voice', 'verdict', 'evidence'];
 CF.defs = {};
 CF.defineSection = (id, mount) => { CF.defs[id] = mount; };
 CF.onReady = [];

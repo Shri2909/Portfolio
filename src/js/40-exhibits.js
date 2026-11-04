@@ -1,4 +1,4 @@
-/* Beats 2 to 5 and 7: Exhibit A (audit prediction), Exhibit B (late-reply model), the three reversals, the person, the verdict. */
+/* Beats 2 to 5 and 7: the three lamp stories (Certgen with the audit prediction, Blitz, Vigil with the late-reply model), the transition, the person, the verdict. */
 
 /* ---------- Interaction 1: guess the audit result ---------- */
 function guessWidget(g, ui) {
@@ -74,30 +74,26 @@ function lateWidget(m, ui) {
 }
 
 /* ---------- sections ---------- */
-CF.defineSection('exhibitA', (d) => {
-  const x = d.exhibitA;
+/* A lamp story: kicker, title, tagline, the story, an optional interaction, three things it reveals, the growth connection and the evidence note. */
+function storySheet(id, tab, x, widget, d) {
   if (!x) return null;
-  return CF.sheet('exhibitA', '2', 'exhibitA-h',
-    CF.heading('exhibitA', x.heading), CF.prose(x.body), guessWidget(x.guess, d.ui || {}),
+  return CF.sheet(id, tab, id + '-h',
+    CF.heading(id, x.heading),
+    has(x.title) ? h('p', { class: 'story-title', text: x.title }) : null,
+    has(x.tagline) ? h('p', { class: 'story-tag', text: x.tagline }) : null,
+    CF.prose(x.body), widget,
+    (x.reveals || []).length ? h('div', { class: 'reveals' }, has(x.revealsLabel) ? h('h3', { text: x.revealsLabel }) : null, h('ul', null, x.reveals.map((t) => h('li', null, CF.rich(t))))) : null,
+    CF.prose([x.growth, x.note].filter(has), 'story-end'),
     x.receipt ? h('div', { class: 'cta-row' }, CF.receiptBtn(x.receipt)) : null);
-});
+}
+CF.defineSection('exhibitA', (d) => d.exhibitA && storySheet('exhibitA', '2', d.exhibitA, guessWidget(d.exhibitA.guess, d.ui || {}), d));
+CF.defineSection('exhibitB', (d) => d.exhibitB && storySheet('exhibitB', '3', d.exhibitB, null, d));
+CF.defineSection('exhibitC', (d) => d.exhibitC && storySheet('exhibitC', '4', d.exhibitC, lateWidget(d.exhibitC.late, d.ui || {}), d));
 
-CF.defineSection('exhibitB', (d) => {
-  const x = d.exhibitB;
+CF.defineSection('transition', (d) => {
+  const x = d.transition;
   if (!x) return null;
-  return CF.sheet('exhibitB', '3', 'exhibitB-h',
-    CF.heading('exhibitB', x.heading), CF.prose(x.body), lateWidget(x.late, d.ui || {}),
-    x.receipt ? h('div', { class: 'cta-row' }, CF.receiptBtn(x.receipt)) : null);
-});
-
-CF.defineSection('more', (d) => {
-  const x = d.more;
-  if (!x || !(x.cards || []).length) return null;
-  return CF.sheet('more', '4', 'more-h', CF.heading('more', x.heading),
-    h('div', { class: 'cards' }, x.cards.map((c) => h('article', { class: 'card' },
-      h('h3', { text: c.head }), CF.prose([c.text]),
-      c.case ? h('button', { class: 'linkbtn', type: 'button', 'aria-label': (d.ui.navEvidence || '') + ': ' + c.head, text: (d.ui.navEvidence || '') + ' →', onclick: () => CF.openEvidence(c.case) }) : null))),
-    has(x.cta) ? h('div', { class: 'cta-row' }, h('button', { class: 'btn', type: 'button', text: x.cta, onclick: () => CF.openEvidence() })) : null);
+  return CF.sheet('transition', '', 'transition-h', CF.heading('transition', x.heading), CF.prose(x.body));
 });
 
 CF.defineSection('person', (d) => {

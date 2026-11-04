@@ -22,6 +22,10 @@
 .prose strong { font-weight: 700; }
 .prose code, .files code, .note code { font-family: var(--type); font-size: .92em; background: rgba(233, 223, 201, .7); padding: 0 4px; border-radius: 3px; }
 .prose p.pull, p.pull { font-family: var(--display); font-weight: 600; font-size: 20px; line-height: 1.35; padding-left: 14px; border-left: 4px solid var(--string); margin: 18px 0; max-width: 56ch; }
+.story-title { font-family: var(--display); font-weight: 700; font-size: clamp(19px, 5vw, 24px); line-height: 1.25; margin: 0 0 6px; }
+.story-tag { font-family: var(--display); font-style: italic; font-weight: 650; font-size: clamp(20px, 5.4vw, 28px); line-height: 1.2; margin: 0 0 16px; }
+.reveals { margin: 18px 0 8px; } .reveals h3 { font-family: var(--display); font-weight: 750; font-size: 17px; letter-spacing: .02em; margin: 0 0 8px; }
+.reveals ul { margin: 0; padding-left: 20px; } .reveals li { font-size: 16.5px; line-height: 1.55; margin: 0 0 8px; max-width: 64ch; }
 .closing { margin-top: 22px; font-style: italic; color: var(--muted); font-size: 16px; line-height: 1.5; }
 .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; align-items: center; }
 .btn.primary { background: linear-gradient(#E2BE6A, var(--brass-art)); color: #2a1d05; border-color: var(--brass-text); text-decoration: none; }
@@ -126,10 +130,6 @@ a.btn { text-decoration: none; }
 .plain-box .outp { font-family: var(--display); font-size: 18px; line-height: 1.55; margin: 0; }
 
 /* beat 4: the three reversals */
-.cards { display: grid; gap: 16px; }
-.card { padding: 14px 14px 6px; background: #FFFDF6; border: 1px solid var(--paper-edge); border-top: 3px solid var(--brass-art); box-shadow: 0 2px 5px rgba(0, 0, 0, .15); }
-.card h3 { font-family: var(--display); font-weight: 750; font-size: 17px; letter-spacing: .02em; line-height: 1.25; margin: 0 0 8px; }
-.card .prose p { font-size: 16.5px; }
 
 /* the evidence drawer */
 .cases { display: grid; gap: 10px; }

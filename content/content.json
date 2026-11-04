@@ -62,20 +62,38 @@
     "byline": "India Growth Internship · Shriniwas Kholkute · 3 November 2026",
     "headline": "324 tests passed. Then an audit found 19 problems.",
     "question": "Would you have shipped it?",
-    "lede": "Five projects. Five inconvenient discoveries. One investigation into what I did next.",
+    "lede": "Three projects. Three inconvenient discoveries. One investigation into what I did next.",
     "intro": "I'm Shriniwas, a final-year VIT Pune engineering student applying for Wispr Flow's India growth internship. I build software, debate, write and study business strategy. Instead of listing strengths, I'll show you difficult decisions.",
     "ctaOpen": "OPEN THE CASE",
     "ctaSixty": "THE 60-SECOND FILE"
   },
   "exhibitA": {
-    "heading": "EXHIBIT A — THE GREEN WALL",
+    "heading": "LAMP 01 — CERTGEN",
+    "title": "The Green Wall · Sab Green Tha. Par Kya Sab Theek Tha?",
+    "tagline": "324 Tests Passed. I Still Wasn't Convinced.",
     "body": [
-      "Imagine a college generating thousands of certificates. One wrong entry shouldn't ruin the batch—or crash the service.",
-      "I mapped the workflow and architecture, made or approved product decisions, and used AI coding tools to implement the prototype. It passed **324 tests**.",
-      "A separate audit found **19 problems**: one input consumed excessive processing time; another ballooned into an enormous response. The tests hadn't asked those questions.",
-      "**I didn't defend the green screen.** Records show me approving safeguards, changing scope and directing more remediation when problems remained. Agents audited and fixed the code. The final report recorded zero open findings in its scope; later checks passed **479 main and 232 audit tests**.",
-      "It's still a prototype, not a security guarantee."
+      "A hiring assignment asked me to build a bulk certificate generator. Simple enough to make it work. But I wanted to build something that could survive when things went wrong.",
+      "Mera sawaal simple tha: agar hazaar students ke certificates ban rahe hain, toh ek galat entry ki wajah se baaki sab kyun rukenge?",
+      "So I mapped the entire workflow, designed the architecture, and chose background processing with fault isolation. AI agents helped with much of the implementation, while I directed the design and key product decisions.",
+      "Then came the interesting part.",
+      "324 tests passed. Everything was green.",
+      "Ab normally kya hota? Project complete. Screenshot lo. Aage badho.",
+      "But I wasn't convinced.",
+      "A separate audit uncovered 19 problems. I directed further remediation, made decisions about safeguards, resource limits, and authentication, and pushed for more corrections when the first fixes weren't sufficient.",
+      "I even dropped a QR-verification feature when it violated an existing requirement.",
+      "Feature impressive tha. Lekin requirement tod raha tha. Toh feature gaya, requirement nahi.",
+      "The remediation report eventually recorded zero open findings within its scope. Later local checks passed 479 main-suite and 232 audit-suite tests.",
+      "**What I learned:** Ownership doesn't mean defending everything you've built. It means having the courage to question it.",
+      "Apna banaya hua system khud challenge karna bhi ownership hai."
     ],
+    "revealsLabel": "Three things this reveals about me",
+    "reveals": [
+      "Systems Thinking: I design complete workflows around real-world constraints, not just happy-path demonstrations.",
+      "Product Judgment: I make difficult trade-offs and prioritize requirements over attractive extras.",
+      "Extreme Ownership: When initial fixes aren't enough, I continue directing improvements instead of declaring premature success."
+    ],
+    "growth": "**My growth connection:** A dashboard full of green numbers doesn't automatically mean users are happy.\nNumbers achhe dikh rahe hain, par kya user ko sach mein value mil rahi hai? That's the question I want to ask.",
+    "note": "**Evidence note:** AI agents performed much of the coding, audits, and fixes. The results describe a tested prototype, not a production security guarantee.",
     "guess": {
       "label": "GUESS THE AUDIT RESULT → REVEAL 19",
       "options": [
@@ -96,14 +114,64 @@
     }
   },
   "exhibitB": {
-    "heading": "EXHIBIT B — THE WATCHDOG THAT TRUSTED A LATE REPLY",
+    "heading": "LAMP 02 — BLITZ",
+    "title": "The Number I Withdrew · Number Bada Tha. Par Sach?",
+    "tagline": "I Chose to Withdraw My Most Impressive Number.",
     "body": [
-      "Vigil checked whether a data connection was alive—like asking, “Are you there?”",
-      "Despite green tests, a reply arriving **after the deadline** could count as proof of health.",
-      "I questioned whether the tests proved the system's real promise. An AI-assisted review found the defect and implemented an approval-gated correction.",
-      "When a verifier removed the correction, **two targeted tests failed**. Restored, the suite passed **105 tests**. These were simulated connections.",
-      "The question became: **Does it deliver what someone depends on?**"
+      "I wanted to build a high-performance stock-order matching engine. The challenge wasn't just making it fast. It was proving that the improvements were real.",
+      "Fast bolna aasaan hai. Lekin kitna fast? Aur uska proof kya hai?",
+      "I designed the workflow and architecture, and established an approach for comparing optimizations with simpler alternatives. AI agents handled much of the coding and benchmarking. I directed the evaluation and decisions about which claims were defensible.",
+      "Then came a number I could have proudly displayed.",
+      "1,205 nanoseconds.",
+      "Dekhne mein impressive tha. Resume par bhi achha lagta.",
+      "But an audit revealed that this headline came from an uncommitted version of the code. A more controlled historical run gave 1,850 nanoseconds.",
+      "And another claimed 3.1× advantage? It shrank to approximately 1.02×.",
+      "Ab do options the: impressive number bachao, ya sach accept karo.",
+      "I chose to withdraw or downgrade claims the evidence couldn't support. Later changes also made the replacement latency outdated.",
+      "**What I learned:** A smaller truth is worth more than a bigger claim you cannot defend.",
+      "Har achha dikhne wala number achha result nahi hota."
     ],
+    "revealsLabel": "Three things this reveals about me",
+    "reveals": [
+      "Analytical Thinking: I approach improvements as hypotheses requiring fair comparisons.",
+      "Independent Judgment: I'm willing to change a conclusion when better evidence contradicts it.",
+      "Evidence-Driven Problem-Solving: I question measurement methods and investigate unexpected results before deciding what to change."
+    ],
+    "growth": "**My growth connection:** Imagine a campaign reporting thousands of sign-ups.\nSunne mein amazing hai. Lekin kitne log actually product use kar rahe hain? Kitne wapas aaye?\nThat's the difference between celebrating a number and understanding what it means.",
+    "note": "**Evidence note:** AI agents performed much of the implementation, benchmarking, and investigation. The 1,850 ns result is historical; current latency has not been remeasured.",
+    "receipt": {
+      "label": "CHECK THE RECEIPT",
+      "case": "c3"
+    }
+  },
+  "exhibitC": {
+    "heading": "LAMP 03 — VIGIL",
+    "title": "The Late Witness · System Bola Healthy. Maine Poochha, Pakka?",
+    "tagline": "The System Said Everything Was Fine. I Questioned Whether It Was.",
+    "body": [
+      "Imagine a trading system receiving live market prices. Suddenly, a connection stops responding—but the system still believes everything is fine.",
+      "Screen par sab normal dikh raha hai. Lekin data hi purana hai. Ab bharosa kis par karein?",
+      "That's the problem I wanted Vigil to address.",
+      "I defined the requirements, designed the monitoring and reconnection workflows, and made key decisions about failure handling. AI agents helped implement and investigate the system.",
+      "Then I asked a question that changed the direction of the testing:",
+      "Were our tests actually proving what the system promised?",
+      "Tests pass ho rahe the. Lekin kya woh sahi sawaal pooch rahe the?",
+      "An AI-assisted investigation exposed a serious flaw: a reply arriving after its deadline could still make a failed connection appear healthy.",
+      "Matlab jawab late aaya, aur system ne maan liya—sab theek hai!",
+      "I directed corrective work, approved changes to the connection rules, and sought evidence that the correction would detect the original problem.",
+      "When the fix was deliberately removed, two targeted tests failed. Restored, all 105 local tests passed.",
+      "I also challenged performance measurements that weren't measuring what they claimed.",
+      "**What I learned:** Before celebrating a successful result, make sure you're testing the right definition of success.",
+      "Galat sawaal ka correct answer bhi kaam ka nahi."
+    ],
+    "revealsLabel": "Three things this reveals about me",
+    "reveals": [
+      "Systems Thinking: I translate complex problems into defined behaviors, workflows, and failure-handling decisions.",
+      "Critical Thinking: I question whether passing tests actually prove what matters.",
+      "Evidence-Driven Ownership: I direct corrective action and seek tests that can expose the original failure again."
+    ],
+    "growth": "**My growth connection:** A new Wispr Flow installation might look like success.\nLekin agar user agle din Flow use hi na kare, toh kya woh real adoption hai?\nI want to understand what happens after the first interaction—not just count how many people started.",
+    "note": "**Evidence note:** AI agents carried out much of the technical investigation and implementation. Verification was local and simulation-based, not a production deployment. Some individual decision attributions remain subject to verification...",
     "late": {
       "label": "TEST THE LATE REPLY",
       "deadline": 3,
@@ -116,26 +184,20 @@
       "case": "c2"
     }
   },
-  "more": {
-    "heading": "THREE MORE FILES. THREE DIFFERENT DECISIONS.",
-    "cards": [
-      {
-        "head": "BLITZ — THE NUMBER I WITHDREW.",
-        "text": "A speed claim looked remarkable: **1,205 nanoseconds**. Better-controlled measurement showed **1,850**; an advertised **3.1× advantage** shrank to **1.02×**. The headline was replaced. Later changes made even the replacement historical. **I chose the defensible story over the flattering one.**",
-        "case": "c3"
-      },
-      {
-        "head": "TIPINDEX — THE AGENT STOPPED. THE WORK CONTINUED.",
-        "text": "Codex hit its limit during a long experiment and left an incomplete output. I directed a handoff to Claude Code, approved a verified disk cleanup, and resumed from recorded checkpoints. The campaign record reports **820 completed measurement rounds**. **A process shouldn't depend on one operator remembering everything.**",
-        "case": "c4"
-      },
-      {
-        "head": "PITDB — THE FUTURE APPEARED EARLY.",
-        "text": "A database meant to answer “What was known then?” could, in one specific time-zone edge case, show a **06:15** event at **06:00**. Agents found and addressed the defect in a local remediation version; the claim was narrowed. **That correction is not yet reflected in the public default branch.**",
-        "case": "c5"
-      }
-    ],
-    "cta": "OPEN THE FIVE EVIDENCE FOLDERS"
+  "transition": {
+    "heading": "Three Lamps. One Pattern.",
+    "body": [
+      "One project taught me not to trust green tests blindly.",
+      "Another taught me not to fall in love with impressive numbers.",
+      "The third taught me to question whether I was measuring the right thing in the first place.",
+      "*Teen alag projects. Teen alag challenges. Lekin ek aadat common thi.*",
+      "**I don't want to be right. I want to find out what's right.**",
+      "And that is exactly the mindset I want to bring to growth.",
+      "Because getting someone to install a product is one thing.",
+      "Getting them to genuinely love it, use it again, and make it part of their daily life?",
+      "*Woh asli challenge hai.*",
+      "**Which brings me to my next question: What happens after someone installs Wispr Flow?**"
+    ]
   },
   "person": {
     "heading": "THE PERSON BEHIND THE FILE",
@@ -202,7 +264,7 @@
     "body": [
       "I'm Shriniwas, an engineering student applying to Wispr Flow's India growth internship. I mapped workflows and architectures, made or approved key design decisions, and used AI agents for implementation and investigation.",
       "In one project, I approved further corrections after the first audit fixes weren't enough. In another, a watchdog called a late reply proof of a healthy connection. I questioned whether the tests actually proved the product's promise; the corrected test failed when its fix was removed.",
-      "I also withdrew a flattering speed claim, redirected an interrupted experiment between AI agents, and narrowed a database claim after a specific time-handling defect.",
+      "I also withdrew a flattering speed claim.",
       "I have no growth wins to borrow. But I've used Flow, and I want to test whether a Hinglish-first demonstration helps Indian students reach their first useful dictation and return for another."
     ],
     "line": "I can't promise I'll always be right. I can show you what I do when I'm wrong.",
@@ -256,45 +318,6 @@
         ]
       },
       {
-        "id": "c2",
-        "name": "VIGIL — The late witness",
-        "purpose": "A monitor checks whether a stream of important information is still alive. A late reply must not count as proof of current health.",
-        "finding": "The original handle_pong logic accepted stale or future-timestamped replies. The project plan records a question about whether its tests truly established the stated state-machine behavior. An agent investigated the code and implemented the correction with an approval gate.",
-        "mine": "I questioned whether the tests proved the system's real promise.",
-        "results": "A later local verification reported 105/105 tests passing. Replacing the guard with `if (false)` made exactly two targeted tests fail. A simulated three-feed lifecycle demonstrated failure, reconnection and recovery. There was no production exchange deployment, and the kernel-level network-loss script was not run.",
-        "inspect": {
-          "label": "Vigil",
-          "url": "https://github.com/Shri2909/Vigil-Low-latency-TCP-heartbeat-monitor",
-          "files": [
-            "PROJECT_PLAN.md §§18–19",
-            "src/connection.cpp",
-            "test/connection_test.cpp",
-            "test/feed_monitor_test.cpp",
-            "demo/lifecycle_demo.cpp"
-          ]
-        },
-        "status": [
-          [
-            "PUBLIC",
-            "Repository"
-          ],
-          [
-            "REPO-REPORTED",
-            "105/105 tests, verified locally in an agent session (not CI)"
-          ],
-          [
-            "UNRESOLVED",
-            "Who asked the correctness question and who approved the semantic change"
-          ]
-        ],
-        "more": [
-          "A CLI dropped piped commands when EOF arrived with the final input; the pattern appeared at three sites.",
-          "A benchmark comparing reactor architectures inherited a one-CPU affinity mask, invalidating the original naive-baseline comparison. Committed documents still disagree on absolute CPU numbers.",
-          "An 18-gap specification exercise led to a first-class feed simulator and protocol decisions.",
-          "One deeper fuzzing harness hung in the sandbox and remains incompletely validated. None of this is production or CI evidence."
-        ]
-      },
-      {
         "id": "c3",
         "name": "BLITZ — The number I withdrew",
         "purpose": "A fast matching engine keeps track of buyers and sellers, but a claimed speed improvement matters only if it can be reliably reproduced.",
@@ -338,23 +361,21 @@
         ]
       },
       {
-        "id": "c4",
-        "name": "TIPINDEX — The operator changed, the evidence stayed",
-        "purpose": "Instead of searching every market message, an index can jump to relevant ones, but that shortcut has maintenance and workload costs.",
-        "finding": "During a P6 measurement campaign Codex ran out of usage allowance, a process died, and one output file was truncated. I redirected the work to Claude Code, controlled progress and approved deleting checksum-verified redundant chunks to recover disk. Agents verified checkpoint integrity; the reports state 820 measured rounds and that 5,364 original P6 files remained byte-identical.",
-        "mine": "The project records explicit phase gates, selection of a narrower Tier B plan, stop and start instructions, approval of controlled deletions, the switch from Codex to Claude Code, and permission to remediate audit findings. Most C++ and Python development, benchmarking and audit execution was agent-written.",
-        "results": "In a separate P7 runtime study, CPU contamination invalidated 9 of 10 rounds in attempt one; a new quiescence rule rejected attempt two at 3.52 seconds against a 3.0-second limit; attempt three passed. The rule was written after attempt one but before the reruns. Failed timing values were deleted at my instruction, despite a general “preserve failures” policy.",
+        "id": "c2",
+        "name": "VIGIL — The late witness",
+        "purpose": "A monitor checks whether a stream of important information is still alive. A late reply must not count as proof of current health.",
+        "finding": "The original handle_pong logic accepted stale or future-timestamped replies. The project plan records a question about whether its tests truly established the stated state-machine behavior. An agent investigated the code and implemented the correction with an approval gate.",
+        "mine": "I questioned whether the tests proved the system's real promise.",
+        "results": "A later local verification reported 105/105 tests passing. Replacing the guard with `if (false)` made exactly two targeted tests fail. A simulated three-feed lifecycle demonstrated failure, reconnection and recovery. There was no production exchange deployment, and the kernel-level network-loss script was not run.",
         "inspect": {
-          "label": "TipIndex",
-          "url": "https://github.com/Shri2909/TipIndex-Indexed-Market-Data-Message-Bus",
+          "label": "Vigil",
+          "url": "https://github.com/Shri2909/Vigil-Low-latency-TCP-heartbeat-monitor",
           "files": [
-            "docs/plan/PROGRESS.md",
-            "results/p6/pause-20261025.json",
-            "results/p6/resume-after-pause.md",
-            "results/p7/runtime-quiescence-rule.json",
-            "docs/report/REMEDIATION.md",
-            "results/p6/",
-            "results/f01/"
+            "PROJECT_PLAN.md §§18–19",
+            "src/connection.cpp",
+            "test/connection_test.cpp",
+            "test/feed_monitor_test.cpp",
+            "demo/lifecycle_demo.cpp"
           ]
         },
         "status": [
@@ -364,59 +385,18 @@
           ],
           [
             "REPO-REPORTED",
-            "820 rounds, checkpoint integrity, audit counts"
+            "105/105 tests, verified locally in an agent session (not CI)"
           ],
           [
             "UNRESOLVED",
-            "Understanding of the generated code: needs a genuine walkthrough. An October interview-prep prompt in the repository states I had zero working knowledge of it at that moment."
+            "Who asked the correctness question and who approved the semantic change"
           ]
         ],
         "more": [
-          "Two audits found 26 and then 14 numbered findings; the mutation audit showed three no-op invariant checkers could pass the existing tests.",
-          "A polling-budget feature shortened individual turns but increased cumulative work and retained unresolved overhead.",
-          "These are one-laptop, limited-workload results, not generalized product speedups. The P7 contamination and the P6 agent interruption are distinct campaigns."
-        ]
-      },
-      {
-        "id": "c5",
-        "name": "PITDB — The future appeared early",
-        "purpose": "A historical database should answer “What was actually known by this point in time?” without quietly using later facts.",
-        "finding": "One specific direct-ingestion daylight-saving-time fold could make a 06:15 UTC record visible at a 06:00 UTC cutoff. The normalized UTC CSV route was not affected. Agent-executed remediation centralized timestamp validation and rejected problematic input.",
-        "mine": "The exact approvals I gave on particular temporal-policy tradeoffs still need to be confirmed against the project record.",
-        "results": "Current local tests passed 346. The last public default branch was an older, pre-audit version.",
-        "inspect": {
-          "label": "PitDB",
-          "url": "https://github.com/Shri2909/PitDB",
-          "files": [
-            "audit finding STORAGE-01",
-            "src/store/validation.py",
-            "tests/test_temporal_regressions.py",
-            "tests/test_benchmark_integrity.py",
-            "corrected README on the local branch fix/forensic-audit-20261029"
-          ]
-        },
-        "status": [
-          [
-            "PUBLIC",
-            "Repository (older, pre-audit version)"
-          ],
-          [
-            "LOCAL-BRANCH",
-            "The remediation and corrected README"
-          ],
-          [
-            "REPO-REPORTED",
-            "346 local tests"
-          ],
-          [
-            "UNRESOLVED",
-            "A per-finding remediation ledger: not every audit finding is claimed fixed"
-          ]
-        ],
-        "more": [
-          "A trimmed-mean estimator hid slow outliers: thirteen 1 ms trials plus two 100 ms trials gave a trimmed mean of 1 ms but a raw mean of 14.2 ms.",
-          "An AI-audit process used approval gates and independent-oracle instructions; 18 confirmed findings were reported and a later review found three more issues.",
-          "GitHub images and packaging had separate first-minute usability issues."
+          "A CLI dropped piped commands when EOF arrived with the final input; the pattern appeared at three sites.",
+          "A benchmark comparing reactor architectures inherited a one-CPU affinity mask, invalidating the original naive-baseline comparison. Committed documents still disagree on absolute CPU numbers.",
+          "An 18-gap specification exercise led to a first-class feed simulator and protocol decisions.",
+          "One deeper fuzzing harness hung in the sandbox and remains incompletely validated. None of this is production or CI evidence."
         ]
       },
       {
