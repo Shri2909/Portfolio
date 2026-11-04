@@ -1,7 +1,5 @@
 # CLAUDE.md: Ek Diya Se Doosra (Shriniwas Kholkute's portfolio)
 
-This file replaces the old detective-site instructions. The detective site ("Case File No. 001") is recoverable at git tag `detective-site-final`. Its rules (three interactions only, chapter seals, detective tone, the old section list, "do not add features not in the specs") no longer apply.
-
 ## What this is
 
 A one-page night site, "Ek Diya Se Doosra" (one lamp lights another), for Shriniwas Kholkute's application to Wispr Flow's India growth internship. A visitor lights three lamps (Certgen, Blitz, Vigil), reads each story in three levels (instantly visible, poora kissa, inspect the evidence), meets the person, hears the voice, reads the proposed Group Admin Tax idea (a fourth lamp that never lights), can write one wish for one real person, and ends with a lamp of their own. The journey is numbered 01 to 06 (see `copy.journey`).
@@ -10,10 +8,9 @@ A one-page night site, "Ek Diya Se Doosra" (one lamp lights another), for Shrini
 
 0. `website_copy_lamps.md`: the three lamp stories and the transition, word for word as Shriniwas wrote them (4 Nov 2026), plus the Level 1 summaries and the changed lines. They replace the five lamp stories of `website_copy.md`; TipIndex and PitDB are removed from the page.
 1. `website_copy.md`: every other visible word. Copied into `src/data/copy.json`. Never rewrite, shorten, translate or "improve" it.
-2. `build_prompts.md`: the build briefs (packs 1 to 7; pack 8 is deliberately not built). Reconciliations R1 to R10 at its top beat the individual prompts.
-3. `reference/content.json`: read-only. The voice takes and the evidence-drawer bodies come from it.
-4. `docs/TRUTH_LEDGER.md` and `docs/TRUTH_CHECK.md`: what is verified. UNVERIFIED items stay off the page.
-5. `BUILD_LOG.md`: progress. If a session is resumed, continue from it.
+2. `reference/content.json`: read-only. The voice takes and the evidence-drawer bodies come from it.
+3. `docs/TRUTH_LEDGER.md` and `docs/TRUTH_CHECK.md`: what is verified. UNVERIFIED items stay off the page.
+4. `BUILD_LOG.md`: progress. If a session is resumed, continue from it.
 
 If anything conflicts with the truth rules below, the truth rules win.
 

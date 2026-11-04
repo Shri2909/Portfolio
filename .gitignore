@@ -8,3 +8,4 @@ dist-perf/
 perf/report-*.json
 qa/shots/
 shots/run/
+shots/
