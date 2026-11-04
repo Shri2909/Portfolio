@@ -36,13 +36,8 @@ export default function LampStop({ n }) {
         <details className="level l3">
           <summary><span className="mono">{LV.level3}</span><small>{LV.level3Sub}</small></summary>
           <div className="l3-body">
-            {insp && <>
-              <h3>{LV.repoLabel}</h3>
-              <p><a className="repo-link" href={insp.url} target="_blank" rel="noopener noreferrer" aria-label={tpl(X('repoAria'), { project, label: insp.label })}>{insp.label}</a></p>
-              {(insp.files || []).length ? <ul className="files">{insp.files.map((f) => <li key={f}><code>{f}</code></li>)}</ul> : null}
-              {insp.note ? <p className="note">{insp.note}</p> : null}
-            </>}
-            <p><button className="btn" data-evidence={l.level3.folder}>{l.receipt.label}</button></p>
+            {insp && <p><a className="repo-link" href={insp.url} target="_blank" rel="noopener noreferrer" aria-label={tpl(X('repoAria'), { project, label: insp.label })}>{insp.label} · {LV.github}</a></p>}
+            {l.level3.punch && <p className="punch">{rich(l.level3.punch)}</p>}
           </div>
         </details>
         <p className="stop-foot">

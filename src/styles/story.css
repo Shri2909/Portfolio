@@ -182,3 +182,11 @@ html[data-calm="1"] .window-scene .panes rect, html[data-calm="1"] .farwin rect,
 .card .reveals { margin: 0; padding-left: 20px; } .card .reveals li { margin: 0 0 8px; color: var(--ink); opacity: 0; transform: translateY(6px); transition: opacity .5s ease, transform .5s ease; transition-delay: calc(var(--i, 0) * 60ms); } .part.on .reveals li { opacity: 1; transform: none; }
 .pattern .pull { font-family: var(--font-display); font-weight: 600; font-size: 1.25rem; border-left: 4px solid var(--marigold); padding-left: 14px; }
 .deeper .cta-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Meet the person: tap a window and its whole text inks in line by line, then stops */
+.pane-body .ml { opacity: 0; }
+#baithak.seen .pane-body:not([hidden]) .ml { animation: ml-in .6s ease both; animation-delay: calc(var(--i, 0) * 360ms); }
+@keyframes ml-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+html[data-calm="1"] .pane-body .ml { opacity: 1; animation: none !important; transform: none; }
+.loop-list { margin: 8px 0; padding-left: 22px; } .loop-list li { margin: 0 0 10px; } .bring-item { margin: 0 0 14px; padding-bottom: 10px; border-bottom: 1px solid var(--ground-5); } .bring-item p { margin: 0 0 4px; }
+.stop .punch { font-family: var(--font-display); font-style: italic; font-size: 1.15rem; line-height: 1.4; color: var(--flame-core); border-left: 3px solid var(--marigold); padding-left: 12px; margin: 10px 0 4px; }

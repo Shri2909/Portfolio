@@ -244,9 +244,7 @@
    "fullTextLine": "Yahan sab kuch seedhe text mein hai: koi animation nahi, koi interaction nahi. Har interaction ka plain-text version bhi.",
    "poorakissaAria": "Full story: {project} receipt",
    "passPrompt": "Lamp {n} ko chhuiye, lau aage badhegi.",
-   "moreLabel": "Aur dekhiye",
    "proofLabel": "Proof",
-   "plainLabel": "Plain text",
    "fastLane": "Take the whole walk",
    "wordsCounter": "{n} of 2,000 words (simulated)",
    "wordsMore": "Bolo",
@@ -265,7 +263,8 @@
     "level3Sub": "For curious reviewers",
     "capLabel": "The one capability this project best demonstrates",
     "repoLabel": "Repository",
-    "revealsLabel": "Three things this reveals about me"
+    "revealsLabel": "Three things this reveals about me",
+    "github": "GitHub"
    },
    "goDeeperStories": "Longer stories",
    "goDeeperPerson": "Personal details",
@@ -355,7 +354,8 @@
     "folder": "c1"
    },
    "level3": {
-    "folder": "c1"
+    "folder": "c1",
+    "punch": "<hi>Numbers achhe dikh rahe hain, par kya user ko sach mein value mil rahi hai?</hi>"
    },
    "interaction": "guess",
    "stop": {}
@@ -414,7 +414,8 @@
     "folder": "c3"
    },
    "level3": {
-    "folder": "c3"
+    "folder": "c3",
+    "punch": "<hi>Lekin kitne log actually product use kar rahe hain? Kitne wapas aaye?</hi>"
    },
    "interaction": null,
    "stop": {
@@ -481,7 +482,8 @@
     "folder": "c2"
    },
    "level3": {
-    "folder": "c2"
+    "folder": "c2",
+    "punch": "<hi>Lekin agar user agle din Flow use hi na kare, toh kya woh real adoption hai?</hi>"
    },
    "interaction": "lateReply",
    "stop": {
